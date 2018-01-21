@@ -1,0 +1,58 @@
+SELECT CASE 
+  WHEN date(date) = date('now','localtime') THEN 'TODAY'
+  WHEN date(date) = date('now','-1 day','localtime') THEN 'YESTERDAY'
+  WHEN date(date) BETWEEN date('now','localtime','weekday 6','-6 days') AND date('now','localtime','weekday 6') THEN 'THISWEEK'
+  WHEN date(date) BETWEEN date('now', 'localtime', 'start of month')  AND date('now','start of month','+1 month','-1 day') THEN 'THISMONTH'
+  WHEN date(date) BETWEEN date('now','-7 day','localtime') AND date('now','localtime') THEN 'RECENT'
+  WHEN date(date) BETWEEN date('now','localtime','weekday 6', '-13 days') AND date('now','localtime','weekday 6', '-7 days') THEN 'LASTWEEK'
+  WHEN date(date) BETWEEN date('now', '-1 month','localtime','start of month') AND date('now','localtime','start of month','-1 day') THEN 'LASTMONTH'
+  ELSE 'OLDER'
+END date_group
+,expense_id, category_name, name, descr, date, value
+FROM expenses
+--ORDER BY category_name, date desc, name
+--ORDER BY date desc
+
+
+
+SELECT expense_id, category_name, name, descr, date, value
+FROM expenses
+WHERE date(date) = date('now','localtime')
+
+
+report_id  label              date_range  date_mode  categories           category_exception   date1       date2        created_by
+--------------------------------------------------------------------------------------------------------
+       12  Standard Expense   This Year   By Month                        Leisure,Electronics                           user
+           trends this year
+       13  Food Expense       This Week   By Day     Food                                                               user  
+           trends this week
+       15  Custom Date        Custom      By Week    Food,Transportation                       07-20-2017  09-20-2017   user
+        1                     This Month  By Day                                                                        system
+
+LINE
+This Year
+ - By Day
+ - By Week
+ - By Month
+
+Last Year
+ - By Day
+ - By Week
+ - By Month
+
+This Month
+ - By Day
+ - By Week
+
+Last Month
+ - By Day
+ - By Week
+
+This Week
+ - By Day
+
+Last Week
+ - By Day
+
+Recent
+ - By Day

@@ -1,0 +1,15 @@
+{
+    "name": "tagatuos2.kugiigi",
+    "description": "A simple but powerful expense, debt and budgeting app for Ubuntu devices.",
+    "architecture": "armhf",
+    "title": "Tagatuos",
+    "hooks": {
+        "tagatuos2": {
+            "apparmor": "tagatuos2/tagatuos2.apparmor",
+            "desktop": "tagatuos2/tagatuos2.desktop"
+        }
+    },
+    "version": "0.60",
+    "maintainer": "Kugi Eusebio <kugi_igi@yahoo.com>",
+    "framework": "ubuntu-sdk-15.04.6"
+}

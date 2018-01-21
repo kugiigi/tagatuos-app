@@ -1,0 +1,240 @@
+SELECT 'Uncategorized', descr, descrlong, date, value FROM items WHERE category = 'Gastos';
+
+
+/*Insert Expenses*/
+INSERT INTO realData.expenses(category_name,name,descr,date,value) SELECT 'Uncategorized', descr, descrlong, date, value FROM items WHERE category = 'Gastos';
+
+
+SELECT descr, descrlong, date, value,CASE WHEN descr LIKE 'Utang ni%' then 0 else 1 end, CASE WHEN status = 'Paid' then 1 else 0 end FROM items WHERE category = 'Utang';
+
+/*Insert Debts*/
+INSERT INTO realData.debts(name,descr,date,value,debtor_flag,paid_flag) SELECT descr, descrlong, date, value,CASE WHEN descr LIKE 'Utang ni%' then 0 else 1 end, CASE WHEN status = 'Paid' then 1 else 0 end FROM items WHERE category = 'Utang';
+
+UPDATE expenses set category_name = 'Transportation' 
+where (name LIKE '%MRT%'
+OR name LIKE '%Bus%'
+OR name LIKE '%FX%'
+OR name LIKE '%Tricycle%'
+OR name LIKE '%Van%'
+OR name LIKE '%LRT%'
+OR name LIKE '%Jeep%'
+OR name LIKE '%Taxi%'
+OR name LIKE '%Train%'
+OR name LIKE '%NLEX%'
+OR name LIKE '%Beep Card Load%'
+)
+AND name NOT IN ('Incubus Concert','Muse and Incubus CD')
+;
+
+UPDATE expenses set category_name = 'Personal' where (name LIKE '%Grocer%');
+
+UPDATE expenses set category_name = 'Household' where (name LIKE '%Kuryente%'
+OR name LIKE '%Bigay kay mama%'
+OR name LIKE '%Adventure Insurance%'
+OR name LIKE '%Plantsa%'
+OR name LIKE '%Amilyar%')
+AND category_name = 'Uncategorized';
+
+(name LIKE '%Oxygen 1155%'
+OR name LIKE '%Human 7%'
+OR name LIKE '%Kagamitan%'
+OR name LIKE '%Pangahit%'
+OR name LIKE '%Pabango%'
+OR name LIKE '%Panlaba Powder%'
+OR name LIKE '%Gupit%'
+OR name LIKE '%Deodorant%'
+OR name LIKE '%Palmolive Shampoo%'
+OR name LIKE '%Gupit%'
+OR name LIKE '%Gupit%'
+)
+
+
+--UPDATE expenses set category_name = 'Electronics' 
+SELECT DISTINCT name FROM expenses
+where(name LIKE '%Thermal Paste%'
+OR name LIKE '%Desktop Mouse%'
+OR name LIKE '%Bayad sa UPS%'
+OR name LIKE '%16GB Flash Drive%'
+OR name LIKE '%Europe Socket Adapter%'
+OR name LIKE '%LycaMobile Sim Card%'
+OR name LIKE '%Amazon Online Shopping%'
+OR name LIKE '%Corsair RM650%'
+OR name LIKE '%Amazon Package%'
+OR name LIKE '%Audio Male to Male%'
+OR name LIKE '%DVI Cable%'
+OR name LIKE '%PS3 Controller USB Cable%'
+OR name LIKE '%PS3 Controller%'
+OR name LIKE '%PC Bluetooth Adapter%'
+OR name LIKE '%Google Cardboard%'
+OR name LIKE '%Earphone%'
+OR name LIKE '%Bluetooth Dongle%'
+OR name LIKE '%Developer Laptop%'
+OR name LIKE '%Laptop RAM Upgrade%'
+OR name LIKE '%Laptop RAM%'
+OR name LIKE '%Laptop Mouse%'
+OR name LIKE '%Bluetooth Keyboard and Mouse%'
+OR name LIKE '%bq Aquaris E5 HD Ubuntu Edition%'
+OR name LIKE '%Smart Micro Sim Card%'
+OR name LIKE '%Europe Adapter%'
+OR name LIKE '%Congstar Sim Card%'
+OR name LIKE '%Bluetooth Keyboards%'
+OR name LIKE '%Soundbar Battery%'
+OR name LIKE '%Sony SBH20 Bluetooth Headset%'
+OR name LIKE '%Miracast + HDMI to VGA Adapter%'
+OR name LIKE '%JohnnyAir Padala%'
+OR name LIKE '%S3 Battery%'
+OR name LIKE '%Logitech Wireless Mouse%'
+OR name LIKE '%A4Tech Headset%'
+OR name LIKE '%Logitech Wireless Mouse/KB%'
+OR name LIKE '%GPU Checkup%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+--UPDATE expenses set category_name = 'Travels' 
+SELECT DISTINCT name FROM expenses
+where(name LIKE '%Pasalubong%'
+OR name LIKE '%CR/WC%'
+OR name LIKE '%Atomium & Mini Europe%'
+OR name LIKE '%Hostel%'
+OR name LIKE '%Louvre Museum Ticket%'
+OR name LIKE '%Ticket to Summit of Eiffel Tower%'
+OR name LIKE '%Pasalubong 2%'
+OR name LIKE '%Skip-The-Line Ticket to Eiffel Tower%'
+OR name LIKE '%Japan Visa%'
+OR name LIKE '%Japan Plane Ticket%'
+OR name LIKE '%Suica Load%'
+OR name LIKE '%JR West Kansai Area Pass%'
+OR name LIKE '%Leeg Unan%'
+OR name LIKE '%Keychains%'
+OR name LIKE '%Spiderman Key Holder%'
+OR name LIKE '%Locker%'
+OR name LIKE '%Haikyuu Manga%'
+OR name LIKE '%Tokyo 1 day Pass%'
+OR name LIKE '%Tokyo Tower Ticket%'
+OR name LIKE '%Weekly Jump Vol. 1%'
+OR name LIKE '%Maleta Repair%'
+OR name LIKE '%Heidelberg Castle Ticket%'
+OR name LIKE '%Starbucks Tumbler Germany%'
+OR name LIKE '%Pasalubong%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Work' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%Passport - Rush%'
+OR name LIKE '%Passport Scan%'
+OR name LIKE '%German Visa%'
+OR name LIKE '%German Visa Delivery%'
+OR name LIKE '%Terminal Fee%'
+OR name LIKE '%Travel Tax%'
+OR name LIKE '%Visa Photo%'
+OR name LIKE '%Germany Flight Rebooking%'
+OR name LIKE '%TGIF%'
+OR name LIKE '%SSE Promotion Celebration Contribution%'
+OR name LIKE '%SF Summer Outing%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Leisure' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%Gastos badtrip%'
+OR name LIKE '%Rurouni Kenshin 2 Movie%'
+OR name LIKE '%Football%'
+OR name LIKE '%Videoke%'
+OR name LIKE '%Nuod Sine%'
+OR name LIKE '%Football Ball%'
+OR name LIKE '%Incubus Concert%'
+OR name LIKE '%Sine Food%'
+OR name LIKE '%Basketball Bola%'
+OR name LIKE '%Muse and Incubus CD%'
+OR name LIKE '%Muse - Absolution%'
+OR name LIKE '%Beer%'
+OR name LIKE '%Basketball%'
+OR name LIKE '%Mask%'
+OR name LIKE '%Sine Pagkain%'
+OR name LIKE '%Mystery Manila%'
+OR name LIKE '%Volleyball%'
+OR name LIKE '%Inoman%'
+OR name LIKE '%Don Pagkain Inom%'
+OR name LIKE '%Tree Planting%'
+OR name LIKE '%Mountain Hiking Expenses%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Clothing' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%Accenture Jersey%'
+OR name LIKE '%Tsinelas%'
+OR name LIKE '%Siyaping%'
+OR name LIKE '%Berlin Shirt%'
+OR name LIKE '%Shoulder Bag%'
+OR name LIKE '%Jersey Season 2%'
+OR name LIKE '%Nike Shoes%'
+OR name LIKE '%Damit sa Kasal ni Kuya Nicky%'
+OR name LIKE '%Polo Shirt%'
+OR name LIKE '%Kinjaz Apparels%'
+OR name LIKE '%Kinjaz Apparels Receive%'
+OR name LIKE '%Black Shoes for Dancing%'
+OR name LIKE '%Jacket for ME4%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Events' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%ABL Registration%'
+OR name LIKE '%Birthday ni Jerel%'
+OR name LIKE '%Birthday Celebrations%'
+OR name LIKE '%Dance Class%'
+OR name LIKE '%Birthday ni Janine%'
+OR name LIKE '%Birthday Ni Joyce%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Personal' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%Smart Load%'
+OR name LIKE '%Globe Prepaid%'
+OR name LIKE '%Baranggay Clearance%'
+OR name LIKE '%BPI ePrepaid Mastercard%'
+OR name LIKE '%Congstar Load%'
+OR name LIKE '%Card Case%'
+OR name LIKE '%Retractable pang Beep Card%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+UPDATE expenses set category_name = 'Games' 
+--SELECT DISTINCT name FROM expenses
+where(name LIKE '%NBA 2K15%'
+OR name LIKE '%Steam Games%'
+OR name LIKE '%GTA V%'
+OR name LIKE '%Cut The Rope%'
+OR name LIKE '%Gundam with stand%'
+OR name LIKE '%Metal Gear Solid V:Phantom Pain%'
+OR name LIKE '%The Witcher Trilogy%'
+)
+--AND name NOT IN ('Meryenda + Deodorant')
+AND category_name = 'Uncategorized'
+;
+
+
+

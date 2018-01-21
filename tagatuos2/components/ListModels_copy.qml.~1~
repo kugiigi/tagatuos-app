@@ -1,0 +1,372 @@
+import QtQuick 2.4
+import Ubuntu.Components 1.3
+//import "BaseComponents"
+import "../library/DataProcess.js" as DataProcess
+import "../library/ProcessFunc.js" as Process
+
+Item {
+    id: lists
+
+    property alias modelTodayExpenses: modelTodayExpenses
+    property alias modelRecentExpenses: modelRecentExpenses
+    property alias modelCategories: modelCategories
+    property alias modelExpenseAutoComplete: modelExpenseAutoComplete
+
+    /*WorkerScript for asynch loading of models*/
+    WorkerScript {
+        id: workerLoader
+        source: "../library/WorkerScripts/ListModelLoader.js"
+
+        onMessage: {
+            switch (messageObject.mode) {
+            case "Expenses":
+                console.log("modelExpenses: " + modelExpenses.count)
+                modelExpenses.loadingStatus = "Ready"
+                modelLoader.active = true
+                //                sortFilterExpenseModel.model = modelExpenses
+                break
+            case "Today":
+                console.log("modelTodayExpenses: " + modelTodayExpenses.count)
+                modelTodayExpenses.loadingStatus = "Ready"
+                break
+            case "Recent":
+                console.log("modelRecentExpenses: " + modelRecentExpenses.count)
+                modelRecentExpenses.loadingStatus = "Ready"
+                break
+            case "ExpenseAutoComplete":
+                //console.log("modelExpenseAutoComplete: " + modelExpenseAutoComplete.count)
+                modelExpenseAutoComplete.loadingStatus = "Ready"
+                break
+            case "Categories":
+                //console.log("modelExpenseAutoComplete: " + modelExpenseAutoComplete.count)
+                modelCategories.loadingStatus = "Ready"
+                break
+            }
+        }
+    }
+
+    /******functions********/
+    function addItem(newItem) {
+        var dateGroup = Process.groupDate(newItem.date)
+
+        if (dateGroup.search("Today") >= 0) {
+            addNewItem(modelTodayExpenses, newItem)
+        }
+
+        if (dateGroup.search("Yesterday") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+
+        if (dateGroup.search("This Week") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+
+        if (dateGroup.search("This Month") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+
+        if (dateGroup.search("Recent") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+
+        if (dateGroup.search("Last Week") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+
+        if (dateGroup.search("Last Month") >= 0) {
+            addNewItem(modelRecentExpenses, newItem)
+        }
+    }
+
+    function updateItem(updatedItem) {
+        updateItemInModel(modelTodayExpenses, updatedItem)
+        updateItemInModel(modelRecentExpenses, updatedItem)
+    }
+
+    function deleteItem(id) {
+        DataProcess.deleteExpense(id)
+        deleteItemInModel(modelRecentExpenses, id)
+        deleteItemInModel(modelTodayExpenses, id)
+    }
+
+    function getExpenseDetails(id) {
+        var expenseData = DataProcess.getExpenseData(id)
+
+        return expenseData
+    }
+
+    //add the new item to the appropriate model
+    function addNewItem(model, newItem) {
+        var sortGroupFound = false
+
+        for (var i = 0; i < model.count; i++) {
+            var sortValue = model.get(i).category_name
+
+            if (sortValue === newItem.category_name) {
+                sortGroupFound = true
+                break
+            }
+        }
+
+        if (sortGroupFound) {
+            var totalValue = model.get(i).total
+            var currentCount = model.get(i).count
+
+            model.get(i).childModel.insert(0, {
+                                               expense_id: newItem.expense_id,
+                                               category_name: newItem.category_name,
+                                               name: newItem.name,
+                                               descr: newItem.descr,
+                                               date: Process.relativeDate(
+                                                         newItem.date,
+                                                         "ddd, MMM d, yyyy",
+                                                         "Basic"),
+                                               dateValue: newItem.date,
+                                               value: newItem.value
+                                           })
+
+            model.setProperty(i, "total", Math.round(
+                                  (totalValue + newItem.value) * 100) / 100)
+            model.setProperty(i, "count", currentCount + 1)
+        } else {
+            var childArray = []
+
+            childArray.push({
+                                expense_id: newItem.expense_id,
+                                category_name: newItem.category_name,
+                                name: newItem.name,
+                                descr: newItem.descr,
+                                date: Process.relativeDate(newItem.date,
+                                                           "ddd, MMM d, yyyy",
+                                                           "Basic"),
+                                dateValue: newItem.date,
+                                value: newItem.value
+                            })
+            model.append({
+                             category_name: newItem.category_name,
+                             childModel: childArray,
+                             total: newItem.value,
+                             count: 1
+                         })
+        }
+    }
+
+    function updateItemInModel(model, updatedItem) {
+        var childModel
+        var expenseID
+        var childModelCount
+
+        for (var i = 0; i < model.count; i++) {
+            childModel = model.get(i).childModel
+
+            for (var j = 0; j < childModel.count; j++) {
+                expenseID = childModel.get(j).expense_id
+
+                if (expenseID == updatedItem.expense_id) {
+                    model.setProperty(
+                                i, "total", Math.round(
+                                    ((model.get(i).total - childModel.get(
+                                          j).value) + updatedItem.value) * 100) / 100)
+
+                    model.get(i).childModel.setProperty(
+                                j, "category_name", updatedItem.category_name)
+                    model.get(i).childModel.setProperty(j, "name",
+                                                        updatedItem.name)
+                    model.get(i).childModel.setProperty(j, "descr",
+                                                        updatedItem.descr)
+                    model.get(i).childModel.setProperty(j, "date",
+                                                        Process.relativeDate(
+                                                            updatedItem.date,
+                                                            "ddd, MMM d, yyyy",
+                                                            "Basic"))
+                    model.get(i).childModel.setProperty(j, "dateValue",
+                                                        updatedItem.date)
+                    model.get(i).childModel.setProperty(j, "value",
+                                                        updatedItem.value)
+                    //                    model.setProperty(i, "childModel",childModel)
+                    break
+                }
+            }
+
+            if (childModelCount === 0) {
+                model.remove(i)
+                break
+            }
+        }
+    }
+
+    function deleteItemInModel(model, id) {
+        var childModel
+        var expenseID
+        var childModelCount
+
+        for (var i = 0; i < model.count; i++) {
+            childModel = model.get(i).childModel
+
+            for (var j = 0; j < childModel.count; j++) {
+                expenseID = childModel.get(j).expense_id
+
+                if (expenseID === id) {
+                    childModelCount = model.get(i).count - 1
+
+                    model.setProperty(i, "total", Math.round(
+                                          (model.get(i).total - childModel.get(
+                                               j).value) * 100) / 100)
+                    model.setProperty(i, "count", childModelCount)
+                    childModel.remove(j)
+                    model.setProperty(i, "childModel", childModel)
+                    break
+                }
+            }
+
+            if (childModelCount === 0) {
+                model.remove(i)
+                break
+            }
+        }
+    }
+
+    /*General Functions*/
+    function arrayUnique(array) {
+        var a = array.concat()
+        for (var i = 0; i < a.length; ++i) {
+            for (var j = i + 1; j < a.length; ++j) {
+                if (a[i] === a[j])
+                    a.splice(j--, 1)
+            }
+        }
+
+        return a
+    }
+
+    /*Today Expenses*/
+    ExpenseListModel {
+        id: modelTodayExpenses
+        mode: "Today"
+    }
+
+    /*Recent Expenses*/
+    ExpenseListModel {
+        id: modelRecentExpenses
+        mode: "Recent"
+    }
+
+    /*Yesterday Expenses*/
+    ExpenseListModel {
+        id: modelYesterdayExpenses
+        mode: "Yesterday"
+    }
+
+    /*This Week Expenses*/
+    ExpenseListModel {
+        id: modelThisWeekExpenses
+        mode: "This Week"
+    }
+
+    /*This Month Expenses*/
+    ExpenseListModel {
+        id: modelThisMonthExpenses
+        mode: "This Month"
+    }
+
+    /*Last Week Expenses*/
+    ExpenseListModel {
+        id: modelLastWeekExpenses
+        mode: "Last Week"
+    }
+
+    /*Last Month Expenses*/
+    ExpenseListModel {
+        id: modelLastMonthExpenses
+        mode: "Last Month"
+    }
+
+    /*Expense Autocomplete Model*/
+    ListModel {
+        id: modelExpenseAutoComplete
+        property string loadingStatus: "Null"
+
+        function getItems(txtString) {
+
+            var txtName
+            var txtComments
+            var txtStatus
+            var txtPriority
+            var arrResult
+
+            loadingStatus = "Loading"
+
+            modelExpenseAutoComplete.clear()
+
+            arrResult = DataProcess.getExpenseAutoComplete(txtString)
+
+            var msg = {
+                result: arrResult,
+                model: modelExpenseAutoComplete,
+                mode: 'ExpenseAutoComplete'
+            }
+            workerLoader.sendMessage(msg)
+        }
+    }
+
+    ListModel {
+        id: modelCategories
+        property bool isListOnly: false
+        property string loadingStatus: "Null"
+
+        onIsListOnlyChanged: {
+            if (isListOnly) {
+                appendAddNew()
+            } else {
+                removeAddNew()
+            }
+        }
+
+        function appendAddNew() {
+            modelCategories.insert(0, {
+                                       category_name: "Add new category",
+                                       descr: "add new",
+                                       icon: "default",
+                                       colorValue: "white"
+                                   })
+        }
+
+        function removeAddNew() {
+            modelCategories.remove(0)
+        }
+
+        function getColor(category) {
+            var i
+            for (var i = 0; i < modelCategories.count; i++) {
+                if (modelCategories.get(i).categoryname === category) {
+                    i = modelCategories.count
+                    if (modelCategories.get(i) === undefined) {
+                        return "white"
+                    } else {
+                        return modelCategories.get(i).colorValue
+                    }
+                }
+            }
+        }
+
+        function getItems() {
+            var txtName
+            var txtDescr
+            var txtColor
+            var arrResult
+
+            loadingStatus = "Loading"
+
+            modelCategories.clear()
+
+            arrResult = DataProcess.getCategories()
+
+            var msg = {
+                result: arrResult,
+                model: modelCategories,
+                mode: 'Categories'
+            }
+            workerLoader.sendMessage(msg)
+        }
+    }
+}
