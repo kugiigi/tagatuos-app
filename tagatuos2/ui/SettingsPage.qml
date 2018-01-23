@@ -27,7 +27,7 @@ Page {
             left: parent.left
             right: parent.right
             top: parent.top
-            bottom: navigationListView.top
+            bottom: parent.bottom   //navigationListView.top
             topMargin: settingsPage.header.height
         }
 
@@ -197,6 +197,56 @@ Page {
                         dashboardExpandedListItem.model = dashboardItemsModel
                     }
                 }
+
+                ListItemSectionHeader {
+                    title: i18n.tr("Administration")
+                }
+
+                UbuntuListView {
+                    id: navigationListView
+
+                    interactive: false
+                    currentIndex: -1
+                    clip: true
+                    highlightFollowsCurrentItem: true
+                    highlight: ListViewHighlight {
+                    }
+                    highlightMoveDuration: UbuntuAnimation.SnapDuration
+                    highlightResizeDuration: UbuntuAnimation.SnapDuration
+                    height: units.gu(7) * navigationsModel.count //contentHeight
+                    anchors {
+                        //bottom: parent.bottom
+                        //bottomMargin: units.gu(1)
+                        left: parent.left
+                        right: parent.right
+                    }
+                    model: navigationsModel
+
+                    UbuntuNumberAnimation on opacity {
+                        running: navigationListView.visible
+                        from: 0
+                        to: 1
+                        easing: UbuntuAnimation.StandardEasing
+                        duration: UbuntuAnimation.FastDuration
+                    }
+
+                    delegate: NavigationItem {
+                        id: categoriesNavigation
+                        titleText.text: title
+                        subText.text: subtitle
+
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+
+                        action: Action {
+                            onTriggered: {
+                                mainPageStack.push(Qt.resolvedUrl(page))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -227,55 +277,10 @@ Page {
         }
     }
 
-    ListItem.ThinDivider {
-        anchors {
-            bottom: navigationListView.top
-            //bottomMargin: units.gu(-0.5)
-        }
-    }
-    UbuntuListView {
-        id: navigationListView
-
-        interactive: false
-        currentIndex: -1
-        clip: true
-        highlightFollowsCurrentItem: true
-        highlight: ListViewHighlight {
-        }
-        highlightMoveDuration: UbuntuAnimation.SnapDuration
-        highlightResizeDuration: UbuntuAnimation.SnapDuration
-        height: units.gu(7) * navigationsModel.count //contentHeight
-        anchors {
-            bottom: parent.bottom
-            //bottomMargin: units.gu(1)
-            left: parent.left
-            right: parent.right
-        }
-        model: navigationsModel
-
-        UbuntuNumberAnimation on opacity {
-            running: navigationListView.visible
-            from: 0
-            to: 1
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.FastDuration
-        }
-
-        delegate: NavigationItem {
-            id: categoriesNavigation
-            titleText.text: title
-            subText.text: subtitle
-
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
-            action: Action {
-                onTriggered: {
-                    mainPageStack.push(Qt.resolvedUrl(page))
-                }
-            }
-        }
-    }
+//    ListItem.ThinDivider {
+//        anchors {
+//            bottom: navigationListView.top
+//            //bottomMargin: units.gu(-0.5)
+//        }
+//    }
 }

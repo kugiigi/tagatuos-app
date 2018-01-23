@@ -107,38 +107,42 @@ Page {
                 ListItemSectionHeader {
                     title: i18n.tr("Support")
                 }
-                NavigationItem {
-                    titleText.text: i18n.tr("Rate this App")
-                    iconName: "starred"
 
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
+                // Removed for now since OpenStore don't have rating support yet
+//                NavigationItem {
+//                    titleText.text: i18n.tr("Rate this App")
+//                    iconName: "starred"
 
-                    action: Action {
-                        onTriggered: {
-                            Qt.openUrlExternally(
-                                        "scope://com.canonical.scopes.clickstore?q=Tagatuos")
-                        }
-                    }
-                }
-                NavigationItem {
-                    titleText.text: i18n.tr("Ask a question")
-                    iconName: "help"
+//                    anchors {
+//                        left: parent.left
+//                        right: parent.right
+//                    }
 
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
+//                    action: Action {
+//                        onTriggered: {
+//                            Qt.openUrlExternally(
+//                                        "scope://com.canonical.scopes.clickstore?q=Tagatuos")
+//                        }
+//                    }
+//                }
 
-                    action: Action {
-                        onTriggered: {
-                            Qt.openUrlExternally(
-                                        "https://answers.launchpad.net/tagatuos-app")
-                        }
-                    }
-                }
+                // No direct equivalent in Github. Perhaps think of a replacement in the future
+//                NavigationItem {
+//                    titleText.text: i18n.tr("Ask a question")
+//                    iconName: "help"
+
+//                    anchors {
+//                        left: parent.left
+//                        right: parent.right
+//                    }
+
+//                    action: Action {
+//                        onTriggered: {
+//                            Qt.openUrlExternally(
+//                                        "https://answers.launchpad.net/tagatuos-app")
+//                        }
+//                    }
+//                }
                 NavigationItem {
                     titleText.text: i18n.tr("Report a bug")
                     iconName: "mail-mark-important"
@@ -151,7 +155,7 @@ Page {
                     action: Action {
                         onTriggered: {
                             Qt.openUrlExternally(
-                                        "https://bugs.launchpad.net/tagatuos-app")
+                                        "https://github.com/kugiigi/tagatuos-app/issues")
                         }
                     }
                 }
@@ -182,7 +186,7 @@ Page {
                     action: Action {
                         onTriggered: {
                             Qt.openUrlExternally(
-                                        'https://code.launchpad.net/tagatuos-app')
+                                        'https://github.com/kugiigi/tagatuos-app')
                         }
                     }
                 }
@@ -214,7 +218,7 @@ Page {
                     action: Action {
                         onTriggered: {
                             Qt.openUrlExternally(
-                                        "scope://com.canonical.scopes.clickstore?q=Kugi Eusebio")
+                                        "https://open.uappexplorer.com/?sort=relevance&search=author%3AKugi%20Eusebio")
                         }
                     }
                 }
@@ -234,7 +238,7 @@ Page {
                     action: Action {
                         onTriggered: {
                             Qt.openUrlExternally(
-                                        'https://launchpad.net/~kugi-igi')
+                                        'https://github.com/kugiigi')
                         }
                     }
                 }

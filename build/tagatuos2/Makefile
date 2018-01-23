@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = tagatuos21.0.0
-DISTDIR = /home/phablet/Documents/Projects/Tagatuos_Reboot/tagatuos2/.tmp/tagatuos21.0.0
+DISTDIR = /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/.tmp/tagatuos21.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -lQt5Quick -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGLESv2 -lpthread 
@@ -583,8 +583,8 @@ qrc_tagatuos2.o: qrc_tagatuos2.cpp
 
 install_config_files: first FORCE
 	@test -d $(INSTALL_ROOT)/tagatuos2 || mkdir -p $(INSTALL_ROOT)/tagatuos2
-	-$(INSTALL_FILE) /home/phablet/Documents/Projects/Tagatuos_Reboot/tagatuos2/tagatuos2.apparmor $(INSTALL_ROOT)/tagatuos2/
-	-$(INSTALL_FILE) /home/phablet/Documents/Projects/Tagatuos_Reboot/tagatuos2/tagatuos2.png $(INSTALL_ROOT)/tagatuos2/
+	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/tagatuos2.apparmor $(INSTALL_ROOT)/tagatuos2/
+	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/tagatuos2.png $(INSTALL_ROOT)/tagatuos2/
 
 uninstall_config_files: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/tagatuos2/tagatuos2.png
@@ -594,7 +594,7 @@ uninstall_config_files: FORCE
 
 install_desktop_file: first FORCE
 	@test -d $(INSTALL_ROOT)/tagatuos2 || mkdir -p $(INSTALL_ROOT)/tagatuos2
-	-$(INSTALL_FILE) /home/phablet/Documents/Projects/Tagatuos_Reboot/build/tagatuos2/tagatuos2.desktop $(INSTALL_ROOT)/tagatuos2/
+	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/build/tagatuos2/tagatuos2.desktop $(INSTALL_ROOT)/tagatuos2/
 
 uninstall_desktop_file: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/tagatuos2/tagatuos2.desktop
