@@ -19,7 +19,7 @@
         <file>components/Common/ListViewHighlight.qml</file>
         <file>components/Common/ListItemSectionHeader.qml</file>
         <file>components/Common/HeaderWithSubtitle.qml</file>
-        <file>components/Common/ExpandableListItem.qml</file>
+        <file>components/Common/ExpandableListItemAdvanced.qml</file>
         <file>components/Common/EmptyState.qml</file>
         <file>components/Common/CheckBoxItem.qml</file>
         <file>ui/Dashboard.qml</file>
@@ -101,5 +101,7 @@
         <file>components/AddReport/DateModeField.qml</file>
         <file>components/AddReport/DateFromField.qml</file>
         <file>components/AddReport/CategoryField.qml</file>
+        <file>components/Common/ExpandableListItem.qml</file>
+        <file>components/Common/PoppingDialog.qml</file>
     </qresource>
 </RCC>

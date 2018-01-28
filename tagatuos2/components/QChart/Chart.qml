@@ -10,8 +10,8 @@ Item {
     property string type: "LINE"
     property string range: "This Year"
     property string mode: "Month"
-    property string filter: ""
-    property string exception: ""
+    property variant filter: ""
+    property variant exception: ""
     property string dateFilter1: ""
     property string dateFilter2: ""
 

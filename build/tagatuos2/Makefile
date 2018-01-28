@@ -503,12 +503,14 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Common/CheckBoxItem.qml \
 		../../tagatuos2/components/Common/ListViewPopover.qml \
 		../../tagatuos2/components/Common/PageWithBottom.qml \
+		../../tagatuos2/components/Common/PoppingDialog.qml \
 		../../tagatuos2/components/Common/ExpandableListItem.qml \
 		../../tagatuos2/components/Common/ListViewPositioner.qml \
 		../../tagatuos2/components/Common/PopupDialog.qml \
 		../../tagatuos2/components/Common/HeaderWithSubtitle.qml \
 		../../tagatuos2/components/Common/PageBackGround.qml \
 		../../tagatuos2/components/Common/ListViewHighlight.qml \
+		../../tagatuos2/components/Common/ExpandableListItemAdvanced.qml \
 		../../tagatuos2/components/Common/NavigationItem.qml \
 		../../tagatuos2/components/Common/ListViewHover.qml \
 		../../tagatuos2/components/Common/ColumnFlow.qml \

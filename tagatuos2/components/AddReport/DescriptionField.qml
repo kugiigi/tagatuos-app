@@ -12,20 +12,20 @@ Column {
     anchors {
         left: parent.left
         right: parent.right
-        leftMargin: units.gu(2)
+        leftMargin: units.gu(3)
         rightMargin: units.gu(2)
     }
 
-    Label {
-        id: descrLabel
-        text: i18n.tr("Description")
-        font.weight: Text.Normal
-        color: theme.palette.normal.foregroundText
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
-    }
+//    Label {
+//        id: descrLabel
+//        text: i18n.tr("Description")
+//        font.weight: Text.Normal
+//        color: theme.palette.normal.foregroundText
+//        anchors {
+//            left: parent.left
+//            right: parent.right
+//        }
+//    }
     TextArea {
         id: textareaDescr
         height: units.gu(4)

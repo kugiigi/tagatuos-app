@@ -1,0 +1,18 @@
+v0.60
+* Added basic statistics (chart, )
+* Some minor UI changes
+  - Settings page
+* Fixed bugs
+  - value when selecting from the autocomplete dropdown is rounded-off to whole number
+  - "Recent" view gets data for the past 8 days instead of 7 days
+  - Disabling "Always start with Dashboard" does not work correctly
+* Updated About page for the new link of Github and OpenStore
+
+Technical
+* Use SQL Views
+* Refactored database versioning
+* Replaced SnappingFlickablew with ListView and ObjectModel
+* Moved from Launchpad to Github
+
+v0.50
+Initial Release

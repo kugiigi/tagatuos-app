@@ -6,6 +6,7 @@ v0.60
   - value when selecting from the autocomplete dropdown is rounded-off to whole number
   - "Recent" view gets data for the past 8 days instead of 7 days
   - Disabling "Always start with Dashboard" does not work correctly
+  - Fixed error in the subtitle of ExpandableListItem
 * Updated About page for the new link of Github and OpenStore
 
 Technical

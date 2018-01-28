@@ -3,7 +3,7 @@ import Ubuntu.Components 1.3
 import "../Common"
 import "../../library/ApplicationFunctions.js" as AppFunctions
 
-ExpandableListItem {
+ExpandableListItemAdvanced {
     id: root
 
     titleText.text: category_name + " " + "(" + count + ")"

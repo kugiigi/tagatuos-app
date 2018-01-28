@@ -19,8 +19,14 @@ Page {
     property string report_type
     property string date_range
     property string date_mode
-    property var filter: {"category":[],"expense_name":[]}
-    property var exceptions: {"category":[],"expense_name":[]}
+    property var filter: {
+        "category": [],
+        "expense_name": []
+    }
+    property var exceptions: {
+        "category": [],
+        "expense_name": []
+    }
     property string date1
     property string date2
     property string description
@@ -52,13 +58,13 @@ Page {
                 typeField.savedValue = report_type
                 dateModeField.savedValue = date_mode
                 dateRangeField.savedValue = date_range
-            }else{
+            } else {
                 report_type = typeField.savedValue
                 date_mode = dateModeField.savedValue
                 date_range = dateRangeField.savedValue
             }
 
-            chartLoader.active = true
+//            chartLoader.active = true
         }
     }
 
@@ -74,25 +80,11 @@ Page {
         }
     }
 
-    Loader {
-        id: chartLoader
-
-//        active: true
-        asynchronous: true
-        visible: status == Loader.Ready
-        sourceComponent: chartComponent
-
-        onLoaded: item.reload()
-
-        height: root.height > units.gu(
-                    100) ? units.gu(45) : root.height < units.gu(
-                               80) ? units.gu(35) : root.height / 2
-        width: root.isLandscape ? root.width / 2 : undefined
-
+    DescriptionField {
+        id: textareaDescr
         anchors {
-            top: textName.bottom //parent.top
-            left: parent.left
-            right: root.isLandscape ? undefined : parent.right
+            top: textName.bottom
+            topMargin: units.gu(1)
         }
     }
 
@@ -112,6 +104,7 @@ Page {
         }
     }
 
+    //TODO: Use Condtional Layout to put chart preview at the left when in wide mode
     ScrollView {
         id: scrollView
 
@@ -119,7 +112,7 @@ Page {
             left: root.isLandscape ? chartLoader.right : parent.left
             right: parent.right
             bottom: toolBar.top
-            top: root.isLandscape ? root.top : chartLoader.bottom
+            top: textareaDescr.bottom //root.isLandscape ? root.top : chartLoader.bottom
             topMargin: units.gu(2)
             bottomMargin: units.gu(2)
         }
@@ -144,17 +137,45 @@ Page {
                     right: parent.right
                 }
 
-                DescriptionField {
-                    id: textareaDescr
+                Loader {
+                    id: chartLoader
+
+                    active: false
+                    asynchronous: true
+                    visible: status == Loader.Ready
+                    sourceComponent: chartComponent
+
+                    onLoaded: item.reload()
+
+                    height: root.height > units.gu(
+                                100) ? units.gu(45) : root.height < units.gu(
+                                           80) ? units.gu(35) : root.height / 2
+                    width: root.isLandscape ? root.width / 2 : undefined
+
+                    anchors {
+//                        top: textName.bottom //parent.top
+                        left: parent.left
+                        right: root.isLandscape ? undefined : parent.right
+                    }
                 }
+
+                CheckBoxItem {
+                    id: previewCheckboxItem
+
+                    titleText.text: i18n.tr("Preview")
+                    bindValue: chartLoader.active
+                    onCheckboxValueChanged: {
+                        chartLoader.active = checkboxValue
+                    }
+                }
+
 
                 Flow {
                     id: dropdownFlow
 
-                    readonly property int childCount: typeField.visibleCount
-                                                      + dateRangeField.visibleCount
-                                                      + dateModeField.visibleCount
-                    readonly property real preferredItemWidth: dropdownFlow.width / childCount
+                    property int childCount: typeField.visibleCount + dateRangeField.visibleCount
+                                             + dateModeField.visibleCount
+                    property real preferredItemWidth: dropdownFlow.width / childCount
                     property real itemWidth: preferredItemWidth >= units.gu(
                                                  15) ? preferredItemWidth : dropdownFlow.width
 
@@ -219,17 +240,43 @@ Page {
                     }
                 }
 
-                FilterException {
-                    id: filterField
-                    title: i18n.tr("Filter")
-                    categorySavedValue: root.filter.category
+                CheckBoxItem{
+                    id: filterCheckboxItem
+
+                    property bool filterOn
+
+                    titleText.text: i18n.tr("Filter")
+                    subText.text: i18n.tr("None")
+                    bindValue: filterOn
+//                    onCheckboxValueChanged: {
+                    onClicked: {
+                        var zoomIn = Qt.createComponent(Qt.resolvedUrl("../components/Common/PoppingDialog.qml"));
+
+                                            var props = {
+                                                x: filterCheckboxItem.mapToItem(root, 0, 0).x,
+                                                y: filterCheckboxItem.mapToItem(root, 0, 0).y,
+                                                width: filterCheckboxItem.width,
+                            height: filterCheckboxItem.height,
+                            explicitHeight: units.gu(30),
+                            explicitWidth: units.gu(30)
+                                            }
+
+                                            zoomIn.createObject(root, props);
+                        subText.text = zoomIn.returnValue ? zoomIn.returnValue : i18n.tr("None")
+                    }
                 }
 
-                FilterException {
-                    id: exceptionField
-                    title: i18n.tr("Exception")
-                    categorySavedValue: root.exceptions.category
-                }
+//                FilterException {
+//                    id: filterField
+//                    title: i18n.tr("Filter")
+//                    categorySavedValue: String(root.filter.category)
+//                }
+
+//                FilterException {
+//                    id: exceptionField
+//                    title: i18n.tr("Exception")
+//                    categorySavedValue: String(root.exceptions.category)
+//                }
             }
         }
     }

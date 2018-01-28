@@ -22,7 +22,9 @@ AP_TEST_FILES += tests/autopilot/run \
 OTHER_FILES += $${CONF_FILES} \
                $${QML_FILES} \
                $${AP_TEST_FILES} \
-               tagatuos2.desktop
+               tagatuos2.desktop \
+    components/Common/ExpandableListItem.qml \
+    components/Common/PoppingDialog.qml
 
 #specify where the config files are installed to
 config_files.path = /tagatuos2

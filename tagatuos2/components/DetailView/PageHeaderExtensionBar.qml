@@ -40,7 +40,7 @@ SlotsLayout {
 //        }
 //    }
 
-    mainSlot: ExpandableListItem {
+    mainSlot: ExpandableListItemAdvanced {
         id: titleExpandable
         listViewHeight: units.gu(28)
         listViewInteractive: true

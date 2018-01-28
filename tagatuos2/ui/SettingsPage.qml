@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
+//import Ubuntu.Components.ListItems 1.3 as ListItem
 import "../components"
 import "../components/Common"
 import "../components/BaseComponents"
@@ -77,13 +77,13 @@ Page {
                     }
                 }
 
-                ExpandableListItem {
+                ExpandableListItemAdvanced {
                     id: themeExpandedListItem
-                    listViewHeight: units.gu(14)
+                    listViewHeight: units.gu(21)
                     titleText.text: i18n.tr("Theme")
                     titleText.textSize: Label.Medium
                     subText.textSize: Label.Small
-                    savedValue: tempSettings.currentTheme
+                    //savedValue: tempSettings.currentTheme
                     highlightColor: theme.palette.highlighted.foreground
 
                     onToggle: {
@@ -101,6 +101,10 @@ Page {
                         //                                                   text: i18n.tr("Default")
                         //                                               })
                         themesModel.append({
+                                               value: "",
+                                               text: i18n.tr("System")
+                                           })
+                        themesModel.append({
                                                value: "Ubuntu.Components.Themes.Ambiance",
                                                text: i18n.tr("Ambiance")
                                            })
@@ -109,10 +113,11 @@ Page {
                                                text: i18n.tr("Suru Dark")
                                            })
                         themeExpandedListItem.model = themesModel
+                        themeExpandedListItem.savedValue = tempSettings.currentTheme
                     }
                 }
 
-                ExpandableListItem {
+                ExpandableListItemAdvanced {
                     id: dashboardExpandedListItem
                     listViewHeight: units.gu(28)
                     titleText.text: i18n.tr("Dashboard")
