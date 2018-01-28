@@ -257,12 +257,41 @@ Page {
                                                 y: filterCheckboxItem.mapToItem(root, 0, 0).y,
                                                 width: filterCheckboxItem.width,
                             height: filterCheckboxItem.height,
-                            explicitHeight: units.gu(30),
-                            explicitWidth: units.gu(30)
+                            explicitHeight: units.gu(60),
+                            explicitWidth: units.gu(40),
+//                            fullscreen: true,
+                            delegate: testComponent
                                             }
 
                                             zoomIn.createObject(root, props);
                         subText.text = zoomIn.returnValue ? zoomIn.returnValue : i18n.tr("None")
+                    }
+
+                    Component{
+                        id: testComponent
+
+
+                        AddCategory{
+                            id: page
+
+                            anchors.fill: parent
+
+                            Button{
+                                id: close
+
+                                iconName: "close"
+                                text: "Close"
+                                height: units.gu(5)
+
+                                anchors{
+                                    bottom: parent.bottom
+                                    left: parent.left
+                                    right: parent.right
+                                }
+
+                                onClicked: page.parent.close()
+                            }
+                        }
                     }
                 }
 

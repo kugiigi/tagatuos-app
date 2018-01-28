@@ -13,6 +13,7 @@ Item {
     property real maxHeight: units.gu(89)
 
     property var returnValue
+    property Component delegate
 
     property real targetWidth: switch (true) {
            case fullscreen:
@@ -48,11 +49,17 @@ Item {
     property real targetY: fullscreen ? 0 : (root.parent.height - targetHeight) / 2
 
 
+    signal opened()
+    signal closed(var returnValue)
     signal closing()
 
     z: Number.MAX_VALUE
 
     Component.onCompleted: {
+        if(delegate){
+            delegateLoader.active = true
+        }
+
         parallelAnimationAppear.start()
     }
 
@@ -70,11 +77,29 @@ Item {
         property real initialY
         property real initialWidth
         property real initialHeight
-        property real hidingOpacity: 0.3
 
         anchors.fill: parent
-        opacity: hidingOpacity
         color: theme.palette.normal.overlay
+    }
+
+    Loader {
+        id: delegateLoader
+
+        active: false
+        asynchronous: true
+        visible: status == Loader.Ready
+        sourceComponent: root.delegate
+
+        onLoaded: item.parent = root
+    }
+
+    LoadingComponent {
+        id: loadingComponent
+
+        visible: delegateLoader.status !== Loader.Ready && delegateLoader.active && !parallelAnimationAppear.running
+        anchors.centerIn: parent
+        //title: searchMode ? i18n.tr("Loading results") : root.loadingTitle
+        //subTitle: i18n.tr("Please wait")
     }
 
     // Close Button for test purposes only
@@ -164,11 +189,11 @@ Item {
         UbuntuNumberAnimation {
             target: backgroundRectangle
             property: "opacity"
-            to: backgroundRectangle.hidingOpacity
+            to: 0
         }
 
         onStopped: {
-            root.destroy(1000)
+            root.destroy()
         }
     }
 }

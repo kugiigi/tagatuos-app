@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 01:15+0800\n"
+"POT-Creation-Date: 2018-01-29 02:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,25 +100,25 @@ msgid "Add"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:303
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:332
 msgid "Save"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:157
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:274
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:343
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:372
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageCategory.qml:257
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:241
 msgid "Cancel"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:168
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:354
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:383
 msgid "Category already exists!"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:169
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:356
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:385
 msgid "That category already exists. Please choose a different name."
 msgstr ""
 
@@ -143,7 +143,7 @@ msgid "Filter"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:249
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:265
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:267
 msgid "None"
 msgstr ""
 
