@@ -250,21 +250,36 @@ Page {
                     bindValue: filterOn
 //                    onCheckboxValueChanged: {
                     onClicked: {
-                        var zoomIn = Qt.createComponent(Qt.resolvedUrl("../components/Common/PoppingDialog.qml"));
+                        poppingDialog.show()
+//                        var zoomIn = Qt.createComponent(Qt.resolvedUrl("../components/Common/PoppingDialog.qml"));
 
-                                            var props = {
-                                                x: filterCheckboxItem.mapToItem(root, 0, 0).x,
-                                                y: filterCheckboxItem.mapToItem(root, 0, 0).y,
-                                                width: filterCheckboxItem.width,
-                            height: filterCheckboxItem.height,
-                            explicitHeight: units.gu(60),
-                            explicitWidth: units.gu(40),
-//                            fullscreen: true,
-                            delegate: testComponent
-                                            }
+//                                            var props = {
+//                                                x: filterCheckboxItem.mapToItem(root, 0, 0).x,
+//                                                y: filterCheckboxItem.mapToItem(root, 0, 0).y,
+//                                                width: filterCheckboxItem.width,
+//                            height: filterCheckboxItem.height,
+//                            explicitHeight: units.gu(60),
+//                            explicitWidth: units.gu(40),
+////                            fullscreen: true,
+//                            delegate: testComponent
+//                                            }
 
-                                            zoomIn.createObject(root, props);
-                        subText.text = zoomIn.returnValue ? zoomIn.returnValue : i18n.tr("None")
+//                                            zoomIn.createObject(root, props);
+//                        subText.text = zoomIn.returnValue ? zoomIn.returnValue : i18n.tr("None")
+                    }
+
+                    PoppingDialog{
+                        id: poppingDialog
+
+                        parent: root
+                        x: filterCheckboxItem.mapToItem(root, 0, 0).x
+                        y: filterCheckboxItem.mapToItem(root, 0, 0).y
+                        width: filterCheckboxItem.width
+                        height: filterCheckboxItem.height
+                        explicitHeight: units.gu(60)
+                        explicitWidth: units.gu(40)
+                        fullscreen: true
+                        delegate: testComponent
                     }
 
                     Component{

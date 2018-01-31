@@ -498,6 +498,7 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Common/ListItemSectionHeader.qml \
 		../../tagatuos2/components/Common/SnappingFlickable.qml \
 		../../tagatuos2/components/Common/TextualButtonStyle.qml \
+		../../tagatuos2/components/Common/PopupItemSelector.qml \
 		../../tagatuos2/components/Common/NoSelectedPage.qml \
 		../../tagatuos2/components/Common/EmptyState.qml \
 		../../tagatuos2/components/Common/CheckBoxItem.qml \
@@ -514,6 +515,10 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Common/NavigationItem.qml \
 		../../tagatuos2/components/Common/ListViewHover.qml \
 		../../tagatuos2/components/Common/ColumnFlow.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/ItemSelector.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/ListItemDelegate.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPickerPopup.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPicker.qml \
 		../../tagatuos2/components/Dashboard/DashboardItem.qml \

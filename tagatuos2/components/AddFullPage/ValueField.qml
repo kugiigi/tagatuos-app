@@ -1,7 +1,7 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Themes.Ambiance 1.3
-//import Ubuntu.Keyboard 0.1
+import Ubuntu.Keyboard 0.1
 
 Column {
     id: column
@@ -36,7 +36,7 @@ Column {
         horizontalAlignment: TextInput.AlignRight
         inputMethodHints: Qt.ImhDigitsOnly
 
-        //                    InputMethod.extensions: { "enterKeyText": i18n.dtr("tagatuos-app", root.mode === "add" ? "Add" : "Save") }
+        InputMethod.extensions: { "enterKeyText": i18n.dtr("tagatuos-app", root.mode === "add" ? "Add" : "Save") }
         anchors {
             left: parent.left
         }

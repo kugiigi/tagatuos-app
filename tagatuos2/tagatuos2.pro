@@ -24,7 +24,12 @@ OTHER_FILES += $${CONF_FILES} \
                $${AP_TEST_FILES} \
                tagatuos2.desktop \
     components/Common/ExpandableListItem.qml \
-    components/Common/PoppingDialog.qml
+    components/Common/PoppingDialog.qml \
+    components/Common/PopupItemSelector.qml \
+    components/Common/PopupItemSelector/ItemSelector.qml \
+    components/Common/PopupItemSelector/SelectorHeader.qml \
+    components/Common/PopupItemSelector/ListItemDelegate.qml \
+    components/Common/PopupItemSelector/SelectorToolbar.qml
 
 #specify where the config files are installed to
 config_files.path = /tagatuos2

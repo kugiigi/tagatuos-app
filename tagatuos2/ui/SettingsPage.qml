@@ -91,6 +91,7 @@ Page {
                     }
                 }
 
+
                 ListModel {
                     id: themesModel
                     Component.onCompleted: initialise()
@@ -115,6 +116,15 @@ Page {
                         themeExpandedListItem.model = themesModel
                         themeExpandedListItem.savedValue = tempSettings.currentTheme
                     }
+                }
+
+                PopupItemSelector{
+                    id: dashBoardPopupItemSelector
+
+                    titleText: i18n.tr("Dashboard")
+                    subText: i18n.tr("Today, Yesterday, This Month")
+                    popupParent: settingsPage
+
                 }
 
                 ExpandableListItemAdvanced {
@@ -200,6 +210,7 @@ Page {
                             }
                         }
                         dashboardExpandedListItem.model = dashboardItemsModel
+                        dashBoardPopupItemSelector.model = dashboardItemsModel
                     }
                 }
 

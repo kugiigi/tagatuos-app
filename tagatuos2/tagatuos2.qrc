@@ -103,5 +103,10 @@
         <file>components/AddReport/CategoryField.qml</file>
         <file>components/Common/ExpandableListItem.qml</file>
         <file>components/Common/PoppingDialog.qml</file>
+        <file>components/Common/PopupItemSelector.qml</file>
+        <file>components/Common/PopupItemSelector/ItemSelector.qml</file>
+        <file>components/Common/PopupItemSelector/SelectorHeader.qml</file>
+        <file>components/Common/PopupItemSelector/ListItemDelegate.qml</file>
+        <file>components/Common/PopupItemSelector/SelectorToolbar.qml</file>
     </qresource>
 </RCC>

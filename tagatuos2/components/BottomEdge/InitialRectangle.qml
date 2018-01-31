@@ -10,7 +10,7 @@ Rectangle {
     Behavior on opacity {
         UbuntuNumberAnimation {
             easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.BriskDuration
+            duration: UbuntuAnimation.FastDuration
         }
     }
 
