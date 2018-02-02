@@ -84,6 +84,8 @@ MainView {
         property bool startDashboard: true
         property int startingPageIndex: 1
 
+        onDashboardItemsChanged: mainView.listModels.dashboardModel.initialise()
+
         Settings {
             property alias currentTheme: tempSettings.currentTheme
             property alias currentCurrency: tempSettings.currentCurrency

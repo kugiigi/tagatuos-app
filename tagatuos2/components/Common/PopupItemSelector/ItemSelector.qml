@@ -10,6 +10,48 @@ Item {
     anchors.fill: parent
     clip: true
 
+    function getReturnValue(){
+        var result
+
+        for (var i=0;i < listView.model.count; i++) {
+            if(listView.ViewItems.selectedIndices.indexOf(i) > -1){
+                if(!result){
+                    result = listView.model.get(i)["value"]
+                }else{
+                    result = result + ";" + listView.model.get(i)["value"]
+                }
+            }
+        }
+
+        return result
+    }
+
+
+    function geValuesOrder(){
+        var result
+
+        for (var i=0;i < listView.model.count; i++) {
+            if(!result){
+                result = listView.model.get(i)["value"]
+            }else{
+                result = result + ";" + listView.model.get(i)["value"]
+            }
+        }
+
+        return result
+    }
+
+    function initializeSelectedValues(initialValues){
+
+        var selectedIndices = initialValues.split(";")
+
+        for (var i=0;i < listView.model.count; i++) {
+            if(selectedIndices.indexOf(listView.model.get(i)["value"]) > -1 ){
+                listView.ViewItems.selectedIndices.push(i)
+            }
+        }
+    }
+
     SelectorHeader{
         id: selectorHeader
 
@@ -58,17 +100,6 @@ Item {
             }
         }
 
-        function returnValue(){
-            var result
-
-            for (var i=0; (i < ViewItems.selectedIndices.length; i++) {
-                     if(result){
-                         result = model.get(i)["text"])
-                     }else{
-                         result = result + ", " + model.get(i)["text"])
-                     }
-            return
-        }
 
         function clearSelection() {
             ViewItems.selectedIndices = []

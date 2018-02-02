@@ -83,7 +83,7 @@ Page {
                     titleText.text: i18n.tr("Theme")
                     titleText.textSize: Label.Medium
                     subText.textSize: Label.Small
-                    //savedValue: tempSettings.currentTheme
+                    savedValue: tempSettings.currentTheme
                     highlightColor: theme.palette.highlighted.foreground
 
                     onToggle: {
@@ -97,10 +97,6 @@ Page {
                     Component.onCompleted: initialise()
 
                     function initialise() {
-                        //                        themesModel.append({
-                        //                                                   value: "themes.default",
-                        //                                                   text: i18n.tr("Default")
-                        //                                               })
                         themesModel.append({
                                                value: "",
                                                text: i18n.tr("System")
@@ -113,39 +109,28 @@ Page {
                                                value: "Ubuntu.Components.Themes.SuruDark",
                                                text: i18n.tr("Suru Dark")
                                            })
+//                        themeExpandedListItem.savedValue = tempSettings.currentTheme
                         themeExpandedListItem.model = themesModel
-                        themeExpandedListItem.savedValue = tempSettings.currentTheme
                     }
                 }
 
                 PopupItemSelector{
-                    id: dashBoardPopupItemSelector
+                    id: dashboardPopupItemSelector
 
                     titleText: i18n.tr("Dashboard")
-                    subText: i18n.tr("Today, Yesterday, This Month")
+                    selectedValue: tempSettings.dashboardItems
                     popupParent: settingsPage
+                    multipleSelection: true
+                    withOrdering: true
+
+                    onConfirmSelection: {
+                        tempSettings.dashboardItems = selections //.replace(/, /g,";")
+                        tempSettings.dashboardItemsOrder = selectionsOrder //.replace(/, /g,";")
+                        //"Today;Yesterday;Recent;This Week;This Month;Last Week;Last Month"
+                    }
 
                 }
 
-                ExpandableListItemAdvanced {
-                    id: dashboardExpandedListItem
-                    listViewHeight: units.gu(28)
-                    titleText.text: i18n.tr("Dashboard")
-                    titleText.textSize: Label.Medium
-                    subText.textSize: Label.Small
-                    savedValue: tempSettings.dashboardItems
-                    multipleSelectionWithOrder: true
-                    listViewInteractive: true
-                    highlightColor: theme.palette.highlighted.foreground
-
-                    onToggle: {
-                        tempSettings.dashboardItems = newValue
-                        mainView.listModels.dashboardModel.initialise()
-                    }
-                    onOrderToggle:{
-                        tempSettings.dashboardItemsOrder = newValue
-                    }
-                }
 
                 ListModel {
                     id: dashboardItemsModel
@@ -209,8 +194,7 @@ Page {
                                 break
                             }
                         }
-                        dashboardExpandedListItem.model = dashboardItemsModel
-                        dashBoardPopupItemSelector.model = dashboardItemsModel
+                        dashboardPopupItemSelector.model = dashboardItemsModel
                     }
                 }
 

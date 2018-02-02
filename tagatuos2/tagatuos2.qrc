@@ -108,5 +108,6 @@
         <file>components/Common/PopupItemSelector/SelectorHeader.qml</file>
         <file>components/Common/PopupItemSelector/ListItemDelegate.qml</file>
         <file>components/Common/PopupItemSelector/SelectorToolbar.qml</file>
+        <file>components/Dialogs/DialogExternalLink.qml</file>
     </qresource>
 </RCC>

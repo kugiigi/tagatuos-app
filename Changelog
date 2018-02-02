@@ -1,3 +1,11 @@
+v0.70
+* UI Changes
+  - New Popup dialog (replaced some dropdown elements)
+
+* Fixed/Closed Issues
+  - Issue # 5: ExpandedListItem is not working correctly again
+  - Issue # 3: Add Confirmation Dialog when navigating to external links
+
 v0.60
 * Added basic statistics (chart, )
 * Some minor UI changes

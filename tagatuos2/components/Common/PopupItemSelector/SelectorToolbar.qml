@@ -29,29 +29,8 @@ Toolbar {
             iconName: "ok"
 
             onTriggered: {
-                poppingDialog.close('Tapos!')
-            }
-        },
-
-        Action {
-            id: selectedAllAction
-
-            text: i18n.tr("Select All")
-            visible: root.multipleSelection
-            iconName: "select"
-            onTriggered: {
-                listView.selectAll()
-            }
-        },
-
-        Action {
-            id: selectedNoneAction
-
-            text: i18n.tr("Clear Selection")
-            visible: root.multipleSelection
-            iconName: "select-none"
-            onTriggered: {
-                listView.clearSelection()
+                poppingDialog.close()
+                root.confirmSelection(itemSelector.getReturnValue(),itemSelector.geValuesOrder())
             }
         }
     ]

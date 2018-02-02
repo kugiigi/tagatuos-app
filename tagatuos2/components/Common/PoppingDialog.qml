@@ -12,7 +12,6 @@ Loader {
     property real maxWidth: units.gu(50)
     property real maxHeight: units.gu(89)
 
-    property var returnValue
     property Component delegate
 
     active: false
@@ -22,18 +21,26 @@ Loader {
 
     onLoaded: {
         item.parent = root.parent
-        modalRectangle.parent = root.parent
-        modalRectangle.z = parent.z
-        modalRectangle.visible = true
+        modalBGRectangle.parent = root.parent
+        modalBGRectangle.z = parent.z
+        modalBGRectangle.visible = true
     }
 
     Rectangle {
-        id: modalRectangle
+        id: modalBGRectangle
 
 
         color: theme.palette.normal.backgroundText
         opacity: 0.3
         anchors.fill: parent
+
+        // To capture mouse events and not propagate to the background elements
+        MouseArea{
+            id: modalMouseArea
+
+            anchors.fill: parent
+
+        }
 
     }
 
@@ -52,18 +59,17 @@ Loader {
         root.active = true
     }
 
-    function close(passValue) {
+    function close() {
         closed()
-        root.returnValue = passValue
-        modalRectangle.parent = root
-        modalRectangle.visible = false
+        modalBGRectangle.parent = root
+        modalBGRectangle.visible = false
         item.close()
     }
 
     Component {
         id: poppingDialogComponent
 
-        Rectangle {
+        Item {
             id: poppingDialog
 
             x: root.x
@@ -142,7 +148,10 @@ Loader {
                 visible: status == Loader.Ready
                 sourceComponent: root.delegate
 
-                onLoaded: item.parent = poppingDialog
+                onLoaded: {
+                    root.opened()
+                    item.parent = poppingDialog
+                }
             }
 
             LoadingComponent {

@@ -530,6 +530,7 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Dashboard/FlowItems.qml \
 		../../tagatuos2/components/BaseComponents/BaseListModel.qml \
 		../../tagatuos2/components/BaseComponents/BaseHeader.qml \
+		../../tagatuos2/components/Dialogs/DialogExternalLink.qml \
 		../../tagatuos2/components/QChart/ChartLegend.qml \
 		../../tagatuos2/components/QChart/QChart.qml \
 		../../tagatuos2/components/QChart/Chart.qml \

@@ -10,8 +10,7 @@ PageHeader {
         dividerColor: UbuntuColors.slate
     }
 
-    title: i18n.tr("Select value(s)")
-
+    title: root.multipleSelection ? i18n.tr("Select values") : i18n.tr("Select a value")
 
 
     contents: Label {
@@ -24,5 +23,31 @@ PageHeader {
         color: theme.palette.normal.foregroundText
         minimumPixelSize: units.gu(3)
         elide: Text.ElideRight
+    }
+
+    trailingActionBar{
+        actions: [
+            Action {
+                id: selectedAllAction
+
+                text: i18n.tr("Select All")
+                visible: root.multipleSelection
+                iconName: "select"
+                onTriggered: {
+                    listView.selectAll()
+                }
+            },
+
+            Action {
+                id: selectedNoneAction
+
+                text: i18n.tr("Clear Selection")
+                visible: root.multipleSelection
+                iconName: "select-none"
+                onTriggered: {
+                    listView.clearSelection()
+                }
+            }
+        ]
     }
 }

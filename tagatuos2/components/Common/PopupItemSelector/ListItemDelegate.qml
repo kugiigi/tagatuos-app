@@ -7,11 +7,10 @@ ListItem {
     property string titleText
 
     highlightColor: theme.palette.highlighted.foreground
-    divider.visible: true
+    divider.visible: false
     selectMode: true
     clip: true
 
-//    anchors.leftMargin: unit.gu(-6)
 
     ListItemLayout {
         id: listItemLayout
