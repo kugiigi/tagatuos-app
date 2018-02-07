@@ -7,6 +7,7 @@ Column {
     id: column
 
     property alias text: valueTextField.text
+    property bool focused: valueTextField.activeFocus
 
     spacing: units.gu(1)
 
@@ -30,20 +31,38 @@ Column {
 
     TextField {
         id: valueTextField
+
+        property string enterKeyLabel: switch(root.mode){
+                                       case "add":
+                                           i18n.tr("Add")
+                                           break
+                                       case "edit":
+                                           i18n.tr("Save")
+                                           break
+                                       case "custom":
+                                           i18n.tr("Add")
+                                           break
+                                       default:
+                                           i18n.tr("Add")
+                                           break
+
+                                       }
+
         // this value is to avoid letter being cut off
         height: units.gu(4.3)
         width: parent.width <= units.gu(50) ? parent.width : parent.width * 0.5
         horizontalAlignment: TextInput.AlignRight
         inputMethodHints: Qt.ImhDigitsOnly
 
-        InputMethod.extensions: { "enterKeyText": i18n.dtr("tagatuos-app", root.mode === "add" ? "Add" : "Save") }
+        InputMethod.extensions: { "enterKeyText": i18n.dtr("tagatuos-app", enterKeyLabel)}
+
         anchors {
             left: parent.left
         }
 
-        placeholderText: "0.0"
+        placeholderText: "0.00"
         validator: DoubleValidator {
-            decimals: 2
+            decimals: tempSettings.currentCurrencyPrecision //2
         }
         hasClearButton: true
     }

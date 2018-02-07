@@ -10,6 +10,14 @@
 .import "ProcessFunc.js" as Process
 
 function formatMoney(value, noSymbol){
-    return Process.formatMoney(value, tempSettings.currentCurrency,noSymbol)
+    var options = {
+        symbol : noSymbol ? "" : tempSettings.currentCurrencySymbol,
+        decimal : tempSettings.currentCurrencyDecimal,
+        thousand: tempSettings.currentCurrencyThousand,
+        precision : tempSettings.currentCurrencyPrecision,
+        format: tempSettings.currentCurrencyFormat
+    };
+    return Process.formatMoney(value, tempSettings.currentCurrency,options)
 
 }
+

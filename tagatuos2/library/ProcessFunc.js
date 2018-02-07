@@ -1,5 +1,6 @@
 .import "../library/moment.js"  as Moment
 .import "../library/accounting.js"  as Accounting
+.import "../library/Currencies.js" as Currencies
 
 String.prototype.replaceAt = function (index, character) {
     return this.substr(0, index) + character + this.substr(index + 1)
@@ -53,27 +54,24 @@ function getStartEndDate(date,mode){
 
 }
 
-function formatMoney(value, currency, noSymbol){
+function formatMoney(value, currency, options){
     var formattedMoney
-    var symbol
-    var thousandSeparator
-    var decimal
-    var format
 
-    switch(currency){
-    case "PHP":
-        symbol = "₱"
-        break
-    default:
-        symbol = "$"
-        break
-    }
+//    switch(currency){
+//    case "PHP":
+//        symbol = "₱"
+//        break
+//    default:
+//        symbol = "$"
+//        break
+//    }
 
-    if(noSymbol){
-        formattedMoney = Accounting.accounting.formatNumber(value, 2, thousandSeparator, decimal);
-    }else{
-        formattedMoney = Accounting.accounting.formatMoney(value, symbol, 2, thousandSeparator, decimal, format);
-    }
+//    if(noSymbol){
+//        formattedMoney = Accounting.accounting.formatNumber(value, 2, thousandSeparator, decimal);
+//    }else{
+//        formattedMoney = Accounting.accounting.formatMoney(value, symbol, 2, thousandSeparator, decimal, format);
+        formattedMoney = Accounting.accounting.formatMoney(value, options);
+//    }
 
     return formattedMoney;
 }

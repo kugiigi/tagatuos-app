@@ -160,6 +160,7 @@ Item {
 
         ListView {
             id: listView
+
             interactive: true
             model: mainView.listModels.modelQuickAdd
             snapMode: ListView.SnapToItem

@@ -1,10 +1,18 @@
 v0.70
 * UI Changes
-  - New Popup dialog (replaced some dropdown elements)
+  - New Popup dialog (replaced most dropdown elements)
+  - Removed divider in the settings and about page
 
 * Fixed/Closed Issues
   - Issue # 5: ExpandedListItem is not working correctly again
   - Issue # 3: Add Confirmation Dialog when navigating to external links
+
+Not committed yet
+  - Issue # 8: Support for International Currencies
+  - Issue # 12: Enter button does nothing when in the value/price field in the add expense page
+
+* Refined app startup logic to avoid conflict when loading components and data
+* Hide Manage Reports page for now since it's not yet completed
 
 v0.60
 * Added basic statistics (chart, )

@@ -11,13 +11,26 @@ ListItem {
     selectMode: true
     clip: true
 
+    onClicked: {
+        if(root.multipleSelection){
+            selected = !selected
+        }else{
+            listView.ViewItems.selectedIndices = []
+            selected = true
+        }
+        if(root.commitOnSelect){
+            root.confirmSelection(itemSelector.getReturnValue(),
+                                  itemSelector.geValuesOrder())
+        }
+    }
+
 
     ListItemLayout {
         id: listItemLayout
 
         title.text: titleText
         title.color: theme.palette.normal.foregroundText
-        title.textSize: Label.Small
+        title.textSize: Label.Medium
         title.font.weight: tickIcon.visible ? Font.Normal : Font.Light
 
         Icon {
@@ -27,11 +40,7 @@ ListItem {
             width: units.gu(2)
             height: width
             name: listItem.selected ? "tick" : "select-none"
-            visible: true /*if (root.multipleSelection) {
-                         listItem.selected
-                     } else {
-                         listItem.selected
-                     }*/
+            visible: root.multipleSelection ? true : listItem.selected ? true : false
 
             asynchronous: true
         }

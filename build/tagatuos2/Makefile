@@ -493,6 +493,7 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/ListModels/QuickAddModel.qml \
 		../../tagatuos2/components/ListModels/ChartModel.qml \
 		../../tagatuos2/components/ListModels/ExpenseAutoCompleteListModel.qml \
+		../../tagatuos2/components/ListModels/CurrencyModel.qml \
 		../../tagatuos2/components/Common/ActionButtonDelegate.qml \
 		../../tagatuos2/components/Common/LoadingComponent.qml \
 		../../tagatuos2/components/Common/ListItemSectionHeader.qml \
@@ -563,7 +564,9 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/library/accounting.js \
 		../../tagatuos2/library/DataProcess.js \
 		../../tagatuos2/library/wait.js \
+		../../tagatuos2/library/Currencies.js \
 		../../tagatuos2/library/DBUtilities.js \
+		../../tagatuos2/library/WorkerScripts/SimpleListModelLoader.js \
 		../../tagatuos2/library/WorkerScripts/ListModelLoader.js
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/rcc -name tagatuos2 ../../tagatuos2/tagatuos2.qrc -o qrc_tagatuos2.cpp
 

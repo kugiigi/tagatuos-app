@@ -33,7 +33,7 @@ Dialog {
     onVisibleChanged: {
         if (visible) {
             if (root.mode === "edit" || root.mode === "custom") {
-                categoryExpandable.savedValue = root.itemCategory
+                categoryPopupItemSelector.selectedValue = root.itemCategory
                 textName.text = root.itemName
                 autoCompletePopover.show = false //Do not show autoCompletePopover
                 textareaDescr.text = root.itemDescr
@@ -43,10 +43,13 @@ Dialog {
     }
 
     CategoryField {
-        id: categoryExpandable
+        id: categoryPopupItemSelector
+
+        popupParent: root
 
         visible: root.mode !== "custom"
-        onToggle: {
+
+        onConfirmSelection: {
             if (textName.text === "") {
                 textName.forceActiveFocus()
             } else {
@@ -89,52 +92,62 @@ Dialog {
     Button {
         text: "OK"
         color: theme.palette.normal.positive
-        onClicked: {
-            /*Commits the OSK*/
-            keyboard.target.commit()
 
-            var intID = root.quickID
-            var txtName = textName.text
-            var txtDescr = textareaDescr.text
-            var txtCategory = categoryExpandable.savedValue
-            var realValue = valueTextField.text
-            realValue = realValue !== "" ? parseFloat(realValue) : 0
 
-            if (Process.checkRequired(
-                        [txtName]) === false) {
-                textName.forceActiveFocus()
-            } else {
-                var quickExpense
+        action: Action{
+            shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
+            onTriggered: {
+                /*Commits the OSK*/
+                keyboard.target.commit()
 
-                switch(root.mode){
-                case "add":
-                    quickExpense = DataProcess.saveQuickExpense(txtCategory,
-                                                                   txtName,
-                                                                   txtDescr,
-                                                                   realValue)
-                    mainView.listModels.addQuickItem(quickExpense)
-                    console.log("Quick Expense Added:" + quickExpense.quickname)
-                    root.saveQuickExpense()
-                    break
-                case "edit":
-                    quickExpense = DataProcess.updateQuickExpense(intID, txtCategory,
-                                                                txtName,
-                                                                txtDescr,
-                                                                realValue)
-                    mainView.listModels.updateQuickItem(quickExpense)
-                    root.saveQuickExpense()
-                    break
-                case "custom":
-                    root.itemDescr = txtDescr
-                    root.itemValue = realValue
-                    root.addQuickExpense()
-                    break
+                var intID = root.quickID
+                var txtName = textName.text
+                var txtDescr = textareaDescr.text
+                var txtCategory = categoryPopupItemSelector.selectedValue
+                var realValue = valueTextField.text
+                realValue = realValue !== "" ? parseFloat(realValue) : 0
+
+                if (Process.checkRequired(
+                            [txtName]) === false) {
+                    textName.forceActiveFocus()
+                } else {
+                    var quickExpense
+
+                    switch(root.mode){
+                    case "add":
+                        quickExpense = DataProcess.saveQuickExpense(txtCategory,
+                                                                       txtName,
+                                                                       txtDescr,
+                                                                       realValue)
+                        mainView.listModels.addQuickItem(quickExpense)
+                        console.log("Quick Expense Added:" + quickExpense.quickname)
+                        root.saveQuickExpense()
+                        break
+                    case "edit":
+                        quickExpense = DataProcess.updateQuickExpense(intID, txtCategory,
+                                                                    txtName,
+                                                                    txtDescr,
+                                                                    realValue)
+                        mainView.listModels.updateQuickItem(quickExpense)
+                        root.saveQuickExpense()
+                        break
+                    case "custom":
+                        root.itemDescr = txtDescr
+                        root.itemValue = realValue
+                        root.addQuickExpense()
+                        break
+                    }
                 }
             }
         }
     }
+
+
     Button {
         text: "Cancel"
-        onClicked: PopupUtils.close(root)
+        action: Action{
+            shortcut: "Esc"
+            onTriggered: PopupUtils.close(root)
+        }
     }
 }

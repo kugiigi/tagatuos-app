@@ -12,6 +12,8 @@ Loader {
     property real maxWidth: units.gu(50)
     property real maxHeight: units.gu(89)
 
+    property bool open: false
+
     property Component delegate
 
     active: false
@@ -29,10 +31,13 @@ Loader {
     Rectangle {
         id: modalBGRectangle
 
+        property real maxOpacity: 0.3
+
 
         color: theme.palette.normal.backgroundText
-        opacity: 0.3
+        opacity: 0
         anchors.fill: parent
+        visible: false
 
         // To capture mouse events and not propagate to the background elements
         MouseArea{
@@ -42,12 +47,29 @@ Loader {
 
         }
 
+        Behavior on opacity {
+            UbuntuNumberAnimation {
+                easing: UbuntuAnimation.StandardEasing
+                duration: UbuntuAnimation.BriskDuration
+            }
+        }
+
     }
 
     signal opened
     signal opening
     signal closed
     signal closing
+
+
+    onOpened: {
+        open = true
+        modalBGRectangle.opacity = modalBGRectangle.maxOpacity
+    }
+    onClosed: {
+        open = false
+        modalBGRectangle.opacity = 0
+    }
 
     function show(itemFrom) {
 
@@ -65,6 +87,7 @@ Loader {
         modalBGRectangle.visible = false
         item.close()
     }
+
 
     Component {
         id: poppingDialogComponent
@@ -100,6 +123,7 @@ Loader {
             property real targetX: fullscreen ? 0 : (root.parent.width - targetWidth) / 2
             property real targetY: fullscreen ? 0 : (root.parent.height - targetHeight) / 2
 
+
             z: Number.MAX_VALUE
 
             Component.onCompleted: {
@@ -115,6 +139,75 @@ Loader {
                 closing()
                 delegateLoader.active = false
                 parallelAnimationClose.start()
+            }
+
+            Binding{
+                id: xBinding
+
+                when: root.open
+                target: poppingDialog
+                property: "x"
+                value: fullscreen ? 0 : (root.parent.width - targetWidth) / 2
+            }
+
+            Binding{
+                id: yBinding
+
+                when: root.open
+                target: poppingDialog
+                property: "y"
+                value: fullscreen ? 0 : (root.parent.height - targetHeight) / 2
+            }
+
+            Binding{
+                id: heightBinding
+
+                when: root.open //false
+                target: poppingDialog
+                property: "height"
+                value: if(fullscreen){
+                           root.parent.height
+                       }else if(explicitHeight && explicitHeight <= root.parent.height){
+                           explicitHeight
+                       }else if(maxHeight <= root.parent.height){
+                           maxHeight
+                       }else{
+                           root.parent.height
+                       }
+            }
+
+            //WORKAROUND: Binding cannot catch up when OSK unhides
+//            Connections{
+//                target: root.parent
+//                onHeightChanged:{
+//                    delayTimer.restart()
+//                }
+//            }
+
+//            Timer{
+//                id: delayTimer
+
+//                running: false
+//                interval: 100
+//                onTriggered: heightBinding.when = root.open
+
+//            }
+
+            Binding{
+                id: widthBinding
+
+                when: root.open
+                target: poppingDialog
+                property: "width"
+                value: if(fullscreen){
+                           root.parent.width
+                       }else if(explicitWidth && explicitWidth <= root.parent.width){
+                           explicitWidth
+                       }else if(maxWidth <= root.parent.width){
+                           maxWidth
+                       }else{
+                           root.parent.width
+                       }
             }
 
             InverseMouseArea{

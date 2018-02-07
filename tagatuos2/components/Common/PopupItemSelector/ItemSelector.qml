@@ -10,15 +10,16 @@ Item {
     anchors.fill: parent
     clip: true
 
+
     function getReturnValue(){
         var result
 
         for (var i=0;i < listView.model.count; i++) {
             if(listView.ViewItems.selectedIndices.indexOf(i) > -1){
                 if(!result){
-                    result = listView.model.get(i)["value"]
+                    result = listView.model.get(i)[root.valueRolename]
                 }else{
-                    result = result + ";" + listView.model.get(i)["value"]
+                    result = result + ";" + listView.model.get(i)[root.valueRolename]
                 }
             }
         }
@@ -32,9 +33,9 @@ Item {
 
         for (var i=0;i < listView.model.count; i++) {
             if(!result){
-                result = listView.model.get(i)["value"]
+                result = listView.model.get(i)[root.valueRolename]
             }else{
-                result = result + ";" + listView.model.get(i)["value"]
+                result = result + ";" + listView.model.get(i)[root.valueRolename]
             }
         }
 
@@ -46,10 +47,14 @@ Item {
         var selectedIndices = initialValues.split(";")
 
         for (var i=0;i < listView.model.count; i++) {
-            if(selectedIndices.indexOf(listView.model.get(i)["value"]) > -1 ){
+            if(selectedIndices.indexOf(listView.model.get(i)[root.valueRolename]) > -1 ){
                 listView.ViewItems.selectedIndices.push(i)
             }
         }
+
+        // TODO: Does not really work correctly. It's always at the beginning
+//        listView.positionViewAtIndex(listView.ViewItems.selectedIndices[0],ListView.Center)
+        listView.positionViewAtIndex(listView.ViewItems.selectedIndices[0],ListView.Beginning)
     }
 
     SelectorHeader{
@@ -87,17 +92,19 @@ Item {
             bottom: selectorToolbar.top
         }
 
+
         displaced: Transition {
             UbuntuNumberAnimation { property: "y"; duration: UbuntuAnimation.BriskDuration }
         }
 
         delegate: ListItemDelegate {
             id: listItemDelegate
-            titleText: text
 
-            onClicked: {
-                selected = !selected
-            }
+            titleText: root.model.get(index)[[root.textRolename]]
+        }
+
+        Component.onCompleted: {
+            itemSelector.initializeSelectedValues(root.selectedValue)
         }
 
 

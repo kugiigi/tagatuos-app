@@ -1,4 +1,4 @@
-.import "../library/ProcessFunc.js" as Process
+//.import "../library/ProcessFunc.js" as Process
 .import QtQuick.LocalStorage 2.0 as Sql
 
 
@@ -129,6 +129,9 @@ function databaseUpgrade(currentVersion) {
     if (currentVersion < 1) {
         executeUserVersion1()
     }
+    if (currentVersion < 2) {
+        executeUserVersion2()
+    }
 }
 
 //Database Changes for User Version 1
@@ -146,8 +149,6 @@ function createReportsRecord(){
     db.transaction(function (tx) {
         tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS `reports` (`report_id` INTEGER PRIMARY KEY AUTOINCREMENT,`creator` TEXT DEFAULT 'user',`report_name` TEXT,`type` TEXT DEFAULT 'LINE',`date_range` TEXT DEFAULT 'This Month',`date_mode` TEXT DEFAULT 'Day',`filter` TEXT,`exceptions` TEXT,`date1` TEXT,`date2` TEXT)")
-//        tx.executeSql(
-//                    'INSERT INTO reports VALUES("system","Trend This Year By Day","LINE","This Year","Day","","","","")')
     })
 
 
@@ -161,7 +162,145 @@ function createQuickRecord(){
                     "CREATE TABLE IF NOT EXISTS `quick_expenses` (`quick_id` INTEGER PRIMARY KEY AUTOINCREMENT, `category_name`	TEXT, `name` TEXT, `descr` TEXT, `value` REAL);")
     })
 
+}
 
+//Database Changes for User Version 2
+// Version 0.70
+function executeUserVersion2() {
+    createCurrenciesRecord()
+    createInitialCurrencies()
+    console.log("Database Upgraded to 2")
+    upgradeUserVersion()
+}
+
+function createCurrenciesRecord(){
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql(
+                     "CREATE TABLE IF NOT EXISTS `currencies` (`currency_code`	TEXT,`description`	TEXT,`symbol`	TEXT,`decimal`	TEXT,`thousand`	TEXT,`precision`	INTEGER,`format`	TEXT,PRIMARY KEY(currency_code));")
+    })
+
+}
+
+// Insert initial Currency data
+function createInitialCurrencies() {
+    var db = openDB()
+    db.transaction(function (tx) {
+        var currencies = tx.executeSql('SELECT * FROM currencies')
+        if (currencies.rows.length === 0) {
+            tx.executeSql("INSERT INTO currencies VALUES('ALL','Albania Lek',?,',','.','2','%s%v')",[String.fromCharCode(76, 101, 107)])
+            tx.executeSql("INSERT INTO currencies VALUES('AFN','Afghanistan Afghani',?,'.',',','2','%v %s')",[String.fromCharCode(1547)])
+            tx.executeSql("INSERT INTO currencies VALUES('ARS','Argentina Peso',?,',','.','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('AWG','Aruba Guilder',?,'.',',','2','%s%v')",[String.fromCharCode(402)])
+            tx.executeSql("INSERT INTO currencies VALUES('AUD','Australia Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('AZN','Azerbaijan Manat',?,',',' ','2','%s%v')",[String.fromCharCode(8380)])
+            tx.executeSql("INSERT INTO currencies VALUES('BSD','Bahamas Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('BBD','Barbados Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('BYN','Belarus Ruble',?,'','','2','%v %s')",[String.fromCharCode(66, 114)])
+            tx.executeSql("INSERT INTO currencies VALUES('BZD','Belize Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(66, 90, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('BMD','Bermuda Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('BOB','Bolivia Bolíviano',?,',','.','2','%s%v')",[String.fromCharCode(36, 98)])
+            tx.executeSql("INSERT INTO currencies VALUES('BAM','Bosnia and Herzegovina Convertible Marka',?,',','.','2','%s%v')",[String.fromCharCode(75, 77)])
+            tx.executeSql("INSERT INTO currencies VALUES('BWP','Botswana Pula',?,'.',',','2','%s%v')",[String.fromCharCode(80)])
+            tx.executeSql("INSERT INTO currencies VALUES('BGN','Bulgaria Lev',?,',',' ','2','%s%v')",[String.fromCharCode(1083, 1074)])
+            tx.executeSql("INSERT INTO currencies VALUES('BRL','Brazil Real',?,',','.','2','%s%v')",[String.fromCharCode(82, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('BND','Brunei Darussalam Dollar',?,',','.','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('KHR','Cambodia Riel',?,'.',',','2','%s%v')",[String.fromCharCode(6107)])
+            tx.executeSql("INSERT INTO currencies VALUES('CAD','Canada Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('KYD','Cayman Islands Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('CLP','Chile Peso',?,',','.','0','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('CNY','China Yuan Renminbi',?,'.',',','2','%v %s')",[String.fromCharCode(165)])
+            tx.executeSql("INSERT INTO currencies VALUES('COP','Colombia Peso',?,',','.','0','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('CRC','Costa Rica Colon',?,',','.','2','%s%v')",[String.fromCharCode(8353)])
+            tx.executeSql("INSERT INTO currencies VALUES('HRK','Croatia Kuna',?,',','.','2','%s%v')",[String.fromCharCode(107, 110)])
+            tx.executeSql("INSERT INTO currencies VALUES('CUP','Cuba Peso',?,'.',',','2','%s%v')",[String.fromCharCode(8369)])
+            tx.executeSql("INSERT INTO currencies VALUES('CZK','Czech Republic Koruna',?,',',' ','2','%v %s')",[String.fromCharCode(75, 269)])
+            tx.executeSql("INSERT INTO currencies VALUES('DKK','Denmark Krone',?,',','','2','%v %s')",[String.fromCharCode(107, 114)])
+            tx.executeSql("INSERT INTO currencies VALUES('DOP','Dominican Republic Peso',?,'.',',','2','%s%v')",[String.fromCharCode(82, 68, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('XCD','East Caribbean Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('EGP','Egypt Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('SVC','El Salvador Colon',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('EUR','Euro Member Countries',?,',',' ','2','%s%v')",[String.fromCharCode(8364)])
+            tx.executeSql("INSERT INTO currencies VALUES('FKP','Falkland Islands (Malvinas) Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('FJD','Fiji Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('GHS','Ghana Cedi',?,'.',',','2','')",[String.fromCharCode(162)])
+            tx.executeSql("INSERT INTO currencies VALUES('GIP','Gibraltar Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('GTQ','Guatemala Quetzal',?,'.',',','2','%s%v')",[String.fromCharCode(81)])
+            tx.executeSql("INSERT INTO currencies VALUES('GGP','Guernsey Pound',?,'','','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('GYD','Guyana Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('HNL','Honduras Lempira',?,'.',',','2','%s%v')",[String.fromCharCode(76)])
+            tx.executeSql("INSERT INTO currencies VALUES('HKD','Hong Kong Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('HUF','Hungary Forint',?,',',' ','0','%s%v')",[String.fromCharCode(70, 116)])
+            tx.executeSql("INSERT INTO currencies VALUES('ISK','Iceland Krona',?,',','.','2','%s%v')",[String.fromCharCode(107, 114)])
+            tx.executeSql("INSERT INTO currencies VALUES('INR','India Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('IDR','Indonesia Rupiah',?,',','.','2','%s%v')",[String.fromCharCode(82, 112)])
+            tx.executeSql("INSERT INTO currencies VALUES('IRR','Iran Rial',?,'/',',','2','%v %s')",[String.fromCharCode(65020)])
+            tx.executeSql("INSERT INTO currencies VALUES('IMP','Isle of Man Pound',?,'','','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('ILS','Israel Shekel',?,'.',',','2','%s%v')",[String.fromCharCode(8362)])
+            tx.executeSql("INSERT INTO currencies VALUES('JMD','Jamaica Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(74, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('JPY','Japan Yen',?,'.',',','0','%s%v')",[String.fromCharCode(165)])
+            tx.executeSql("INSERT INTO currencies VALUES('JEP','Jersey Pound',?,'','','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('KZT','Kazakhstan Tenge',?,'-',' ','2','%s%v')",[String.fromCharCode(1083, 1074)])
+            tx.executeSql("INSERT INTO currencies VALUES('KPW','Korea (North) Won',?,'.',',','0','%s%v')",[String.fromCharCode(8361)])
+            tx.executeSql("INSERT INTO currencies VALUES('KRW','Korea (South) Won',?,'.',',','0','%s%v')",[String.fromCharCode(8361)])
+            tx.executeSql("INSERT INTO currencies VALUES('KGS','Kyrgyzstan Som',?,'-',' ','2','%s%v')",[String.fromCharCode(1083, 1074)])
+            tx.executeSql("INSERT INTO currencies VALUES('LAK','Laos Kip',?,'.',',','2','%s%v')",[String.fromCharCode(8365)])
+            tx.executeSql("INSERT INTO currencies VALUES('LBP','Lebanon Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('LRD','Liberia Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('MKD','Macedonia Denar',?,',','.','2','%s%v')",[String.fromCharCode(1076, 1077, 1085)])
+            tx.executeSql("INSERT INTO currencies VALUES('MYR','Malaysia Ringgit',?,'.',',','2','%s%v')",[String.fromCharCode(82, 77)])
+            tx.executeSql("INSERT INTO currencies VALUES('MUR','Mauritius Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('MXN','Mexico Peso',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('MNT','Mongolia Tughrik',?,',',' ','2','%s%v')",[String.fromCharCode(8366)])
+            tx.executeSql("INSERT INTO currencies VALUES('MZN','Mozambique Metical',?,'.',',','2','%s%v')",[String.fromCharCode(77, 84)])
+            tx.executeSql("INSERT INTO currencies VALUES('NAD','Namibia Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('NPR','Nepal Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('ANG','Netherlands Antilles Guilder',?,'.',',','2','%s%v')",[String.fromCharCode(402)])
+            tx.executeSql("INSERT INTO currencies VALUES('NZD','New Zealand Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('NIO','Nicaragua Cordoba',?,'.',',','2','%s%v')",[String.fromCharCode(67, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('NGN','Nigeria Naira',?,'.',',','2','%s%v')",[String.fromCharCode(8358)])
+            tx.executeSql("INSERT INTO currencies VALUES('NOK','Norway Krone',?,',',' ','2','%v %s')",[String.fromCharCode(107, 114)])
+            tx.executeSql("INSERT INTO currencies VALUES('OMR','Oman Rial',?,'.',',','3','%v %s')",[String.fromCharCode(65020)])
+            tx.executeSql("INSERT INTO currencies VALUES('PKR','Pakistan Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('PAB','Panama Balboa',?,'.',',','2','%s%v')",[String.fromCharCode(66, 47, 46)])
+            tx.executeSql("INSERT INTO currencies VALUES('PYG','Paraguay Guarani',?,',','.','0','%v%s')",[String.fromCharCode(71, 115)])
+            tx.executeSql("INSERT INTO currencies VALUES('PEN','Peru Sol',?,'.',',','2','%s%v')",[String.fromCharCode(83, 47, 46)])
+            tx.executeSql("INSERT INTO currencies VALUES('PHP','Philippines Piso',?,'.',',','2','%s%v')",[String.fromCharCode(8369)])
+            tx.executeSql("INSERT INTO currencies VALUES('PLN','Poland Zloty',?,',',' ','2','%v %s')",[String.fromCharCode(122, 322)])
+            tx.executeSql("INSERT INTO currencies VALUES('QAR','Qatar Riyal',?,'.',',','2','%v %s')",[String.fromCharCode(65020)])
+            tx.executeSql("INSERT INTO currencies VALUES('RON','Romania Leu',?,',','.','2','%s%v')",[String.fromCharCode(108, 101, 105)])
+            tx.executeSql("INSERT INTO currencies VALUES('RUB','Russia Ruble',?,',',' ','2','%v %s')",[String.fromCharCode(8381)])
+            tx.executeSql("INSERT INTO currencies VALUES('SHP','Saint Helena Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('SAR','Saudi Arabia Riyal',?,'.',',','2','%v %s')",[String.fromCharCode(65020)])
+            tx.executeSql("INSERT INTO currencies VALUES('RSD','Serbia Dinar',?,',','.','2','%s%v')",[String.fromCharCode(1044, 1080, 1085, 46)])
+            tx.executeSql("INSERT INTO currencies VALUES('SCR','Seychelles Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('SGD','Singapore Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('SBD','Solomon Islands Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('SOS','Somalia Shilling',?,'.',',','2','%s%v')",[String.fromCharCode(83)])
+            tx.executeSql("INSERT INTO currencies VALUES('ZAR','South Africa Rand',?,',',' ','2','%s%v')",[String.fromCharCode(82)])
+            tx.executeSql("INSERT INTO currencies VALUES('LKR','Sri Lanka Rupee',?,'.',',','2','%s%v')",[String.fromCharCode(8360)])
+            tx.executeSql("INSERT INTO currencies VALUES('SEK','Sweden Krona',?,',','.','2','%v %s')",[String.fromCharCode(107, 114)])
+            tx.executeSql("INSERT INTO currencies VALUES('CHF','Switzerland Franc',?,'.','''','2','')",[String.fromCharCode(67, 72, 70)])
+            tx.executeSql("INSERT INTO currencies VALUES('SRD','Suriname Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('SYP','Syria Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('TWD','Taiwan New Dollar',?,'.',',','0','%s%v')",[String.fromCharCode(78, 84, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('THB','Thailand Baht',?,'.',',','2','%s%v')",[String.fromCharCode(3647)])
+            tx.executeSql("INSERT INTO currencies VALUES('TTD','Trinidad and Tobago Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(84, 84, 36)])
+            tx.executeSql("INSERT INTO currencies VALUES('TRY','Turkey Lira',?,',','.','2','%s%v')",[String.fromCharCode(8378)])
+            tx.executeSql("INSERT INTO currencies VALUES('TVD','Tuvalu Dollar',?,'.',',','','')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('UAH','Ukraine Hryvnia',?,',',' ','2','%s%v')",[String.fromCharCode(8372)])
+            tx.executeSql("INSERT INTO currencies VALUES('GBP','United Kingdom Pound',?,'.',',','2','%s%v')",[String.fromCharCode(163)])
+            tx.executeSql("INSERT INTO currencies VALUES('USD','United States Dollar',?,'.',',','2','%s%v')",[String.fromCharCode(36)])
+            tx.executeSql("INSERT INTO currencies VALUES('UYU','Uruguay Peso',?,',','.','0','%s%v')",[String.fromCharCode(36)]) //36, 85 doesn't work with accounting.js
+            tx.executeSql("INSERT INTO currencies VALUES('UZS','Uzbekistan Som',?,',',' ','2','%s%v')",[String.fromCharCode(1083, 1074)])
+            tx.executeSql("INSERT INTO currencies VALUES('VEF','Venezuela Bolívar',?,',','.','2','%s%v')",[String.fromCharCode(66, 115)])
+            tx.executeSql("INSERT INTO currencies VALUES('VND','Viet Nam Dong',?,',','.','0','%v %s')",[String.fromCharCode(8363)])
+            tx.executeSql("INSERT INTO currencies VALUES('YER','Yemen Rial',?,'.',',','2','%v %s')",[String.fromCharCode(65020)])
+            tx.executeSql("INSERT INTO currencies VALUES('ZWD','Zimbabwe Dollar',?,'','','2','%s%v')",[String.fromCharCode(90, 36)])
+
+        }
+    })
 }
 
 
@@ -837,346 +976,23 @@ function getTopExpenses() {
     return arrResults
 }
 
-/******Old Functions**********/
-function saveChecklist(txtName, txtDescr, txtCategory, txtCreationDt, txtTargetDt, txtListType) {
-    var txtSaveStatement
-    var db = openDB()
-    var rs = null
-    var newID
-    var newChecklist
 
-    txtSaveStatement = 'INSERT INTO CHECKLIST(name,descr,category,creation_dt,target_dt, status) VALUES(?,?,?,?,?,?)'
-
-    //txtSaveStatement = txtSaveStatement.bindValues("?",[txtName,txtDescr,txtCategory,txtCreationDt]);
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    txtSaveStatement,
-                    [txtName, txtDescr, txtCategory, txtCreationDt, txtTargetDt, txtListType])
-        rs = tx.executeSql("SELECT MAX(id) as id FROM CHECKLIST")
-        newID = rs.rows.item(0).id
-        newChecklist = {
-            id: newID,
-            checklist: txtName,
-            descr: txtDescr,
-            category: txtCategory,
-            creation_dt: txtCreationDt,
-            completion_dt: null,
-            status: txtListType,
-            target_dt: txtTargetDt,
-            completed: 0,
-            total: 0
-        }
-    })
-
-    return newChecklist
-}
-
-function checklistExist(category, name) {
-    var db = openDB()
-    var rs = null
-    var exists
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql(
-                    "SELECT * FROM checklist WHERE category = ? AND name = ? and status<>'complete'",
-                    [category, name])
-
-        exists = rs.rows.length === 0 ? false : true
-    })
-
-    return exists
-}
-
-function itemExist(checklistid, name) {
-    var db = openDB()
-    var rs = null
-    var exists
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql(
-                    "SELECT * FROM items WHERE checklist_id = ? AND name = ?",
-                    [checklistid, name])
-
-        exists = rs.rows.length === 0 ? false : true
-    })
-
-    return exists
-}
-
-function saveItem(checklistid, txtChecklist, txtName, txtComment) {
-    var txtSaveStatement
-    var db = openDB()
-    txtSaveStatement = 'INSERT INTO items(checklist_id,checklist,name,comments) VALUES(?,?,?,?)'
-
-    db.transaction(function (tx) {
-        tx.executeSql(txtSaveStatement,
-                      [checklistid, txtChecklist, txtName, txtComment])
-    })
-}
-
-function getDBChecklists(statement, binds) {
+function getCurrencies() {
     var db = openDB()
     var arrResults = []
     var rs = null
+    var txtSelectStatement = ""
+
+    txtSelectStatement = "SELECT * FROM currencies"
 
     db.transaction(function (tx) {
-        //console.log(statement)
-        //console.log(binds)
-        if (binds !== undefined) {
-            rs = tx.executeSql(statement, binds)
-        } else {
-            rs = tx.executeSql(statement)
-        }
+        rs = tx.executeSql(txtSelectStatement)
 
         arrResults.length = rs.rows.length
 
         for (var i = 0; i < rs.rows.length; i++) {
-            //add new row in the array
-            arrResults[i] = []
-
-            //assign values to the array
             arrResults[i] = rs.rows.item(i)
         }
     })
-
     return arrResults
-}
-
-function getDBChecklist(checklistid) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql("SELECT * FROM checklist WHERE id = ?",
-                           [checklistid])
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            //add new row in the array
-            arrResults[i] = []
-
-            //assign values to the array
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getDBCategories(statement) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql(statement)
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            //add new row in the array
-            arrResults[i] = []
-
-            //assign values to the array
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getTargets() {
-    var db = openDB()
-    var rs = null
-    var arrResults = []
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql(
-                    "SELECT id, name, target_dt, (CASE WHEN target_dt < date('now','localtime') THEN 1 ELSE 0 END) overdue FROM checklist WHERE target_dt <> '' AND status = 'incomplete' ORDER BY target_dt")
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            //add new row in the array
-            arrResults[i] = []
-
-            //assign values to the array
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function deleteChecklist(checklistid) {
-    var txtDeleteStatement, txtDeleteItemsStatement
-    var db = openDB()
-
-    txtDeleteStatement = 'DELETE FROM CHECKLIST WHERE id = ?'
-    txtDeleteItemsStatement = 'DELETE FROM ITEMS WHERE checklist_id = ?'
-
-    db.transaction(function (tx) {
-        tx.executeSql(txtDeleteItemsStatement, [checklistid])
-        tx.executeSql(txtDeleteStatement, [checklistid])
-    })
-}
-
-function deleteItem(checklistid, txtName) {
-    var txtDeleteStatement
-    var db = openDB()
-
-    txtDeleteStatement = 'DELETE FROM ITEMS WHERE checklist_id = ? AND name = ?'
-
-    db.transaction(function (tx) {
-        tx.executeSql(txtDeleteStatement, [checklistid, txtName])
-    })
-}
-
-function updateItemStatus(checklistid, name, status) {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE ITEMS SET status = ? WHERE checklist_id = ? AND name = ?",
-                    [status, checklistid, name])
-    })
-}
-
-function updateItem(checklistid, name, newname, comments) {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE ITEMS SET name = ?, comments = ? WHERE checklist_id = ? AND name = ?",
-                    [newname, comments, checklistid, name])
-    })
-}
-
-function updateItemPriority(checklistid, name, newPriority) {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE ITEMS SET priority = ? WHERE checklist_id = ? AND name = ?",
-                    [newPriority, checklistid, name])
-    })
-}
-
-function updateFavorite(checklistid, newFavoriteStatus) {
-    var db = openDB()
-
-    var favorite = newFavoriteStatus ? 1 : 0
-
-    db.transaction(function (tx) {
-        tx.executeSql("UPDATE CHECKLIST SET favorite = ? WHERE id = ?",
-                      [favorite, checklistid])
-    })
-}
-
-function updateChecklist(intID, txtListType, txtName, txtDescr, txtCategory, txtTargetDt) {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql("UPDATE items SET checklist = ? WHERE checklist_id = ?",
-                      [txtName, intID])
-        tx.executeSql(
-                    "UPDATE checklist SET status = ?, name = ?, descr = ?, category = ?, target_dt = ? WHERE id = ?",
-                    [txtListType, txtName, txtDescr, txtCategory, txtTargetDt, intID])
-    })
-}
-
-
-
-function updateChecklistComplete(intID) {
-    var db = openDB()
-    var today = new Date(Process.getToday())
-    var txtCompletionDt = Process.dateFormat(0, today)
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE checklist SET status = 'complete', completion_dt = ? WHERE id = ?",
-                    [txtCompletionDt, intID])
-        tx.executeSql(
-                    'UPDATE items SET status = 1 WHERE checklist_id = ? AND status = 0',
-                    intID)
-    })
-}
-
-function updateChecklistIncomplete(intID) {
-    var db = openDB()
-    var txtCompletionDt = null
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE checklist SET status = 'incomplete', completion_dt = ? WHERE id = ?",
-                    [txtCompletionDt, intID])
-    })
-}
-
-//Uncheck all items
-function uncheckAllItems(intID) {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    'UPDATE items SET status = 0 WHERE checklist_id = ? AND status <> 0',
-                    intID)
-    })
-}
-
-//Clear Hstory
-function clearHistory(dateMode) {
-    var db = openDB()
-    var days
-
-    switch (dateMode) {
-    case "year":
-        days = "-365 day"
-        break
-    case "month":
-        days = "-30 day"
-        break
-    case "week":
-        days = "-7 day"
-        break
-    default:
-        days = "-365 day"
-        break
-    }
-
-    db.transaction(function (tx) {
-        if (dateMode !== "all") {
-            tx.executeSql(
-                        'DELETE FROM items WHERE EXISTS (SELECT 1 FROM checklist chk WHERE chk.id = checklist_id AND chk.status = "complete" and chk.completion_dt <= date("now",?,"localtime"))',
-                        [days])
-            tx.executeSql(
-                        'DELETE FROM checklist WHERE status = "complete" and completion_dt <= date("now",?,"localtime")',
-                        [days])
-        } else {
-            tx.executeSql(
-                        'DELETE FROM items WHERE EXISTS (SELECT 1 FROM checklist chk WHERE chk.id = checklist_id AND chk.status = "complete")')
-            tx.executeSql('DELETE FROM checklist WHERE status = "complete"')
-        }
-    })
-}
-
-//Clean Saved data
-function cleanSaved() {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    'UPDATE checklist set target_dt = "" WHERE status = "saved" and target_dt <> ""')
-        tx.executeSql(
-                    'UPDATE checklist set completion_dt = "" WHERE status = "saved" and completion_dt <> ""')
-    })
-}
-
-//Clean Normal Lists
-function cleanNormalLists() {
-    var db = openDB()
-
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    'UPDATE checklist set target_dt = "" WHERE status = "normal" and target_dt <> ""')
-    })
 }

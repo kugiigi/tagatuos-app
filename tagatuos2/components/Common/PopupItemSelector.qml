@@ -9,11 +9,17 @@ ListItem {
     property bool forceFullscreen: false
     property bool multipleSelection: false
     property bool withOrdering: false
-    property var model
+    property bool commitOnSelect: false
+    property var model: []
 
     property string titleText
+    property alias title: listItemLayout.title
+    property alias subtitle: listItemLayout.subtitle
     property string selectedValue //separated by semicolon (;)
     property string iconName
+
+    property string textRolename: "text"
+    property string valueRolename: "value"
 
 
     signal confirmSelection(string selections, string selectionsOrder)
@@ -27,14 +33,16 @@ ListItem {
         }
     }
 
+    onConfirmSelection: poppingDialog.close()
+
     function getDisplayValues() {
         var result = []
         var arrSelectedValues = root.selectedValue.split(";")
 
         for (var i = 0; i <= model.count - 1; i++) {
 
-            if (arrSelectedValues.indexOf(model.get(i)["value"]) > -1) {
-                result.push(model.get(i)["text"])
+            if (arrSelectedValues.indexOf(model.get(i)[valueRolename]) > -1) {
+                result.push(model.get(i)[textRolename])
             }
         }
 
@@ -47,7 +55,7 @@ ListItem {
         id: listItemLayout
 
         title.text: root.titleText
-        subtitle.text: root.getDisplayValues()//root.selectedValue
+        subtitle.text: root.getDisplayValues()
 
         Icon {
             name: iconName
@@ -60,8 +68,8 @@ ListItem {
     PoppingDialog {
         id: poppingDialog
 
-        explicitHeight: root.model.count <  8 ? units.gu(60) : null
-        explicitWidth: root.model.count <  8 ?units.gu(40) : null
+        explicitHeight: root.model.count <  8 ? units.gu(60) : 0
+        explicitWidth: root.model.count <  8 ?units.gu(40) : 0
         fullscreen: root.forceFullscreen ? true : false
         delegate: itemSelectorComponent
     }
@@ -74,16 +82,7 @@ ListItem {
             model: root.model
             title: root.titleText
 
-            Connections{
-                id: poppingDialogConnection
-
-                target: poppingDialog
-
-                onOpened:{
-                    itemSelector.initializeSelectedValues(root.selectedValue)
-                }
-            }
-
+//            Component.onCompleted: itemSelector.initializeSelectedValues(root.selectedValue)
         }
     }
 }

@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import ".."
 
 Toolbar {
     id: toolBar
@@ -12,26 +13,50 @@ Toolbar {
 
     height: units.gu(6)
 
-    leadingActionBar.actions: [
-        Action {
-            id: cancelAction
+    style: Rectangle{
+        color: theme.palette.normal.foreground
+    }
 
-            iconName: "cancel"
-            onTriggered: {
-                poppingDialog.close()
-            }
+    Component {
+        id: buttonDelegate
+        ActionButtonDelegate {
         }
-    ]
-    trailingActionBar.actions: [
-        Action {
-            id: saveAction
+    }
 
-            iconName: "ok"
+    leadingActionBar {
+        actions: [
+            Action {
+                id: cancelAction
 
-            onTriggered: {
-                poppingDialog.close()
-                root.confirmSelection(itemSelector.getReturnValue(),itemSelector.geValuesOrder())
+                property color color: theme.palette.normal.foreground
+
+                text: i18n.tr("Cancel")
+                iconName: "cancel"
+                onTriggered: {
+                    poppingDialog.close()
+                }
             }
-        }
-    ]
+        ]
+
+        delegate: buttonDelegate
+    }
+
+    trailingActionBar {
+        actions: [
+            Action {
+                id: saveAction
+
+                property color color: theme.palette.normal.foreground
+
+                iconName: "ok"
+                text: i18n.tr("OK")
+                onTriggered: {
+//                    poppingDialog.close()
+                    root.confirmSelection(itemSelector.getReturnValue(),
+                                          itemSelector.geValuesOrder())
+                }
+            }
+        ]
+        delegate: buttonDelegate
+    }
 }

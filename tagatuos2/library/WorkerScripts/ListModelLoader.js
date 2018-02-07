@@ -21,6 +21,9 @@ WorkerScript.onMessage = function (msg) {
 
     var txtLabel
 
+    var txtCode
+    var txtSysmbol
+
     var previousSortField = ""
     var currentSortField = ""
     var childArray = []
@@ -278,11 +281,23 @@ WorkerScript.onMessage = function (msg) {
         result = chartData
 
         break
+    case "Currencies":
+        for (i = 0; i < msg.result.length; i++) {
+            txtCode = msg.result[i].currency_code
+            txtDescr = msg.result[i].description
+            txtSysmbol = msg.result[i].symbol
+            msg.model.append({
+                                 currency_code: txtCode,
+                                 descr: txtDescr,
+                                 symbol: txtSysmbol
+                             })
+        }
+        break
     }
 
     if(msg.model){
        msg.model.sync() // updates the changes to the list
-       msg.model.clear() //clear model after sync to remove from memory (assumption only :))
+//       msg.model.clear() //clear model after sync to remove from memory (assumption only :))
     }
 
     WorkerScript.sendMessage({
