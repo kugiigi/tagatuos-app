@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
+import Ubuntu.Keyboard 0.1
 import "../AddFullPage"
 import "../Common"
 import "../../library/DataProcess.js" as DataProcess
@@ -84,6 +85,7 @@ Dialog {
 
     ValueField {
         id: valueTextField
+        shortcutInOSK: false
     }
 
     CommentsField {

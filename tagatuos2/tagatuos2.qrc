@@ -112,5 +112,7 @@
         <file>library/Currencies.js</file>
         <file>library/WorkerScripts/SimpleListModelLoader.js</file>
         <file>components/ListModels/CurrencyModel.qml</file>
+        <file>components/QuickAddPage/QuickAddListView.qml</file>
+        <file>components/QuickAddPage/QuickAddFindToolbar.qml</file>
     </qresource>
 </RCC>

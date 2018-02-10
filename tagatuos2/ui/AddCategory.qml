@@ -24,13 +24,11 @@ Page {
 
     header: BaseHeader {
         title: root.mode === "add" ? i18n.tr(
-                                                    "Add New Category") : i18n.tr(
-                                                    "Edit Category - " + category_name)
+                                         "Add New Category") : i18n.tr(
+                                         "Edit Category - " + category_name)
         flickable: flickDialog
 
     }
-
-//    PageBackGround{}
 
     onActiveChanged: {
         if (active === true) {
@@ -113,9 +111,11 @@ Page {
         trailingActionBar {
             delegate: buttonComponent
             actions: Action {
+                property color color: theme.palette.normal.background
+
                 shortcut: "Ctrl+S"
                 text: root.mode === "add" ? i18n.tr(
-                                                           "Add") : i18n.tr("Save")
+                                                "Add") : i18n.tr("Save")
                 onTriggered: {
 
                     /*Commits the OSK*/
@@ -153,6 +153,8 @@ Page {
         leadingActionBar {
             delegate: buttonComponent
             actions: Action {
+                property color color: theme.palette.normal.background
+
                 shortcut: "Esc"
                 text: i18n.tr("Cancel")
                 onTriggered: {

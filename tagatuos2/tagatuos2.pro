@@ -32,7 +32,9 @@ OTHER_FILES += $${CONF_FILES} \
     components/Common/PopupItemSelector/SelectorToolbar.qml \
     library/Currencies.js \
     components/ListModels/CurrencyModel.qml \
-    library/WorkerScripts/SimpleListModelLoader.js
+    library/WorkerScripts/SimpleListModelLoader.js \
+    components/QuickAddPage/QuickAddListView.qml \
+    components/QuickAddPage/QuickAddFindToolbar.qml
 
 #specify where the config files are installed to
 config_files.path = /tagatuos2

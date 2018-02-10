@@ -75,22 +75,21 @@ function initiateData() {
         if (categories.rows.length === 0) {
             //            db.transaction(function (tx) {
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Food", "Breakfast, Lunch, Dinner, etc.","default","cornflowerblue")')
+                        'INSERT INTO categories VALUES(?, ?,"default","cornflowerblue")',[i18n.tr("Food"),i18n.tr("Breakfast, Lunch, Dinner, etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Transportation", "Taxi, Bus, Train, Gas, etc.","default","orangered")')
+                        'INSERT INTO categories VALUES(?, ?,"default","orangered")',[i18n.tr("Transportation"),i18n.tr("Taxi, Bus, Train, Gas, etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Clothing", "Shirts, Pants, underwear, etc.","default","chocolate")')
+                        'INSERT INTO categories VALUES(?, ?,"default","chocolate")',[i18n.tr("Clothing"),i18n.tr("Shirts, Pants, underwear, etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Household", "Electricity, Groceries, Rent etc.","default","springgreen")')
+                        'INSERT INTO categories VALUES(?, ?,"default","springgreen")',[i18n.tr("Household"),i18n.tr("Electricity, Groceries, Rent etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Leisure", "Movies, Books, Sports etc.","default","palegreen")')
+                        'INSERT INTO categories VALUES(?, ?,"default","palegreen")',[i18n.tr("Leisure"),i18n.tr("Movies, Books, Sports etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Savings", "Investments, Reserve Funds etc.","default","purple")')
+                        'INSERT INTO categories VALUES(?, ?,"default","purple")',[i18n.tr("Savings"),i18n.tr("Investments, Reserve Funds etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Healthcare", "Dental, Hospital, Medicines etc.","default","snow")')
+                        'INSERT INTO categories VALUES(?, ?,"default","snow")',[i18n.tr("Healthcare"),i18n.tr("Dental, Hospital, Medicines etc.")])
             tx.executeSql(
-                        'INSERT INTO categories VALUES("Miscellaneous", "Other expenses","default","darkslategrey")')
-            //            })
+                        'INSERT INTO categories VALUES(?, ?,"default","darkslategrey")',[i18n.tr("Miscellaneous"),i18n.tr("Other expenses")])
         }
     })
 }
@@ -917,7 +916,7 @@ function deleteQuickExpense(id) {
     })
 }
 
-function getRecentExpenses() {
+function getRecentExpenses(searchText) {
     var db = openDB()
     var arrResults = []
     var rs = null
@@ -925,16 +924,31 @@ function getRecentExpenses() {
     var txtWhereStatement = ""
     var txtOrderStatement = ""
     var txtLimitStatement = ""
-    var intTop = 10
+    var intTop
 
     txtOrderStatement = " ORDER BY date desc, expense_id desc"
 
     txtSelectStatement = 'SELECT expense_id, category_name, name, descr, date, value FROM expenses'
-    txtLimitStatement = " LIMIT " + intTop
-    txtSelectStatement = txtSelectStatement + txtWhereStatement + txtOrderStatement + txtLimitStatement
+    txtLimitStatement = " LIMIT ?"
+
+    if(searchText){
+        intTop = 20
+        txtWhereStatement = " WHERE category_name LIKE ? OR name LIKE ? OR descr LIKE ?"
+        txtSelectStatement = txtSelectStatement + txtWhereStatement + txtOrderStatement + txtLimitStatement
+    }else{
+        intTop = 10
+        txtSelectStatement = txtSelectStatement + txtOrderStatement + txtLimitStatement
+    }
+
     //console.log(txtSelectStatement)
     db.transaction(function (tx) {
-        rs = tx.executeSql(txtSelectStatement)
+
+        if(searchText){
+            var wildcard = "%" + searchText + "%"
+            rs = tx.executeSql(txtSelectStatement,[wildcard,wildcard,wildcard,intTop])
+        }else{
+            rs = tx.executeSql(txtSelectStatement,[intTop])
+        }
 
         arrResults.length = rs.rows.length
 
@@ -942,6 +956,7 @@ function getRecentExpenses() {
             arrResults[i] = rs.rows.item(i)
         }
     })
+
 
     return arrResults
 }

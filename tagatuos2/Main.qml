@@ -62,6 +62,9 @@ MainView {
     property alias listModels: listModelsLoader.item //listModels
     property alias tempSettings: settingsLoader.item
 
+    // For Debugging only
+    property bool showBottomEdgeHint: false
+
     Component.onCompleted: {
         /*Meta data processing*/
         var currentDataBaseVersion = DataProcess.checkUserVersion()
@@ -261,9 +264,9 @@ MainView {
     //            }
     //        }
     //    }
-    PopupDialog {
-        id: popupDialog
-    }
+//    PopupDialog {
+//        id: popupDialog
+//    }
 
     PageStack {
         id: mainPageStack
@@ -354,15 +357,10 @@ MainView {
         id: addBottomEdge
 
         onCommitCompleted: {
-            visible = false
-            enabled = false
-            hint.visible = false
+            visible = showBottomEdgeHint //false
+            enabled = showBottomEdgeHint //false
+            hint.visible = showBottomEdgeHint //false
         }
-        //        onCollapseCompleted: {
-        //            visible = true
-        //            enabled = true
-        //            hint.visible = true
-        //        }
 
         //Component.onCompleted: QuickUtils.mouseAttached = true
     }

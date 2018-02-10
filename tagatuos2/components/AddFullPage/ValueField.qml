@@ -8,6 +8,7 @@ Column {
 
     property alias text: valueTextField.text
     property bool focused: valueTextField.activeFocus
+    property bool shortcutInOSK: true
 
     spacing: units.gu(1)
 
@@ -43,7 +44,7 @@ Column {
                                            i18n.tr("Add")
                                            break
                                        default:
-                                           i18n.tr("Add")
+                                           ""
                                            break
 
                                        }
@@ -54,7 +55,7 @@ Column {
         horizontalAlignment: TextInput.AlignRight
         inputMethodHints: Qt.ImhDigitsOnly
 
-        InputMethod.extensions: { "enterKeyText": i18n.dtr("tagatuos-app", enterKeyLabel)}
+        InputMethod.extensions: shortcutInOSK ? { "enterKeyText": i18n.dtr("tagatuos-app", enterKeyLabel)} : {}
 
         anchors {
             left: parent.left

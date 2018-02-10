@@ -82,7 +82,7 @@ Loader {
     }
 
     function close() {
-        closed()
+//        closed()
         modalBGRectangle.parent = root
         modalBGRectangle.visible = false
         item.close()
@@ -317,12 +317,12 @@ Loader {
                     to: targetHeight
                     duration: UbuntuAnimation.BriskDuration
                 }
-                UbuntuNumberAnimation {
-                    target: backgroundRectangle
-                    property: "opacity"
-                    to: 1
-                    duration: UbuntuAnimation.BriskDuration
-                }
+//                UbuntuNumberAnimation {
+//                    target: backgroundRectangle
+//                    property: "opacity"
+//                    to: 1
+//                    duration: UbuntuAnimation.BriskDuration
+//                }
             }
 
             ParallelAnimation {
@@ -332,30 +332,36 @@ Loader {
                     target: poppingDialog
                     property: "x"
                     to: backgroundRectangle.initialX
+                    duration: UbuntuAnimation.BriskDuration
                 }
                 UbuntuNumberAnimation {
                     target: poppingDialog
                     property: "y"
                     to: backgroundRectangle.initialY
+                    duration: UbuntuAnimation.BriskDuration
                 }
                 UbuntuNumberAnimation {
                     target: poppingDialog
                     property: "width"
                     to: backgroundRectangle.initialWidth
+                    duration: UbuntuAnimation.BriskDuration
                 }
                 UbuntuNumberAnimation {
                     target: poppingDialog
                     property: "height"
                     to: backgroundRectangle.initialHeight
+                    duration: UbuntuAnimation.BriskDuration
                 }
                 UbuntuNumberAnimation {
                     target: backgroundRectangle
                     property: "opacity"
-                    to: 0
+                    to: 0.3
+                    duration: UbuntuAnimation.BriskDuration
                 }
 
                 onStopped: {
                     root.active = false
+                    root.closed()
                 }
             }
         }

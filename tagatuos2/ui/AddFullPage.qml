@@ -30,8 +30,8 @@ Page {
     onVisibleChanged: {
         if (visible === true) {
             resetFields()
-            mainView.addBottomEdge.hint.visible = false
-            mainView.addBottomEdge.hint.enabled = false
+            mainView.addBottomEdge.hint.visible = mainView.showBottomEdgeHint //false
+            mainView.addBottomEdge.hint.enabled = mainView.showBottomEdgeHint //false
             //            if (mainView.listModels.modelCategories.count === 0) {
             //                mainView.listModels.modelCategories.getItems()
             //            }

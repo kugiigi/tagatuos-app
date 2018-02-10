@@ -14,7 +14,7 @@ BaseListModel {
         switch(type){
         case "recent":
             mode = "QuickRecent"
-            arrResult = DataProcess.getRecentExpenses()
+            arrResult = DataProcess.getRecentExpenses(searchText)
             break
         case "list":
             mode = "QuickAdd"

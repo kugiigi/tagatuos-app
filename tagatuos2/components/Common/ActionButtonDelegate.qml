@@ -8,8 +8,8 @@ AbstractButton {
     width: buttonsRow.width + units.gu(2)
 
     anchors {
-        top: parent.top
-        bottom: parent.bottom
+        top: action.visible ? parent.top : undefined
+        bottom: action.visible ?parent.bottom : undefined
     }
 
 
@@ -53,7 +53,7 @@ AbstractButton {
             id: icon
 
             name: action.iconName
-            width: units.gu(2)
+            width: label.text ? units.gu(2) : units.gu(3)
             height: width
             visible: action.iconName
         }

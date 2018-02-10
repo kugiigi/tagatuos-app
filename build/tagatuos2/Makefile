@@ -486,6 +486,8 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/BottomEdge/InitialRectangle.qml \
 		../../tagatuos2/components/QuickAddPage/QuickAddItem.qml \
 		../../tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddListView.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml \
 		../../tagatuos2/components/QuickAddPage/BottomBarNavigation.qml \
 		../../tagatuos2/components/QuickAddPage/BottomBarItem.qml \
 		../../tagatuos2/components/ListModels/ListModels.qml \

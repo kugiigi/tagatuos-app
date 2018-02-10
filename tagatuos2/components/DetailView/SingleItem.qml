@@ -27,6 +27,8 @@ UbuntuListView {
     }
 
     delegate: SingleItemChild {
+        id: singleItemChild
+
         //        height: units.gu(5)
         itemName: name
         itemValue: AppFunctions.formatMoney(value, false)
@@ -38,29 +40,30 @@ UbuntuListView {
                 text: i18n.tr("View Details")
                 onTriggered: {
                     //console.log(expense_id)
-                    var expenseDetails = listModels.getExpenseDetails(
-                                expense_id)
-                    var itemName
-                    var category
-                    var description
-                    var date
-                    var value
-                    itemName = expenseDetails.name
-                    category = expenseDetails.category_name
-                    description = expenseDetails.descr
-                    date = Process.relativeDate(expenseDetails.date,
-                                                "ddd, MMM d, yyyy", "Basic")
-                    value = AppFunctions.formatMoney(expenseDetails.value,
-                                                     false)
-                    popupDialog.contentLoader.setSource("DetailsDialog.qml", {
-                                                            category: category,
-                                                            itemName: itemName,
-                                                            description: description,
-                                                            date: date,
-                                                            value: value
-                                                        })
+//                    var expenseDetails = listModels.getExpenseDetails(
+//                                expense_id)
+//                    var itemName
+//                    var category
+//                    var description
+//                    var date
+//                    var value
+//                    itemName = expenseDetails.name
+//                    category = expenseDetails.category_name
+//                    description = expenseDetails.descr
+//                    date = Process.relativeDate(expenseDetails.date,
+//                                                "ddd, MMM d, yyyy", "Basic")
+//                    value = AppFunctions.formatMoney(expenseDetails.value,
+//                                                     false)
+//                    popupDialog.contentLoader.setSource("DetailsDialog.qml", {
+//                                                            category: category,
+//                                                            itemName: itemName,
+//                                                            description: description,
+//                                                            date: date,
+//                                                            value: value
+//                                                        })
                     //                        popupDialog.contentLoader.sourceComponent = detailsDialogComponent
-                    popupDialog.show()
+//                    popupDialog.show()
+                poppingDialog.show(singleItemChild)
                 }
             },
             Action {
@@ -80,6 +83,39 @@ UbuntuListView {
                 }
             }
         ]
+
+        PoppingDialog {
+            id: poppingDialog
+
+            maxHeight: units.gu(40)
+            maxWidth: units.gu(30)
+            parent:  mainView
+
+            delegate: DetailsDialog{
+                id: detailsDialog
+
+                category: singleItemChild.category
+                itemName: singleItemChild.itemName
+                description: singleItemChild.desc
+                date: singleItemChild.date
+                value: singleItemChild.value
+
+                Component.onCompleted: {
+                    var expenseDetails = listModels.getExpenseDetails(
+                                expense_id)
+
+                    itemName = expenseDetails.name
+                    category = expenseDetails.category_name
+                    description = expenseDetails.descr
+                    date = Process.relativeDate(expenseDetails.date,
+                                                "ddd, MMM d, yyyy", "Basic")
+                    value = AppFunctions.formatMoney(expenseDetails.value,
+                                                     false)
+                }
+
+                onClosed: poppingDialog.close()
+            }
+        }
 
         onActionActiveChanged: {
             if (actionActive) {

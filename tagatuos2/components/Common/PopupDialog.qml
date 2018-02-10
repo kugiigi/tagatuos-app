@@ -19,7 +19,7 @@ Rectangle {
     //    height: parent.height < units.gu(30) ? parent.height * 0.8 : childrenRect.height + units.gu(4)
     height: flickable.height
     opacity: 0
-    z: 10000000
+    z: Number.MAX_VALUE
 
     anchors {
         centerIn: parent

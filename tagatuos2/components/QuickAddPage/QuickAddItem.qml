@@ -10,6 +10,7 @@ ListItem {
     property string itemValue
     property string itemDescr
     property string itemCategory
+    property string itemDate
 
     divider {
         visible: false

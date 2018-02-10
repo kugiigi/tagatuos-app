@@ -1,18 +1,21 @@
 v0.70
+* Initial French translation support
 * UI Changes
-  - New Popup dialog (replaced most dropdown elements)
-  - Removed divider in the settings and about page
+  - New Popup dialog (replaced most dropdown elements and popup dialogs)
+  - Removed divider in the settings, manager categories and about page
 
 * Fixed/Closed Issues
-  - Issue # 5: ExpandedListItem is not working correctly again
-  - Issue # 3: Add Confirmation Dialog when navigating to external links
+  - Issue #5: ExpandedListItem is not working correctly again
+  - Issue #3: Add Confirmation Dialog when navigating to external links
+  - Issue #8: Support for International Currencies
+  - Issue #12: Enter button does nothing when in the value/price field in the add expense page
 
 Not committed yet
-  - Issue # 8: Support for International Currencies
-  - Issue # 12: Enter button does nothing when in the value/price field in the add expense page
+  - Issue #6: Add history search in Recent tab in Quick Add page
 
 * Refined app startup logic to avoid conflict when loading components and data
-* Hide Manage Reports page for now since it's not yet completed
+* Removed non-working/unimplemented features like Manage Reports and Adding debt
+* Predefined categories are now translatable
 
 v0.60
 * Added basic statistics (chart, )

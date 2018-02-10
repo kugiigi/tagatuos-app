@@ -126,9 +126,15 @@ WorkerScript.onMessage = function (msg) {
             txtName = msg.result[i].name
             txtDescr = msg.result[i].descr
             txtValue = msg.result[i].value
+
+            txtDateValue = msg.result[i].date
+            txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
+//            console.log("txtDate: " + txtDate)
+
             msg.model.append({
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: txtDate,
                 descr: txtDescr,
                 quickvalue: txtValue
             })
@@ -141,10 +147,12 @@ WorkerScript.onMessage = function (msg) {
             txtName = msg.result[i].name
             txtDescr = msg.result[i].descr
             txtValue = msg.result[i].value
+
             msg.model.append({
                 quick_id: intID,
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: "",
                 descr: txtDescr,
                 quickvalue: txtValue
             })
@@ -158,6 +166,7 @@ WorkerScript.onMessage = function (msg) {
             msg.model.append({
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: "",
                 descr: "",
                 quickvalue: txtValue
             })
