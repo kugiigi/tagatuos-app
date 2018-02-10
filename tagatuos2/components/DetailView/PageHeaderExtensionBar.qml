@@ -17,9 +17,6 @@ SlotsLayout {
     opacity: visible ? 1 : 0
     padding{
         top: units.gu(-0.5)
-//        bottom: units.gu(-3)
-//        leading: units.gu(-1)
-//        trailing: units.gu(-1)
     }
 
     Behavior on opacity {

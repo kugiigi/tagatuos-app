@@ -1,7 +1,9 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 import "../components"
 import "../components/Common"
+import "../components/Dialogs"
 import "../components/BaseComponents"
 
 Page {
@@ -9,6 +11,20 @@ Page {
 
     header: BaseHeader {
         title: i18n.tr("About") + " Tagatuos"
+    }
+
+    function externalLinkConfirmation(link, continueFunction){
+        var dialogConfirm = PopupUtils.open(
+                    dialogExternalLink,null,{"externalURL": link})
+
+        var continueDialog = function (answer) {
+            if(answer){
+                Qt.openUrlExternally(link)
+            }
+        }
+
+        dialogConfirm.proceed.connect(
+                    continueDialog)
     }
 
     PageBackGround {
@@ -90,7 +106,7 @@ Page {
                     }
 
                     onLinkActivated: {
-                        Qt.openUrlExternally(link)
+                        externalLinkConfirmation(link)
                     }
                 }
             }
@@ -120,7 +136,7 @@ Page {
 
 //                    action: Action {
 //                        onTriggered: {
-//                            Qt.openUrlExternally(
+//                            externalLinkConfirmation(
 //                                        "scope://com.canonical.scopes.clickstore?q=Tagatuos")
 //                        }
 //                    }
@@ -138,7 +154,7 @@ Page {
 
 //                    action: Action {
 //                        onTriggered: {
-//                            Qt.openUrlExternally(
+//                            externalLinkConfirmation(
 //                                        "https://answers.launchpad.net/tagatuos-app")
 //                        }
 //                    }
@@ -154,7 +170,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         "https://github.com/kugiigi/tagatuos-app/issues")
                         }
                     }
@@ -170,7 +186,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally('mailto:kugi_igi@yahoo.com')
+                            externalLinkConfirmation('mailto:kugi_igi@yahoo.com')
                         }
                     }
                 }
@@ -185,7 +201,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         'https://github.com/kugiigi/tagatuos-app')
                         }
                     }
@@ -201,7 +217,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2GBQRJGLZMBCL')
                         }
                     }
@@ -217,7 +233,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         "https://open.uappexplorer.com/?sort=relevance&search=author%3AKugi%20Eusebio")
                         }
                     }
@@ -237,7 +253,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         'https://github.com/kugiigi')
                         }
                     }
@@ -255,7 +271,7 @@ Page {
 
                 //                    action: Action {
                 //                        onTriggered: {
-                //                            Qt.openUrlExternally(
+                //                            externalLinkConfirmation(
                 //                                        'mailto:sander.k1007@kpnmail.nl')
                 //                        }
                 //                    }
@@ -274,7 +290,7 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally(
+                            externalLinkConfirmation(
                                         'http://openexchangerates.github.io/accounting.js/')
                         }
                     }
@@ -290,11 +306,15 @@ Page {
 
                     action: Action {
                         onTriggered: {
-                            Qt.openUrlExternally('http://momentjs.com/')
+                            externalLinkConfirmation('http://momentjs.com/')
                         }
                     }
                 }
             }
         }
+    }
+
+    DialogExternalLink {
+        id: dialogExternalLink
     }
 }

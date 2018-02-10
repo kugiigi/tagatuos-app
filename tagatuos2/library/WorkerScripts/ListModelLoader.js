@@ -21,6 +21,9 @@ WorkerScript.onMessage = function (msg) {
 
     var txtLabel
 
+    var txtCode
+    var txtSysmbol
+
     var previousSortField = ""
     var currentSortField = ""
     var childArray = []
@@ -123,9 +126,15 @@ WorkerScript.onMessage = function (msg) {
             txtName = msg.result[i].name
             txtDescr = msg.result[i].descr
             txtValue = msg.result[i].value
+
+            txtDateValue = msg.result[i].date
+            txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
+//            console.log("txtDate: " + txtDate)
+
             msg.model.append({
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: txtDate,
                 descr: txtDescr,
                 quickvalue: txtValue
             })
@@ -138,10 +147,12 @@ WorkerScript.onMessage = function (msg) {
             txtName = msg.result[i].name
             txtDescr = msg.result[i].descr
             txtValue = msg.result[i].value
+
             msg.model.append({
                 quick_id: intID,
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: "",
                 descr: txtDescr,
                 quickvalue: txtValue
             })
@@ -155,6 +166,7 @@ WorkerScript.onMessage = function (msg) {
             msg.model.append({
                 category_name: txtCategory,
                 quickname: txtName,
+                quickdate: "",
                 descr: "",
                 quickvalue: txtValue
             })
@@ -278,11 +290,23 @@ WorkerScript.onMessage = function (msg) {
         result = chartData
 
         break
+    case "Currencies":
+        for (i = 0; i < msg.result.length; i++) {
+            txtCode = msg.result[i].currency_code
+            txtDescr = msg.result[i].description
+            txtSysmbol = msg.result[i].symbol
+            msg.model.append({
+                                 currency_code: txtCode,
+                                 descr: txtDescr,
+                                 symbol: txtSysmbol
+                             })
+        }
+        break
     }
 
     if(msg.model){
        msg.model.sync() // updates the changes to the list
-       msg.model.clear() //clear model after sync to remove from memory (assumption only :))
+//       msg.model.clear() //clear model after sync to remove from memory (assumption only :))
     }
 
     WorkerScript.sendMessage({

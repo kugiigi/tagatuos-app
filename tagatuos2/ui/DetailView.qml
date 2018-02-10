@@ -70,8 +70,6 @@ Page {
         }
     }
 
-//    PageBackGround {
-//    }
 
     PageHeaderExtensionBar {
         id: pageHeaderExtension
@@ -79,11 +77,12 @@ Page {
         visible: mainPage.currentPage === "Detail"
                  && !mainPage.listView.moving ? true : false
         trailingActions: [forwardAction, backAction]
-        leadingActions: [sortAction]
+
+//        TODO: Temporarily removed since not yet implemented
+//        leadingActions: [sortAction]
         Component.onCompleted: {
             mainView.listModels.modelSortFilterExpense.model
                     = mainView.listModels.modelTodayExpenses
-            //            mainView.listModels.modelSortFilterExpense.filter.pattern = root.sort
         }
 
         onCurrentValueChanged: {
@@ -98,7 +97,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelTodayExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelTodayExpenses.totalValue
                 break
             case "recent":
                 if (mainView.listModels.modelRecentExpenses.count === 0) {
@@ -106,7 +104,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelRecentExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelRecentExpenses.totalValue
                 break
             case "yesterday":
                 if (mainView.listModels.modelYesterdayExpenses.count === 0) {
@@ -114,7 +111,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelYesterdayExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelYesterdayExpenses.totalValue
                 break
             case "thisweek":
                 if (mainView.listModels.modelThisWeekExpenses.count === 0) {
@@ -122,7 +118,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelThisWeekExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelThisWeekExpenses.totalValue
                 break
             case "thismonth":
                 if (mainView.listModels.modelThisMonthExpenses.count === 0) {
@@ -130,7 +125,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelThisMonthExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelThisMonthExpenses.totalValue
                 break
             case "lastweek":
                 if (mainView.listModels.modelLastWeekExpenses.count === 0) {
@@ -138,7 +132,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelLastWeekExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelLastWeekExpenses.totalValue
                 break
             case "lastmonth":
                 if (mainView.listModels.modelLastMonthExpenses.count === 0) {
@@ -146,7 +139,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelLastMonthExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelLastMonthExpenses.totalValue
                 break
             case "calendar-daily":
                 mainView.listModels.modelCalendarExpenses.mode = "Calendar (By Day)"
@@ -156,7 +148,6 @@ Page {
                 }
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelCalendarExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelCalendarExpenses.totalValue
                 break
             case "calendar-weekly":
                 mainView.listModels.modelCalendarExpenses.mode = "Calendar (By Week)"
@@ -189,7 +180,6 @@ Page {
             default:
                 mainView.listModels.modelSortFilterExpense.model
                         = mainView.listModels.modelRecentExpenses
-                //                mainView.listModels.modelSortFilterExpense.totalValue = mainView.listModels.modelRecentExpenses.totalValue
                 break
             }
         }
@@ -213,16 +203,17 @@ Page {
         }
     }
 
-    Action {
-        id: sortAction
+      //TODO: Temporarily removed since not yet implemented
+//    Action {
+//        id: sortAction
 
-        iconName: "sort-listitem"
-        text: i18n.tr("Sort / Filter")
-        onTriggered: {
+//        iconName: "sort-listitem"
+//        text: i18n.tr("Sort / Filter")
+//        onTriggered: {
 
-            //            tempSettings.dashboardItems = "Today;This Week;Recent"
-        }
-    }
+//            //            tempSettings.dashboardItems = "Today;This Week;Recent"
+//        }
+//    }
 
     Action {
         id: backAction

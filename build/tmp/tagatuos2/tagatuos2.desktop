@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Tagatuos
+Name[fr]=Tagatuos
 Exec=tagatuos2
 Icon=tagatuos2/tagatuos2.png
 Terminal=false

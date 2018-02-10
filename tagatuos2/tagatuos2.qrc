@@ -103,5 +103,16 @@
         <file>components/AddReport/CategoryField.qml</file>
         <file>components/Common/ExpandableListItem.qml</file>
         <file>components/Common/PoppingDialog.qml</file>
+        <file>components/Common/PopupItemSelector.qml</file>
+        <file>components/Common/PopupItemSelector/ItemSelector.qml</file>
+        <file>components/Common/PopupItemSelector/SelectorHeader.qml</file>
+        <file>components/Common/PopupItemSelector/ListItemDelegate.qml</file>
+        <file>components/Common/PopupItemSelector/SelectorToolbar.qml</file>
+        <file>components/Dialogs/DialogExternalLink.qml</file>
+        <file>library/Currencies.js</file>
+        <file>library/WorkerScripts/SimpleListModelLoader.js</file>
+        <file>components/ListModels/CurrencyModel.qml</file>
+        <file>components/QuickAddPage/QuickAddListView.qml</file>
+        <file>components/QuickAddPage/QuickAddFindToolbar.qml</file>
     </qresource>
 </RCC>

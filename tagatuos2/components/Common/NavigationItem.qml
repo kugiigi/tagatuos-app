@@ -10,6 +10,7 @@ ListItem {
     property string iconName
 
     width: parent.width
+    divider.visible: false
 
     ListItemLayout {
         id: listItemLayout

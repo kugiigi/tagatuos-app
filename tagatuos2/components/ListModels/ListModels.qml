@@ -21,6 +21,7 @@ Item {
     property alias modelReports: modelReports
     property alias modelQuickAdd: modelQuickAdd
     property alias dashboardModel: dashboardModel
+    property alias modelCurrencies: modelCurrencies
 
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
@@ -88,6 +89,9 @@ Item {
 
             case "QuickTop":
                 modelQuickAdd.loadingStatus = "Ready"
+                break
+            case "Currencies":
+                modelCurrencies.loadingStatus = "Ready"
                 break
             }
         }
@@ -676,5 +680,31 @@ Item {
 
     QuickAddModel {
         id: modelQuickAdd
+    }
+
+    ListModel {
+        id: modelCurrencies
+
+        property string loadingStatus: "Null"
+
+        function getItems() {
+            var txtName
+            var txtDescr
+            var txtColor
+            var arrResult
+
+            loadingStatus = "Loading"
+
+            modelCurrencies.clear()
+
+            arrResult = DataProcess.getCurrencies()
+
+            var msg = {
+                result: arrResult,
+                model: modelCurrencies,
+                mode: 'Currencies'
+            }
+            workerLoader.sendMessage(msg)
+        }
     }
 }

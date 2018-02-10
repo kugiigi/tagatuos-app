@@ -21,13 +21,32 @@ ListView{
         onClicked: bottomBarNavigation.currentIndex = index
     }
 
+
+    model: [{
+            title: i18n.tr("Recent"),
+            icon: "history",
+            type: "recent"
+        }, {
+            title: i18n.tr("Quick List"),
+            icon: "bookmark",
+            type: "list"
+        }, {
+            title: i18n.tr("Most Used"),
+            icon: "view-list-symbolic",
+            type: "top"
+        }]
+    height: units.gu(8)
+    anchors {
+        bottom: contents.bottom
+        left: parent.left
+        right: parent.right
+    }
+
     ListItems.ThinDivider {
         anchors {
             top: bottomBarNavigation.top
             left: parent.left
             right: parent.right
-//            leftMargin: units.gu(1)
-//            rightMargin: units.gu(1)
         }
     }
 

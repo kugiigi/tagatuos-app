@@ -53,7 +53,7 @@ Item {
         //spacing: units.gu(1)
         visible: false
 
-        opacity: parent.parent.parent.height <= heightLimit ? 0 : 1
+        opacity: !parent.parent.parent ? 1 : parent.parent.parent.height <= heightLimit ? 0 : 1
 
         anchors {
             top: loadingIndicator.bottom

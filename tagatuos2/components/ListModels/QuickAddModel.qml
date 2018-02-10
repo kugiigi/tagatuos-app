@@ -2,7 +2,6 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import "../BaseComponents"
 import "../../library/DataProcess.js" as DataProcess
-import "../../library/ApplicationFunctions.js" as AppFunctions
 
 BaseListModel {
     id: rootModel
@@ -15,7 +14,7 @@ BaseListModel {
         switch(type){
         case "recent":
             mode = "QuickRecent"
-            arrResult = DataProcess.getRecentExpenses()
+            arrResult = DataProcess.getRecentExpenses(searchText)
             break
         case "list":
             mode = "QuickAdd"

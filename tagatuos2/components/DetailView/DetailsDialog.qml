@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import "../Common"
 
 Item {
     id: root
@@ -10,12 +11,16 @@ Item {
     property string date
     property string value
 
-    height: column.height + units.gu(3)//childrenRect.height + units.gu(3)
+    signal closed
+
+    //height: column.height + units.gu(3)//childrenRect.height + units.gu(3)
 
 //    anchors {
 //        left: parent!== null ? parent.left : undefined
 //        right: parent!== null ? parent.right : undefined
 //    }
+
+    anchors.fill: parent
 
     Column {
         id: column
@@ -56,6 +61,29 @@ Item {
             id: valueItem
             label: i18n.tr("Value:")
             text: root.value
+        }
+    }
+
+    Item{
+        height: units.gu(5)
+        anchors{
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+
+        ActionButtonDelegate{
+
+            anchors{
+                left: parent.left
+                right: parent.right
+            }
+
+            action: Action{
+                iconName: "close"
+                text: i18n.tr("Close")
+                onTriggered: root.closed()
+            }
         }
     }
 }

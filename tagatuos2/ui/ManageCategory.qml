@@ -35,8 +35,6 @@ Page {
         ]
     }
 
-//    PageBackGround{}
-
 
     BottomEdge {
         id: bottomEdgePage
@@ -176,11 +174,11 @@ Page {
 
             delegate: ListItem {
                 id: listWithActions
-//                divider.colorFrom: UbuntuColors.darkGrey
-//                divider.colorTo: UbuntuColors.warmGrey
-//                highlightColor: "#2D371300"
+
                 property int currentIndex: index
                 property string itemAction: dialogResponse
+
+                divider.visible: false
 
                 Rectangle{
                     id: categoryColorRec
@@ -197,8 +195,6 @@ Page {
                 ListItemLayout {
                     id: layout
                     title.text: category_name
-//                    title.color: theme.palette.normal.background
-//                    subtitle.color: theme.palette.normal.background //baseText
                     subtitle.text: descr
                 }
 

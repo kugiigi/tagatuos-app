@@ -486,6 +486,8 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/BottomEdge/InitialRectangle.qml \
 		../../tagatuos2/components/QuickAddPage/QuickAddItem.qml \
 		../../tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddListView.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml \
 		../../tagatuos2/components/QuickAddPage/BottomBarNavigation.qml \
 		../../tagatuos2/components/QuickAddPage/BottomBarItem.qml \
 		../../tagatuos2/components/ListModels/ListModels.qml \
@@ -493,11 +495,13 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/ListModels/QuickAddModel.qml \
 		../../tagatuos2/components/ListModels/ChartModel.qml \
 		../../tagatuos2/components/ListModels/ExpenseAutoCompleteListModel.qml \
+		../../tagatuos2/components/ListModels/CurrencyModel.qml \
 		../../tagatuos2/components/Common/ActionButtonDelegate.qml \
 		../../tagatuos2/components/Common/LoadingComponent.qml \
 		../../tagatuos2/components/Common/ListItemSectionHeader.qml \
 		../../tagatuos2/components/Common/SnappingFlickable.qml \
 		../../tagatuos2/components/Common/TextualButtonStyle.qml \
+		../../tagatuos2/components/Common/PopupItemSelector.qml \
 		../../tagatuos2/components/Common/NoSelectedPage.qml \
 		../../tagatuos2/components/Common/EmptyState.qml \
 		../../tagatuos2/components/Common/CheckBoxItem.qml \
@@ -514,6 +518,10 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Common/NavigationItem.qml \
 		../../tagatuos2/components/Common/ListViewHover.qml \
 		../../tagatuos2/components/Common/ColumnFlow.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/ItemSelector.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml \
+		../../tagatuos2/components/Common/PopupItemSelector/ListItemDelegate.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPickerPopup.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPicker.qml \
 		../../tagatuos2/components/Dashboard/DashboardItem.qml \
@@ -525,6 +533,7 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Dashboard/FlowItems.qml \
 		../../tagatuos2/components/BaseComponents/BaseListModel.qml \
 		../../tagatuos2/components/BaseComponents/BaseHeader.qml \
+		../../tagatuos2/components/Dialogs/DialogExternalLink.qml \
 		../../tagatuos2/components/QChart/ChartLegend.qml \
 		../../tagatuos2/components/QChart/QChart.qml \
 		../../tagatuos2/components/QChart/Chart.qml \
@@ -557,7 +566,9 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/library/accounting.js \
 		../../tagatuos2/library/DataProcess.js \
 		../../tagatuos2/library/wait.js \
+		../../tagatuos2/library/Currencies.js \
 		../../tagatuos2/library/DBUtilities.js \
+		../../tagatuos2/library/WorkerScripts/SimpleListModelLoader.js \
 		../../tagatuos2/library/WorkerScripts/ListModelLoader.js
 	/usr/lib/arm-linux-gnueabihf/qt5/bin/rcc -name tagatuos2 ../../tagatuos2/tagatuos2.qrc -o qrc_tagatuos2.cpp
 

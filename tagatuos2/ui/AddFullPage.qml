@@ -30,8 +30,8 @@ Page {
     onVisibleChanged: {
         if (visible === true) {
             resetFields()
-            mainView.addBottomEdge.hint.visible = false
-            mainView.addBottomEdge.hint.enabled = false
+            mainView.addBottomEdge.hint.visible = mainView.showBottomEdgeHint //false
+            mainView.addBottomEdge.hint.enabled = mainView.showBottomEdgeHint //false
             //            if (mainView.listModels.modelCategories.count === 0) {
             //                mainView.listModels.modelCategories.getItems()
             //            }
@@ -43,9 +43,7 @@ Page {
             //loads data when in edit mode
             if (root.mode === "edit") {
                 root.itemData = listModels.getExpenseDetails(root.itemID)
-
-                //                categoryItemSelector.selectSpecific(root.itemData.category_name)
-                categoryExpandable.savedValue = root.itemData.category_name
+                categoryPopupItemSelector.selectedValue = root.itemData.category_name
                 textName.text = root.itemData.name
                 autoCompletePopover.show = false //Do not show autoCompletePopover
                 textareaDescr.text = root.itemData.descr
@@ -70,30 +68,16 @@ Page {
         textName.text = ""
         textareaDescr.text = ""
         valueTextField.text = ""
-        //            categoryItemSelector.selectedIndex
-        //                    = 1 //workaround for the issue on incorrect tem shown in the selector
-        //            categoryItemSelector.selectedIndex = 0
-        categoryExpandable.selectedIndex = 0
-        categoryExpandable.savedValue = categoryExpandable.model.get(
-                    0).category_name
-        categoryExpandable.expansion.expanded = false
+
+        categoryPopupItemSelector.selectedValue = categoryPopupItemSelector.model.get(0)[categoryPopupItemSelector.valueRolename]
+
+
         dateLabel.date = new Date()
     }
     PageBackGround {
     }
 
 
-    //    Connections{
-    //        id: categoriesModel
-    //        target: listModels.modelCategories
-    //        onLoadingStatusChanged:{
-    //            if(target.loadingStatus === "Ready"){
-    //                if(root.mode === "edit"){
-    //                    categoryItemSelector.selectSpecific(root.itemData.category_name)
-    //                }
-    //            }
-    //        }
-    //    }
     Flickable {
         id: flickDialog
         boundsBehavior: Flickable.DragAndOvershootBounds
@@ -106,7 +90,6 @@ Page {
             bottom: toolBar.top
             top: parent.top
             topMargin: units.gu(2)
-            //bottomMargin: units.gu(2)
         }
 
         flickableDirection: Flickable.VerticalFlick
@@ -121,9 +104,11 @@ Page {
             }
 
             CategoryField {
-                id: categoryExpandable
+                id: categoryPopupItemSelector
 
-                onToggle: {
+                popupParent: root
+
+                onConfirmSelection: {
                     if (textName.text === "") {
                         textName.forceActiveFocus()
                     } else {
@@ -184,12 +169,16 @@ Page {
             bottom: parent.bottom
         }
 
-        //height: units.gu(3)
+        height: units.gu(6)
         trailingActionBar {
             delegate: buttonComponent
             actions: [
                 Action {
+
+                    property color color: theme.palette.normal.background
+
                     //shortcut: "Ctrl+S"
+                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
                     text: root.mode === "add" ? i18n.tr(
                                                     "Add") : i18n.tr("Update")
                     onTriggered: {
@@ -199,8 +188,7 @@ Page {
 
                         var txtName = textName.text
                         var txtDescr = textareaDescr.text
-                        var txtCategory = categoryExpandable.savedValue /*categoryItemSelector.model.get(
-                                                        categoryItemSelector.selectedIndex).category_name*/
+                        var txtCategory = categoryPopupItemSelector.selectedValue
                         var today = new Date(Process.getToday())
                         var txtDate = Process.dateFormat(0, dateLabel.date)
                         var realValue = parseFloat(valueTextField.text)
@@ -242,6 +230,8 @@ Page {
                     }
                 },
                 Action {
+                    property color color: theme.palette.normal.background
+
                     text: i18n.tr("Add as Quick")
                     onTriggered: {
                         /*Commits the OSK*/
@@ -249,7 +239,7 @@ Page {
 
                         var txtName = textName.text
                         var txtDescr = textareaDescr.text
-                        var txtCategory = categoryExpandable.savedValue
+                        var txtCategory = categoryPopupItemSelector.selectedValue
                         var realValue = parseFloat(valueTextField.text)
 
                         if (Process.checkRequired(
@@ -270,6 +260,8 @@ Page {
         leadingActionBar {
             delegate: buttonComponent
             actions: Action {
+                property color color: theme.palette.normal.background
+
                 //shortcut: "Esc"
                 text: i18n.tr("Cancel")
                 onTriggered: {
