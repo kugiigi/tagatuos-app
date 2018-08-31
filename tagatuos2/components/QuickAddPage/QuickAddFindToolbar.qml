@@ -16,6 +16,13 @@ Toolbar {
         bottom: parent.top
     }
 
+    //Force focus on the textfield when it has contents
+    function forceFocus(){
+        if(findField.text !== ""){
+            findField.forceActiveFocus()
+        }
+    }
+
 
     trailingActionBar {
 
@@ -36,6 +43,7 @@ Toolbar {
             activeFocusOnPress: false
         }
     }
+
 
     Rectangle {
         z: -1
@@ -81,6 +89,14 @@ Toolbar {
             onTriggered: {
                 root.loadQuickList(findField.text)
             }
+        }
+
+        Connections{
+            id: bottomNavigationConnection
+
+            target: bottomBarNavigation
+
+            onCurrentIndexChanged: findField.text = ""
         }
     }
 }

@@ -14,13 +14,20 @@ ExpandableListItemAdvanced {
 
     trailingItemComponent: Label {
         id: totalLabel
-        text: AppFunctions.formatMoney(total, false)
+
+        property string homeMoney: AppFunctions.formatMoney(total, false)
+        property string travelMoney: tempSettings.travelMode ? AppFunctions.formatMoneyTravel(total / tempSettings.exchangeRate, false) : ""
+
+        text: !tempSettings.travelMode ? homeMoney
+                                       : (root.expansion.expanded ? '<font color=\"' + theme.palette.normal.backgroundTertiaryText + '\">' + "(" + homeMoney + ") "
+                                                                    + '</font>' + travelMoney
+                                                                  : travelMoney)
         textSize: Label.Medium
         font.weight: Font.Normal
         SlotsLayout.position: SlotsLayout.Trailing
         fontSizeMode: Text.HorizontalFit
         horizontalAlignment: Text.AlignRight
-        color: theme.palette.normal.foregroundText
+        color: tempSettings.travelMode ? theme.palette.normal.positive : theme.palette.normal.foregroundText
         minimumPixelSize: units.gu(2)
         elide: Text.ElideRight
     }

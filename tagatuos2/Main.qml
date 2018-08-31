@@ -56,7 +56,7 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.70"
+    property string current_version: "0.80"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels
@@ -99,6 +99,15 @@ MainView {
             property string dashboardItemsOrder: "Today;Yesterday;Recent;This Week;This Month;Last Week;Last Month"
             property bool startDashboard: true
             property int startingPageIndex: 1
+            property bool hideBottomHint: false
+
+            //TODO: Temporary only
+            property bool travelMode: false
+            property string travelCurrency: "USD"
+            property real exchangeRate: 1.0
+            property bool fetchExchangeRate: false
+            property string exchangeRateJSON: ""
+            property string exchangeRateDate: ""
 
             // Session Settings (not stored)
             property string currentCurrencySymbol: "8369"
@@ -106,6 +115,12 @@ MainView {
             property string currentCurrencyThousand: ","
             property int currentCurrencyPrecision: 2
             property string currentCurrencyFormat: "%s%v"
+
+            property string travelCurrencySymbol: "$"
+            property string travelCurrencyDecimal: "."
+            property string travelCurrencyThousand: ","
+            property int travelCurrencyPrecision: 2
+            property string travelCurrencyFormat: "%s%v"
 
             function loadCurrencyData() {
                 var currency = Currencies.currency(currentCurrency)
@@ -117,15 +132,30 @@ MainView {
                 currentCurrencyFormat = currency.format
             }
 
+            function loadTravelCurrencyData() {
+                var currency = Currencies.currency(travelCurrency)
+
+                travelCurrencySymbol = currency.symbol
+                travelCurrencyDecimal = currency.decimal
+                travelCurrencyThousand = currency.thousand
+                travelCurrencyPrecision = currency.precision
+                travelCurrencyFormat = currency.format
+            }
+
 
             //        onDashboardItemsChanged: mainView.listModels.dashboardModel.initialise()
             onCurrentCurrencyChanged: {
                 loadCurrencyData()
             }
 
+            onTravelCurrencyChanged: {
+                loadTravelCurrencyData()
+            }
+
             // Initiate temporary values
             Component.onCompleted: {
                 loadCurrencyData()
+                loadTravelCurrencyData()
             }
 
             Settings {
@@ -135,6 +165,14 @@ MainView {
                 property alias dashboardItemsOrder: tempSettings.dashboardItemsOrder
                 property alias startDashboard: tempSettings.startDashboard
                 property alias startingPageIndex: tempSettings.startingPageIndex
+                property alias hideBottomHint: tempSettings.hideBottomHint
+
+                property alias travelMode: tempSettings.travelMode
+                property alias travelCurrency: tempSettings.travelCurrency
+                property alias exchangeRate: tempSettings.exchangeRate
+                property alias fetchExchangeRate: tempSettings.fetchExchangeRate
+                property alias exchangeRateJSON: tempSettings.exchangeRateJSON
+                property alias exchangeRateDate: tempSettings.exchangeRateDate
             }
         }
     }
@@ -264,9 +302,6 @@ MainView {
     //            }
     //        }
     //    }
-//    PopupDialog {
-//        id: popupDialog
-//    }
 
     PageStack {
         id: mainPageStack
@@ -363,5 +398,10 @@ MainView {
         }
 
         //Component.onCompleted: QuickUtils.mouseAttached = true
+    }
+
+    Connections {
+        id: keyboard
+        target: Qt.inputMethod
     }
 }

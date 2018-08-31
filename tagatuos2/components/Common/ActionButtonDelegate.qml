@@ -62,6 +62,7 @@ AbstractButton {
             id: label
 
             text: action.text
+            renderType: Text.QtRendering
             font.weight: Font.Normal
         }
     }

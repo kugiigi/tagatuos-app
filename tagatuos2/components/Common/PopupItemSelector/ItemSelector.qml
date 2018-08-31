@@ -7,7 +7,6 @@ Item {
     property alias model: listView.model
     property alias title: selectorHeader.title
 
-    anchors.fill: parent
     clip: true
 
 

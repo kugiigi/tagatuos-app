@@ -13,7 +13,8 @@ QML_FILES += $$files(*.qml,true) \
              $$files(*.js,true)
 
 CONF_FILES +=  tagatuos2.apparmor \
-               tagatuos2.png
+               tagatuos2.png \
+               icon.svg
 
 AP_TEST_FILES += tests/autopilot/run \
                  $$files(tests/*.py,true)
@@ -34,7 +35,25 @@ OTHER_FILES += $${CONF_FILES} \
     components/ListModels/CurrencyModel.qml \
     library/WorkerScripts/SimpleListModelLoader.js \
     components/QuickAddPage/QuickAddListView.qml \
-    components/QuickAddPage/QuickAddFindToolbar.qml
+    components/QuickAddPage/QuickAddFindToolbar.qml \
+    components/DetailDialog/DetailDescription.qml \
+    components/DetailDialog.qml \
+    components/DetailDialog/DetailCategory.qml \
+    components/DetailDialog/DetailDate.qml \
+    components/DetailDialog/DetailValue.qml \
+    components/DetailDialog/DetailName.qml \
+    components/Common/PoppingDialog2.qml \
+    components/Common/PoppingItemSelector2.qml \
+    components/Common/PopupItemSelector2/ItemSelector2.qml \
+    components/Common/PopupItemSelector2/ListItemDelegate2.qml \
+    components/Common/PopupItemSelector2/SelectorHeader2.qml \
+    components/Common/PopupItemSelector2/SelectorToolbar2.qml \
+    components/Common/NavigationWithState.qml \
+    ui/TravelPage.qml \
+    components/Common/SwitchItem.qml \
+    components/TravelPage/RateField.qml \
+    components/AddFullPage/TravelFields.qml \
+    components/AddFullPage/EditCurrencyFields.qml
 
 #specify where the config files are installed to
 config_files.path = /tagatuos2

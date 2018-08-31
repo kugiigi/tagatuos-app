@@ -3,7 +3,7 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Themes.Ambiance 1.3
 
 Column {
-    id: root
+    id: commentsField
 
     property alias text: textareaDescr.text
 
@@ -14,6 +14,10 @@ Column {
         right: parent.right
         leftMargin: units.gu(2)
         rightMargin: units.gu(2)
+    }
+
+    function forceFocus(){
+        textareaDescr.forceActiveFocus()
     }
 
     Label {
@@ -40,6 +44,12 @@ Column {
             background: Item {
             }
             color: theme.palette.normal.overlayText
+        }
+
+        onActiveFocusChanged: {
+            if(activeFocus){
+                root.elementWithFocus = "Comments"
+            }
         }
     }
 

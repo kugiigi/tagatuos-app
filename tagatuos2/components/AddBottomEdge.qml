@@ -36,6 +36,7 @@ BottomEdge {
 
 
     hint {
+        opacity: tempSettings.hideBottomHint ? 0 : 1
         action: Action {
             text: i18n.tr("New Expense")
             iconName: "add"

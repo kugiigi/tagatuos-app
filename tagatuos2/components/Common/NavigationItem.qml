@@ -8,6 +8,7 @@ ListItem {
     property alias titleText: listItemLayout.title
     property alias subText: listItemLayout.subtitle
     property string iconName
+    property alias iconColor: icon.color
 
     width: parent.width
     divider.visible: false
@@ -24,6 +25,7 @@ ListItem {
         ProgressionSlot{}
 
         Icon {
+            id: icon
             name: iconName
             SlotsLayout.position: SlotsLayout.Leading
             width: units.gu(3)

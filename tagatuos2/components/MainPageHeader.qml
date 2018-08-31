@@ -25,15 +25,26 @@ BaseHeader {
         }
     }
 
-    contents: Label {
-        text: root.title
-        textSize: Label.Large
-        font.weight: Font.Normal
+    contents: Row{
         anchors.centerIn: parent
-        fontSizeMode: Text.HorizontalFit
-        //horizontalAlignment: Text.Center
-        color: theme.palette.normal.foregroundText
-        minimumPixelSize: units.gu(3)
-        elide: Text.ElideRight
+        spacing: units.gu(1)
+        Icon{
+            visible: tempSettings.travelMode
+            color: theme.palette.normal.positive
+            name: "airplane-mode"
+            height: parent.height//units.gu(2.5)
+            width: height
+        }
+
+        Label {
+            text: root.title
+            textSize: Label.Large
+            font.weight: Font.Normal
+            //        anchors.centerIn: parent
+            fontSizeMode: Text.HorizontalFit
+            color: tempSettings.travelMode ? theme.palette.normal.positive : theme.palette.normal.foregroundText
+            minimumPixelSize: units.gu(3)
+            elide: Text.ElideRight
+        }
     }
 }

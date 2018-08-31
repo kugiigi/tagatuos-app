@@ -8,20 +8,14 @@ Item {
     property alias subTitle: activitySubTitle.text
     readonly property real widthLimit: units.gu(30)
     readonly property real heightLimit: units.gu(40)
+    property bool withBackground: false
 
 
     //anchors.fill: parent
-    height: childrenRect.height
+    height: withBackground && backgroundLoader.item ? childrenRect.height - backgroundLoader.item.height : childrenRect.height
     anchors.left: parent.left
     anchors.right: parent.right
 
-
-    //    anchors {
-    //        right: parent.right
-    //        left: parent.left
-    //        verticalCenter: parent.verticalCenter
-    //        margins: units.gu(1)
-    //    }
     onVisibleChanged: {
         if (visible) {
             timer.start()
@@ -33,10 +27,10 @@ Item {
 
     ActivityIndicator {
         id: loadingIndicator
-        //anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
         running: true
     }
+
 
     Timer {
         id: timer
@@ -50,7 +44,6 @@ Item {
     Column {
         id: columnTexts
 
-        //spacing: units.gu(1)
         visible: false
 
         opacity: !parent.parent.parent ? 1 : parent.parent.parent.height <= heightLimit ? 0 : 1
@@ -87,4 +80,29 @@ Item {
             }
         }
     }
+
+    Component {
+        id: backgroundComponent
+
+        Rectangle{
+            color: theme.palette.normal.overlay
+            opacity: 0.7
+        }
+    }
+
+    Loader {
+        id: backgroundLoader
+
+        active: withBackground
+        asynchronous: true
+        visible: status == Loader.Ready
+        sourceComponent: backgroundComponent
+        anchors.centerIn: parent
+        z: -1
+        onLoaded: {
+            item.height = root.parent.height
+            item.width = root.parent.width
+        }
+    }
+
 }

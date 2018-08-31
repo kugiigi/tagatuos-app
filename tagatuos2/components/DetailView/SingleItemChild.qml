@@ -1,16 +1,23 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
+import "../../library/ApplicationFunctions.js" as AppFunctions
 
 ListItem {
-    id: root
+    id: singleItemChild
 
     property string itemName
     property string itemValue
     property string itemDescr
     property string itemDate
+    property real itemTravelRate
+    property string itemHomeCurrency
+    property string itemTravelCurrency
+    property string itemTravelValue
     property alias actions: actionList.actions
+
     property bool actionActive: false
+    property bool showTravelValue: tempSettings.travelMode
 
     divider {
         visible: false
@@ -20,61 +27,77 @@ ListItem {
         }
     }
 
+    onClicked: {
+        if(tempSettings.travelMode){
+            showTravelValue = !showTravelValue
+        }
+    }
 
-//    action: Action {
-//        onTriggered: {
-////            root.actionActive = true
-////            PopupUtils.open(actionsPopoverComponent, root)
-//        }
-//    }
 
     onPressAndHold: {
-        PopupUtils.open(actionsPopoverComponent, root)
+        PopupUtils.open(actionsPopoverComponent, singleItemChild)
     }
+
+//    onItemValueChanged: fieldsColumn.refresh()
+//    onItemDateChanged: fieldsColumn.refresh()
+    onShowTravelValueChanged: fieldsColumn.refresh()
 
 
     highlightColor: theme.palette.highlighted.background //overlay
 
     ListItemLayout {
-        title.text: root.itemName
-        subtitle.text: root.itemDescr
+        title.text: singleItemChild.itemName
+        subtitle.text: singleItemChild.itemDescr
 
         Column {
+            id: fieldsColumn
+
             SlotsLayout.position: SlotsLayout.Trailing
             spacing: units.gu(0.5)
 
             //WORKAROUND: Dynamic setting of width depending on which is longer to retain right alignment
             Component.onCompleted: {
-                dateLabel.text = root.itemDate
-                valueLabel.text = root.itemValue
+                refresh()
+            }
+
+            function refresh(){
+//                valueLabel.text = singleItemChild.showTravelValue ? AppFunctions.formatMoneyTravel(singleItemChild.itemValue / tempSettings.exchangeRate, false) : AppFunctions.formatMoney(singleItemChild.itemValue, false)
+//                valueLabel.text = singleItemChild.showTravelValue ? singleItemChild.itemTravelValue : singleItemChild.itemValue
+//                dateLabel.text = singleItemChild.itemDate
+
                 if (dateLabel.width > valueLabel.width) {
                     width = dateLabel.width
-                    valueLabel.width = dateLabel.width
+//                    valueLabel.width = dateLabel.width
                 } else {
                     width = valueLabel.width
-                    dateLabel.width = valueLabel.width
+//                    dateLabel.width = valueLabel.width
                 }
             }
 
             Label {
                 id: dateLabel
-                //text: root.itemDate
+                text: singleItemChild.itemDate
                 textSize: Label.Small
                 fontSizeMode: Text.HorizontalFit
                 horizontalAlignment: Text.AlignRight
                 color: theme.palette.normal.foregroundText
                 minimumPixelSize: units.gu(2)
                 elide: Text.ElideRight
+                anchors.right: parent.right
+                onTextChanged: fieldsColumn.refresh()
             }
             Label {
                 id: valueLabel
-                //text: root.itemValue
+                text: singleItemChild.itemValue
                 textSize: Label.Medium
                 font.weight: Font.Normal
                 fontSizeMode: Text.HorizontalFit
                 horizontalAlignment: Text.AlignRight
                 minimumPixelSize: units.gu(2)
                 elide: Text.ElideRight
+                color: singleItemChild.showTravelValue && tempSettings.travelMode ? theme.palette.normal.positive : theme.palette.normal.backgroundText
+                anchors.right: parent.right
+                onTextChanged: fieldsColumn.refresh()
             }
         }
     }
@@ -89,7 +112,7 @@ ListItem {
         ActionSelectionPopover {
             id: actionsPopover
 
-            actions: root.actions
+            actions: singleItemChild.actions
 
 //            delegate:
 //                ActionDelegate {
@@ -98,10 +121,10 @@ ListItem {
 //            }
 
             onVisibleChanged: {
-                root.actionActive = visible ? true : false
+                singleItemChild.actionActive = visible ? true : false
             }
 
-            target: root
+            target: singleItemChild
         }
     }
 }

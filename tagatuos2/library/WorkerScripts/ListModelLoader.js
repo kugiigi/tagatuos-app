@@ -24,6 +24,11 @@ WorkerScript.onMessage = function (msg) {
     var txtCode
     var txtSysmbol
 
+    var realTravelValue
+    var realRate
+    var txtHomeCur
+    var txtTravelCur
+
     var previousSortField = ""
     var currentSortField = ""
     var childArray = []
@@ -66,6 +71,10 @@ WorkerScript.onMessage = function (msg) {
             txtDateValue = msg.result[i].date
             txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
             txtValue = msg.result[i].value
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
 
             currentSortField = txtCategory
 
@@ -78,7 +87,11 @@ WorkerScript.onMessage = function (msg) {
                                     descr: txtDescr,
                                     date: txtDate,
                                     dateValue: txtDateValue,
-                                    value: txtValue
+                                    value: txtValue,
+                                    rate: realRate,
+                                    homeCur: txtHomeCur,
+                                    travelCur: txtTravelCur,
+                                    travel_value: realTravelValue
                                 })
                 msg.model.append({
                                      category_name: txtCategory,
@@ -99,11 +112,16 @@ WorkerScript.onMessage = function (msg) {
                                                                   descr: txtDescr,
                                                                   date: txtDate,
                                                                   dateValue: txtDateValue,
-                                                                  value: txtValue
+                                                                  value: txtValue,
+                                                                  rate: realRate,
+                                                                  homeCur: txtHomeCur,
+                                                                  travelCur: txtTravelCur,
+                                                                  travel_value: realTravelValue
                                                               })
 
-                msg.model.setProperty(currentIndex, "total", Math.round(
-                                          (totalValue + txtValue) * 100) / 100)
+//                msg.model.setProperty(currentIndex, "total", Math.round(
+//                                          (totalValue + txtValue) * 100) / 100)
+                msg.model.setProperty(currentIndex, "total", totalValue + txtValue)
                 msg.model.setProperty(currentIndex, "count", currentCount + 1)
             }
 

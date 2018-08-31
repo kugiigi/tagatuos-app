@@ -81,6 +81,7 @@ ListItem {
             id: itemSelector
             model: root.model
             title: root.titleText
+//            anchors.fill: parent
 
 //            Component.onCompleted: itemSelector.initializeSelectedValues(root.selectedValue)
         }

@@ -78,6 +78,15 @@ Page {
                     }
                 }
 
+                CheckBoxItem {
+                    titleText.text: i18n.tr("Hide bottom edge hint")
+                    bindValue: tempSettings.hideBottomHint
+                    divider.visible: false
+                    onCheckboxValueChanged: {
+                        tempSettings.hideBottomHint = checkboxValue
+                    }
+                }
+
                 ExpandableListItemAdvanced {
                     id: themeExpandedListItem
                     listViewHeight: units.gu(21)
@@ -103,7 +112,7 @@ Page {
                     function initialise() {
                         themesModel.append({
                                                value: "",
-                                               text: i18n.tr("Systems")
+                                               text: i18n.tr("System")
                                            })
                         themesModel.append({
                                                value: "Ubuntu.Components.Themes.Ambiance",
@@ -143,30 +152,27 @@ Page {
 
                 }
 
-                ListModel {
-                    id: currencyModel
-                    Component.onCompleted: initialise()
+//                PoppingItemSelector2{
+//                    id: dashboardPopupItemSelector2
 
-                    function initialise() {
-                        currencyModel.append({
-                                               value: "ARS",
-                                               text: i18n.tr("Argentina Peso")
-                                           })
-                        currencyModel.append({
-                                               value: "PHP",
-                                               text: i18n.tr("Philippines Peso")
-                                           })
-                        currencyModel.append({
-                                               value: "USD",
-                                               text: i18n.tr("US Dollars")
-                                           })
-                        currencyModel.append({
-                                               value: "GBP",
-                                               text: i18n.tr("United Kingdom Pound")
-                                           })
-//                        currencyPopupItemSelector.model = currencyModel
-                    }
-                }
+//                    titleText: i18n.tr("Dashboard 2")
+//                    selectedValue: tempSettings.dashboardItems
+//                    popupParent: settingsPage
+//                    multipleSelection: true
+//                    withOrdering: true
+
+//                    anchors{
+//                        left: parent.left
+//                        right: parent.right
+//                    }
+
+//                    onConfirmSelection: {
+//                        tempSettings.dashboardItems = selections //.replace(/, /g,";")
+//                        tempSettings.dashboardItemsOrder = selectionsOrder //.replace(/, /g,";")
+//                    }
+
+//                }
+
 
                 PopupItemSelector{
                     id: dashboardPopupItemSelector
@@ -250,6 +256,27 @@ Page {
                             }
                         }
                         dashboardPopupItemSelector.model = dashboardItemsModel
+//                        dashboardPopupItemSelector2.model = dashboardItemsModel
+                    }
+                }
+
+
+                NavigationWithState {
+                    id: travelMode
+                    titleText.text:  i18n.tr("Travel Mode")
+                    iconName: "airplane-mode" //"stock_website"
+                    isActive: tempSettings.travelMode
+
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            mainPageStack.push(Qt.resolvedUrl("TravelPage.qml"))
+                        }
                     }
                 }
 

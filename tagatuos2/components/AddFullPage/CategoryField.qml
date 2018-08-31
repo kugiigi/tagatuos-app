@@ -13,6 +13,7 @@ PopupItemSelector{
     textRolename: "category_name"
     divider.visible: false
     commitOnSelect: true
+//    forceFullscreen: true
 
     title.textSize: Label.Medium
     title.font.weight: Text.Normal
@@ -20,5 +21,11 @@ PopupItemSelector{
 
     onConfirmSelection: {
         selectedValue = selections
+    }
+
+    onActiveFocusChanged: {
+        if(activeFocus){
+            root.resetFocus()
+        }
     }
 }

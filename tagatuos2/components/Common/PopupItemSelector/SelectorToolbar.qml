@@ -51,7 +51,6 @@ Toolbar {
                 iconName: "ok"
                 text: i18n.tr("OK")
                 onTriggered: {
-//                    poppingDialog.close()
                     root.confirmSelection(itemSelector.getReturnValue(),
                                           itemSelector.geValuesOrder())
                 }

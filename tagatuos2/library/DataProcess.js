@@ -48,22 +48,25 @@ function createMetaViews() {
         tx.executeSql("DROP VIEW IF EXISTS expenses_recent")
         tx.executeSql("DROP VIEW IF EXISTS expenses_lastweek")
         tx.executeSql("DROP VIEW IF EXISTS expenses_lastmonth")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_vw")
 
 
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_today AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) = date('now','localtime')")
+                    "CREATE VIEW IF NOT EXISTS expenses_today AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) = date('now','localtime')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_yesterday AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) = date('now','localtime','-1 day')")
+                    "CREATE VIEW IF NOT EXISTS expenses_yesterday AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) = date('now','localtime','-1 day')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_thisweek AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) BETWEEN date('now','localtime','weekday 6','-6 days') AND date('now','localtime','weekday 6')")
+                    "CREATE VIEW IF NOT EXISTS expenses_thisweek AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) BETWEEN date('now','localtime','weekday 6','-6 days') AND date('now','localtime','weekday 6')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_thismonth AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) BETWEEN date('now', 'localtime', 'start of month')  AND date('now','localtime','start of month','+1 month','-1 day')")
+                    "CREATE VIEW IF NOT EXISTS expenses_thismonth AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) BETWEEN date('now', 'localtime', 'start of month')  AND date('now','localtime','start of month','+1 month','-1 day')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_recent AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) BETWEEN date('now','localtime','-7 day') AND date('now','localtime')")
+                    "CREATE VIEW IF NOT EXISTS expenses_recent AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) BETWEEN date('now','localtime','-7 day') AND date('now','localtime')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_lastweek AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) BETWEEN date('now','localtime','weekday 6', '-13 days') AND date('now','localtime','weekday 6', '-7 days')")
+                    "CREATE VIEW IF NOT EXISTS expenses_lastweek AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) BETWEEN date('now','localtime','weekday 6', '-13 days') AND date('now','localtime','weekday 6', '-7 days')")
         tx.executeSql(
-                    "CREATE VIEW IF NOT EXISTS expenses_lastmonth AS SELECT expense_id, category_name, name, descr, date, value FROM expenses WHERE date(date) BETWEEN date('now','localtime','start of month','-1 month') AND date('now','localtime','start of month','-1 day')")
+                    "CREATE VIEW IF NOT EXISTS expenses_lastmonth AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) WHERE date(a.date) BETWEEN date('now','localtime','start of month','-1 month') AND date('now','localtime','start of month','-1 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_vw AS SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id)")
     })
 }
 
@@ -131,6 +134,9 @@ function databaseUpgrade(currentVersion) {
     if (currentVersion < 2) {
         executeUserVersion2()
     }
+    if (currentVersion < 3) {
+        executeUserVersion3()
+    }
 }
 
 //Database Changes for User Version 1
@@ -171,6 +177,7 @@ function executeUserVersion2() {
     console.log("Database Upgraded to 2")
     upgradeUserVersion()
 }
+
 
 function createCurrenciesRecord(){
     var db = openDB()
@@ -302,6 +309,26 @@ function createInitialCurrencies() {
     })
 }
 
+//Database Changes for User Version 3
+// Version 0.80
+function executeUserVersion3() {
+    createTravelRecord()
+    createMetaViews()
+    console.log("Database Upgraded to 3")
+    upgradeUserVersion()
+}
+
+
+function createTravelRecord(){
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql(
+                     "CREATE TABLE `travel_expenses` (`expense_id`	INTEGER,`home_currency`	TEXT,`travel_currency`	TEXT,`rate`	REAL, `value` REAL,PRIMARY KEY(expense_id));")
+    })
+
+}
+
 
 
 
@@ -313,7 +340,7 @@ function getExpenses(mode, sort, dateFilter1, dateFilter2) {
     var txtSelectStatement = ""
     var txtWhereStatement = ""
     var txtOrderStatement = ""
-    var txtSelectView = "expenses"
+    var txtSelectView = "expenses_vw"
 
     switch (mode) {
     case "Today":
@@ -363,7 +390,7 @@ function getExpenses(mode, sort, dateFilter1, dateFilter2) {
         break
     }
 
-    txtSelectStatement = 'SELECT expense_id, category_name, name, descr, date, value FROM '
+    txtSelectStatement = 'SELECT expense_id, category_name, name, descr, date, value, home_currency, travel_currency, rate, travel_value FROM '
     txtSelectStatement = txtSelectStatement + txtSelectView + txtWhereStatement + txtOrderStatement
 
 //    console.log(txtSelectStatement)
@@ -407,6 +434,12 @@ function getExpenseData(id) {
             arrResults[i] = rs.rows.item(i)
         }
     })
+
+    //Get Travel Data
+    var arrTravelData = getTravelData(id)
+    if(arrTravelData){
+        arrResults[0].travel = arrTravelData
+    }
 
     return arrResults[0]
 }
@@ -636,7 +669,7 @@ function getExpenseBreakdown(range, category, exception, dateFilter1, dateFilter
     return arrResults
 }
 
-function saveExpense(txtCategory, txtName, txtDescr, txtDate, realValue) {
+function saveExpense(txtCategory, txtName, txtDescr, txtDate, realValue, travelData) {
     var txtSaveStatement
     var db = openDB()
     var rs = null
@@ -648,22 +681,29 @@ function saveExpense(txtCategory, txtName, txtDescr, txtDate, realValue) {
     db.transaction(function (tx) {
         tx.executeSql(txtSaveStatement,
                       [txtCategory, txtName, txtDescr, txtDate, realValue])
+
         rs = tx.executeSql("SELECT MAX(expense_id) as id FROM expenses")
         newID = rs.rows.item(0).id
+        //Save Travel Data
+        if(travelData){
+            saveTravelExpense(newID, travelData.homeCur, travelData.travelCur, travelData.rate, travelData.value)
+        }
         newChecklist = {
             expense_id: newID,
             category_name: txtCategory,
             name: txtName,
             descr: txtDescr,
             date: txtDate,
-            value: realValue
+            value: realValue,
+            travel: travelData
         }
     })
+
 
     return newChecklist
 }
 
-function updateExpense(id, category, name, descr, date, value) {
+function updateExpense(id, category, name, descr, date, value, travelData) {
     var db = openDB()
 
     db.transaction(function (tx) {
@@ -671,6 +711,11 @@ function updateExpense(id, category, name, descr, date, value) {
                     "UPDATE expenses SET category_name = ?, name = ?, descr = ?, date = ?, value = ? WHERE expense_id = ?",
                     [category, name, descr, date, value, id])
     })
+
+    //Update Travel Data
+    if(travelData){
+        updateTravelExpense(id, travelData.homeCur, travelData.travelCur, travelData.rate, travelData.value)
+    }
 }
 
 function deleteExpense(id) {
@@ -678,6 +723,68 @@ function deleteExpense(id) {
     var db = openDB()
 
     txtDeleteStatement = 'DELETE FROM expenses WHERE expense_id = ?'
+
+    db.transaction(function (tx) {
+        tx.executeSql(txtDeleteStatement, [id])
+    })
+
+    //Delete Travel Data
+    deleteTravelExpense(id)
+}
+
+
+//Travel Data
+function getTravelData(id) {
+    var db = openDB()
+    var arrResults = []
+    var rs = null
+
+    db.transaction(function (tx) {
+        rs = tx.executeSql("SELECT * FROM travel_expenses WHERE expense_id = ?", [id])
+        arrResults.length = rs.rows.length
+
+        for (var i = 0; i < rs.rows.length; i++) {
+            //add new row in the array
+            arrResults[i] = []
+
+            //assign values to the array
+            arrResults[i] = rs.rows.item(i)
+        }
+    })
+
+    return arrResults[0]
+}
+
+function saveTravelExpense(id, homeCurrency, travelCurrency, rate, value ) {
+    var txtSaveStatement
+    var db = openDB()
+    var rs = null
+    var newID
+    var newChecklist
+
+    txtSaveStatement = 'INSERT INTO travel_expenses(expense_id,home_currency,travel_currency,rate,value) VALUES(?,?,?,?,?)'
+
+    db.transaction(function (tx) {
+        tx.executeSql(txtSaveStatement,
+                      [id, homeCurrency, travelCurrency, rate, value])
+    })
+}
+
+function updateTravelExpense(id, homeCurrency, travelCurrency, rate, value) {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql(
+                    "UPDATE travel_expenses SET home_currency = ?, travel_currency = ?, rate = ?, value = ? WHERE expense_id = ?",
+                    [homeCurrency, travelCurrency, rate, value, id])
+    })
+}
+
+function deleteTravelExpense(id) {
+    var txtDeleteStatement
+    var db = openDB()
+
+    txtDeleteStatement = 'DELETE FROM travel_expenses WHERE expense_id = ?'
 
     db.transaction(function (tx) {
         tx.executeSql(txtDeleteStatement, [id])

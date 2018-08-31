@@ -3,7 +3,7 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Pickers 1.3
 
 Column {
-    id: root
+    id: dateField
 
     property alias date: dateLabel.date
 //    spacing: units.gu(1)
@@ -41,6 +41,12 @@ Column {
 
         onClicked: {
             dateAction.trigger()
+        }
+
+        onActiveFocusChanged: {
+            if(activeFocus){
+                root.resetFocus()
+            }
         }
 
         Action {

@@ -22,6 +22,7 @@ Item {
     property alias modelQuickAdd: modelQuickAdd
     property alias dashboardModel: dashboardModel
     property alias modelCurrencies: modelCurrencies
+    property alias modelExchangeRates: modelExchangeRates
 
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
@@ -229,11 +230,16 @@ Item {
                                                          "ddd, MMM d, yyyy",
                                                          "Basic"),
                                                dateValue: newItem.date,
-                                               value: newItem.value
+                                               value: newItem.value,
+                                               homeCur: typeof newItem.travel !== "undefined" ? newItem.travel.homeCur : "",
+                                               travelCur: typeof newItem.travel !== "undefined" ? newItem.travel.travelCur : "",
+                                               rate: typeof newItem.travel !== "undefined" ? newItem.travel.rate : 0,
+                                               travel_value: typeof newItem.travel !== "undefined" ? newItem.travel.value : 0
                                            })
 
-            model.setProperty(i, "total", Math.round(
-                                  (totalValue + newItem.value) * 100) / 100)
+//            model.setProperty(i, "total", Math.round(
+//                                  (totalValue + newItem.value) * 100) / 100)
+            model.setProperty(i, "total", (totalValue + newItem.value))
             model.setProperty(i, "count", currentCount + 1)
         } else {
             var childArray = []
@@ -247,7 +253,11 @@ Item {
                                                            "ddd, MMM d, yyyy",
                                                            "Basic"),
                                 dateValue: newItem.date,
-                                value: newItem.value
+                                value: newItem.value,
+                                homeCur: typeof newItem.travel !== "undefined" ? newItem.travel.homeCur : "",
+                                travelCur: typeof newItem.travel !== "undefined" ? newItem.travel.travelCur : "",
+                                rate: typeof newItem.travel !== "undefined" ? newItem.travel.rate : 0,
+                                travel_value: typeof newItem.travel !== "undefined" ? newItem.travel.value : 0
                             })
             model.append({
                              category_name: newItem.category_name,
@@ -270,10 +280,11 @@ Item {
                 expenseID = childModel.get(j).expense_id
 
                 if (expenseID == updatedItem.expense_id) {
-                    model.setProperty(
-                                i, "total", Math.round(
-                                    ((model.get(i).total - childModel.get(
-                                          j).value) + updatedItem.value) * 100) / 100)
+//                    model.setProperty(
+//                                i, "total", Math.round(
+//                                    ((model.get(i).total - childModel.get(
+//                                          j).value) + updatedItem.value) * 100) / 100)
+                    model.setProperty(i, "total", ((model.get(i).total - childModel.get(j).value) + updatedItem.value))
 
                     model.get(i).childModel.setProperty(
                                 j, "category_name", updatedItem.category_name)
@@ -291,6 +302,18 @@ Item {
                     model.get(i).childModel.setProperty(j, "value",
                                                         updatedItem.value)
                     //                    model.setProperty(i, "childModel",childModel)
+
+                    //Travel Data
+                    if(typeof updatedItem.travel !== "undefined"){
+                        model.get(i).childModel.setProperty(j, "homeCur",
+                                                            updatedItem.travel.homeCur)
+                        model.get(i).childModel.setProperty(j, "travelCur",
+                                                            updatedItem.travel.travelCur)
+                        model.get(i).childModel.setProperty(j, "rate",
+                                                            updatedItem.travel.rate)
+                        model.get(i).childModel.setProperty(j, "travel_value",
+                                                            updatedItem.travel.value)
+                    }
                     break
                 }
             }
@@ -316,9 +339,10 @@ Item {
                 if (expenseID === id) {
                     childModelCount = model.get(i).count - 1
 
-                    model.setProperty(i, "total", Math.round(
-                                          (model.get(i).total - childModel.get(
-                                               j).value) * 100) / 100)
+//                    model.setProperty(i, "total", Math.round(
+//                                          (model.get(i).total - childModel.get(
+//                                               j).value) * 100) / 100)
+                    model.setProperty(i, "total", (model.get(i).total - childModel.get(j).value))
                     model.setProperty(i, "count", childModelCount)
                     childModel.remove(j)
                     model.setProperty(i, "childModel", childModel)
@@ -389,6 +413,7 @@ Item {
     SortFilterModel {
         id: modelSortFilterExpense
         property string totalValue: getTotalValue()
+        property string totalTravelValue: getTotalTravelValue()
         property string loadingStatus: model.loadingStatus
 
         filter.property: "category_name"
@@ -403,6 +428,15 @@ Item {
                 result += modelSortFilterExpense.get(i).total
             }
             return AppFunctions.formatMoney(result, false)
+        }
+        function getTotalTravelValue() {
+            var result = 0
+            for (var i = 0; i < modelSortFilterExpense.count; i++) {
+                result += modelSortFilterExpense.get(i).total
+            }
+            result = result / tempSettings.exchangeRate
+
+            return AppFunctions.formatMoneyTravel(result, false)
         }
     }
 
@@ -620,13 +654,13 @@ Item {
         function getColor(category) {
             var i
             for (var i = 0; i < modelCategories.count; i++) {
-                if (modelCategories.get(i).categoryname === category) {
-                    i = modelCategories.count
-                    if (modelCategories.get(i) === undefined) {
-                        return "white"
-                    } else {
+                if (modelCategories.get(i).category_name === category) {
+//                    i = modelCategories.count
+//                    if (modelCategories.get(i) === undefined) {
+//                        return "white"
+//                    } else {
                         return modelCategories.get(i).colorValue
-                    }
+//                    }
                 }
             }
         }
@@ -707,4 +741,56 @@ Item {
             workerLoader.sendMessage(msg)
         }
     }
+
+    QtObject{
+        id: modelExchangeRates
+
+        property var data: JSON.parse(tempSettings.exchangeRateJSON)
+        property string appID: "624288a2010b46efa678686799b33599" //openexchangerates app ID
+        property string requestURL: encodeURI("https://openexchangerates.org/api/latest.json?app_id=" + appID)
+
+        property string tempJSON: '{
+                                "disclaimer": "Usage subject to terms: https://openexchangerates.org/terms",
+                               "license": "https://openexchangerates.org/license",
+                               "timestamp": 1534424400,
+                               "base": "USD",
+                               "rates": {
+                                 "AED": 3.673158,
+                                 "AFN": 72.750697,
+                                 "ALL": 110.22,
+                                 "AMD": 482.840272,
+                                 "EUR": 0.879867,
+                                 "PHP": 53.478,
+                                 "USD": 1
+                                 }
+                                }'
+
+
+        function fetchLatestJSON(callback){
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                //                data = JSON.parse(tempJSON)
+                //                callback(true)
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        console.log("exchange rate fetch success")
+//                        data = JSON.parse(xhr.responseText)
+                        tempSettings.exchangeRateJSON = xhr.responseText
+                        tempSettings.exchangeRateDate = Process.getToday()
+                        callback(true)
+                    }
+                    else {
+                        console.log('Failed to fetch exchange rate list');
+                        callback(false)
+                    }
+                }
+            };
+
+            xhr.open('GET', requestURL, true);
+            xhr.send();
+
+        }
+    }
+
 }

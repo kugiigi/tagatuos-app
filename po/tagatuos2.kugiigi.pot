@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-11 00:42+0800\n"
+"POT-Creation-Date: 2018-08-31 15:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,65 +21,86 @@ msgstr ""
 msgid "Add Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:40
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:41
 msgid "New Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:67
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:68
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml:32
 msgid "Quick Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:117
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:118
 msgid "Back"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailDialog.qml:109
+msgid "Close"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:13
 msgid "About"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:89
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:92
 msgid "Version"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:99
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:102
 msgid "Released under license"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:124
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:127
 msgid "Support"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:163
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:166
 msgid "Report a bug"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:179
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:182
 msgid "Contact Developer"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:210
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:213
 msgid "Donate"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:226
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:229
+msgid "View in OpenStore"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:245
 msgid "Other apps by the developer"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:243
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:262
 msgid "Developers"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:280
-msgid "Powered by"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:284
-msgid "Money formatting"
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:281
+msgid "Icon"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:300
+msgid "Powered by"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:304
+msgid "Money formatting"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:320
+msgid "Exchange rates data"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:336
 msgid "Date and Time manipulation and formatting"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:351
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AboutPage.qml:366
+msgid "Charts and graphs"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:27
@@ -91,28 +112,29 @@ msgid "Edit Category - "
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:183
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:200
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:238
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:201
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageCategory.qml:30
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:29
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:38
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:44
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:50
 msgid "Add"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:347
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:41
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:47
 msgid "Save"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddCategory.qml:159
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:266
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:342
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddReport.qml:387
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageCategory.qml:253
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:241
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:23
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:33
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:33
 msgid "Cancel"
 msgstr ""
 
@@ -126,15 +148,15 @@ msgstr ""
 msgid "That category already exists. Please choose a different name."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:183
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:238
 msgid "Update"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:235
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:311
 msgid "Add as Quick"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:286
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/AddFullPage.qml:362
 msgid "Quick expense successfully added!"
 msgstr ""
 
@@ -155,7 +177,7 @@ msgstr ""
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/MainPage.qml:58
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/MainPage.qml:163
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/MainPage.qml:193
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:174
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:180
 msgid "Dashboard"
 msgstr ""
 
@@ -163,89 +185,89 @@ msgstr ""
 msgid "Night-mode"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:222
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:223
 msgid "Previous"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:251
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:252
 msgid "Next"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:282
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:205
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:283
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:211
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:40
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:87
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:495
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:130
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:529
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
 msgid "Today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:285
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:286
 msgid "Recent Days"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:288
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:212
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:289
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:218
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:44
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:92
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:509
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:133
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:543
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
 msgid "Yesterday"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:291
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:226
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:292
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:232
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:48
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:97
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:523
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:557
 msgid "This Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:294
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:233
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:295
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:239
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:52
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:102
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:537
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:571
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
 msgid "This Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:297
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:240
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:298
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:246
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:64
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:112
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:565
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:142
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:599
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
 msgid "Last Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:300
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:247
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:301
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:253
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:68
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:117
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:579
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:613
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
 msgid "Last Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:303
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:304
 msgid "the specified date range"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:306
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:307
 msgid "No expense for "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:309
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:310
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:46
 msgid "Use the bottom edge to add expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:310
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:311
 msgid "Loading Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:311
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/DetailView.qml:312
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:48
 msgid "Please wait"
 msgstr ""
@@ -260,11 +282,12 @@ msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/MainPage.qml:173
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:13
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:72
 msgid "Settings"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/MainPage.qml:183
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:40
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:46
 msgid "View Details"
 msgstr ""
 
@@ -285,15 +308,15 @@ msgstr ""
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:202
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:246
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/ActionDelegate.qml:49
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:79
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:92
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:61
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:99
 msgid "Delete"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageCategory.qml:228
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/ManageReports.qml:216
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:71
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:44
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:53
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:51
 msgid "Edit"
 msgstr ""
 
@@ -345,7 +368,7 @@ msgstr ""
 msgid "Are you sure you want to delete this report?"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/QuickAddPage.qml:105
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/QuickAddPage.qml:119
 msgid "No data to display"
 msgstr ""
 
@@ -361,72 +384,83 @@ msgstr ""
 msgid "Disabling will load the page from previous session"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:84
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:82
+msgid "Hide bottom edge hint"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:93
 msgid "Theme"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:106
-msgid "Systems"
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:115
+msgid "System"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:110
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:119
 msgid "Ambiance"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:114
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:123
 msgid "Suru Dark"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:122
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:131
 msgid "General"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:128
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:137
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:78
 msgid "Currency"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:153
-msgid "Argentina Peso"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:157
-msgid "Philippines Peso"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:161
-msgid "US Dollars"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:165
-msgid "United Kingdom Pound"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:219
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:107
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:551
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:585
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:26
 msgid "Recent"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:257
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:266
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:14
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:50
+msgid "Travel Mode"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:284
 msgid "Administration"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:325
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:352
 msgid "Manage Categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:327
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:354
 msgid "Add, edit, and delete categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:331
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:358
 msgid "About Tagatuos"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:333
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/SettingsPage.qml:360
 msgid "Credits, report bugs, view source code, contact developer, donate"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:51
+msgid "Set a temporary currency"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:119
+msgid "Fetching exchange rates data"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:128
+msgid "Cannot fetch exchange rate data"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/ui/TravelPage.qml:129
+msgid "Please check if you have a working internet connection"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddCategory/ColorField.qml:24
@@ -456,11 +490,11 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:21
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:25
 msgid "Details/Comments"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:34
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:38
 msgid "Add details / comments"
 msgstr ""
 
@@ -472,7 +506,23 @@ msgstr ""
 msgid "Enter expense description "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:24
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:20
+msgid "Home Currency"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:41
+msgid "Travel Currency"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
+msgid "Travel Data"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
+msgid "Travel Mode is ON"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:30
 msgid "Value"
 msgstr ""
 
@@ -532,34 +582,6 @@ msgstr ""
 msgid "View All"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
-msgid "Name:"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:44
-msgid "Description:"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:45
-msgid "<No Description>"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:50
-msgid "Category:"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:56
-msgid "Date:"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:62
-msgid "Value:"
-msgstr ""
-
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:84
-msgid "Close"
-msgstr ""
-
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:122
 msgid "Calendar (By Day)"
 msgstr ""
@@ -590,62 +612,63 @@ msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:52
 msgid "OK"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:497
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:531
 msgid "No expense for Today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:499
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:533
 msgid "Loading Today's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:511
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:545
 msgid "No expense for Yesterday"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:513
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:547
 msgid "Loading Yesterday's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:525
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:559
 msgid "No expense for This Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:527
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:561
 msgid "Loading This Week's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:539
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:573
 msgid "No expense for This Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:541
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:575
 msgid "Loading This Month's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:553
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:587
 msgid "No Recent Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:555
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:589
 msgid "Loading Recent Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:567
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:601
 msgid "No expense for Last Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:569
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:603
 msgid "Loading Last Week's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:581
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:615
 msgid "No expense for Last Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:583
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:617
 msgid "Loading Last Month's Expenses"
 msgstr ""
 
@@ -665,19 +688,19 @@ msgstr ""
 msgid "Most Used"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:53
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:61
 msgid "Find"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:53
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:61
 msgid "Search History"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:52
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:59
 msgid "Custom Add"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:60
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:67
 msgid "Information"
 msgstr ""
 
@@ -733,107 +756,127 @@ msgstr ""
 msgid "By Year"
 msgstr ""
 
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:71
+msgid "Rate"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:85
+msgid "Use online data"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:86
+msgid "Source"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:175
+msgid "Exchange rate data as of"
+msgstr ""
+
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select values"
 msgstr ""
 
 #: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select a value"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:33
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:34
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:34
 msgid "Select All"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:44
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:45
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:45
 msgid "Clear Selection"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:78
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:78
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:80
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Transportation"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:80
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:82
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:82
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Shirts, Pants, underwear, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:84
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Household"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:84
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Electricity, Groceries, Rent etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:86
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Leisure"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:86
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Movies, Books, Sports etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:88
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Savings"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:88
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Investments, Reserve Funds etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:90
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:90
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:92
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Miscellaneous"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:92
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Other expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:142
 msgid "Tomorrow"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:145
 msgid "On "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:145
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:151
 msgid "Next Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:151
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:157
 msgid "Next Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:157
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:163
 msgid "Older"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
+#: /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/library/ProcessFunc.js:166
 msgid "In The Future"
 msgstr ""
 

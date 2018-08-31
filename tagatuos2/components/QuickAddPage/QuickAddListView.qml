@@ -2,7 +2,8 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "../Common"
-import "../DetailView"
+//import "../DetailView"
+import ".."
 import "../../library/DataProcess.js" as DataProcess
 import "../../library/ApplicationFunctions.js" as AppFunctions
 
@@ -18,6 +19,12 @@ ListView {
         right: parent.right
         top: parent.top
         bottom: bottomBarNavigation.visible ? bottomBarNavigation.top : parent.bottom
+    }
+
+    onActiveFocusChanged: {
+        if(activeFocus){
+            findToolBar.forceFocus()
+        }
     }
 
     delegate: QuickAddItem {
@@ -72,7 +79,7 @@ ListView {
             maxWidth: units.gu(30)
             parent:  mainView
 
-            delegate: DetailsDialog{
+            delegate: DetailDialog{
                 id: detailsDialog
 
                 category: itemCategory

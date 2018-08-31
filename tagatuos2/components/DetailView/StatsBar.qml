@@ -6,7 +6,10 @@ Rectangle {
     id: root
 
     property bool hide: false
-    property string text
+    property string text: listView.model !== null
+                              || listView.model !== undefined ? (tempSettings.travelMode ? listView.model.totalTravelValue : listView.model.totalValue) : ""
+    property string secondaryText: listView.model !== null
+                                   || listView.model !== undefined ? (tempSettings.travelMode ? listView.model.totalValue : "") : ""
     property color bgColor: "transparent" //theme.palette.normal.base
 
     height: units.gu(8)
@@ -129,19 +132,52 @@ Rectangle {
 //        }
 //    }
 
-    Label {
-        id: totalLabel
-        visible: root.state === "bar" ? true : false
-        text: root.text
-        textSize: Label.XLarge
-        fontSizeMode: Text.HorizontalFit
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        color: theme.palette.normal.overlayText
-        minimumPixelSize: units.gu(2)
-        elide: Text.ElideRight
-        anchors.fill: parent
+
+    Column{
+        id: valuesColumn
+
+        anchors{
+            left: parent.left
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: totalLabel
+            visible: root.state === "bar" ? true : false
+            text: root.text
+            textSize: Label.XLarge
+            fontSizeMode: Text.HorizontalFit
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: tempSettings.travelMode ? theme.palette.normal.positive : theme.palette.normal.overlayText
+            minimumPixelSize: units.gu(2)
+            elide: Text.ElideRight
+            anchors{
+                left: parent.left
+                right: parent.right
+            }
+
+        }
+        Label {
+            id: totalSecondaryLabel
+            visible: root.state === "bar" && text !== "" ? true : false
+            text: root.secondaryText
+            textSize: Label.Medium
+            fontSizeMode: Text.HorizontalFit
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: theme.palette.normal.backgroundTertiaryText
+            minimumPixelSize: units.gu(2)
+            elide: Text.ElideRight
+            anchors{
+                left: parent.left
+                right: parent.right
+            }
+        }
     }
+
+
 
     Icon {
         id: icon

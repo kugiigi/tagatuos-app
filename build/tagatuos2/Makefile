@@ -456,6 +456,7 @@ compiler_rcc_make_all: qrc_tagatuos2.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_tagatuos2.cpp
 qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
+		../../tagatuos2/icon.svg \
 		../../tagatuos2/tagatuos2.png \
 		../../tagatuos2/Main.qml \
 		../../tagatuos2/ui/ManageCategory.qml \
@@ -468,34 +469,15 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/ui/AddCategory.qml \
 		../../tagatuos2/ui/AddFullPage.qml \
 		../../tagatuos2/ui/SettingsPage.qml \
+		../../tagatuos2/ui/TravelPage.qml \
 		../../tagatuos2/ui/DetailView.qml \
 		../../tagatuos2/ui/ManageReports.qml \
 		../../tagatuos2/ui/QuickAddPage.qml \
-		../../tagatuos2/components/MainPageHeader.qml \
 		../../tagatuos2/components/AddBottomEdge.qml \
-		../../tagatuos2/components/DetailView/GroupItem.qml \
-		../../tagatuos2/components/DetailView/StatsBar.qml \
-		../../tagatuos2/components/DetailView/ViewAllItem.qml \
-		../../tagatuos2/components/DetailView/PageHeaderExtensionBar.qml \
-		../../tagatuos2/components/DetailView/DetailsDialogItem.qml \
-		../../tagatuos2/components/DetailView/SingleItemChild.qml \
-		../../tagatuos2/components/DetailView/StatsBarCloseButton.qml \
-		../../tagatuos2/components/DetailView/ActionDelegate.qml \
-		../../tagatuos2/components/DetailView/DetailsDialog.qml \
-		../../tagatuos2/components/DetailView/SingleItem.qml \
-		../../tagatuos2/components/BottomEdge/InitialRectangle.qml \
-		../../tagatuos2/components/QuickAddPage/QuickAddItem.qml \
-		../../tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml \
-		../../tagatuos2/components/QuickAddPage/QuickAddListView.qml \
-		../../tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml \
-		../../tagatuos2/components/QuickAddPage/BottomBarNavigation.qml \
-		../../tagatuos2/components/QuickAddPage/BottomBarItem.qml \
-		../../tagatuos2/components/ListModels/ListModels.qml \
-		../../tagatuos2/components/ListModels/ExpenseListModel.qml \
-		../../tagatuos2/components/ListModels/QuickAddModel.qml \
-		../../tagatuos2/components/ListModels/ChartModel.qml \
-		../../tagatuos2/components/ListModels/ExpenseAutoCompleteListModel.qml \
-		../../tagatuos2/components/ListModels/CurrencyModel.qml \
+		../../tagatuos2/components/DetailDialog.qml \
+		../../tagatuos2/components/MainPageHeader.qml \
+		../../tagatuos2/components/BaseComponents/BaseListModel.qml \
+		../../tagatuos2/components/BaseComponents/BaseHeader.qml \
 		../../tagatuos2/components/Common/ActionButtonDelegate.qml \
 		../../tagatuos2/components/Common/LoadingComponent.qml \
 		../../tagatuos2/components/Common/ListItemSectionHeader.qml \
@@ -506,39 +488,60 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/Common/EmptyState.qml \
 		../../tagatuos2/components/Common/CheckBoxItem.qml \
 		../../tagatuos2/components/Common/ListViewPopover.qml \
+		../../tagatuos2/components/Common/PoppingDialog2.qml \
 		../../tagatuos2/components/Common/PageWithBottom.qml \
 		../../tagatuos2/components/Common/PoppingDialog.qml \
 		../../tagatuos2/components/Common/ExpandableListItem.qml \
 		../../tagatuos2/components/Common/ListViewPositioner.qml \
-		../../tagatuos2/components/Common/PopupDialog.qml \
 		../../tagatuos2/components/Common/HeaderWithSubtitle.qml \
 		../../tagatuos2/components/Common/PageBackGround.qml \
 		../../tagatuos2/components/Common/ListViewHighlight.qml \
 		../../tagatuos2/components/Common/ExpandableListItemAdvanced.qml \
 		../../tagatuos2/components/Common/NavigationItem.qml \
+		../../tagatuos2/components/Common/PoppingItemSelector2.qml \
 		../../tagatuos2/components/Common/ListViewHover.qml \
 		../../tagatuos2/components/Common/ColumnFlow.qml \
+		../../tagatuos2/components/Common/NavigationWithState.qml \
+		../../tagatuos2/components/Common/SwitchItem.qml \
 		../../tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml \
 		../../tagatuos2/components/Common/PopupItemSelector/ItemSelector.qml \
 		../../tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml \
 		../../tagatuos2/components/Common/PopupItemSelector/ListItemDelegate.qml \
+		../../tagatuos2/components/Common/PopupItemSelector2/ListItemDelegate2.qml \
+		../../tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml \
+		../../tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml \
+		../../tagatuos2/components/Common/PopupItemSelector2/ItemSelector2.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPickerPopup.qml \
 		../../tagatuos2/components/Common/ColorPicker/ColorPicker.qml \
-		../../tagatuos2/components/Dashboard/DashboardItem.qml \
-		../../tagatuos2/components/Dashboard/FlowItemListItem.qml \
-		../../tagatuos2/components/Dashboard/FlowItemExpandItem.qml \
-		../../tagatuos2/components/Dashboard/FlowItem.qml \
-		../../tagatuos2/components/Dashboard/ViewHeader.qml \
-		../../tagatuos2/components/Dashboard/FlowItemHeader.qml \
-		../../tagatuos2/components/Dashboard/FlowItems.qml \
-		../../tagatuos2/components/BaseComponents/BaseListModel.qml \
-		../../tagatuos2/components/BaseComponents/BaseHeader.qml \
-		../../tagatuos2/components/Dialogs/DialogExternalLink.qml \
+		../../tagatuos2/components/BottomEdge/InitialRectangle.qml \
+		../../tagatuos2/components/AddCategory/ColorField.qml \
+		../../tagatuos2/components/AddCategory/DescriptionField.qml \
+		../../tagatuos2/components/AddCategory/NameField.qml \
+		../../tagatuos2/components/AddFullPage/DateField.qml \
+		../../tagatuos2/components/AddFullPage/DescriptionField.qml \
+		../../tagatuos2/components/AddFullPage/ValueField.qml \
+		../../tagatuos2/components/AddFullPage/CommentsField.qml \
+		../../tagatuos2/components/AddFullPage/EditCurrencyFields.qml \
+		../../tagatuos2/components/AddFullPage/TravelFields.qml \
+		../../tagatuos2/components/AddFullPage/CategoryField.qml \
+		../../tagatuos2/components/DetailDialog/DetailDate.qml \
+		../../tagatuos2/components/DetailDialog/DetailValue.qml \
+		../../tagatuos2/components/DetailDialog/DetailDescription.qml \
+		../../tagatuos2/components/DetailDialog/DetailCategory.qml \
+		../../tagatuos2/components/DetailDialog/DetailName.qml \
 		../../tagatuos2/components/QChart/ChartLegend.qml \
 		../../tagatuos2/components/QChart/QChart.qml \
 		../../tagatuos2/components/QChart/Chart.qml \
 		../../tagatuos2/components/QChart/ChartLegendItem.qml \
 		../../tagatuos2/components/QChart/QChart.js \
+		../../tagatuos2/components/StatisticsView/ChartComponent.qml \
+		../../tagatuos2/components/StatisticsView/ChartHeader.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddItem.qml \
+		../../tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddListView.qml \
+		../../tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml \
+		../../tagatuos2/components/QuickAddPage/BottomBarNavigation.qml \
+		../../tagatuos2/components/QuickAddPage/BottomBarItem.qml \
 		../../tagatuos2/components/AddReport/DateToField.qml \
 		../../tagatuos2/components/AddReport/FilterException.qml \
 		../../tagatuos2/components/AddReport/DateModeField.qml \
@@ -548,16 +551,29 @@ qrc_tagatuos2.cpp: ../../tagatuos2/tagatuos2.qrc \
 		../../tagatuos2/components/AddReport/CategoryField.qml \
 		../../tagatuos2/components/AddReport/DateRangeField.qml \
 		../../tagatuos2/components/AddReport/DateFromField.qml \
-		../../tagatuos2/components/AddCategory/ColorField.qml \
-		../../tagatuos2/components/AddCategory/DescriptionField.qml \
-		../../tagatuos2/components/AddCategory/NameField.qml \
-		../../tagatuos2/components/AddFullPage/DateField.qml \
-		../../tagatuos2/components/AddFullPage/DescriptionField.qml \
-		../../tagatuos2/components/AddFullPage/ValueField.qml \
-		../../tagatuos2/components/AddFullPage/CommentsField.qml \
-		../../tagatuos2/components/AddFullPage/CategoryField.qml \
-		../../tagatuos2/components/StatisticsView/ChartComponent.qml \
-		../../tagatuos2/components/StatisticsView/ChartHeader.qml \
+		../../tagatuos2/components/ListModels/ListModels.qml \
+		../../tagatuos2/components/ListModels/ExpenseListModel.qml \
+		../../tagatuos2/components/ListModels/QuickAddModel.qml \
+		../../tagatuos2/components/ListModels/ChartModel.qml \
+		../../tagatuos2/components/ListModels/ExpenseAutoCompleteListModel.qml \
+		../../tagatuos2/components/ListModels/CurrencyModel.qml \
+		../../tagatuos2/components/DetailView/GroupItem.qml \
+		../../tagatuos2/components/DetailView/StatsBar.qml \
+		../../tagatuos2/components/DetailView/ViewAllItem.qml \
+		../../tagatuos2/components/DetailView/PageHeaderExtensionBar.qml \
+		../../tagatuos2/components/DetailView/SingleItemChild.qml \
+		../../tagatuos2/components/DetailView/StatsBarCloseButton.qml \
+		../../tagatuos2/components/DetailView/ActionDelegate.qml \
+		../../tagatuos2/components/DetailView/SingleItem.qml \
+		../../tagatuos2/components/TravelPage/RateField.qml \
+		../../tagatuos2/components/Dialogs/DialogExternalLink.qml \
+		../../tagatuos2/components/Dashboard/DashboardItem.qml \
+		../../tagatuos2/components/Dashboard/FlowItemListItem.qml \
+		../../tagatuos2/components/Dashboard/FlowItemExpandItem.qml \
+		../../tagatuos2/components/Dashboard/FlowItem.qml \
+		../../tagatuos2/components/Dashboard/ViewHeader.qml \
+		../../tagatuos2/components/Dashboard/FlowItemHeader.qml \
+		../../tagatuos2/components/Dashboard/FlowItems.qml \
 		../../tagatuos2/DefaultTheme/1.3/Palette.qml \
 		../../tagatuos2/DefaultTheme/1.3/parent_theme \
 		../../tagatuos2/library/ProcessFunc.js \
@@ -598,8 +614,10 @@ install_config_files: first FORCE
 	@test -d $(INSTALL_ROOT)/tagatuos2 || mkdir -p $(INSTALL_ROOT)/tagatuos2
 	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/tagatuos2.apparmor $(INSTALL_ROOT)/tagatuos2/
 	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/tagatuos2.png $(INSTALL_ROOT)/tagatuos2/
+	-$(INSTALL_FILE) /home/phablet/Documents/Projects/tagatuos-app/tagatuos2/icon.svg $(INSTALL_ROOT)/tagatuos2/
 
 uninstall_config_files: FORCE
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/tagatuos2/icon.svg
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/tagatuos2/tagatuos2.png
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/tagatuos2/tagatuos2.apparmor
 	-$(DEL_DIR) $(INSTALL_ROOT)/tagatuos2/ 

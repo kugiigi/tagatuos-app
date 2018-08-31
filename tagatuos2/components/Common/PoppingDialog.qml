@@ -50,7 +50,7 @@ Loader {
         Behavior on opacity {
             UbuntuNumberAnimation {
                 easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+                duration: UbuntuAnimation.FastDuration
             }
         }
 
@@ -110,34 +110,38 @@ Loader {
 
 
             property real targetHeight: if(fullscreen){
-                                            root.parent.height
+                                            mainView.height
                                         }else if(explicitHeight && explicitHeight <= root.parent.height){
                                             explicitHeight
                                         }else if(maxHeight <= root.parent.height){
                                             maxHeight
                                         }else{
-                                            root.parent.height
+                                            mainView.height
                                         }
 
 
             property real targetX: fullscreen ? 0 : (root.parent.width - targetWidth) / 2
-            property real targetY: fullscreen ? 0 : (root.parent.height - targetHeight) / 2
+//            property real targetY: fullscreen ? 0 : (root.parent.height - targetHeight) / 2
+            property real targetY: if(fullscreen){
+                                       0
+                                   }else if((explicitHeight && explicitHeight <= root.parent.height) || (maxHeight <= root.parent.height)){
+                                       (root.parent.height - targetHeight) / 2
+                                   }else{
+                                       0
+                                   }
 
 
-            z: Number.MAX_VALUE
+            z: Number.MAX_VALUE / 2
 
             Component.onCompleted: {
-//                if (root.delegate) {
-//                    delegateLoader.active = true
-//                }
-
                 opening()
                 parallelAnimationShow.start()
             }
 
             function close() {
                 closing()
-                delegateLoader.active = false
+//                delegateLoader.active = false
+                delegateLoader.item.visible = false
                 parallelAnimationClose.start()
             }
 
@@ -176,22 +180,6 @@ Loader {
                        }
             }
 
-            //WORKAROUND: Binding cannot catch up when OSK unhides
-//            Connections{
-//                target: root.parent
-//                onHeightChanged:{
-//                    delayTimer.restart()
-//                }
-//            }
-
-//            Timer{
-//                id: delayTimer
-
-//                running: false
-//                interval: 100
-//                onTriggered: heightBinding.when = root.open
-
-//            }
 
             Binding{
                 id: widthBinding
@@ -209,6 +197,23 @@ Loader {
                            root.parent.width
                        }
             }
+
+            //WORKAROUND: Binding cannot catch up when OSK unhides
+//            Connections{
+//                target: root.parent
+//                onHeightChanged:{
+//                    delayTimer.restart()
+//                }
+//            }
+
+//            Timer{
+//                id: delayTimer
+
+//                running: false
+//                interval: 100
+//                onTriggered: heightBinding.when = root.open
+
+//            }
 
             InverseMouseArea{
                 id: inverseMouseArea
@@ -236,16 +241,22 @@ Loader {
             Loader {
                 id: delegateLoader
 
-                active: false
+//                active: false
                 asynchronous: true
                 visible: status == Loader.Ready
                 sourceComponent: root.delegate
 
                 onLoaded: {
-                    root.opened()
+//                    root.opened()
                     item.parent = poppingDialog
+                    if(parallelAnimationShow.running){
+                        item.visible = false
+                    }else{
+                        item.anchors.fill = item.parent
+                    }
                 }
             }
+
 
             LoadingComponent {
                 id: loadingComponent
@@ -258,6 +269,99 @@ Loader {
                 //subTitle: i18n.tr("Please wait")
             }
 
+
+            ParallelAnimation {
+                id: parallelAnimationShow
+
+                onStarted: {
+                    backgroundRectangle.initialX = poppingDialog.x
+                    backgroundRectangle.initialY = poppingDialog.y
+                    backgroundRectangle.initialHeight = poppingDialog.height
+                    backgroundRectangle.initialWidth = poppingDialog.width
+                }
+
+                onStopped: {
+//                    if (root.delegate) {
+                    if (delegateLoader.status === Loader.Ready) {
+                        delegateLoader.item.anchors.fill = delegateLoader.item.parent
+                        delegateLoader.item.visible = true
+//                        delegateLoader.active = true
+
+                    }
+                    root.opened()
+                }
+
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "x"
+                    to: targetX
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "y"
+                    to: targetY
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "width"
+                    to: targetWidth
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "height"
+                    to: targetHeight
+                    duration: UbuntuAnimation.FastDuration
+                }
+//                UbuntuNumberAnimation {
+//                    target: backgroundRectangle
+//                    property: "opacity"
+//                    to: 1
+//                    duration: UbuntuAnimation.FastDuration
+//                }
+            }
+
+            ParallelAnimation {
+                id: parallelAnimationClose
+
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "x"
+                    to: backgroundRectangle.initialX
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "y"
+                    to: backgroundRectangle.initialY
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "width"
+                    to: backgroundRectangle.initialWidth
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: poppingDialog
+                    property: "height"
+                    to: backgroundRectangle.initialHeight
+                    duration: UbuntuAnimation.FastDuration
+                }
+                UbuntuNumberAnimation {
+                    target: backgroundRectangle
+                    property: "opacity"
+                    to: 0.3
+                    duration: UbuntuAnimation.FastDuration
+                }
+
+                onStopped: {
+                    root.active = false
+                    root.closed()
+                }
+            }
 
             // Close Button for test purposes only
             // Closing UI should be implemented by the using component
@@ -277,93 +381,6 @@ Loader {
             //                poppingDialog.close()
             //            }
             //        }
-            ParallelAnimation {
-                id: parallelAnimationShow
-
-                onStarted: {
-                    backgroundRectangle.initialX = poppingDialog.x
-                    backgroundRectangle.initialY = poppingDialog.y
-                    backgroundRectangle.initialHeight = poppingDialog.height
-                    backgroundRectangle.initialWidth = poppingDialog.width
-                }
-
-                onStopped: {
-                    if (root.delegate) {
-                        delegateLoader.active = true
-                    }
-                }
-
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "x"
-                    to: targetX
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "y"
-                    to: targetY
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "width"
-                    to: targetWidth
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "height"
-                    to: targetHeight
-                    duration: UbuntuAnimation.BriskDuration
-                }
-//                UbuntuNumberAnimation {
-//                    target: backgroundRectangle
-//                    property: "opacity"
-//                    to: 1
-//                    duration: UbuntuAnimation.BriskDuration
-//                }
-            }
-
-            ParallelAnimation {
-                id: parallelAnimationClose
-
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "x"
-                    to: backgroundRectangle.initialX
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "y"
-                    to: backgroundRectangle.initialY
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "width"
-                    to: backgroundRectangle.initialWidth
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: poppingDialog
-                    property: "height"
-                    to: backgroundRectangle.initialHeight
-                    duration: UbuntuAnimation.BriskDuration
-                }
-                UbuntuNumberAnimation {
-                    target: backgroundRectangle
-                    property: "opacity"
-                    to: 0.3
-                    duration: UbuntuAnimation.BriskDuration
-                }
-
-                onStopped: {
-                    root.active = false
-                    root.closed()
-                }
-            }
         }
     }
 }

@@ -80,7 +80,10 @@ Page {
                         horizontalCenter: parent.horizontalCenter
                     }
                     source: Image {
-                        source: "../tagatuos2.png"
+//                        source: "../tagatuos2.png"
+                        source: "../icon.svg"
+                        sourceSize.width: parent.width
+                        sourceSize.height: parent.height
                         asynchronous: true
                     }
                 }
@@ -223,6 +226,22 @@ Page {
                     }
                 }
                 NavigationItem {
+                    titleText.text: i18n.tr("View in OpenStore")
+                    iconName: "ubuntu-store-symbolic"
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation(
+                                        "openstore://tagatuos2.kugiigi")
+                        }
+                    }
+                }
+                NavigationItem {
                     titleText.text: i18n.tr("Other apps by the developer")
                     iconName: "stock_application"
 
@@ -234,7 +253,7 @@ Page {
                     action: Action {
                         onTriggered: {
                             externalLinkConfirmation(
-                                        "https://open.uappexplorer.com/?sort=relevance&search=author%3AKugi%20Eusebio")
+                                        "https://open-store.io/?search=author%3AKugi%20Eusebio")
                         }
                     }
                 }
@@ -258,24 +277,25 @@ Page {
                         }
                     }
                 }
-                //                ListItemSectionHeader {
-                //                    title: i18n.tr("Logo")
-                //                }
-                //                NavigationItem {
-                //                    titleText.text: "Sander Klootwijk"
+                ListItemSectionHeader {
+                    title: i18n.tr("Icon")
+                }
+                NavigationItem {
+                    titleText.text: "Joan CiberSheep"
+                    subText.text: "coin icon under license CC By Nimal Raj, chart icon under license CC By Gregor Cresnar"
 
-                //                    anchors {
-                //                        left: parent.left
-                //                        right: parent.right
-                //                    }
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
 
-                //                    action: Action {
-                //                        onTriggered: {
-                //                            externalLinkConfirmation(
-                //                                        'mailto:sander.k1007@kpnmail.nl')
-                //                        }
-                //                    }
-                //                }
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation(
+                                        'mailto:cibersheep@gmail.com')
+                        }
+                    }
+                }
                 ListItemSectionHeader {
                     title: i18n.tr("Powered by")
                 }
@@ -296,6 +316,22 @@ Page {
                     }
                 }
                 NavigationItem {
+                    titleText.text: "OpenExchangeRates.org"
+                    subText.text: i18n.tr("Exchange rates data")
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation(
+                                        'http://openexchangerates.org')
+                        }
+                    }
+                }
+                NavigationItem {
                     titleText.text: "moment.js"
                     subText.text: i18n.tr("Date and Time manipulation and formatting")
 
@@ -307,6 +343,36 @@ Page {
                     action: Action {
                         onTriggered: {
                             externalLinkConfirmation('http://momentjs.com/')
+                        }
+                    }
+                }
+                NavigationItem {
+                    titleText.text: "chart.js for QML"
+                    subText.text: i18n.tr("Charts and graphs")
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation('http://jwintz.me/blog/2014/02/15/qchart-dot-js-qml-binding-for-chart-dot-js/')
+                        }
+                    }
+                }
+                NavigationItem {
+                    titleText.text: "chart.js core"
+                    subText.text: i18n.tr("Charts and graphs")
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation('http://www.chartjs.org')
                         }
                     }
                 }

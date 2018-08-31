@@ -9,7 +9,7 @@
             "desktop": "tagatuos2/tagatuos2.desktop"
         }
     },
-    "version": "0.70",
+    "version": "0.80",
     "maintainer": "Kugi Eusebio <kugi_igi@yahoo.com>",
     "framework": "ubuntu-sdk-15.04.6"
 }

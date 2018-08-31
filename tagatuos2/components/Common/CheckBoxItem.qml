@@ -9,6 +9,7 @@ ListItem {
     property bool checkboxValue: bindValue
     property alias titleText: listItemLayout.title
     property alias subText: listItemLayout.subtitle
+    property alias checked: checkItem.checked
 
     width: parent.width
 

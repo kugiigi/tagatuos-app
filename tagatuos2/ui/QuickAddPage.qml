@@ -24,12 +24,26 @@ Item {
         var today = new Date(Process.getToday())
         var txtDate = Qt.formatDateTime(today,
                                         "yyyy-MM-dd 00:00:00.000")
-        var realValue = parseFloat(itemValue)
+        var realValue //parseFloat()
+        var travelData
+
+        //Travel Data
+        if(tempSettings.travelMode){
+            var realRate = tempSettings.exchangeRate
+            var txtHomeCur = tempSettings.currentCurrency
+            var txtTravelCur = tempSettings.travelCurrency
+
+            var realTravelValue = itemValue
+            realValue = itemValue * realRate
+            travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
+        }else{
+            realValue = itemValue
+        }
 
         var newExpense = DataProcess.saveExpense(category,
                                                  itemName,
                                                  itemDescr,
-                                                 txtDate, itemValue)
+                                                 txtDate, realValue, travelData)
         mainView.listModels.addItem(newExpense)
         close()
     }
@@ -55,7 +69,7 @@ Item {
             color: "transparent"
             activeFocusOnPress: false
             anchors {
-                bottom: toolBar.visible ? toolBar.top : parent.top
+                bottom: findToolBar.visible ? findToolBar.top : parent.top
                 horizontalCenter: parent.horizontalCenter
             }
             action: Action {
@@ -75,7 +89,7 @@ Item {
         }
 
         QuickAddFindToolbar{
-            id: toolBar
+            id: findToolBar
         }
 
         QuickAddListView{
