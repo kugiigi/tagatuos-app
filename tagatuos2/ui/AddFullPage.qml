@@ -316,7 +316,13 @@ Page {
                         var txtName = textName.text
                         var txtDescr = textareaDescr.text
                         var txtCategory = categoryPopupItemSelector.selectedValue
-                        var realValue = parseFloat(valueTextField.text)
+                        var realValue
+
+                        if(travelFields.visible){
+                            realValue = parseFloat(valueTextField.homeValue)
+                        }else{
+                            realValue = parseFloat(valueTextField.text)
+                        }
 
                         if (Process.checkRequired(
                                     [txtName, valueTextField.text]) === false) {

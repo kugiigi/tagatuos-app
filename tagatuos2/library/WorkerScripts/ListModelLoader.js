@@ -147,15 +147,24 @@ WorkerScript.onMessage = function (msg) {
 
             txtDateValue = msg.result[i].date
             txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
-//            console.log("txtDate: " + txtDate)
+
+            //Travel Data
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
 
             msg.model.append({
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: txtDate,
-                descr: txtDescr,
-                quickvalue: txtValue
-            })
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: txtDate,
+                                 descr: txtDescr,
+                                 quickvalue: txtValue,
+                                 rate: realRate,
+                                 homeCur: txtHomeCur,
+                                 travelCur: txtTravelCur,
+                                 travel_value: realTravelValue
+                             })
         }
         break
     case "QuickAdd":
@@ -167,13 +176,17 @@ WorkerScript.onMessage = function (msg) {
             txtValue = msg.result[i].value
 
             msg.model.append({
-                quick_id: intID,
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: "",
-                descr: txtDescr,
-                quickvalue: txtValue
-            })
+                                 quick_id: intID,
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: "",
+                                 descr: txtDescr,
+                                 quickvalue: txtValue,
+                                 rate: 0,
+                                 homeCur: "",
+                                 travelCur: "",
+                                 travel_value: 0
+                             })
         }
         break
     case "QuickTop":
@@ -181,13 +194,24 @@ WorkerScript.onMessage = function (msg) {
             txtCategory = msg.result[i].category_name
             txtName = msg.result[i].name
             txtValue = msg.result[i].value
+
+            //Travel Data
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
+
             msg.model.append({
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: "",
-                descr: "",
-                quickvalue: txtValue
-            })
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: "",
+                                 descr: "",
+                                 quickvalue: txtValue,
+                                 rate: realRate,
+                                 homeCur: txtHomeCur,
+                                 travelCur: txtTravelCur,
+                                 travel_value: realTravelValue
+                             })
         }
         break
     case "Categories":

@@ -1033,14 +1033,14 @@ function getRecentExpenses(searchText) {
     var txtLimitStatement = ""
     var intTop
 
-    txtOrderStatement = " ORDER BY date desc, expense_id desc"
+    txtOrderStatement = " ORDER BY a.date desc, a.expense_id desc"
 
-    txtSelectStatement = 'SELECT expense_id, category_name, name, descr, date, value FROM expenses'
+    txtSelectStatement = "SELECT a.expense_id, a.category_name, a.name, a.descr, a.date, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id)"
     txtLimitStatement = " LIMIT ?"
 
     if(searchText){
         intTop = 20
-        txtWhereStatement = " WHERE category_name LIKE ? OR name LIKE ? OR descr LIKE ?"
+        txtWhereStatement = " WHERE a.category_name LIKE ? OR a.name LIKE ? OR a.descr LIKE ?"
         txtSelectStatement = txtSelectStatement + txtWhereStatement + txtOrderStatement + txtLimitStatement
     }else{
         intTop = 10
@@ -1080,8 +1080,8 @@ function getTopExpenses() {
     var intTop = 10
 
     txtOrderStatement = " ORDER BY count desc"
-    txtGroupStatement = " GROUP BY name, category_name, value"
-    txtSelectStatement = 'SELECT name,category_name, value, COUNT(*) as count FROM expenses'
+    txtGroupStatement = " GROUP BY a.name, a.category_name, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0), IFNULL(b.value, 0)"
+    txtSelectStatement = "SELECT a.name, a.category_name, a.value, b.home_currency, b.travel_currency, IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value', COUNT(*) as count FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id)"
     txtLimitStatement = " LIMIT " + intTop
     txtSelectStatement = txtSelectStatement + txtWhereStatement + txtGroupStatement + txtOrderStatement + txtLimitStatement
     //console.log(txtSelectStatement)

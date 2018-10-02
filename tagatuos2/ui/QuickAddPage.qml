@@ -13,7 +13,7 @@ Item {
     property bool isContentShown: false
 
     signal close
-    signal addQuick(string category, string itemName, string itemDescr, real itemValue)
+    signal addQuick(string category, string itemName, string itemDescr, real itemValue, real itemTravelValue, string itemHomeCur, string itemTravelCur)
 
     function loadQuickList(searchText) {
         listView.model.load(
@@ -32,9 +32,17 @@ Item {
             var realRate = tempSettings.exchangeRate
             var txtHomeCur = tempSettings.currentCurrency
             var txtTravelCur = tempSettings.travelCurrency
+            var realTravelValue
 
-            var realTravelValue = itemValue
-            realValue = itemValue * realRate
+
+            if(itemHomeCur === tempSettings.currentCurrency && itemTravelCur === tempSettings.travelCurrency){
+                realTravelValue = itemTravelValue
+                realValue = realTravelValue * realRate
+            }else{
+                realTravelValue = itemValue / realRate
+                realValue = itemValue
+            }
+
             travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
         }else{
             realValue = itemValue
@@ -144,7 +152,12 @@ Item {
         id: addDialog
         AddQuickExpenseDialog {
             onAddQuickExpense: {
-                addQuick(itemCategory, itemName, itemDescr, itemValue)
+                var travelValue = 0
+                var rate = 0
+                var homeCur = ""
+                var travelCur = ""
+
+                addQuick(itemCategory, itemName, itemDescr, itemValue, travelValue, rate, homeCur, travelCur)
             }
         }
     }

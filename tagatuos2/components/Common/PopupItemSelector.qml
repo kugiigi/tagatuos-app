@@ -29,6 +29,7 @@ ListItem {
 
     action: Action {
         onTriggered: {
+            keyboard.target.hide()
             poppingDialog.show(root)
         }
     }
@@ -85,5 +86,10 @@ ListItem {
 
 //            Component.onCompleted: itemSelector.initializeSelectedValues(root.selectedValue)
         }
+    }
+
+    Connections {
+        id: keyboard
+        target: Qt.inputMethod
     }
 }

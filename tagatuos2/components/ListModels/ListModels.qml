@@ -362,8 +362,13 @@ Item {
                                  quick_id: newItem.quick_id,
                                  category_name: newItem.category_name,
                                  quickname: newItem.quickname,
+                                 quickdate: "",
                                  descr: newItem.descr,
-                                 quickvalue: newItem.quickvalue
+                                 quickvalue: newItem.quickvalue,
+                                 travel_value: 0,
+                                 rate: 0,
+                                 homeCur: "",
+                                 travelCur: ""
                              })
     }
 
@@ -377,8 +382,13 @@ Item {
                 modelQuickAdd.setProperty(j, "category_name",
                                                  updatedItem.category_name)
                 modelQuickAdd.setProperty(j, "quickname", updatedItem.quickname)
+                modelQuickAdd.setProperty(j, "quickdate", "")
                 modelQuickAdd.setProperty(j, "descr", updatedItem.descr)
                 modelQuickAdd.setProperty(j, "quickvalue", updatedItem.quickvalue)
+                modelQuickAdd.setProperty(j, "travel_value", 0)
+                modelQuickAdd.setProperty(j, "rate", 0)
+                modelQuickAdd.setProperty(j, "homeCur", "")
+                modelQuickAdd.setProperty(j, "travelCur", "")
                 break
             }
         }

@@ -25,6 +25,7 @@ Toolbar {
 
 
     trailingActionBar {
+        z:1
 
         actions: Action {
             id: addAction
@@ -46,7 +47,7 @@ Toolbar {
 
 
     Rectangle {
-        z: -1
+//        z: -1
         anchors.fill: parent
         color: theme.palette.normal.foreground
     }
@@ -63,8 +64,12 @@ Toolbar {
         anchors {
             left: parent.left
             leftMargin: units.gu(1)
-            right: toolBar.trailingActionBar.left
-            rightMargin: units.gu(1)
+
+            //WORKAROUND: Width of trailingActionBar is incorrect in Xenial
+//            right: toolBar.trailingActionBar.left
+//            rightMargin: units.gu(1)
+            right: parent.right
+            rightMargin: bottomBarNavigation.currentIndex === 1 ? units.gu(7) : units.gu(1)
             verticalCenter: parent.verticalCenter
         }
 
