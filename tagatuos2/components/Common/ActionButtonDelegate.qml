@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 
 AbstractButton {
@@ -8,8 +8,10 @@ AbstractButton {
     width: buttonsRow.width + units.gu(2)
 
     anchors {
-        top: action.visible ? parent.top : undefined
-        bottom: action.visible ?parent.bottom : undefined
+//        top: action.visible ? parent.top : undefined
+//        bottom: action.visible ?parent.bottom : undefined
+        top: parent.top
+        bottom: parent.bottom
     }
 
 

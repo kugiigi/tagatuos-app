@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Layouts 1.0
 //import Ubuntu.Components.Labs 1.0

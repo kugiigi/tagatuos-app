@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 //import Ubuntu.Components.Themes.Ambiance 1.3
 import Ubuntu.Components.ListItems 1.0 as ListItemOld
@@ -184,6 +184,8 @@ Page {
 
             ValueField {
                 id: valueTextField
+                //WORKAROUND: Shortcut doesn't seem to work in xenial
+                Keys.onReturnPressed:saveAction.trigger()
             }
 
             CommentsField {
@@ -215,6 +217,7 @@ Page {
         }
     }
 
+
     Toolbar {
         id: toolBar
 
@@ -229,11 +232,12 @@ Page {
             delegate: buttonComponent
             actions: [
                 Action {
+                    id: saveAction
 
                     property color color: theme.palette.normal.background
 
                     //shortcut: "Ctrl+S"
-                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
+//                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
                     text: root.mode === "add" ? i18n.tr(
                                                     "Add") : i18n.tr("Update")
                     onTriggered: {

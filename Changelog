@@ -2,6 +2,8 @@ v0.80
 * Initial Dutch and Spanish translations support
 * Fixed Text rendering in the popup dialog when connected to a monitor
 * Many minor fixes
+* Fixed crashes that appeared in Xenial
+* Moved from QtQuick 2.4 to QtQuick 2.9
 
 
 Not Committed issues
@@ -13,6 +15,10 @@ Not Committed issues
 * Contents of popup dialogs are now preloaded
 * Travel Mode
 * Setting for hiding bottom edge hint
+
+v.0.75
+* Initial Spanish and Dutch translation support
+* Xenial release
 
 v0.70
 * Initial French translation support

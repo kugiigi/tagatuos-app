@@ -78,8 +78,8 @@ WorkerScript.onMessage = function (msg) {
 
             currentSortField = txtCategory
 
-            if (previousSortField !== currentSortField) {
 
+            if (previousSortField !== currentSortField) {
                 childArray.push({
                                     expense_id: intID,
                                     category_name: txtCategory,
@@ -100,10 +100,16 @@ WorkerScript.onMessage = function (msg) {
                                      count: 1
                                  })
                 childArray = []
+
+
             } else {
                 var currentIndex = msg.model.count - 1
                 var totalValue = msg.model.get(currentIndex).total
-                var currentCount = msg.model.get(currentIndex).count
+
+                //WORKAROUND: App crashes in Xenial without this line
+                var currentCount = msg.model.get(currentIndex).count_1
+
+                currentCount = msg.model.get(currentIndex).count
 
                 msg.model.get(currentIndex).childModel.append({
                                                                   expense_id: intID,
