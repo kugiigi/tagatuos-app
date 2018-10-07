@@ -125,6 +125,7 @@ msgstr "Ajouter"
 #: /home/kugi/Documents/Developments/devel_xenial/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
 #: /home/kugi/Documents/Developments/devel_xenial/tagatuos-app/tagatuos2/ui/AddReport.qml:347
 #: /home/kugi/Documents/Developments/devel_xenial/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:47
+
 msgid "Save"
 msgstr "Enregistrer"
 
