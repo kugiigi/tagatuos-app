@@ -56,9 +56,6 @@
         <file>DefaultTheme/1.3/parent_theme</file>
         <file>DefaultTheme/1.3/Palette.qml</file>
         <file>components/DetailView/ActionDelegate.qml</file>
-        <file>components/Common/PopupDialog.qml</file>
-        <file>components/DetailView/DetailsDialog.qml</file>
-        <file>components/DetailView/DetailsDialogItem.qml</file>
         <file>components/Dashboard/FlowItemExpandItem.qml</file>
         <file>components/AddFullPage/DescriptionField.qml</file>
         <file>components/AddFullPage/DateField.qml</file>
@@ -114,5 +111,24 @@
         <file>components/ListModels/CurrencyModel.qml</file>
         <file>components/QuickAddPage/QuickAddListView.qml</file>
         <file>components/QuickAddPage/QuickAddFindToolbar.qml</file>
+        <file>components/DetailDialog.qml</file>
+        <file>components/DetailDialog/DetailCategory.qml</file>
+        <file>components/DetailDialog/DetailDate.qml</file>
+        <file>components/DetailDialog/DetailDescription.qml</file>
+        <file>components/DetailDialog/DetailName.qml</file>
+        <file>components/DetailDialog/DetailValue.qml</file>
+        <file>components/Common/PoppingDialog2.qml</file>
+        <file>components/Common/PoppingItemSelector2.qml</file>
+        <file>components/Common/PopupItemSelector2/ItemSelector2.qml</file>
+        <file>components/Common/PopupItemSelector2/ListItemDelegate2.qml</file>
+        <file>components/Common/PopupItemSelector2/SelectorHeader2.qml</file>
+        <file>components/Common/PopupItemSelector2/SelectorToolbar2.qml</file>
+        <file>components/Common/NavigationWithState.qml</file>
+        <file>ui/TravelPage.qml</file>
+        <file>icon.svg</file>
+        <file>components/Common/SwitchItem.qml</file>
+        <file>components/TravelPage/RateField.qml</file>
+        <file>components/AddFullPage/TravelFields.qml</file>
+        <file>components/AddFullPage/EditCurrencyFields.qml</file>
     </qresource>
 </RCC>

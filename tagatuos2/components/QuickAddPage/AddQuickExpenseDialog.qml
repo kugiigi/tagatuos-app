@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import Ubuntu.Keyboard 0.1
@@ -17,6 +17,7 @@ Dialog {
     property string itemDescr
     property string itemCategory
     property string itemValue
+    property string elementWithFocus
 
     signal saveQuickExpense
     signal addQuickExpense
@@ -39,6 +40,13 @@ Dialog {
                 autoCompletePopover.show = false //Do not show autoCompletePopover
                 textareaDescr.text = root.itemDescr
                 valueTextField.text = root.itemValue !== "0" ? root.itemValue : ""
+//                if(tempSettings.travelMode){
+//                    valueTextField.text = root.itemValue !== "0" ? root.itemValue : ""
+//                }else{
+//                    valueTextField.text = root.itemValue !== "0" ? root.itemValue : ""
+//                }
+
+
             }
         }
     }
@@ -106,7 +114,14 @@ Dialog {
                 var txtName = textName.text
                 var txtDescr = textareaDescr.text
                 var txtCategory = categoryPopupItemSelector.selectedValue
-                var realValue = valueTextField.text
+                var realValue
+
+                if(tempSettings.travelMode){
+                    realValue = valueTextField.homeValue
+                }else{
+                    realValue = valueTextField.text
+                }
+
                 realValue = realValue !== "" ? parseFloat(realValue) : 0
 
                 if (Process.checkRequired(

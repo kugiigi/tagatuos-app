@@ -18,11 +18,23 @@ String.prototype.bindValues = function (charBind, arrValues) {
     return txtNewString
 }
 
+function round_number(num, dec) {
+    return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+}
+
 function getToday() {
     //get current date
     var today = Moment.moment(new Date()).format("YYYY-MM-DD HH:mm:ss")//.format("YYYY/MM/DD")
 
     return today.toString()
+}
+
+function isToday(petsa) {
+    //check if current date
+    var dtPetsa = Moment.moment(petsa)
+    var today = Moment.moment(new Date())
+
+    return dtPetsa.isSame(today,'day')
 }
 
 function getStartEndDate(date,mode){
@@ -57,21 +69,15 @@ function getStartEndDate(date,mode){
 function formatMoney(value, currency, options){
     var formattedMoney
 
-//    switch(currency){
-//    case "PHP":
-//        symbol = "₱"
-//        break
-//    default:
-//        symbol = "$"
-//        break
-//    }
+    var finalOptions
 
-//    if(noSymbol){
-//        formattedMoney = Accounting.accounting.formatNumber(value, 2, thousandSeparator, decimal);
-//    }else{
-//        formattedMoney = Accounting.accounting.formatMoney(value, symbol, 2, thousandSeparator, decimal, format);
-        formattedMoney = Accounting.accounting.formatMoney(value, options);
-//    }
+    if(options){
+        finalOptions = options
+    }else{
+        finalOptions = Currencies.currency(currency)
+    }
+
+    formattedMoney = Accounting.accounting.formatMoney(value, finalOptions);
 
     return formattedMoney;
 }

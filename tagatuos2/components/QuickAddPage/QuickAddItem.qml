@@ -1,7 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import QtQuick.Layouts 1.1
+import "../../library/ApplicationFunctions.js" as AppFunctions
 
 ListItem {
     id: root
@@ -11,6 +12,10 @@ ListItem {
     property string itemDescr
     property string itemCategory
     property string itemDate
+    property real itemTravelValue
+    property real itemRate
+    property string itemTravelCur
+    property string itemHomeCur
 
     divider {
         visible: false
@@ -67,9 +72,12 @@ ListItem {
             Label {
                 id: valueLabel
 
-                text: root.itemValue
+                text: tempSettings.travelMode ? (root.itemTravelValue > 0 && root.itemHomeCur === tempSettings.currentCurrency && root.itemTravelCur === tempSettings.travelCurrency
+                                                 ? AppFunctions.formatMoneyTravel(root.itemTravelValue) : AppFunctions.formatMoneyTravel(root.itemValue / tempSettings.exchangeRate, false))
+                                              : AppFunctions.formatMoney(root.itemValue, false)
                 textSize: Label.Large
                 font.weight: Font.Light
+                color: tempSettings.travelMode ? theme.palette.normal.positive : theme.palette.normal.foregroundText
                 fontSizeMode: Text.HorizontalFit
                 horizontalAlignment: Text.AlignRight
                 minimumPixelSize: units.gu(2)

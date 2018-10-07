@@ -1,9 +1,11 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "../Common"
-import "../DetailView"
+//import "../DetailView"
+import ".."
 import "../../library/DataProcess.js" as DataProcess
+import "../../library/ProcessFunc.js" as Process
 import "../../library/ApplicationFunctions.js" as AppFunctions
 
 ListView {
@@ -20,20 +22,30 @@ ListView {
         bottom: bottomBarNavigation.visible ? bottomBarNavigation.top : parent.bottom
     }
 
+    onActiveFocusChanged: {
+        if(activeFocus){
+            findToolBar.forceFocus()
+        }
+    }
+
     delegate: QuickAddItem {
         id: quickAdditem
 
         itemName: quickname
-        itemValue: AppFunctions.formatMoney(quickvalue, false)
+        itemValue: quickvalue //AppFunctions.formatMoney(quickvalue, false)
         itemDescr: descr
         itemCategory: category_name
         itemDate: quickdate
+        itemTravelValue: travel_value
+        itemRate: rate
+        itemTravelCur: travelCur
+        itemHomeCur: homeCur
 
         leadingActions: bottomBarNavigation.currentIndex === 1 ? leftListItemActions : null
         trailingActions: rightListItemActions
 
         onClicked: {
-            addQuick(itemCategory, itemName, itemDescr, quickvalue)
+            addQuick(itemCategory, itemName, itemDescr, quickvalue, itemTravelValue, itemRate, itemHomeCur, itemTravelCur)
         }
 
         ListItemActions {
@@ -51,7 +63,14 @@ ListView {
                     iconName: "message-new"
                     text: i18n.tr("Custom Add")
                     onTriggered: {
-                        PopupUtils.open(addDialog, null, {mode: "custom", quickID: quick_id, itemName: quickname, itemValue: quickvalue,itemDescr: descr, itemCategory: category_name})
+                        var realValue
+                        if(tempSettings.travelMode){
+                            realValue = itemTravelValue > 0 ? itemTravelValue : quickvalue / tempSettings.exchangeRate
+                        }else{
+                            realValue = quickvalue
+                        }
+
+                        PopupUtils.open(addDialog, null, {mode: "custom", quickID: quick_id, itemName: quickname, itemValue: realValue,itemDescr: descr, itemCategory: category_name})
                     }
                 }
                 ,
@@ -72,14 +91,17 @@ ListView {
             maxWidth: units.gu(30)
             parent:  mainView
 
-            delegate: DetailsDialog{
+            delegate: DetailDialog{
                 id: detailsDialog
 
                 category: itemCategory
                 itemName: quickAdditem.itemName
                 description: itemDescr
                 date: itemDate
-                value: itemValue
+                value: AppFunctions.formatMoney(itemValue, false)
+                travelValue: itemTravelValue > 0 ? Process.formatMoney(itemTravelValue, itemTravelCur) : ""
+                travelRate: itemRate > 0 ? itemRate : 0
+
 
                 onClosed: poppingDialog.close()
             }

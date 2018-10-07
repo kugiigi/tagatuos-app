@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import "PopupItemSelector"
 
@@ -29,6 +29,7 @@ ListItem {
 
     action: Action {
         onTriggered: {
+            keyboard.target.hide()
             poppingDialog.show(root)
         }
     }
@@ -81,8 +82,14 @@ ListItem {
             id: itemSelector
             model: root.model
             title: root.titleText
+//            anchors.fill: parent
 
 //            Component.onCompleted: itemSelector.initializeSelectedValues(root.selectedValue)
         }
+    }
+
+    Connections {
+        id: keyboard
+        target: Qt.inputMethod
     }
 }

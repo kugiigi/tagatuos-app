@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 
 Item {
@@ -7,7 +7,6 @@ Item {
     property alias model: listView.model
     property alias title: selectorHeader.title
 
-    anchors.fill: parent
     clip: true
 
 
@@ -66,6 +65,11 @@ Item {
             top: parent.top
         }
     }
+
+//    Item{
+//        id: selectorHeader
+//        property string title: "Test"
+//    }
 
 
     UbuntuListView {
@@ -132,4 +136,15 @@ Item {
             bottom: parent.bottom
         }
     }
+//    Rectangle{
+//        id: selectorToolbar
+
+//        color: "green"
+//        height: units.gu(5)
+//        anchors{
+//            left: parent.left
+//            right: parent.right
+//            bottom: parent.bottom
+//        }
+//    }
 }
