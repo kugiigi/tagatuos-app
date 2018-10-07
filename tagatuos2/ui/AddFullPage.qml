@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 //import Ubuntu.Components.Themes.Ambiance 1.3
 import Ubuntu.Components.ListItems 1.0 as ListItemOld
@@ -10,6 +10,7 @@ import "../components/Common"
 import "../components/AddFullPage"
 import "../library"
 import "../library/ProcessFunc.js" as Process
+import "../library/Currencies.js" as Currencies
 
 Page {
     id: root
@@ -18,6 +19,9 @@ Page {
     property string type: "expense"
     property string itemID
     property var itemData
+    property var travelCurData
+    property bool withTravelData: false
+    property string elementWithFocus
 
     signal cancel
     signal saved
@@ -26,19 +30,12 @@ Page {
         visible: false
     }
 
-    // onActiveChanged: {
     onVisibleChanged: {
         if (visible === true) {
             resetFields()
-            mainView.addBottomEdge.hint.visible = mainView.showBottomEdgeHint //false
-            mainView.addBottomEdge.hint.enabled = mainView.showBottomEdgeHint //false
-            //            if (mainView.listModels.modelCategories.count === 0) {
-            //                mainView.listModels.modelCategories.getItems()
-            //            }
+            mainView.addBottomEdge.hint.visible = mainView.showBottomEdgeHint
+            mainView.addBottomEdge.hint.enabled = mainView.showBottomEdgeHint
 
-            //            categoryItemSelector.selectedIndex
-            //                    = 1 //workaround for the issue on incorrect tem shown in the selector
-            //            categoryItemSelector.selectedIndex = 0
 
             //loads data when in edit mode
             if (root.mode === "edit") {
@@ -48,10 +45,29 @@ Page {
                 autoCompletePopover.show = false //Do not show autoCompletePopover
                 textareaDescr.text = root.itemData.descr
                 dateLabel.date = new Date(root.itemData.date)
-                valueTextField.text = root.itemData.value
+
+
+                if(typeof root.itemData.travel !== 'undefined'){
+
+                    var currency = Currencies.currency(root.itemData.travel.travel_currency)                    
+
+                    root.travelCurData.symbol = currency.symbol
+                    root.travelCurData.decimal = currency.decimal
+                    root.travelCurData.thousand = currency.thousand
+                    root.travelCurData.precision = currency.precision
+                    root.travelCurData.format = currency.format
+
+                    valueTextField.text = root.itemData.travel.value
+                    valueTextField.homeValue = root.itemData.value
+
+                    //should be last here
+                    root.withTravelData = true
+                }else{
+                    valueTextField.text = root.itemData.value
+                }
             }
 
-            textName.forceActiveFocus()
+            textName.forceFocus()
 
             //btnCancel.action.shortcut = "Esc"
             toolBar.leadingActionBar.actions[0].shortcut = "Esc"
@@ -73,13 +89,35 @@ Page {
 
 
         dateLabel.date = new Date()
+
+        travelCurData = {}
+        root.withTravelData = false
     }
     PageBackGround {
+    }
+
+    function resetFocus(){
+        console.log("elementWithFocus: " + elementWithFocus)
+        switch(elementWithFocus){
+        case "Description":
+            textName.forceFocus()
+            break
+        case "Value":
+            valueTextField.forceFocus()
+            break
+        case "Comments":
+            textareaDescr.forceFocus()
+            break
+        default:
+            valueTextField.forceFocus()
+            break
+        }
     }
 
 
     Flickable {
         id: flickDialog
+
         boundsBehavior: Flickable.DragAndOvershootBounds
         contentHeight: columnContent.height + units.gu(1)
         interactive: true
@@ -94,6 +132,8 @@ Page {
 
         flickableDirection: Flickable.VerticalFlick
         clip: true
+
+
         Column {
             id: columnContent
 
@@ -103,6 +143,21 @@ Page {
                 right: parent.right
             }
 
+            TravelFields{
+                id: travelFields
+
+                visible: if(root.mode === "edit"){
+                             root.withTravelData ? true : false
+                         }else{
+                             tempSettings.travelMode ? true : false
+                         }
+
+                rate: root.withTravelData ? root.itemData.travel.rate : (tempSettings.travelMode ? tempSettings.exchangeRate : 0)
+                homeCurrency: root.withTravelData ? root.itemData.travel.home_currency : (tempSettings.travelMode ? tempSettings.currentCurrency : "")
+                travelCurrency: root.withTravelData ? root.itemData.travel.travel_currency : (tempSettings.travelMode ? tempSettings.travelCurrency : "")
+            }
+
+
             CategoryField {
                 id: categoryPopupItemSelector
 
@@ -110,7 +165,7 @@ Page {
 
                 onConfirmSelection: {
                     if (textName.text === "") {
-                        textName.forceActiveFocus()
+                        textName.forceFocus()
                     } else {
                         if (valueTextField.text === "") {
                             valueTextField.forceActiveFocus()
@@ -129,6 +184,8 @@ Page {
 
             ValueField {
                 id: valueTextField
+                //WORKAROUND: Shortcut doesn't seem to work in xenial
+                Keys.onReturnPressed:saveAction.trigger()
             }
 
             CommentsField {
@@ -160,6 +217,7 @@ Page {
         }
     }
 
+
     Toolbar {
         id: toolBar
 
@@ -174,11 +232,12 @@ Page {
             delegate: buttonComponent
             actions: [
                 Action {
+                    id: saveAction
 
                     property color color: theme.palette.normal.background
 
                     //shortcut: "Ctrl+S"
-                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
+//                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
                     text: root.mode === "add" ? i18n.tr(
                                                     "Add") : i18n.tr("Update")
                     onTriggered: {
@@ -187,31 +246,52 @@ Page {
                         keyboard.target.commit()
 
                         var txtName = textName.text
-                        var txtDescr = textareaDescr.text
-                        var txtCategory = categoryPopupItemSelector.selectedValue
-                        var today = new Date(Process.getToday())
-                        var txtDate = Process.dateFormat(0, dateLabel.date)
-                        var realValue = parseFloat(valueTextField.text)
-                        var txtType = "Expense" //typeSection.selectedIndex === 0 ? "Expense" : "Debt"
 
                         if (Process.checkRequired(
                                     [txtName, valueTextField.text]) === false) {
-                            textName.forceActiveFocus()
+                            textName.forceFocus()
                         } else {
                             var newExpense
+                            var txtDescr = textareaDescr.text
+                            var txtCategory = categoryPopupItemSelector.selectedValue
+                            var today = new Date(Process.getToday())
+                            var txtDate = Process.dateFormat(0, dateLabel.date)
+                            var txtType = "Expense" //typeSection.selectedIndex === 0 ? "Expense" : "Debt"
+                            var realValue
+                            var realTravelValue
+
+                            //Travel Data
+                            var travelData
+
+                            if(travelFields.visible){
+                                var realRate = travelFields.rate
+                                var txtHomeCur = travelFields.homeCurrency
+                                var txtTravelCur = travelFields.travelCurrency
+
+                                realTravelValue = parseFloat(valueTextField.text)
+                                realValue = valueTextField.homeValue
+//                                realValue = realTravelValue * realRate
+
+                                travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
+
+                            }else{
+                                realValue = parseFloat(valueTextField.text)
+                            }
+
                             switch (mode) {
                             case "edit":
                                 DataProcess.updateExpense(root.itemID,
                                                           txtCategory, txtName,
                                                           txtDescr, txtDate,
-                                                          realValue)
+                                                          realValue, travelData)
                                 var updatedItem = {
                                     expense_id: root.itemID,
                                     category_name: txtCategory,
                                     name: txtName,
                                     descr: txtDescr,
                                     date: txtDate,
-                                    value: realValue
+                                    value: realValue,
+                                    travel: travelData
                                 }
                                 mainView.listModels.updateItem(updatedItem)
                                 break
@@ -219,7 +299,7 @@ Page {
                                 if (txtType === "Expense") {
                                     newExpense = DataProcess.saveExpense(
                                                 txtCategory, txtName, txtDescr,
-                                                txtDate, realValue)
+                                                txtDate, realValue, travelData)
                                     mainView.listModels.addItem(newExpense)
                                 }
                                 break
@@ -240,11 +320,17 @@ Page {
                         var txtName = textName.text
                         var txtDescr = textareaDescr.text
                         var txtCategory = categoryPopupItemSelector.selectedValue
-                        var realValue = parseFloat(valueTextField.text)
+                        var realValue
+
+                        if(travelFields.visible){
+                            realValue = parseFloat(valueTextField.homeValue)
+                        }else{
+                            realValue = parseFloat(valueTextField.text)
+                        }
 
                         if (Process.checkRequired(
                                     [txtName, valueTextField.text]) === false) {
-                            textName.forceActiveFocus()
+                            textName.forceFocus()
                         } else {
                             var newQuickExpense
 

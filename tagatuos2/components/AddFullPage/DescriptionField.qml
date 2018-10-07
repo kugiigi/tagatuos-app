@@ -1,10 +1,10 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Themes.Ambiance 1.3
 
 Column {
 
-    id: root
+    id: descriptionField
 
     property alias text: textName.text
 
@@ -18,7 +18,7 @@ Column {
         rightMargin: units.gu(2)
     }
 
-    function forceActiveFocus(){
+    function forceFocus(){
         textName.forceActiveFocus()
     }
 
@@ -57,6 +57,12 @@ Column {
                 autoCompletePopover.show = true
             } else {
                 autoCompletePopover.show = false
+            }
+        }
+
+        onActiveFocusChanged: {
+            if(activeFocus){
+                root.elementWithFocus = "Description"
             }
         }
     }

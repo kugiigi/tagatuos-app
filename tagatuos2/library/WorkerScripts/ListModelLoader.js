@@ -24,6 +24,11 @@ WorkerScript.onMessage = function (msg) {
     var txtCode
     var txtSysmbol
 
+    var realTravelValue
+    var realRate
+    var txtHomeCur
+    var txtTravelCur
+
     var previousSortField = ""
     var currentSortField = ""
     var childArray = []
@@ -66,11 +71,15 @@ WorkerScript.onMessage = function (msg) {
             txtDateValue = msg.result[i].date
             txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
             txtValue = msg.result[i].value
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
 
             currentSortField = txtCategory
 
-            if (previousSortField !== currentSortField) {
 
+            if (previousSortField !== currentSortField) {
                 childArray.push({
                                     expense_id: intID,
                                     category_name: txtCategory,
@@ -78,7 +87,11 @@ WorkerScript.onMessage = function (msg) {
                                     descr: txtDescr,
                                     date: txtDate,
                                     dateValue: txtDateValue,
-                                    value: txtValue
+                                    value: txtValue,
+                                    rate: realRate,
+                                    homeCur: txtHomeCur,
+                                    travelCur: txtTravelCur,
+                                    travel_value: realTravelValue
                                 })
                 msg.model.append({
                                      category_name: txtCategory,
@@ -87,10 +100,16 @@ WorkerScript.onMessage = function (msg) {
                                      count: 1
                                  })
                 childArray = []
+
+
             } else {
                 var currentIndex = msg.model.count - 1
                 var totalValue = msg.model.get(currentIndex).total
-                var currentCount = msg.model.get(currentIndex).count
+
+                //WORKAROUND: App crashes in Xenial without this line
+                var currentCount = msg.model.get(currentIndex).count_1
+
+                currentCount = msg.model.get(currentIndex).count
 
                 msg.model.get(currentIndex).childModel.append({
                                                                   expense_id: intID,
@@ -99,11 +118,16 @@ WorkerScript.onMessage = function (msg) {
                                                                   descr: txtDescr,
                                                                   date: txtDate,
                                                                   dateValue: txtDateValue,
-                                                                  value: txtValue
+                                                                  value: txtValue,
+                                                                  rate: realRate,
+                                                                  homeCur: txtHomeCur,
+                                                                  travelCur: txtTravelCur,
+                                                                  travel_value: realTravelValue
                                                               })
 
-                msg.model.setProperty(currentIndex, "total", Math.round(
-                                          (totalValue + txtValue) * 100) / 100)
+//                msg.model.setProperty(currentIndex, "total", Math.round(
+//                                          (totalValue + txtValue) * 100) / 100)
+                msg.model.setProperty(currentIndex, "total", totalValue + txtValue)
                 msg.model.setProperty(currentIndex, "count", currentCount + 1)
             }
 
@@ -129,15 +153,24 @@ WorkerScript.onMessage = function (msg) {
 
             txtDateValue = msg.result[i].date
             txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
-//            console.log("txtDate: " + txtDate)
+
+            //Travel Data
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
 
             msg.model.append({
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: txtDate,
-                descr: txtDescr,
-                quickvalue: txtValue
-            })
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: txtDate,
+                                 descr: txtDescr,
+                                 quickvalue: txtValue,
+                                 rate: realRate,
+                                 homeCur: txtHomeCur,
+                                 travelCur: txtTravelCur,
+                                 travel_value: realTravelValue
+                             })
         }
         break
     case "QuickAdd":
@@ -149,13 +182,17 @@ WorkerScript.onMessage = function (msg) {
             txtValue = msg.result[i].value
 
             msg.model.append({
-                quick_id: intID,
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: "",
-                descr: txtDescr,
-                quickvalue: txtValue
-            })
+                                 quick_id: intID,
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: "",
+                                 descr: txtDescr,
+                                 quickvalue: txtValue,
+                                 rate: 0,
+                                 homeCur: "",
+                                 travelCur: "",
+                                 travel_value: 0
+                             })
         }
         break
     case "QuickTop":
@@ -163,13 +200,24 @@ WorkerScript.onMessage = function (msg) {
             txtCategory = msg.result[i].category_name
             txtName = msg.result[i].name
             txtValue = msg.result[i].value
+
+            //Travel Data
+            realTravelValue = msg.result[i].travel_value
+            realRate = msg.result[i].rate
+            txtHomeCur = msg.result[i].home_currency
+            txtTravelCur = msg.result[i].travel_currency
+
             msg.model.append({
-                category_name: txtCategory,
-                quickname: txtName,
-                quickdate: "",
-                descr: "",
-                quickvalue: txtValue
-            })
+                                 category_name: txtCategory,
+                                 quickname: txtName,
+                                 quickdate: "",
+                                 descr: "",
+                                 quickvalue: txtValue,
+                                 rate: realRate,
+                                 homeCur: txtHomeCur,
+                                 travelCur: txtTravelCur,
+                                 travel_value: realTravelValue
+                             })
         }
         break
     case "Categories":

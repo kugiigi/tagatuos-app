@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 
 ListItem {
@@ -8,6 +8,7 @@ ListItem {
     property alias titleText: listItemLayout.title
     property alias subText: listItemLayout.subtitle
     property string iconName
+    property alias iconColor: icon.color
 
     width: parent.width
     divider.visible: false
@@ -24,6 +25,7 @@ ListItem {
         ProgressionSlot{}
 
         Icon {
+            id: icon
             name: iconName
             SlotsLayout.position: SlotsLayout.Leading
             width: units.gu(3)

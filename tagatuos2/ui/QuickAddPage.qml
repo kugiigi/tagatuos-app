@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "../components/Common"
@@ -13,7 +13,7 @@ Item {
     property bool isContentShown: false
 
     signal close
-    signal addQuick(string category, string itemName, string itemDescr, real itemValue)
+    signal addQuick(string category, string itemName, string itemDescr, real itemValue, real itemTravelValue, string itemHomeCur, string itemTravelCur)
 
     function loadQuickList(searchText) {
         listView.model.load(
@@ -24,12 +24,34 @@ Item {
         var today = new Date(Process.getToday())
         var txtDate = Qt.formatDateTime(today,
                                         "yyyy-MM-dd 00:00:00.000")
-        var realValue = parseFloat(itemValue)
+        var realValue //parseFloat()
+        var travelData
+
+        //Travel Data
+        if(tempSettings.travelMode){
+            var realRate = tempSettings.exchangeRate
+            var txtHomeCur = tempSettings.currentCurrency
+            var txtTravelCur = tempSettings.travelCurrency
+            var realTravelValue
+
+
+            if(itemHomeCur === tempSettings.currentCurrency && itemTravelCur === tempSettings.travelCurrency){
+                realTravelValue = itemTravelValue
+                realValue = realTravelValue * realRate
+            }else{
+                realTravelValue = itemValue / realRate
+                realValue = itemValue
+            }
+
+            travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
+        }else{
+            realValue = itemValue
+        }
 
         var newExpense = DataProcess.saveExpense(category,
                                                  itemName,
                                                  itemDescr,
-                                                 txtDate, itemValue)
+                                                 txtDate, realValue, travelData)
         mainView.listModels.addItem(newExpense)
         close()
     }
@@ -55,7 +77,7 @@ Item {
             color: "transparent"
             activeFocusOnPress: false
             anchors {
-                bottom: toolBar.visible ? toolBar.top : parent.top
+                bottom: findToolBar.visible ? findToolBar.top : parent.top
                 horizontalCenter: parent.horizontalCenter
             }
             action: Action {
@@ -75,7 +97,7 @@ Item {
         }
 
         QuickAddFindToolbar{
-            id: toolBar
+            id: findToolBar
         }
 
         QuickAddListView{
@@ -130,7 +152,12 @@ Item {
         id: addDialog
         AddQuickExpenseDialog {
             onAddQuickExpense: {
-                addQuick(itemCategory, itemName, itemDescr, itemValue)
+                var travelValue = 0
+                var rate = 0
+                var homeCur = ""
+                var travelCur = ""
+
+                addQuick(itemCategory, itemName, itemDescr, itemValue, travelValue, rate, homeCur, travelCur)
             }
         }
     }

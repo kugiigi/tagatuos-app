@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import "../Common"
 
@@ -13,6 +13,7 @@ PopupItemSelector{
     textRolename: "category_name"
     divider.visible: false
     commitOnSelect: true
+//    forceFullscreen: true
 
     title.textSize: Label.Medium
     title.font.weight: Text.Normal
@@ -20,5 +21,11 @@ PopupItemSelector{
 
     onConfirmSelection: {
         selectedValue = selections
+    }
+
+    onActiveFocusChanged: {
+        if(activeFocus){
+            root.resetFocus()
+        }
     }
 }

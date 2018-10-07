@@ -1,6 +1,7 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Components.ListItems 1.3 as ListItems
+import ".."
 import "../Common"
 import "../../library/ApplicationFunctions.js" as AppFunctions
 import "../../library/ProcessFunc.js" as Process
@@ -31,39 +32,20 @@ UbuntuListView {
 
         //        height: units.gu(5)
         itemName: name
-        itemValue: AppFunctions.formatMoney(value, false)
+        itemValue: showTravelValue && tempSettings.travelMode ? AppFunctions.formatMoneyTravel(value / tempSettings.exchangeRate, false) : AppFunctions.formatMoney(value, false)
         itemDescr: descr
         itemDate: date
+        itemTravelRate: rate
+        //TODO: Needs better logic for displaying correct value
+        itemTravelValue: travel_value //AppFunctions.formatMoneyTravel(value / tempSettings.exchangeRate, false)//travelCur ? Process.formatMoney(travel_value, travelCur) : AppFunctions.formatMoneyTravel(value, false)
+
+
         actions: [
             Action {
                 iconName: "info"
                 text: i18n.tr("View Details")
                 onTriggered: {
-                    //console.log(expense_id)
-//                    var expenseDetails = listModels.getExpenseDetails(
-//                                expense_id)
-//                    var itemName
-//                    var category
-//                    var description
-//                    var date
-//                    var value
-//                    itemName = expenseDetails.name
-//                    category = expenseDetails.category_name
-//                    description = expenseDetails.descr
-//                    date = Process.relativeDate(expenseDetails.date,
-//                                                "ddd, MMM d, yyyy", "Basic")
-//                    value = AppFunctions.formatMoney(expenseDetails.value,
-//                                                     false)
-//                    popupDialog.contentLoader.setSource("DetailsDialog.qml", {
-//                                                            category: category,
-//                                                            itemName: itemName,
-//                                                            description: description,
-//                                                            date: date,
-//                                                            value: value
-//                                                        })
-                    //                        popupDialog.contentLoader.sourceComponent = detailsDialogComponent
-//                    popupDialog.show()
-                poppingDialog.show(singleItemChild)
+                    poppingDialog.show(singleItemChild)
                 }
             },
             Action {
@@ -91,27 +73,41 @@ UbuntuListView {
             maxWidth: units.gu(30)
             parent:  mainView
 
-            delegate: DetailsDialog{
+            delegate: DetailDialog{
                 id: detailsDialog
 
-                category: singleItemChild.category
-                itemName: singleItemChild.itemName
-                description: singleItemChild.desc
-                date: singleItemChild.date
-                value: singleItemChild.value
+                property var expenseDetails: listModels.getExpenseDetails(expense_id)
 
-                Component.onCompleted: {
-                    var expenseDetails = listModels.getExpenseDetails(
-                                expense_id)
+                itemName: expenseDetails.name
+                category: expenseDetails.category_name
+                description: expenseDetails.descr
+                date: Process.relativeDate(expenseDetails.date,"ddd, MMM d, yyyy", "Basic")
+                value: AppFunctions.formatMoney(expenseDetails.value,false)
+                travelValue: expenseDetails.travel ? Process.formatMoney(expenseDetails.travel.value, expenseDetails.travel.travel_currency) : ""
+                travelRate: expenseDetails.travel ? expenseDetails.travel.rate : 0
 
-                    itemName = expenseDetails.name
-                    category = expenseDetails.category_name
-                    description = expenseDetails.descr
-                    date = Process.relativeDate(expenseDetails.date,
-                                                "ddd, MMM d, yyyy", "Basic")
-                    value = AppFunctions.formatMoney(expenseDetails.value,
-                                                     false)
-                }
+//                category: singleItemChild.category
+//                itemName: singleItemChild.itemName
+//                description: singleItemChild.desc
+//                date: singleItemChild.date
+//                value: singleItemChild.value
+
+//                Component.onCompleted: {
+//                    var expenseDetails = listModels.getExpenseDetails(
+//                                expense_id)
+
+//                    itemName = expenseDetails.name
+//                    category = expenseDetails.category_name
+//                    description = expenseDetails.descr
+//                    date = Process.relativeDate(expenseDetails.date,
+//                                                "ddd, MMM d, yyyy", "Basic")
+//                    value = AppFunctions.formatMoney(expenseDetails.value,
+//                                                     false)
+//                    if(expenseDetails.travel){
+//                        travelValue = Process.formatMoney(expenseDetails.travel.value, expenseDetails.travel.travel_currency)
+//                        travelRate = expenseDetails.travel.rate
+//                    }
+//                }
 
                 onClosed: poppingDialog.close()
             }

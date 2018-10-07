@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import Ubuntu.Components 1.3
 import "../ui"
 import "../components/BottomEdge"
@@ -36,6 +36,7 @@ BottomEdge {
 
 
     hint {
+        opacity: tempSettings.hideBottomHint ? 0 : 1
         action: Action {
             text: i18n.tr("New Expense")
             iconName: "add"
