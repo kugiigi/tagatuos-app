@@ -1,0 +1,45 @@
+[editor]
+line_wrapping=false
+line_break_column=72
+auto_continue_multiline=true
+
+[file_prefs]
+final_new_line=true
+ensure_convert_new_lines=false
+strip_trailing_spaces=false
+replace_tabs=false
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=false
+detect_indent_width=false
+indent_mode=2
+
+[project]
+name=Tagatuos_Geany
+base_path=/home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app
+description=
+file_patterns=
+
+[long line marker]
+long_line_behaviour=1
+long_line_column=72
+
+[files]
+current_page=2
+FILE_NAME_0=376;None;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Fmanifest.json.in;0;4
+FILE_NAME_1=108;None;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2FChangelog;0;4
+FILE_NAME_2=6823;Javascript;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Ftagatuos2%2FMain.qml;0;4
+
+[VTE]
+last_dir=/home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app
+
+[build-menu]
+EX_00_LB=Build and Run
+EX_00_CM=qtcompilerun_geany tagatuos2 kugiigi
+EX_00_WD=%p
+EX_01_LB=Deploy Remote
+EX_01_CM=qtcompilerun_remote tagatuos2 kugiigi 192.168.1.35
+EX_01_WD=%p

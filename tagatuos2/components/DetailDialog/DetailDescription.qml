@@ -11,15 +11,15 @@ ScrollView {
         boundsBehavior: Flickable.DragAndOvershootBounds
         interactive: true
         clip: true
-        contentHeight: descriptionLabel.contentHeight
+        contentHeight: descriptionLabel.height
         anchors{
             left: parent.left
-            leftMargin: units.gu(-1)
-            rightMargin: units.gu(-2)
+            //leftMargin: units.gu(-1)
+            //rightMargin: units.gu(-2)
             right: parent.right
             top: parent.top
         }
-
+		
         TextArea {
             id: descriptionLabel
 
@@ -28,7 +28,7 @@ ScrollView {
             color: theme.palette.normal.backgroundSecondaryText
             autoSize: true
             readOnly: true
-            maximumLineCount: 0
+            maximumLineCount: 20
             verticalAlignment: TextEdit.AlignVCenter
             wrapMode: TextEdit.WordWrap
             cursorVisible: false
