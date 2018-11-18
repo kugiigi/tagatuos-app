@@ -1,3 +1,8 @@
+v0.81
+* Fixed Issue # 29: Clicking on the TextField in Quickadd page does not put focus
+* Fixed issue when sometimes descriptions are cut off in the details dialog
+* Some code cleanups
+
 v0.80
 * Initial Dutch and Spanish translations support
 * Fixed Text rendering in the popup dialog when connected to a monitor

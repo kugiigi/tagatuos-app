@@ -1,7 +1,6 @@
 import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Layouts 1.0
-//import Ubuntu.Components.Labs 1.0
 import Qt.labs.settings 1.0
 import "components"
 import "components/ListModels"
@@ -56,7 +55,7 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.80"
+    property string current_version: "0.81"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels
@@ -206,102 +205,6 @@ MainView {
             }
         }
     }
-
-
-    //    ListView {
-    //        id: listView
-    //        anchors {
-    //            left: parent.left
-    //            right: parent.right
-    //            top: skipLabel.bottom
-    //            bottom: separator.top
-    //        }
-
-    //        model: []
-    //        snapMode: ListView.SnapOneItem
-    //        orientation: Qt.Horizontal
-    //        highlightMoveDuration: UbuntuAnimation.FastDuration
-    //        highlightRangeMode: ListView.StrictlyEnforceRange
-    //        highlightFollowsCurrentItem: true
-
-    //        delegate: Item {
-    //            width: listView.width
-    //            height: listView.height
-    //            clip: true
-
-    //        }
-    //    }
-
-    //    SplitView {
-    //            anchors.fill: parent
-    //            layouts: [
-    //                SplitViewLayout {
-    //                    when: main.width < units.gu(80)
-    //                    ViewColumn {
-    //                        fillWidth: true
-    //                    }
-    //                },
-    //                SplitViewLayout {
-    //                    when: main.width >= units.gu(80)
-    //                    ViewColumn {
-    //                        minimumWidth: units.gu(30)
-    //                        maximumWidth: units.gu(100)
-    //                        preferredWidth: units.gu(40)
-    //                    }
-    //                    ViewColumn {
-    //                        minimumWidth: units.gu(40)
-    //                        fillWidth: true
-    //                    }
-    //                }
-    //            ]
-    //        }
-
-    //    Layouts {
-    //        id: layouts
-    //        width: units.gu(40)
-    //        height: units.gu(40)
-    //        layouts: [
-    //            ConditionalLayout {
-    //                name: "flow"
-    //                when: layouts.width > units.gu(60)
-    //                Flow {
-    //                    anchors.fill: parent
-    //                    spacing: units.dp(3)
-    //                    flow: Flow.LeftToRight
-    //                    ItemLayout {
-    //                        item: "item1"
-    //                        width: units.gu(30)
-    //                        height: units.gu(20)
-    //                    }
-    //                    ItemLayout {
-    //                        item: "item2"
-    //                        width: units.gu(30)
-    //                        height: units.gu(20)
-    //                    }
-    //                    ItemLayout {
-    //                        item: "item3"
-    //                        width: units.gu(30)
-    //                        height: units.gu(20)
-    //                    }
-    //                }
-    //            }
-    //        ]
-    //        Column {
-    //            spacing: units.dp(2)
-    //            Button {
-    //                text: "Button #1"
-    //                Layouts.item: "item1"
-    //            }
-    //            Button {
-    //                text: "Button #2"
-    //                Layouts.item: "item2"
-    //            }
-    //            Button {
-    //                text: "Button #3"
-    //                Layouts.item: "item3"
-    //            }
-    //        }
-    //    }
 
     PageStack {
         id: mainPageStack
