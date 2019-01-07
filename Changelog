@@ -1,3 +1,6 @@
+v0.82
+* Implemented user metric for displaying your expense today and current month
+
 v0.81
 * Fixed Issue # 29: Clicking on the TextField in Quickadd page does not put focus
 * Fixed issue when sometimes descriptions are cut off in the details dialog

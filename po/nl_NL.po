@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 21:35+0800\n"
+"POT-Creation-Date: 2019-01-07 20:39+0800\n"
 "PO-Revision-Date: 2018-02-12 12:08+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/Main.qml:75
+#, fuzzy
+msgid "No expense yet for today"
+msgstr "Geen uitgave(n) gevonden voor vandaag"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:22
 msgid "Add Expense"
@@ -199,7 +204,7 @@ msgstr "Volgende"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:211
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:40
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:87
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:539
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:544
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
 msgid "Today"
 msgstr "Vandaag"
@@ -212,7 +217,7 @@ msgstr "Afgelopen dagen"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:218
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:44
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:92
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:553
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:558
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
 msgid "Yesterday"
 msgstr "Gisteren"
@@ -221,7 +226,7 @@ msgstr "Gisteren"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:232
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:48
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:97
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:567
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:572
 msgid "This Week"
 msgstr "Deze week"
 
@@ -229,7 +234,7 @@ msgstr "Deze week"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:239
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:52
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:102
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:581
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:586
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
 msgid "This Month"
 msgstr "Deze maand"
@@ -238,7 +243,7 @@ msgstr "Deze maand"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:246
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:64
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:112
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:609
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:614
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
 msgid "Last Week"
 msgstr "Vorige week"
@@ -247,7 +252,7 @@ msgstr "Vorige week"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:253
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:68
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:117
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:623
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:628
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
 msgid "Last Month"
 msgstr "Vorige maand"
@@ -422,7 +427,7 @@ msgstr "Valuta"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:107
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:595
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:600
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:26
 msgid "Recent"
 msgstr "Recent"
@@ -650,59 +655,64 @@ msgstr "U staat op het punt om een externe link te openen. Wilt u doorgaan?"
 msgid "OK"
 msgstr "Oké"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:541
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
+#, qt-format
+msgid "You have spent %1 today"
+msgstr ""
+
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
 msgid "No expense for Today"
 msgstr "Geen uitgave(n) gevonden voor vandaag"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:543
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
 msgid "Loading Today's Expenses"
 msgstr "Bezig met laden van uitgaven van vandaag"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:555
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
 msgid "No expense for Yesterday"
 msgstr "Gisteren niks uitgegeven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:557
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
 msgid "Loading Yesterday's Expenses"
 msgstr "Bezig met laden van uitgaven van gisteren"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:569
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
 msgid "No expense for This Week"
 msgstr "Deze week niks uitgegeven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:571
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
 msgid "Loading This Week's Expenses"
 msgstr "Bezig met laden van uitgaven van deze week"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:583
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
 msgid "No expense for This Month"
 msgstr "Deze maand niks uitgegeven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:585
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
 msgid "Loading This Month's Expenses"
 msgstr "Bezig met laden van uitgaven van deze maand"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:597
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
 msgid "No Recent Expenses"
 msgstr "Geen recente uitgaven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:599
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
 msgid "Loading Recent Expenses"
 msgstr "Bezig met laden van recente uitgaven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:611
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
 msgid "No expense for Last Week"
 msgstr "Vorige week niks uitgegeven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:613
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
 msgid "Loading Last Week's Expenses"
 msgstr "Bezig met laden van uitgaven van vorige week"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:625
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:630
 msgid "No expense for Last Month"
 msgstr "Vorige maand niks uitgegeven"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:627
+#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:632
 msgid "Loading Last Month's Expenses"
 msgstr "Bezig met laden van uitgaven van vorige maand"
 
@@ -917,6 +927,14 @@ msgstr "In de toekomst"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/build/tagatuos2/tagatuos2.desktop.h:1
 msgid "Tagatuos"
 msgstr "Tagatuos"
+
+#, fuzzy
+#~ msgid "No expense yet for this month"
+#~ msgstr "Deze maand niks uitgegeven"
+
+#, fuzzy
+#~ msgid "You have spent %1 this month"
+#~ msgstr "Deze maand niks uitgegeven"
 
 #~ msgid "Argentina Peso"
 #~ msgstr "Argentijnse Peso"
