@@ -2,6 +2,7 @@ import QtQuick 2.9
 import Ubuntu.Components 1.3
 import Ubuntu.Layouts 1.0
 import Qt.labs.settings 1.0
+import UserMetrics 0.1
 import "components"
 import "components/ListModels"
 import "components/Common"
@@ -55,7 +56,7 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.81"
+    property string current_version: "0.82"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels
@@ -63,6 +64,17 @@ MainView {
 
     // For Debugging only
     property bool showBottomEdgeHint: false
+    
+    Metric {
+        id: userMetric
+        
+        property string circleMetric
+
+        name: "expenseCounter"
+        format: circleMetric
+        emptyFormat: i18n.tr("No expense yet for today")
+        domain: "tagatuos2.kugiigi"
+    }
 
     Component.onCompleted: {
         /*Meta data processing*/
