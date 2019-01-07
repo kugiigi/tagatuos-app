@@ -465,6 +465,11 @@ Item {
     ExpenseListModel {
         id: modelTodayExpenses
         mode: "Today"
+        
+        onTotalValueChanged: {
+			userMetric.circleMetric = i18n.tr("You have spent %1 today").arg(totalValue)
+			userMetric.update(0)
+		}
     }
 
     /*Recent Expenses*/
