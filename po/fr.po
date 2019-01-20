@@ -37,12 +37,12 @@ msgstr "Dépense rapide"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:118
 msgid "Back"
-msgstr ""
+msgstr "Retour"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailDialog.qml:109
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:84
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:13
 msgid "About"
@@ -74,7 +74,7 @@ msgstr "Faire un don"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:229
 msgid "View in OpenStore"
-msgstr ""
+msgstr "Afficher dans l'OpenStore"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:245
 msgid "Other apps by the developer"
@@ -86,7 +86,7 @@ msgstr "Développeurs"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:281
 msgid "Icon"
-msgstr ""
+msgstr "Icône"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:300
 msgid "Powered by"
@@ -98,7 +98,7 @@ msgstr "Formattage de la monnaie"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:320
 msgid "Exchange rates data"
-msgstr ""
+msgstr "Données concernant le taux de change "
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:336
 msgid "Date and Time manipulation and formatting"
@@ -107,7 +107,7 @@ msgstr "Manipulation et formattage de la date et de l'heure"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:351
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:366
 msgid "Charts and graphs"
-msgstr ""
+msgstr "Tableaux et graphiques"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:27
 msgid "Add New Category"
@@ -395,7 +395,7 @@ msgstr "Désactiver cette option chargera la page de la session précédente"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:82
 msgid "Hide bottom edge hint"
-msgstr ""
+msgstr "Masquer l'astuce du bord inférieur"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:93
 msgid "Theme"
@@ -416,12 +416,12 @@ msgstr "Suru Sombre"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:131
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:137
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:78
 msgid "Currency"
-msgstr ""
+msgstr "Devise"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
@@ -435,7 +435,7 @@ msgstr "Récent"
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:14
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:50
 msgid "Travel Mode"
-msgstr ""
+msgstr "Mode voyage"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:284
 msgid "Administration"
@@ -462,19 +462,19 @@ msgstr ""
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:51
 msgid "Set a temporary currency"
-msgstr ""
+msgstr "Définir une devise temporaire"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:119
 msgid "Fetching exchange rates data"
-msgstr ""
+msgstr "Récupération des données concernant le taux de change"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:128
 msgid "Cannot fetch exchange rate data"
-msgstr ""
+msgstr "Impossible de récupérer les données concernant le taux de change"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:129
 msgid "Please check if you have a working internet connection"
-msgstr ""
+msgstr "Veuillez vérifier que vous disposez d'une connexion à Internet fonctionnelle"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/ColorField.qml:24
 msgid "Color"
@@ -521,19 +521,19 @@ msgstr "Saisissez la description de la dépense "
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:20
 msgid "Home Currency"
-msgstr ""
+msgstr "Devise du domicile"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:41
 msgid "Travel Currency"
-msgstr ""
+msgstr "Devise en voyage"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Data"
-msgstr ""
+msgstr "Données de voyage"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Mode is ON"
-msgstr ""
+msgstr "Le mode voyage est ACTIVÉ"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:30
 msgid "Value"
@@ -641,22 +641,22 @@ msgstr "Voir plus"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:12
 msgid "Open external link"
-msgstr ""
+msgstr "Ouvrir le lien externe"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:13
 msgid "You are about to open an external link. Do you wish to continue?"
-msgstr ""
+msgstr "Vous êtes sur le point d'ouvrir un lien externe. Voulez-vous continuer ?"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:52
 msgid "OK"
-msgstr ""
+msgstr "Valider"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
 #, qt-format
 msgid "You have spent %1 today"
-msgstr ""
+msgstr "Vous avez dépensé %1 aujourd'hui"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
 msgid "No expense for Today"
@@ -736,7 +736,7 @@ msgstr "Trouver"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:69
 msgid "Search History"
-msgstr ""
+msgstr "Historique de recherches"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:64
 msgid "Custom Add"
@@ -801,47 +801,47 @@ msgstr "Par année"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:71
 msgid "Rate"
-msgstr ""
+msgstr "Taux"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:85
 msgid "Use online data"
-msgstr ""
+msgstr "Utiliser les données en ligne"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:86
 msgid "Source"
-msgstr ""
+msgstr "Source"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:175
 msgid "Exchange rate data as of"
-msgstr ""
+msgstr "Taux de conversion du"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select values"
-msgstr ""
+msgstr "Sélectionnez les valeurs"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select a value"
-msgstr ""
+msgstr "Sélectionnez une valeur"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:34
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:34
 msgid "Select All"
-msgstr ""
+msgstr "Tout sélectionner"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:45
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:45
 msgid "Clear Selection"
-msgstr ""
+msgstr "Supprimer la sélection"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
-msgstr ""
+msgstr "Nourriture"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
-msgstr ""
+msgstr "Petit-déjeuner, déjeuner, dîner, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:83
 #, fuzzy
@@ -850,31 +850,31 @@ msgstr "Formattage de la monnaie"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
-msgstr ""
+msgstr "Taxi, bus, train, esence, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
-msgstr ""
+msgstr "Vêtements"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Shirts, Pants, underwear, etc."
-msgstr ""
+msgstr "Maillots, pantalons, sous-vêtements, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Household"
-msgstr ""
+msgstr "Maison"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Electricity, Groceries, Rent etc."
-msgstr ""
+msgstr "Électricité, épicerie, loyer, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Leisure"
-msgstr ""
+msgstr "Loisirs"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Movies, Books, Sports etc."
-msgstr ""
+msgstr "Films, livres, sport, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:91
 #, fuzzy
@@ -883,19 +883,19 @@ msgstr "Paramètres"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Investments, Reserve Funds etc."
-msgstr ""
+msgstr "Investissements, fonds de réserve, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
-msgstr ""
+msgstr "Santé"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
-msgstr ""
+msgstr "Dentiste, hôpital, médicaments, etc."
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Divers"
 
 #: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:95
 #, fuzzy
