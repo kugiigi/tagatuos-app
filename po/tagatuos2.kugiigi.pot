@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-07 20:39+0800\n"
+"POT-Creation-Date: 2019-01-27 15:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,903 +17,903 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/Main.qml:75
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/Main.qml:75
 msgid "No expense yet for today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:22
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:22
 msgid "Add Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:41
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:41
 msgid "New Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:68
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml:33
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:68
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/AddQuickExpenseDialog.qml:33
 msgid "Quick Expense"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:118
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:118
 msgid "Back"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailDialog.qml:109
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:84
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailDialog.qml:109
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:84
 msgid "Close"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:13
 msgid "About"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:92
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:92
 msgid "Version"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:102
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:102
 msgid "Released under license"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:127
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:127
 msgid "Support"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:166
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:166
 msgid "Report a bug"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:182
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:182
 msgid "Contact Developer"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:213
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:213
 msgid "Donate"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:229
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:229
 msgid "View in OpenStore"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:245
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:245
 msgid "Other apps by the developer"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:262
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:262
 msgid "Developers"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:281
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:281
 msgid "Icon"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:300
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:300
 msgid "Powered by"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:304
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:304
 msgid "Money formatting"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:320
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:320
 msgid "Exchange rates data"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:336
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:336
 msgid "Date and Time manipulation and formatting"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:351
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AboutPage.qml:366
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:351
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:366
 msgid "Charts and graphs"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:27
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:27
 msgid "Add New Category"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:28
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:28
 msgid "Edit Category - "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:201
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:30
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:29
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:44
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:50
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:201
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:30
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:29
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:44
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:50
 msgid "Add"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:347
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:47
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:347
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:47
 msgid "Save"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:159
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddFullPage.qml:352
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:387
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:253
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:241
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:23
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:33
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:33
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:159
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:352
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:387
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:253
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:241
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:23
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:33
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:33
 msgid "Cancel"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:170
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:398
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:170
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:398
 msgid "Category already exists!"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddCategory.qml:171
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:400
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:171
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:400
 msgid "That category already exists. Please choose a different name."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
 msgid "Update"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddFullPage.qml:315
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:315
 msgid "Add as Quick"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddFullPage.qml:372
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:372
 msgid "Quick expense successfully added!"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:165
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:165
 msgid "Preview"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:248
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:248
 msgid "Filter"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/AddReport.qml:249
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:249
 msgid "None"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/Dashboard.qml:13
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:52
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:58
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:163
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:193
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:180
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/Dashboard.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:52
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:58
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:163
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:193
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:180
 msgid "Dashboard"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/Dashboard.qml:22
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/Dashboard.qml:22
 msgid "Night-mode"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:223
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:223
 msgid "Previous"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:252
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:252
 msgid "Next"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:283
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:211
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:40
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:87
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:544
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:283
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:211
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:40
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:87
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:544
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
 msgid "Today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:286
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:286
 msgid "Recent Days"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:289
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:218
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:44
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:92
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:558
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:289
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:218
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:44
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:92
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:558
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
 msgid "Yesterday"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:292
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:232
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:48
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:97
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:572
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:292
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:232
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:48
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:97
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:572
 msgid "This Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:295
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:239
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:52
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:102
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:586
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:295
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:239
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:52
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:102
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:586
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
 msgid "This Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:298
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:246
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:64
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:112
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:614
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:298
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:246
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:64
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:112
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:614
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
 msgid "Last Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:301
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:253
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:68
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:117
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:628
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:301
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:253
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:68
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:117
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:628
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
 msgid "Last Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:304
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:304
 msgid "the specified date range"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:307
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:307
 msgid "No expense for "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:310
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:46
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:310
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:46
 msgid "Use the bottom edge to add expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:311
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:311
 msgid "Loading Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/DetailView.qml:312
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:48
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:312
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:48
 msgid "Please wait"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:49
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:49
 msgid "Statistics"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:55
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:55
 msgid "Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:173
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:13
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:72
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:173
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:72
 msgid "Settings"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/MainPage.qml:183
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:46
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:183
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:46
 msgid "View Details"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:25
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:25
 msgid "Categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:138
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:138
 msgid "No Category Exists"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:139
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:139
 msgid "Tap/Click the '+' button to add categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:214
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:258
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:202
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:246
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/ActionDelegate.qml:49
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:61
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:114
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:214
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:258
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:202
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:246
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/ActionDelegate.qml:49
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:61
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:114
 msgid "Delete"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:228
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:216
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:53
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:56
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:228
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:216
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:53
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:56
 msgid "Edit"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:247
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:247
 msgid "Delete Category"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
 msgid "Are you sure you want to delete this category?"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
 msgid ""
 "If you continue, all expenses under this category will be moved under "
 "'Uncategorized'"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:24
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:24
 msgid "Reports"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:128
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:128
 msgid "No custom reports"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:129
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:129
 msgid "Use the '+' button to add custom reports"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:179
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/TypeField.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:179
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/TypeField.qml:38
 msgid "Trends"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:182
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/TypeField.qml:42
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:182
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/TypeField.qml:42
 msgid "Breakdown"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:185
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:185
 msgid "Chart"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:235
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:235
 msgid "Delete Report"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/ManageReports.qml:236
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:236
 msgid "Are you sure you want to delete this report?"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/QuickAddPage.qml:127
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/QuickAddPage.qml:127
 msgid "No data to display"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:67
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:67
 msgid "Interface"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:71
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:71
 msgid "Always start with Dashboard"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:73
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:73
 msgid "Disabling will load the page from previous session"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:82
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:82
 msgid "Hide bottom edge hint"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:93
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:93
 msgid "Theme"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:115
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:115
 msgid "System"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:119
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:119
 msgid "Ambiance"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:123
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:123
 msgid "Suru Dark"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:131
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:131
 msgid "General"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:137
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:78
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:137
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:78
 msgid "Currency"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:107
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:600
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:26
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:107
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:600
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:26
 msgid "Recent"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:266
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:14
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:50
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:266
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:14
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:50
 msgid "Travel Mode"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:284
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:284
 msgid "Administration"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:352
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:352
 msgid "Manage Categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:354
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:354
 msgid "Add, edit, and delete categories"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:358
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:358
 msgid "About Tagatuos"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/SettingsPage.qml:360
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:360
 msgid "Credits, report bugs, view source code, contact developer, donate"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:51
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:51
 msgid "Set a temporary currency"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:119
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:119
 msgid "Fetching exchange rates data"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:128
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:128
 msgid "Cannot fetch exchange rate data"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/ui/TravelPage.qml:129
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:129
 msgid "Please check if you have a working internet connection"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/ColorField.qml:24
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/ColorField.qml:24
 msgid "Color"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/DescriptionField.qml:21
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/DescriptionField.qml:27
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/DescriptionField.qml:21
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/DescriptionField.qml:27
 msgid "Description"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/DescriptionField.qml:33
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DescriptionField.qml:33
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/DescriptionField.qml:33
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DescriptionField.qml:33
 msgid "Add description (optional)"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/NameField.qml:27
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/NameField.qml:27
 msgid "Name"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddCategory/NameField.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/NameField.qml:38
 msgid "Enter category name "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/CategoryField.qml:9
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/CategoryField.qml:23
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/CategoryField.qml:9
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/CategoryField.qml:23
 msgid "Category"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:25
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:25
 msgid "Details/Comments"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:38
 msgid "Add details / comments"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/DateField.qml:18
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/DateField.qml:18
 msgid "Date"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/DescriptionField.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/DescriptionField.qml:38
 msgid "Enter expense description "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:20
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:20
 msgid "Home Currency"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:41
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:41
 msgid "Travel Currency"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Data"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Mode is ON"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:30
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:30
 msgid "Value"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateFromField.qml:18
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateFromField.qml:18
 msgid "From"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:40
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:71
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:40
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:71
 msgid "By Day"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:44
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:68
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:44
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:68
 msgid "By Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:48
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:65
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateModeField.qml:48
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:65
 msgid "By Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:56
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:56
 msgid "This Year"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:72
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:72
 msgid "Last Year"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:76
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:76
 msgid "Custom Range"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/DateToField.qml:18
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateToField.qml:18
 msgid "To"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/FilterException.qml:29
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/FilterException.qml:29
 msgid "Expense Name"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/FilterException.qml:30
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/FilterException.qml:30
 msgid "Enter Expense Name"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/AddReport/NameField.qml:43
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/NameField.qml:43
 msgid "Enter report name "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:48
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:51
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:48
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:51
 msgid "Pick"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dashboard/FlowItemExpandItem.qml:10
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/FlowItemExpandItem.qml:10
 msgid "View All"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
 msgid "Name:"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:44
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:44
 msgid "Description:"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:45
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:45
 msgid "<No Description>"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:50
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:50
 msgid "Category:"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:56
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:56
 msgid "Date:"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:62
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:62
 msgid "Value:"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:122
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:122
 msgid "Calendar (By Day)"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:127
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:127
 msgid "Calendar (By Week)"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:132
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:132
 msgid "Calendar (By Month)"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:137
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:137
 msgid "Calendar (Custom)"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/DetailView/ViewAllItem.qml:23
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/ViewAllItem.qml:23
 msgid "See More"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:12
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:12
 msgid "Open external link"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:13
 msgid "You are about to open an external link. Do you wish to continue?"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:52
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:52
 msgid "OK"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
 #, qt-format
 msgid "You have spent %1 today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
 msgid "No expense for Today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
 msgid "Loading Today's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
 msgid "No expense for Yesterday"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
 msgid "Loading Yesterday's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
 msgid "No expense for This Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
 msgid "Loading This Week's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
 msgid "No expense for This Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
 msgid "Loading This Month's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
 msgid "No Recent Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
 msgid "Loading Recent Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
 msgid "No expense for Last Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
 msgid "Loading Last Week's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:630
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:630
 msgid "No expense for Last Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:632
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:632
 msgid "Loading Last Month's Expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QChart/Chart.qml:314
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QChart/Chart.qml:314
 msgid "Not enough data to display the report"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QChart/Chart.qml:316
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QChart/Chart.qml:316
 msgid "Select different report criteria"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:30
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:30
 msgid "Quick List"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:34
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:34
 msgid "Most Used"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:69
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:69
 msgid "Find"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:69
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddFindToolbar.qml:69
 msgid "Search History"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:64
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:64
 msgid "Custom Add"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:79
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:79
 msgid "Information"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:14
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:14
 msgid "today"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:17
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:17
 msgid "yesterday"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:20
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:20
 msgid "this year"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:23
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:23
 msgid "this month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:26
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:26
 msgid "this week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:29
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:29
 msgid "last year"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:32
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:32
 msgid "last month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:35
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:35
 msgid "last week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:38
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:38
 msgid "for the past 7 days"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:41
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:41
 msgid "Default"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:50
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:50
 msgid "Your expense trends "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:53
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:53
 msgid "Your expense breakdown "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:62
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:62
 msgid "By Year"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:71
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:71
 msgid "Rate"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:85
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:85
 msgid "Use online data"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:86
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:86
 msgid "Source"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:175
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:175
 msgid "Exchange rate data as of"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select values"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
 msgid "Select a value"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:34
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:34
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:34
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:34
 msgid "Select All"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:45
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:45
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:45
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:45
 msgid "Clear Selection"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:81
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:81
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:83
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Transportation"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:83
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:85
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:85
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Shirts, Pants, underwear, etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:87
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Household"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:87
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Electricity, Groceries, Rent etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:89
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Leisure"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:89
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Movies, Books, Sports etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:91
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Savings"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:91
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Investments, Reserve Funds etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:93
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:93
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:95
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Miscellaneous"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/DataProcess.js:95
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Other expenses"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:142
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:142
 msgid "Tomorrow"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:145
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:145
 msgid "On "
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:151
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:151
 msgid "Next Week"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:157
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:157
 msgid "Next Month"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:163
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:163
 msgid "Older"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/tagatuos2/library/ProcessFunc.js:166
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:166
 msgid "In The Future"
 msgstr ""
 
-#: /home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app/build/tagatuos2/tagatuos2.desktop.h:1
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/build/tagatuos2/tagatuos2.desktop.h:1
 msgid "Tagatuos"
 msgstr ""

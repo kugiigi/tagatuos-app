@@ -28,15 +28,10 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=4
-FILE_NAME_0=0;None;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTalaan%2Ftalaan-app%2Fmanifest.json.in;0;4
-FILE_NAME_1=2043;Javascript;0;EUTF-8;0;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Ftagatuos2%2FMain.qml;0;4
-FILE_NAME_2=18912;Javascript;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Ftagatuos2%2Fcomponents%2FListModels%2FListModels.qml;0;4
-FILE_NAME_3=0;Javascript;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Ftagatuos2%2Fcomponents%2FListModels%2FExpenseListModel.qml;0;4
-FILE_NAME_4=376;None;0;EUTF-8;1;1;0;%2Fhome%2Fphablet%2FDocuments%2FProjects%2FTagatuos%2Fdevelopment%2Ftagatuos-app%2Fmanifest.json.in;0;4
+current_page=0
 
 [VTE]
-last_dir=/home/phablet/Documents/Projects/Tagatuos/development/tagatuos-app
+last_dir=/home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Palitan/Nexus5/GeanyProject
 
 [build-menu]
 EX_00_LB=Build and Run
