@@ -56,7 +56,7 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.83"
+    property string current_version: "0.84"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels
