@@ -1,3 +1,9 @@
+v0.85
+* Updated Dutch translations
+* Update data when day changes
+* Some code cleanup
+* Create clickable.json
+
 v0.84
 * arm64 support
 

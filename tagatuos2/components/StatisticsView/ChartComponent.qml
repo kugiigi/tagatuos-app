@@ -36,7 +36,7 @@ Item {
         id: timer
 
         interval: 8000
-        running: mainPage.currentPage === "Statistics" //true
+        running: mainPage.currentPage === "Statistics"
 
         onTriggered: root.next()
     }

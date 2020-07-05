@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-27 15:44+0000\n"
+"POT-Creation-Date: 2020-07-05 17:32+0000\n"
 "PO-Revision-Date: 2020-07-03 17:26+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -119,7 +119,7 @@ msgstr "Categorie aanpassen - "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:201
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:194
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:30
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:29
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:44
@@ -191,89 +191,89 @@ msgstr "Overzicht"
 msgid "Night-mode"
 msgstr "Nachtmodus"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:223
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:216
 msgid "Previous"
 msgstr "Vorige"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:252
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:245
 msgid "Next"
 msgstr "Volgende"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:283
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:276
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:211
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:40
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:87
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:544
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:532
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:136
 msgid "Today"
 msgstr "Vandaag"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:286
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:279
 msgid "Recent Days"
 msgstr "Afgelopen dagen"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:289
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:282
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:218
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:44
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:92
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:558
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:139
 msgid "Yesterday"
 msgstr "Gisteren"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:292
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:285
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:232
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:48
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:97
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:572
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
 msgid "This Week"
 msgstr "Deze week"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:295
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:288
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:239
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:52
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:102
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:586
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:160
 msgid "This Month"
 msgstr "Deze maand"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:298
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:291
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:246
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:64
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:112
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:614
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:148
 msgid "Last Week"
 msgstr "Vorige week"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:301
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:294
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:253
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:68
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:117
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:628
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/ProcessFunc.js:154
 msgid "Last Month"
 msgstr "Vorige maand"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:304
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:297
 msgid "the specified date range"
 msgstr "het opgegeven datumbereik"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:307
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:300
 msgid "No expense for "
 msgstr "Geen uitgave binnen "
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:310
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:303
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:46
 msgid "Use the bottom edge to add expenses"
 msgstr "Veeg vanaf de onderste rand om uitgaven toe te voegen"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:311
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:304
 msgid "Loading Expenses"
 msgstr "Bezig met laden van uitgaven…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:312
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:305
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:48
 msgid "Please wait"
 msgstr "Even geduld…"
@@ -424,7 +424,7 @@ msgstr "Valuta"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:225
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/DateRangeField.qml:60
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/PageHeaderExtensionBar.qml:107
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:600
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:26
 msgid "Recent"
 msgstr "Recent"
@@ -642,8 +642,7 @@ msgstr "Externe link openen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:13
 msgid "You are about to open an external link. Do you wish to continue?"
-msgstr ""
-"Je staat op het punt om een externe link te openen. Weet je het zeker?"
+msgstr "Je staat op het punt om een externe link te openen. Weet je het zeker?"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
@@ -651,64 +650,64 @@ msgstr ""
 msgid "OK"
 msgstr "Oké"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:459
 #, qt-format
 msgid "You have spent %1 today"
 msgstr "Je hebt vandaag %1 uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:534
 msgid "No expense for Today"
 msgstr "Je hebt vandaag niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:536
 msgid "Loading Today's Expenses"
 msgstr "Bezig met laden van uitgaven van vandaag…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
 msgid "No expense for Yesterday"
 msgstr "Je hebt gisteren niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:550
 msgid "Loading Yesterday's Expenses"
 msgstr "Bezig met laden van uitgaven van gisteren…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
 msgid "No expense for This Week"
 msgstr "Je hebt deze week niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:564
 msgid "Loading This Week's Expenses"
 msgstr "Bezig met laden van uitgaven van deze week…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
 msgid "No expense for This Month"
 msgstr "Je hebt deze maand niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:578
 msgid "Loading This Month's Expenses"
 msgstr "Bezig met laden van uitgaven van deze maand…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
 msgid "No Recent Expenses"
 msgstr "Je hebt onlangs niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:592
 msgid "Loading Recent Expenses"
 msgstr "Bezig met laden van recente uitgaven…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
 msgid "No expense for Last Week"
 msgstr "Je hebt vorige week niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:606
 msgid "Loading Last Week's Expenses"
 msgstr "Bezig met laden van uitgaven van vorige week…"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:630
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
 msgid "No expense for Last Month"
 msgstr "Je hebt vorige maand niks uitgegeven"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:632
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:620
 msgid "Loading Last Month's Expenses"
 msgstr "Bezig met laden van uitgaven van vorige maand…"
 
@@ -920,7 +919,7 @@ msgstr "Ouder"
 msgid "In The Future"
 msgstr "In de toekomst"
 
-#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/build/tagatuos2/tagatuos2.desktop.h:1
+#: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/build/aarch64-linux-gnu/app/tagatuos2/tagatuos2.desktop.h:1
 msgid "Tagatuos"
 msgstr "Tagatuos"
 

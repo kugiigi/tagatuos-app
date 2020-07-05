@@ -56,7 +56,7 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.84"
+    property string current_version: "0.85"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels
@@ -154,7 +154,6 @@ MainView {
             }
 
 
-            //        onDashboardItemsChanged: mainView.listModels.dashboardModel.initialise()
             onCurrentCurrencyChanged: {
                 loadCurrencyData()
             }
@@ -200,15 +199,49 @@ MainView {
             mainPageLoader.active = true
         }
     }
+    
+    /* Reload data when day changes */
+    LiveTimer {
+        property var prevDate: new Date().setHours(0,0,0,0)
+        frequency: LiveTimer.Hour
+        onTrigger: {
+            var now = new Date().setHours(0,0,0,0)
+
+            if (+now !== +prevDate) {
+                var currentDate1 = mainPage.detailView.currentDate1
+                var currentDate2 = mainPage.detailView.currentDate2
+                
+                switch (mainPage.detailView.currentMode) {
+                    case "today":
+                    case "recent":
+                    case "yesterday":
+                    case "yesterday":
+                    case "thisweek":
+                    case "thismonth":
+                    case "lastweek":
+                    case "lastmonth":
+                        mainView.listModels.modelSortFilterExpense.model.load("Category")
+                        break
+                    case "calendar-daily":
+                        mainView.listModels.modelSortFilterExpense.model.load("Category", currentDate1)
+                        break
+                    case "calendar-weekly":
+                    case "calendar-monthly":
+                        mainView.listModels.modelSortFilterExpense.model.load("Category", currentDate1, currentDate2)
+                        break
+                }
+                
+                mainView.listModels.dashboardModel.initialise()
+            }
+            prevDate = now
+        }
+    }
 
     Component {
         id: listModelsComponent
         ListModels {
             id: listModels
 
-            //        Component.onCompleted: {
-            //            modelCategories.getItems()
-            //        }
             Connections {
                 target: tempSettings
                 onDashboardItemsChanged: {
@@ -225,7 +258,7 @@ MainView {
             id: mainPageLoader
             active: false
             asynchronous: true
-            source: "ui/MainPage.qml" //"ui/Dashboard.qml"
+            source: "ui/MainPage.qml"
 
             visible: status == Loader.Ready
 
@@ -307,9 +340,9 @@ MainView {
         id: addBottomEdge
 
         onCommitCompleted: {
-            visible = showBottomEdgeHint //false
-            enabled = showBottomEdgeHint //false
-            hint.visible = showBottomEdgeHint //false
+            visible = showBottomEdgeHint
+            enabled = showBottomEdgeHint
+            hint.visible = showBottomEdgeHint
         }
 
         //Component.onCompleted: QuickUtils.mouseAttached = true
