@@ -14,22 +14,17 @@ Page {
     property alias currentMode: pageHeaderExtension.currentValue
     property string currentDate1: Process.getToday()
     property string currentDate2
-    //: Process.getToday()
     property string calendarMode: switch (pageHeaderExtension.currentValue) {
                                   case "calendar-daily":
-                                      //pageHeaderExtension.currentValue.search('daily') > -1:
                                       "day"
                                       break
                                   case "calendar-weekly":
-                                      //pageHeaderExtension.currentValue.search('weekly'):
                                       "week"
                                       break
                                   case "calendar-monthly":
-                                      //pageHeaderExtension.currentValue.search('monthly'):
                                       "month"
                                       break
                                   case "calendar-custom":
-                                      //pageHeaderExtension.currentValue.search('custom'):
                                       "custom"
                                       break
                                   default:
@@ -49,11 +44,9 @@ Page {
     function applyLayoutChanges() {
         if (mainPage) {
             if (mainPage.currentPage === "Detail") {
-                //pageHeaderExtension.visible = true
                 mainPage.header.extension = pageHeaderExtension
                 mainPage.header.trailingActionBar.actions = [addAction]
             } else {
-                //pageHeaderExtension.visible = false
                 mainPage.header.extension = null
             }
         }

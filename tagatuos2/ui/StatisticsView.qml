@@ -43,11 +43,7 @@ Page {
                         right: parent.right
                     }
 
-                    height: units.gu(45)/*if(root.height < units.gu(120) && root.height > units.gu(80)){
-                                root.height * 0.5
-                            }else{
-                                units.gu(40)
-                            }*/
+                    height: units.gu(45)
                 }
             }
         }

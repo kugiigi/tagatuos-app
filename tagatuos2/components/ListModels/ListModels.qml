@@ -35,7 +35,6 @@ Item {
                 console.log("modelExpenses: " + modelExpenses.count)
                 modelExpenses.loadingStatus = "Ready"
                 modelLoader.active = true
-                //                sortFilterExpenseModel.model = modelExpenses
                 break
             case "Today":
                 console.log("modelTodayExpenses: " + modelTodayExpenses.count)
@@ -237,8 +236,6 @@ Item {
                                                travel_value: typeof newItem.travel !== "undefined" ? newItem.travel.value : 0
                                            })
 
-//            model.setProperty(i, "total", Math.round(
-//                                  (totalValue + newItem.value) * 100) / 100)
             model.setProperty(i, "total", (totalValue + newItem.value))
             model.setProperty(i, "count", currentCount + 1)
         } else {
@@ -280,10 +277,6 @@ Item {
                 expenseID = childModel.get(j).expense_id
 
                 if (expenseID == updatedItem.expense_id) {
-//                    model.setProperty(
-//                                i, "total", Math.round(
-//                                    ((model.get(i).total - childModel.get(
-//                                          j).value) + updatedItem.value) * 100) / 100)
                     model.setProperty(i, "total", ((model.get(i).total - childModel.get(j).value) + updatedItem.value))
 
                     model.get(i).childModel.setProperty(
@@ -301,7 +294,6 @@ Item {
                                                         updatedItem.date)
                     model.get(i).childModel.setProperty(j, "value",
                                                         updatedItem.value)
-                    //                    model.setProperty(i, "childModel",childModel)
 
                     //Travel Data
                     if(typeof updatedItem.travel !== "undefined"){
@@ -339,9 +331,6 @@ Item {
                 if (expenseID === id) {
                     childModelCount = model.get(i).count - 1
 
-//                    model.setProperty(i, "total", Math.round(
-//                                          (model.get(i).total - childModel.get(
-//                                               j).value) * 100) / 100)
                     model.setProperty(i, "total", (model.get(i).total - childModel.get(j).value))
                     model.setProperty(i, "count", childModelCount)
                     childModel.remove(j)
@@ -532,7 +521,6 @@ Item {
             var dashboardItems = tempSettings.dashboardItems.split(";")
             var itemsCount = dashboardItems.length
 
-            //            dashboardItems = dashboardItems.split(";")
             for (var i = 0; i < itemsCount; i++) {
                 switch (dashboardItems[i]) {
                 case "Today":
@@ -670,12 +658,7 @@ Item {
             var i
             for (var i = 0; i < modelCategories.count; i++) {
                 if (modelCategories.get(i).category_name === category) {
-//                    i = modelCategories.count
-//                    if (modelCategories.get(i) === undefined) {
-//                        return "white"
-//                    } else {
-                        return modelCategories.get(i).colorValue
-//                    }
+                    return modelCategories.get(i).colorValue
                 }
             }
         }
@@ -785,12 +768,9 @@ Item {
             var xhr = new XMLHttpRequest();
 
             xhr.onreadystatechange = function() {
-                //                data = JSON.parse(tempJSON)
-                //                callback(true)
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
                         console.log("exchange rate fetch success")
-//                        data = JSON.parse(xhr.responseText)
                         tempSettings.exchangeRateJSON = xhr.responseText
                         tempSettings.exchangeRateDate = Process.getToday()
                         callback(true)
