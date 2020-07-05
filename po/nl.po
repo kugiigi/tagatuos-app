@@ -8,20 +8,19 @@ msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-27 15:44+0000\n"
-"PO-Revision-Date: 2018-02-12 12:08+0100\n"
+"PO-Revision-Date: 2020-07-03 17:26+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/Main.qml:75
-#, fuzzy
 msgid "No expense yet for today"
-msgstr "Geen uitgave(n) gevonden voor vandaag"
+msgstr "Je hebt vandaag nog niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddBottomEdge.qml:22
 msgid "Add Expense"
@@ -63,7 +62,7 @@ msgstr "Ondersteuning"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:166
 msgid "Report a bug"
-msgstr "Fouten (bugs) rapporteren"
+msgstr "Bug melden"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:182
 msgid "Contact Developer"
@@ -75,7 +74,7 @@ msgstr "Doneren"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:229
 msgid "View in OpenStore"
-msgstr ""
+msgstr "Openen in OpenStore"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:245
 msgid "Other apps by the developer"
@@ -87,7 +86,7 @@ msgstr "Ontwikkelaars"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:281
 msgid "Icon"
-msgstr ""
+msgstr "Pictogram"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:300
 msgid "Powered by"
@@ -99,7 +98,7 @@ msgstr "Geldopmaak"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:320
 msgid "Exchange rates data"
-msgstr ""
+msgstr "Wisselkoersgegevens"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:336
 msgid "Date and Time manipulation and formatting"
@@ -108,15 +107,15 @@ msgstr "Datum- en tijdmanipulatie en -opmaak"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:351
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:366
 msgid "Charts and graphs"
-msgstr ""
+msgstr "Kaarten en grafieken"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:27
 msgid "Add New Category"
-msgstr "Nieuwe categorie toevoegen"
+msgstr "Categorie toevoegen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:28
 msgid "Edit Category - "
-msgstr "Categorie bewerken - "
+msgstr "Categorie aanpassen - "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
@@ -148,12 +147,12 @@ msgstr "Annuleren"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:170
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:398
 msgid "Category already exists!"
-msgstr "De categorie bestaat al!"
+msgstr "Deze categorie bestaat al!"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:171
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:400
 msgid "That category already exists. Please choose a different name."
-msgstr "Die categorie bestaat al. Kies een andere naam."
+msgstr "Deze categorie bestaat al. Kies een andere naam."
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
 msgid "Update"
@@ -165,11 +164,11 @@ msgstr "Toevoegen als snelle uitgave"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:372
 msgid "Quick expense successfully added!"
-msgstr "De snelle uitgave is succesvol toegevoegd!"
+msgstr "De snelle uitgave is toegevoegd!"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:165
 msgid "Preview"
-msgstr "Voorbeeld"
+msgstr "Voorvertoning"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:248
 msgid "Filter"
@@ -263,21 +262,21 @@ msgstr "het opgegeven datumbereik"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:307
 msgid "No expense for "
-msgstr "Geen uitgave voor "
+msgstr "Geen uitgave binnen "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:310
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:46
 msgid "Use the bottom edge to add expenses"
-msgstr "Gebruik de onderste rand om uitgaven toe te voegen"
+msgstr "Veeg vanaf de onderste rand om uitgaven toe te voegen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:311
 msgid "Loading Expenses"
-msgstr "Bezig met laden van uitgaven"
+msgstr "Bezig met laden van uitgaven…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:312
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/DashboardItem.qml:48
 msgid "Please wait"
-msgstr "Even geduld"
+msgstr "Even geduld…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:49
 msgid "Statistics"
@@ -296,7 +295,7 @@ msgstr "Instellingen"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/MainPage.qml:183
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:46
 msgid "View Details"
-msgstr "Details weergeven"
+msgstr "Details tonen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:25
 msgid "Categories"
@@ -308,7 +307,7 @@ msgstr "Er zijn geen categorieën"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:139
 msgid "Tap/Click the '+' button to add categories"
-msgstr "Druk op de '+'-knop om categorieën toe te voegen"
+msgstr "Druk op de '+'-knop om een categorie toe te voegen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:214
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:258
@@ -325,7 +324,7 @@ msgstr "Verwijderen"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/SingleItem.qml:53
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/QuickAddListView.qml:56
 msgid "Edit"
-msgstr "Bewerken"
+msgstr "Aanpassen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:247
 msgid "Delete Category"
@@ -333,27 +332,27 @@ msgstr "Categorie verwijderen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
 msgid "Are you sure you want to delete this category?"
-msgstr "Weet u zeker dat u deze categorie wilt verwijderen?"
+msgstr "Weet je zeker dat je deze categorie wilt verwijderen?"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:248
 msgid ""
 "If you continue, all expenses under this category will be moved under "
 "'Uncategorized'"
 msgstr ""
-"Als u doorgaat, dan worden alle uitgaven in deze categorie verplaatst naar "
-"'Niet-gecategoriseerd'"
+"Als je doorgaat, dan worden alle uitgaven in deze categorie verplaatst naar "
+"'Ongecategoriseerd'"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:24
 msgid "Reports"
-msgstr "Rapportages"
+msgstr "Verslagen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:128
 msgid "No custom reports"
-msgstr "Geen aangepaste rapportages"
+msgstr "Geen aangepaste verslagen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:129
 msgid "Use the '+' button to add custom reports"
-msgstr "Gebruik de '+'-knop om aangepaste rapportages toe te voegen"
+msgstr "Druk op de '+'-knop om een aangepast verslag toe te voegen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:179
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/TypeField.qml:38
@@ -371,11 +370,11 @@ msgstr "Grafiek"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:235
 msgid "Delete Report"
-msgstr "Rapportage verwijderen"
+msgstr "Verslag verwijderen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:236
 msgid "Are you sure you want to delete this report?"
-msgstr "Weet u zeker dat u deze rapportage wilt verwijderen?"
+msgstr "Weet je zeker dat je dit verslag wilt verwijderen?"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/QuickAddPage.qml:127
 msgid "No data to display"
@@ -387,23 +386,21 @@ msgstr "Uiterlijk"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:71
 msgid "Always start with Dashboard"
-msgstr "Altijd starten op Overzichtspagina"
+msgstr "Na opstarten altijd overzichtspagina tonen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:73
 msgid "Disabling will load the page from previous session"
-msgstr ""
-"Als u dit uitschakelt, dan zal de laatst geopende pagina worden geladen"
+msgstr "Als je dit uitschakelt, dan wordt de laatst geopende pagina geladen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:82
 msgid "Hide bottom edge hint"
-msgstr ""
+msgstr "Tip omtrent vegen vanaf onderste rand verbergen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:93
 msgid "Theme"
 msgstr "Thema"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:115
-#, fuzzy
 msgid "System"
 msgstr "Systeemthema"
 
@@ -436,7 +433,7 @@ msgstr "Recent"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:14
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:50
 msgid "Travel Mode"
-msgstr ""
+msgstr "Reismodus"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:284
 msgid "Administration"
@@ -448,7 +445,7 @@ msgstr "Categorieën beheren"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:354
 msgid "Add, edit, and delete categories"
-msgstr "Categorieën toevoegen, bewerken en verwijderen"
+msgstr "Categorieën toevoegen, aanpassen en verwijderen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:358
 msgid "About Tagatuos"
@@ -457,24 +454,24 @@ msgstr "Over Tagatuos"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/SettingsPage.qml:360
 msgid "Credits, report bugs, view source code, contact developer, donate"
 msgstr ""
-"Met dank aan, fouten (bugs rapporteren), broncode bekijken, contact opnemen "
-"met ontwikkelaar, doneren"
+"Met dank aan, bugs melden, broncode bekijken, contact opnemen met "
+"ontwikkelaar, doneren"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:51
 msgid "Set a temporary currency"
-msgstr ""
+msgstr "Tijdelijke valuta instellen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:119
 msgid "Fetching exchange rates data"
-msgstr ""
+msgstr "Bezig met ophalen van wisselkoersgegevens…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:128
 msgid "Cannot fetch exchange rate data"
-msgstr ""
+msgstr "De wisselkoersgegevens kunnen niet worden opgehaald"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/ui/TravelPage.qml:129
 msgid "Please check if you have a working internet connection"
-msgstr ""
+msgstr "Controleer je internetverbinding"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/ColorField.qml:24
 msgid "Color"
@@ -496,7 +493,7 @@ msgstr "Naam"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddCategory/NameField.qml:38
 msgid "Enter category name "
-msgstr "Categorienaam invoeren "
+msgstr "Voer een categorienaam in "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/CategoryField.qml:9
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/CategoryField.qml:23
@@ -509,7 +506,7 @@ msgstr "Details/Opmerkingen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/CommentsField.qml:38
 msgid "Add details / comments"
-msgstr "Details/opmerkingen toevoegen"
+msgstr "Details/Opmerkingen toevoegen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/DateField.qml:18
 msgid "Date"
@@ -517,25 +514,23 @@ msgstr "Datum"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/DescriptionField.qml:38
 msgid "Enter expense description "
-msgstr "Uitgave-omschrijving invoeren "
+msgstr "Voer een uitgave-omschrijving in "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:20
-#, fuzzy
 msgid "Home Currency"
-msgstr "Valuta"
+msgstr "Valuta van thuisland"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/EditCurrencyFields.qml:41
-#, fuzzy
 msgid "Travel Currency"
-msgstr "Valuta"
+msgstr "Valuta van huidige land"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Data"
-msgstr ""
+msgstr "Reisgegevens"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/TravelFields.qml:49
 msgid "Travel Mode is ON"
-msgstr ""
+msgstr "De reismodus is ingeschakeld"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:30
 msgid "Value"
@@ -582,11 +577,11 @@ msgstr "Uitgavenaam"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/FilterException.qml:30
 msgid "Enter Expense Name"
-msgstr "Uitgavenaam invoeren"
+msgstr "Voer een uitgavenaam in"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/AddReport/NameField.qml:43
 msgid "Enter report name "
-msgstr "Rapportnaam invoeren "
+msgstr "Voer een verslagnaam in "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:48
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/TextualButtonStyle.qml:51
@@ -595,7 +590,7 @@ msgstr "Kiezen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dashboard/FlowItemExpandItem.qml:10
 msgid "View All"
-msgstr "Alles weergeven"
+msgstr "Alles tonen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
 msgid "Name:"
@@ -647,7 +642,8 @@ msgstr "Externe link openen"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:13
 msgid "You are about to open an external link. Do you wish to continue?"
-msgstr "U staat op het punt om een externe link te openen. Wilt u doorgaan?"
+msgstr ""
+"Je staat op het punt om een externe link te openen. Weet je het zeker?"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
@@ -658,71 +654,71 @@ msgstr "Oké"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:470
 #, qt-format
 msgid "You have spent %1 today"
-msgstr ""
+msgstr "Je hebt vandaag %1 uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:546
 msgid "No expense for Today"
-msgstr "Geen uitgave(n) gevonden voor vandaag"
+msgstr "Je hebt vandaag niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:548
 msgid "Loading Today's Expenses"
-msgstr "Bezig met laden van uitgaven van vandaag"
+msgstr "Bezig met laden van uitgaven van vandaag…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:560
 msgid "No expense for Yesterday"
-msgstr "Gisteren niks uitgegeven"
+msgstr "Je hebt gisteren niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:562
 msgid "Loading Yesterday's Expenses"
-msgstr "Bezig met laden van uitgaven van gisteren"
+msgstr "Bezig met laden van uitgaven van gisteren…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:574
 msgid "No expense for This Week"
-msgstr "Deze week niks uitgegeven"
+msgstr "Je hebt deze week niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:576
 msgid "Loading This Week's Expenses"
-msgstr "Bezig met laden van uitgaven van deze week"
+msgstr "Bezig met laden van uitgaven van deze week…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:588
 msgid "No expense for This Month"
-msgstr "Deze maand niks uitgegeven"
+msgstr "Je hebt deze maand niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:590
 msgid "Loading This Month's Expenses"
-msgstr "Bezig met laden van uitgaven van deze maand"
+msgstr "Bezig met laden van uitgaven van deze maand…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:602
 msgid "No Recent Expenses"
-msgstr "Geen recente uitgaven"
+msgstr "Je hebt onlangs niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:604
 msgid "Loading Recent Expenses"
-msgstr "Bezig met laden van recente uitgaven"
+msgstr "Bezig met laden van recente uitgaven…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:616
 msgid "No expense for Last Week"
-msgstr "Vorige week niks uitgegeven"
+msgstr "Je hebt vorige week niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:618
 msgid "Loading Last Week's Expenses"
-msgstr "Bezig met laden van uitgaven van vorige week"
+msgstr "Bezig met laden van uitgaven van vorige week…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:630
 msgid "No expense for Last Month"
-msgstr "Vorige maand niks uitgegeven"
+msgstr "Je hebt vorige maand niks uitgegeven"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/ListModels/ListModels.qml:632
 msgid "Loading Last Month's Expenses"
-msgstr "Bezig met laden van uitgaven van vorige maand"
+msgstr "Bezig met laden van uitgaven van vorige maand…"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QChart/Chart.qml:314
 msgid "Not enough data to display the report"
-msgstr "Onvoldoende gegevens om rapportage op te maken"
+msgstr "Onvoldoende gegevens om verslag op te maken"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QChart/Chart.qml:316
 msgid "Select different report criteria"
-msgstr "Selecteer andere rapportage-criteria"
+msgstr "Selecteer andere verslagcriteria"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/QuickAddPage/BottomBarNavigation.qml:30
 msgid "Quick List"
@@ -790,11 +786,11 @@ msgstr "Standaard"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:50
 msgid "Your expense trends "
-msgstr "Uw uitgavepatronen "
+msgstr "Mijn uitgavepatronen "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:53
 msgid "Your expense breakdown "
-msgstr "Uw uitgave-analyse "
+msgstr "Mijn uitgave-analyse "
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/StatisticsView/ChartHeader.qml:62
 msgid "By Year"
@@ -802,19 +798,19 @@ msgstr "Op jaar"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:71
 msgid "Rate"
-msgstr ""
+msgstr "Koers"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:85
 msgid "Use online data"
-msgstr ""
+msgstr "Online-gegevens gebruiket"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:86
 msgid "Source"
-msgstr ""
+msgstr "Bron"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/TravelPage/RateField.qml:175
 msgid "Exchange rate data as of"
-msgstr ""
+msgstr "Wisselkoersgegevens van"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:13
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:13
@@ -834,11 +830,11 @@ msgstr "Alles selecteren"
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorHeader.qml:45
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorHeader2.qml:45
 msgid "Clear Selection"
-msgstr "Selectie wissen"
+msgstr "Niets selecteren"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
-msgstr "Eten"
+msgstr "Eten en drinken"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
@@ -850,7 +846,7 @@ msgstr "Vervoer"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
-msgstr "Taxi, bus, trein, brandstof, etc."
+msgstr "Taxi, bus, trein, brandstofkosten, etc."
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
@@ -886,7 +882,7 @@ msgstr "Investeringen, spaarrekening, etc."
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
-msgstr "Gezondheid"
+msgstr "Persoonlijke verzorging"
 
 #: /home/kugi/Nextcloud/UbuntuHomeDesktop/Developments/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
