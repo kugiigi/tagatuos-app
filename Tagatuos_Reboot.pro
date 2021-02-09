@@ -38,5 +38,3 @@ unittest.commands = /usr/bin/qmltestrunner -input $$PWD/tagatuos2/tests/unit
 unittest.depends  = sub-tagatuos2
 
 QMAKE_EXTRA_TARGETS += aptest unittest
-
-QT += charts
