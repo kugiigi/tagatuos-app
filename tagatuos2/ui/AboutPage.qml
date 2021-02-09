@@ -127,41 +127,23 @@ Page {
                     title: i18n.tr("Support")
                 }
 
-                // Removed for now since OpenStore don't have rating support yet
-//                NavigationItem {
-//                    titleText.text: i18n.tr("Rate this App")
-//                    iconName: "starred"
+                NavigationItem {
+                    titleText.text: i18n.tr("Rate this App")
+                    iconName: "starred"
 
-//                    anchors {
-//                        left: parent.left
-//                        right: parent.right
-//                    }
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
 
-//                    action: Action {
-//                        onTriggered: {
-//                            externalLinkConfirmation(
-//                                        "scope://com.canonical.scopes.clickstore?q=Tagatuos")
-//                        }
-//                    }
-//                }
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation(
+                                        "openstore://tagatuos2.kugiigi")
+                        }
+                    }
+                }
 
-                // No direct equivalent in Github. Perhaps think of a replacement in the future
-//                NavigationItem {
-//                    titleText.text: i18n.tr("Ask a question")
-//                    iconName: "help"
-
-//                    anchors {
-//                        left: parent.left
-//                        right: parent.right
-//                    }
-
-//                    action: Action {
-//                        onTriggered: {
-//                            externalLinkConfirmation(
-//                                        "https://answers.launchpad.net/tagatuos-app")
-//                        }
-//                    }
-//                }
                 NavigationItem {
                     titleText.text: i18n.tr("Report a bug")
                     iconName: "mail-mark-important"
@@ -210,7 +192,7 @@ Page {
                     }
                 }
                 NavigationItem {
-                    titleText.text: i18n.tr("Donate")
+                    titleText.text: i18n.tr("Donate via PayPal")
                     iconName: "like"
 
                     anchors {
@@ -222,6 +204,22 @@ Page {
                         onTriggered: {
                             externalLinkConfirmation(
                                         'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2GBQRJGLZMBCL')
+                        }
+                    }
+                }
+                NavigationItem {
+                    titleText.text: i18n.tr("Donate via LibrePay")
+                    iconName: "unlike"
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    action: Action {
+                        onTriggered: {
+                            externalLinkConfirmation(
+                                        'https://liberapay.com/kugi_eusebio/donate')
                         }
                     }
                 }

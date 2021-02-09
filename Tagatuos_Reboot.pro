@@ -39,3 +39,4 @@ unittest.depends  = sub-tagatuos2
 
 QMAKE_EXTRA_TARGETS += aptest unittest
 
+QT += charts
