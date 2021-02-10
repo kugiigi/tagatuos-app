@@ -1,3 +1,10 @@
+v0.86
+* Updated French translation
+* Changed splashscreen
+* Updated to framework 16.04.4
+* Added LibrePay link in About page
+* Re-enabled "Rate this app" in About page
+
 v0.85
 * Updated Dutch translations
 * Update data when day changes

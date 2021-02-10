@@ -14,7 +14,8 @@ QML_FILES += $$files(*.qml,true) \
 
 CONF_FILES +=  tagatuos2.apparmor \
                tagatuos2.png \
-               icon.svg
+               icon.svg \
+               splash.svg
 
 AP_TEST_FILES += tests/autopilot/run \
                  $$files(tests/*.py,true)

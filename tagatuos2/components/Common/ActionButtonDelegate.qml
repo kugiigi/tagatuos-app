@@ -8,19 +8,11 @@ AbstractButton {
     width: buttonsRow.width + units.gu(2)
 
     anchors {
-//        top: action.visible ? parent.top : undefined
-//        bottom: action.visible ?parent.bottom : undefined
         top: parent.top
         bottom: parent.bottom
     }
 
 
-    //    Component.onCompleted: {
-    //        if(action.color){
-    //            icon.color = action.color
-    //            label.color = action.color
-    //        }
-    //    }
     style: Rectangle {
         color: action.color ? action.color : theme.palette.normal.foreground
 

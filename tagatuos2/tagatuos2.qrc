@@ -126,6 +126,7 @@
         <file>components/Common/NavigationWithState.qml</file>
         <file>ui/TravelPage.qml</file>
         <file>icon.svg</file>
+        <file>splash.svg</file>
         <file>components/Common/SwitchItem.qml</file>
         <file>components/TravelPage/RateField.qml</file>
         <file>components/AddFullPage/TravelFields.qml</file>
