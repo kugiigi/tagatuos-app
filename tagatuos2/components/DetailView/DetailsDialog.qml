@@ -13,13 +13,6 @@ Item {
 
     signal closed
 
-    //height: column.height + units.gu(3)//childrenRect.height + units.gu(3)
-
-//    anchors {
-//        left: parent!== null ? parent.left : undefined
-//        right: parent!== null ? parent.right : undefined
-//    }
-
     anchors.fill: parent
 
     Column {
@@ -74,10 +67,7 @@ Item {
 
         ActionButtonDelegate{
 
-            anchors{
-                left: parent.left
-                right: parent.right
-            }
+            anchors.fill: parent
 
             action: Action{
                 iconName: "close"

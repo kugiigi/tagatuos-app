@@ -77,7 +77,7 @@ Rectangle {
             }
         }
         
-        ActionButtonDelegate{
+        ActionButtonDelegate {
             
             Layout.rightMargin: units.gu(1) 
             Layout.fillHeight: true
@@ -91,7 +91,6 @@ Rectangle {
 
                 visible: bottomBarNavigation.currentIndex == 1
                 shortcut: "Ctrl+A"
-                //            text: i18n.tr("Add")
                 iconName: "add"
                 onTriggered: {
                     PopupUtils.open(addDialog, null, {mode: "add"})

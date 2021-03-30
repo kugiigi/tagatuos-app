@@ -16,9 +16,7 @@ Item {
 
     signal closed
 
-//    anchors.fill: parent
-
-    DetailName{
+    DetailName {
         id: detailName
 
         anchors {
@@ -29,7 +27,7 @@ Item {
         }
     }
 
-    Item{
+    Item {
         id: categoryDateRow
 
         anchors{
@@ -39,7 +37,7 @@ Item {
             margins: units.gu(2)
         }
 
-        DetailCategory{
+        DetailCategory {
             id: detailCategory
 
             anchors {
@@ -50,7 +48,7 @@ Item {
             }
         }
 
-        DetailDate{
+        DetailDate {
             id: detailDate
 
             anchors {
@@ -62,7 +60,7 @@ Item {
 
 
 
-    DetailDescription{
+    DetailDescription {
         id: detailDescription
 
         anchors {
@@ -76,7 +74,7 @@ Item {
         }
     }
 
-    DetailValue{
+    DetailValue {
         id: detailValue
 
         anchors {
@@ -87,24 +85,20 @@ Item {
         }
     }
 
-    Item{
+    Item {
         id: closeButton
 
         height: units.gu(5)
-        anchors{
+        anchors {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
 
-        ActionButtonDelegate{
+        ActionButtonDelegate {
+            anchors.fill: parent
 
-            anchors{
-                left: parent.left
-                right: parent.right
-            }
-
-            action: Action{
+            action: Action {
                 iconName: "close"
                 text: i18n.tr("Close")
                 onTriggered: root.closed()

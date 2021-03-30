@@ -69,7 +69,6 @@ Page {
 
             textName.forceFocus()
 
-            //btnCancel.action.shortcut = "Esc"
             toolBar.leadingActionBar.actions[0].shortcut = "Esc"
         } else {
             mainView.addBottomEdge.hint.visible = true
@@ -214,6 +213,10 @@ Page {
     Component {
         id: buttonComponent
         ActionButtonDelegate {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
         }
     }
 
@@ -236,8 +239,6 @@ Page {
 
                     property color color: theme.palette.normal.background
 
-                    //shortcut: "Ctrl+S"
-//                    shortcut: valueTextField.focused ? StandardKey.InsertParagraphSeparator : undefined
                     text: root.mode === "add" ? i18n.tr(
                                                     "Add") : i18n.tr("Update")
                     onTriggered: {
@@ -256,7 +257,7 @@ Page {
                             var txtCategory = categoryPopupItemSelector.selectedValue
                             var today = new Date(Process.getToday())
                             var txtDate = Process.dateFormat(0, dateLabel.date)
-                            var txtType = "Expense" //typeSection.selectedIndex === 0 ? "Expense" : "Debt"
+                            var txtType = "Expense"
                             var realValue
                             var realTravelValue
 
@@ -270,7 +271,6 @@ Page {
 
                                 realTravelValue = parseFloat(valueTextField.text)
                                 realValue = valueTextField.homeValue
-//                                realValue = realTravelValue * realRate
 
                                 travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
 
@@ -348,20 +348,12 @@ Page {
             actions: Action {
                 property color color: theme.palette.normal.background
 
-                //shortcut: "Esc"
                 text: i18n.tr("Cancel")
                 onTriggered: {
                     root.cancel()
                 }
             }
         }
-
-        //        Sections {
-        //            id: typeSection
-        //            anchors.centerIn: parent
-
-        //            model: [i18n.tr("Expense"), i18n.tr("Debt")]
-        //        }
     }
 
     Component {

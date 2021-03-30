@@ -38,11 +38,6 @@ Page {
     signal cancel
     signal saved
 
-    //    header: BaseHeader {
-    //        title: root.mode === "add" ? i18n.tr("Add a custom report") : i18n.tr(
-    //                                         "Edit Report") + " - " + report_name
-    //        flickable: flickDialog
-    //    }
     onActiveChanged: {
         if (active === true) {
             if (mainView.listModels.modelCategories.count === 0) {
@@ -63,8 +58,6 @@ Page {
                 date_mode = dateModeField.savedValue
                 date_range = dateRangeField.savedValue
             }
-
-//            chartLoader.active = true
         }
     }
 
@@ -112,7 +105,7 @@ Page {
             left: root.isLandscape ? chartLoader.right : parent.left
             right: parent.right
             bottom: toolBar.top
-            top: textareaDescr.bottom //root.isLandscape ? root.top : chartLoader.bottom
+            top: textareaDescr.bottom
             topMargin: units.gu(2)
             bottomMargin: units.gu(2)
         }
@@ -153,7 +146,6 @@ Page {
                     width: root.isLandscape ? root.width / 2 : undefined
 
                     anchors {
-//                        top: textName.bottom //parent.top
                         left: parent.left
                         right: root.isLandscape ? undefined : parent.right
                     }
@@ -248,24 +240,8 @@ Page {
                     titleText.text: i18n.tr("Filter")
                     subText.text: i18n.tr("None")
                     bindValue: filterOn
-//                    onCheckboxValueChanged: {
                     onClicked: {
                         poppingDialog.show()
-//                        var zoomIn = Qt.createComponent(Qt.resolvedUrl("../components/Common/PoppingDialog.qml"));
-
-//                                            var props = {
-//                                                x: filterCheckboxItem.mapToItem(root, 0, 0).x,
-//                                                y: filterCheckboxItem.mapToItem(root, 0, 0).y,
-//                                                width: filterCheckboxItem.width,
-//                            height: filterCheckboxItem.height,
-//                            explicitHeight: units.gu(60),
-//                            explicitWidth: units.gu(40),
-////                            fullscreen: true,
-//                            delegate: testComponent
-//                                            }
-
-//                                            zoomIn.createObject(root, props);
-//                        subText.text = zoomIn.returnValue ? zoomIn.returnValue : i18n.tr("None")
                     }
 
                     PoppingDialog{
@@ -309,18 +285,6 @@ Page {
                         }
                     }
                 }
-
-//                FilterException {
-//                    id: filterField
-//                    title: i18n.tr("Filter")
-//                    categorySavedValue: String(root.filter.category)
-//                }
-
-//                FilterException {
-//                    id: exceptionField
-//                    title: i18n.tr("Exception")
-//                    categorySavedValue: String(root.exceptions.category)
-//                }
             }
         }
     }
@@ -328,6 +292,10 @@ Page {
     Component {
         id: buttonComponent
         ActionButtonDelegate {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
         }
     }
 
@@ -374,7 +342,6 @@ Page {
                         }
 
                         listModels.modelCategories.getItems()
-                        //checkEmpty()
                         root.saved()
                     }
                 }

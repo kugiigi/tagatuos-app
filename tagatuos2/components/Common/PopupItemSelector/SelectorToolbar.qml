@@ -20,6 +20,10 @@ Toolbar {
     Component {
         id: buttonDelegate
         ActionButtonDelegate {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
         }
     }
 
