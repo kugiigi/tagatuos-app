@@ -96,6 +96,10 @@ Page {
     Component {
         id: buttonComponent
         ActionButtonDelegate {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
         }
     }
 
@@ -144,7 +148,6 @@ Page {
                         }
 
                         listModels.modelCategories.getItems()
-                        //checkEmpty()
                         root.saved()
                     }
                 }

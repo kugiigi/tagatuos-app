@@ -7,12 +7,6 @@ AbstractButton {
     action: modelData
     width: buttonsRow.width + units.gu(2)
 
-    anchors {
-        top: parent.top
-        bottom: parent.bottom
-    }
-
-
     style: Rectangle {
         color: action.color ? action.color : theme.palette.normal.foreground
 

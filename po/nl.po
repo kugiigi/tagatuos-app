@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 18:49+0000\n"
+"POT-Creation-Date: 2021-03-30 16:36+0000\n"
 "PO-Revision-Date: 2020-07-03 17:26+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -39,8 +39,8 @@ msgstr "Snelle uitgave"
 msgid "Back"
 msgstr "Terug"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailDialog.qml:109
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:84
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailDialog.qml:103
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:74
 msgid "Close"
 msgstr "Sluiten"
 
@@ -125,8 +125,8 @@ msgstr "Categorie toevoegen"
 msgid "Edit Category - "
 msgstr "Categorie aanpassen - "
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:122
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:243
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/DetailView.qml:194
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:30
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:29
@@ -135,34 +135,34 @@ msgstr "Categorie aanpassen - "
 msgid "Add"
 msgstr "Toevoegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:118
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:347
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:122
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:315
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/AddFullPage/ValueField.qml:47
 msgid "Save"
 msgstr "Opslaan"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:159
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:352
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:387
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:162
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:351
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:354
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/ManageCategory.qml:253
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/ManageReports.qml:241
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:23
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:33
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:37
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:33
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:170
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:398
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:173
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:365
 msgid "Category already exists!"
 msgstr "Deze categorie bestaat al!"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:171
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:400
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddCategory.qml:174
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:367
 msgid "That category already exists. Please choose a different name."
 msgstr "Deze categorie bestaat al. Kies een andere naam."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:242
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:243
 msgid "Update"
 msgstr "Bijwerken"
 
@@ -170,19 +170,19 @@ msgstr "Bijwerken"
 msgid "Add as Quick"
 msgstr "Toevoegen als snelle uitgave"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:372
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddFullPage.qml:364
 msgid "Quick expense successfully added!"
 msgstr "De snelle uitgave is toegevoegd!"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:165
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:157
 msgid "Preview"
 msgstr "Voorvertoning"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:248
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:240
 msgid "Filter"
 msgstr "Filteren"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:249
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AddReport.qml:241
 msgid "None"
 msgstr "Geen"
 
@@ -600,27 +600,27 @@ msgstr "Kiezen"
 msgid "View All"
 msgstr "Alles tonen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:31
 msgid "Name:"
 msgstr "Naam:"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:44
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:37
 msgid "Description:"
 msgstr "Omschrijving:"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:45
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:38
 msgid "<No Description>"
 msgstr "<geen omschrijving>"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:50
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:43
 msgid "Category:"
 msgstr "Categorie:"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:56
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:49
 msgid "Date:"
 msgstr "Datum:"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:62
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DetailView/DetailsDialog.qml:55
 msgid "Value:"
 msgstr "Waarde:"
 
@@ -653,7 +653,7 @@ msgid "You are about to open an external link. Do you wish to continue?"
 msgstr "Je staat op het punt om een externe link te openen. Weet je het zeker?"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Dialogs/DialogExternalLink.qml:31
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:52
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector/SelectorToolbar.qml:56
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/Common/PopupItemSelector2/SelectorToolbar2.qml:52
 msgid "OK"
 msgstr "Oké"
@@ -927,9 +927,17 @@ msgstr "Ouder"
 msgid "In The Future"
 msgstr "In de toekomst"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/build/arm-linux-gnueabihf/app/tagatuos2/tagatuos2.desktop.h:1
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/build/aarch64-linux-gnu/app/tagatuos2/tagatuos2.desktop.h:1
 msgid "Tagatuos"
 msgstr "Tagatuos"
+
+#, fuzzy
+#~ msgid "Closerurur"
+#~ msgstr "Sluiten"
+
+#, fuzzy
+#~ msgid "Canceluru"
+#~ msgstr "Annuleren"
 
 #~ msgid "Donate"
 #~ msgstr "Doneren"

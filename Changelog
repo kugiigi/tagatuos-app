@@ -1,3 +1,11 @@
+V0.87
+* Norwegian translation
+* Fixed unresponsiveness on the Pinephone
+  (App may still be unresponsive when the loading animation is displayed)
+* Disabled predictive text in the expense description/name field
+* Implemented right-click in list items
+* Fixed layout and anchoring warning messages
+  
 v0.86
 * Updated French translation
 * Changed splashscreen

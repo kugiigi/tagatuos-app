@@ -42,6 +42,9 @@ Column {
             right: parent.right
         }
 
+        // Disable predictive text
+        inputMethodHints: Qt.ImhNoPredictiveText
+
         style: TextFieldStyle {
             //overlaySpacing: 0
             //frameSpacing: 0

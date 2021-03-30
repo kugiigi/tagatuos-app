@@ -28,7 +28,7 @@ Item {
     ActivityIndicator {
         id: loadingIndicator
         anchors.horizontalCenter: parent.horizontalCenter
-        running: true
+        running: root.visible
     }
 
 

@@ -18,6 +18,10 @@ ListItem {
 
     property bool actionActive: false
     property bool showTravelValue: tempSettings.travelMode
+    
+    function openContextMenu() {
+        PopupUtils.open(actionsPopoverComponent, singleItemChild)
+    }
 
     divider {
         visible: false
@@ -35,15 +39,19 @@ ListItem {
 
 
     onPressAndHold: {
-        PopupUtils.open(actionsPopoverComponent, singleItemChild)
+        openContextMenu()
     }
 
-//    onItemValueChanged: fieldsColumn.refresh()
-//    onItemDateChanged: fieldsColumn.refresh()
     onShowTravelValueChanged: fieldsColumn.refresh()
 
 
-    highlightColor: theme.palette.highlighted.background //overlay
+    highlightColor: theme.palette.highlighted.background
+    
+    MouseArea {
+        acceptedButtons: Qt.RightButton
+        anchors.fill: parent
+        onClicked: openContextMenu()
+    }
 
     ListItemLayout {
         title.text: singleItemChild.itemName
@@ -61,16 +69,11 @@ ListItem {
             }
 
             function refresh(){
-//                valueLabel.text = singleItemChild.showTravelValue ? AppFunctions.formatMoneyTravel(singleItemChild.itemValue / tempSettings.exchangeRate, false) : AppFunctions.formatMoney(singleItemChild.itemValue, false)
-//                valueLabel.text = singleItemChild.showTravelValue ? singleItemChild.itemTravelValue : singleItemChild.itemValue
-//                dateLabel.text = singleItemChild.itemDate
 
                 if (dateLabel.width > valueLabel.width) {
                     width = dateLabel.width
-//                    valueLabel.width = dateLabel.width
                 } else {
                     width = valueLabel.width
-//                    dateLabel.width = valueLabel.width
                 }
             }
 
@@ -113,12 +116,6 @@ ListItem {
             id: actionsPopover
 
             actions: singleItemChild.actions
-
-//            delegate:
-//                ActionDelegate {
-//                text: action.text
-//                iconName: action.iconName
-//            }
 
             onVisibleChanged: {
                 singleItemChild.actionActive = visible ? true : false
