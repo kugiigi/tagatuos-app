@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-30 16:36+0000\n"
-"PO-Revision-Date: 2020-07-22 20:51+0200\n"
+"PO-Revision-Date: 2021-04-05 14:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -60,7 +60,7 @@ msgstr "Aide"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:131
 msgid "Rate this App"
-msgstr ""
+msgstr "Noter cette application"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:148
 msgid "Report a bug"
@@ -72,11 +72,11 @@ msgstr "Contacter le développeur"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:195
 msgid "Donate via PayPal"
-msgstr ""
+msgstr "Faire un don via PayPal"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:211
 msgid "Donate via LibrePay"
-msgstr ""
+msgstr "Faire un don via LibrePay"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/ui/AboutPage.qml:227
 msgid "View in OpenStore"
