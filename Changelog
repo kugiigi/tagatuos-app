@@ -1,3 +1,7 @@
+V0.88
+* Updated French translation (Thanks Ann017)
+* Set date picker able to provide one year in the past
+
 V0.87
 * Norwegian translation
 * Fixed unresponsiveness on the Pinephone
