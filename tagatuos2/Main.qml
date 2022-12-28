@@ -56,7 +56,17 @@ MainView {
     anchorToKeyboard: true
     theme.name: tempSettings.currentTheme
 
-    property string current_version: "0.88"
+    // Change theme in real time when set to follow system theme
+    // Only works when the app gets unfocused then focused
+    // Possibly ideal so the change won't happen while the user is using the app
+    onActiveFocusChanged: {
+        if (activeFocus) {
+                theme.name = Theme.name
+                theme.name = Qt.binding( function() { return tempSettings.currentTheme == "" ? "" : tempSettings.currentTheme } )
+        }
+    }
+
+    property string current_version: "0.89"
     property alias mainPage: mainPageLoader.item
     property alias addBottomEdge: addBottomEdge
     property alias listModels: listModelsLoader.item //listModels

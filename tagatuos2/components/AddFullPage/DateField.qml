@@ -56,7 +56,7 @@ Column {
                 var datePicker = PickerPanel.openDatePicker(
                             dateLabel, "date", "Years|Months|Days")
                 var lastYear = new Date()
-                lastYear.setFullYear( lastYear.getFullYear() - 1 );
+                lastYear.setFullYear( lastYear.getFullYear() - 50 );
                 datePicker.picker.minimum = lastYear
                 var datePickerClosed = function () {
                     expenseDateListItem.color = "transparent"
