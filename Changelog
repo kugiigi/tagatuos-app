@@ -1,7 +1,7 @@
 V0.89
 * Initial Ubuntu 20.04 (Focal) support
 * Change theme in real time when set to system theme
-* Set minimum year in date pickers to 50 years in the past
+* Set minimum year in date pickersto 50 years in the past
 
 V0.88
 * Updated French translation (Thanks Ann017)
