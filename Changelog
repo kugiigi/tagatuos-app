@@ -3,6 +3,7 @@ V0.89
 * Change theme in real time when set to system theme
 * Set minimum year in date picker to 50 years in the past
 * Fix minor issues/errors in the quick add function
+* Close quick add page when unfocusing the app as a workaround for the theme switch issue
 
 V0.88
 * Updated French translation (Thanks Ann017)
