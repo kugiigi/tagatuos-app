@@ -31,21 +31,21 @@ ListView {
     delegate: QuickAddItem {
         id: quickAdditem
 
-        itemName: quickname
-        itemValue: quickvalue //AppFunctions.formatMoney(quickvalue, false)
-        itemDescr: descr
-        itemCategory: category_name
-        itemDate: quickdate
-        itemTravelValue: travel_value
-        itemRate: rate
-        itemTravelCur: travelCur
-        itemHomeCur: homeCur
+        itemName: model.quickname
+        itemValue: model.quickvalue //AppFunctions.formatMoney(quickvalue, false)
+        itemDescr: model.descr
+        itemCategory: model.category_name
+        itemDate: model.quickdate
+        itemTravelValue: model.travel_value
+        itemRate: model.rate
+        itemTravelCur: model.travelCur ? model.travelCur : ""
+        itemHomeCur: model.homeCur ? model.homeCur : ""
 
         leadingActions: bottomBarNavigation.currentIndex === 1 ? leftListItemActions : null
         trailingActions: rightListItemActions
 
         onClicked: {
-            addQuick(itemCategory, itemName, itemDescr, quickvalue, itemTravelValue, itemRate, itemHomeCur, itemTravelCur)
+            addQuick(itemCategory, itemName, itemDescr, model.quickvalue, itemTravelValue, itemRate, itemHomeCur, itemTravelCur)
         }
 
         ListItemActions {
@@ -56,7 +56,7 @@ ListView {
                     text: i18n.tr("Edit")
                     visible: bottomBarNavigation.currentIndex === 1
                     onTriggered: {
-                        PopupUtils.open(addDialog, null, {mode: "edit", quickID: quick_id, itemName: quickname, itemValue: quickvalue,itemDescr: descr, itemCategory: category_name})
+                        PopupUtils.open(addDialog, null, {mode: "edit", quickID: model.quick_id, itemName: model.quickname, itemValue: model.quickvalue,itemDescr: model.descr, itemCategory: model.category_name})
                     }
                 },
                 Action {
@@ -65,12 +65,12 @@ ListView {
                     onTriggered: {
                         var realValue
                         if(tempSettings.travelMode){
-                            realValue = itemTravelValue > 0 ? itemTravelValue : quickvalue / tempSettings.exchangeRate
+                            realValue = itemTravelValue > 0 ? itemTravelValue : model.quickvalue / tempSettings.exchangeRate
                         }else{
-                            realValue = quickvalue
+                            realValue = model.quickvalue
                         }
 
-                        PopupUtils.open(addDialog, null, {mode: "custom", quickID: quick_id, itemName: quickname, itemValue: realValue,itemDescr: descr, itemCategory: category_name})
+                        PopupUtils.open(addDialog, null, {mode: "custom", quickID: model.quick_id, itemName: model.quickname, itemValue: realValue,itemDescr: model.descr, itemCategory: model.category_name})
                     }
                 }
                 ,
@@ -113,8 +113,8 @@ ListView {
                     iconName: "delete"
                     text: i18n.tr("Delete")
                     onTriggered: {
-                        DataProcess.deleteQuickExpense(quick_id)
-                        mainView.listModels.deleteQuickItem(quick_id)
+                        DataProcess.deleteQuickExpense(model.quick_id)
+                        mainView.listModels.deleteQuickItem(model.quick_id)
                     }
                 }
             ]

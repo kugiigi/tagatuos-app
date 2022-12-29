@@ -63,6 +63,8 @@ MainView {
         if (activeFocus) {
                 theme.name = Theme.name
                 theme.name = Qt.binding( function() { return tempSettings.currentTheme == "" ? "" : tempSettings.currentTheme } )
+        } else {
+            addBottomEdge.collapse()
         }
     }
 
