@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItems
+import Lomiri.Components 1.3
+import Lomiri.Components.ListItems 1.3 as ListItems
 
 Rectangle {
     id: root
@@ -105,30 +105,30 @@ Rectangle {
     //        }
     //    }
     Behavior on radius {
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             easing.type: Easing.OutCubic
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
     Behavior on width {
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             easing.type: Easing.OutCubic
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
     Behavior on height {
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             easing.type: Easing.OutCubic
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
 //    Behavior on color {
 //        ColorAnimation {
-//            easing: UbuntuAnimation.StandardEasing
-//            duration: UbuntuAnimation.BriskDuration
+//            easing: LomiriAnimation.StandardEasing
+//            duration: LomiriAnimation.BriskDuration
 //        }
 //    }
 

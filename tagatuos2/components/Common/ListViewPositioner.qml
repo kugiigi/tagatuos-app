@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Rectangle {
     id: root
@@ -54,16 +54,16 @@ Rectangle {
     }
 
 //    Behavior on opacity {
-//        UbuntuNumberAnimation {
+//        LomiriNumberAnimation {
 //            easing.type: Easing.OutCubic
-//            duration: UbuntuAnimation.SlowDuration
+//            duration: LomiriAnimation.SlowDuration
 //        }
 //    }
 
     Behavior on color {
         ColorAnimation {
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.BriskDuration
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
@@ -89,7 +89,7 @@ Rectangle {
 
         onPressedChanged: {
             if (pressed) {
-                root.color = "#3A000000" //UbuntuColors.blue //"#4A3D1400"
+                root.color = "#3A000000" //LomiriColors.blue //"#4A3D1400"
             } else {
                 root.color = bgColor
             }

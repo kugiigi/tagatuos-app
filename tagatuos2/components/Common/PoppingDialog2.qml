@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Item {
     id: root
@@ -107,9 +107,9 @@ Item {
         }
 
         Behavior on opacity {
-            UbuntuNumberAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+            LomiriNumberAnimation {
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.BriskDuration
             }
         }
     }
@@ -229,64 +229,64 @@ Item {
             }
         }
 
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "x"
             to: targetX
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "y"
             to: targetY
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "width"
             to: targetWidth
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "height"
             to: targetHeight
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
     ParallelAnimation {
         id: parallelAnimationClose
 
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "x"
             to: backgroundRectangle.initialX
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "y"
             to: backgroundRectangle.initialY
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "width"
             to: backgroundRectangle.initialWidth
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: root
             property: "height"
             to: backgroundRectangle.initialHeight
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
-        UbuntuNumberAnimation {
+        LomiriNumberAnimation {
             target: backgroundRectangle
             property: "opacity"
             to: 0.3
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
         }
 
         onStopped: {

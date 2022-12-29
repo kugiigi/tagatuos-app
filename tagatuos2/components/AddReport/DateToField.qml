@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Pickers 1.3
+import Lomiri.Components 1.3
+import Lomiri.Components.Pickers 1.3
 
 Column {
     id: root

@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Row {
     id: root
@@ -11,7 +11,7 @@ Row {
     spacing: units.gu(0.5)
 
 
-    UbuntuShape {
+    LomiriShape {
         id: legendColor
 
         height: root.height * 0.80

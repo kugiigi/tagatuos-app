@@ -1,9 +1,9 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-//import Ubuntu.Components.Themes.Ambiance 1.3
-import Ubuntu.Components.ListItems 1.0 as ListItemOld
-import Ubuntu.Components.Popups 1.3
-//import Ubuntu.Components.Pickers 1.3
+import Lomiri.Components 1.3
+//import Lomiri.Components.Themes.Ambiance 1.3
+import Lomiri.Components.ListItems 1.0 as ListItemOld
+import Lomiri.Components.Popups 1.3
+//import Lomiri.Components.Pickers 1.3
 import "../library/DataProcess.js" as DataProcess
 import "../components"
 import "../components/Common"

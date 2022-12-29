@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components 1.3
+import Lomiri.Components.Popups 1.3
 import "../components"
 import "../components/Common"
 import "../components/Dialogs"
@@ -48,12 +48,12 @@ Page {
             flickableDirection: Flickable.VerticalFlick
             clip: true
 
-            UbuntuNumberAnimation on opacity {
+            LomiriNumberAnimation on opacity {
                 running: flickableAbout.visible
                 from: 0
                 to: 1
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.FastDuration
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.FastDuration
             }
 
             Item {
@@ -66,11 +66,11 @@ Page {
                     right: parent.right
                 }
 
-                UbuntuShape {
+                LomiriShape {
                     id: iconShape
                     width: units.gu(20)
                     height: width
-                    aspect: UbuntuShape.Flat
+                    aspect: LomiriShape.Flat
 
                     radius: "medium"
                     relativeRadius: 0.5

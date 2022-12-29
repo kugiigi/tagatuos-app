@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Rectangle {
     id: root
@@ -9,7 +9,7 @@ Rectangle {
 
     color: theme.palette.normal.overlay
     border {
-        color: UbuntuColors.blue
+        color: LomiriColors.blue
         width: units.gu(0.1)
     }
 
@@ -26,9 +26,9 @@ Rectangle {
     }
 
     Behavior on opacity {
-        UbuntuNumberAnimation {
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.SlowDuration
+        LomiriNumberAnimation {
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.SlowDuration
         }
     }
 

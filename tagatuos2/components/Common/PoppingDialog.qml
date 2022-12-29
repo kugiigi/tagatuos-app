@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Loader {
     id: root
@@ -48,9 +48,9 @@ Loader {
         }
 
         Behavior on opacity {
-            UbuntuNumberAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.FastDuration
+            LomiriNumberAnimation {
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.FastDuration
             }
         }
 
@@ -291,70 +291,70 @@ Loader {
                     root.opened()
                 }
 
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "x"
                     to: targetX
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "y"
                     to: targetY
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "width"
                     to: targetWidth
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "height"
                     to: targetHeight
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-//                UbuntuNumberAnimation {
+//                LomiriNumberAnimation {
 //                    target: backgroundRectangle
 //                    property: "opacity"
 //                    to: 1
-//                    duration: UbuntuAnimation.FastDuration
+//                    duration: LomiriAnimation.FastDuration
 //                }
             }
 
             ParallelAnimation {
                 id: parallelAnimationClose
 
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "x"
                     to: backgroundRectangle.initialX
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "y"
                     to: backgroundRectangle.initialY
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "width"
                     to: backgroundRectangle.initialWidth
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: poppingDialog
                     property: "height"
                     to: backgroundRectangle.initialHeight
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
-                UbuntuNumberAnimation {
+                LomiriNumberAnimation {
                     target: backgroundRectangle
                     property: "opacity"
                     to: 0.3
-                    duration: UbuntuAnimation.FastDuration
+                    duration: LomiriAnimation.FastDuration
                 }
 
                 onStopped: {

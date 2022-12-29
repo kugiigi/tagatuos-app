@@ -1,11 +1,11 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Themes.Ambiance 1.3
+import Lomiri.Components 1.3
+import Lomiri.Components.Themes.Ambiance 1.3
 import "../components"
 import "../components/Common"
 import "../components/BaseComponents"
 import "../library"
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components.Popups 1.3
 import "../library/DataProcess.js" as DataProcess
 import "../library/ProcessFunc.js" as Process
 
@@ -148,7 +148,7 @@ Page {
     ScrollView {
         anchors.fill: parent
         anchors.topMargin: pageCategories.header.height
-        UbuntuListView {
+        LomiriListView {
             id: groupedList
 
             property string category
@@ -164,12 +164,12 @@ Page {
             highlightMoveDuration: 200
 
 
-            UbuntuNumberAnimation on opacity {
+            LomiriNumberAnimation on opacity {
                 running: groupedList.count > 0
                 from: 0
                 to: 1
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.FastDuration
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.FastDuration
             }
 
             delegate: ListItem {
@@ -256,7 +256,7 @@ Page {
                 }
                 Button {
                     text: i18n.tr("Delete")
-                    color: UbuntuColors.red
+                    color: LomiriColors.red
                     width: parent.width * 0.45
                     onClicked: {
                         dialogResponse = "YES"

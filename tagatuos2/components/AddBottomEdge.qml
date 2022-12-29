@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../ui"
 import "../components/BottomEdge"
 import "../components/Common"
@@ -18,7 +18,7 @@ BottomEdge {
             opacity: root.status === BottomEdge.Committed ? 0 : 1
             z: 100
             anchors.fill: parent
-            color: UbuntuColors.green
+            color: LomiriColors.green
             text: i18n.tr("Add Expense")
             onOpacityChanged: {
                 if (opacity === 0) {
@@ -64,7 +64,7 @@ BottomEdge {
                 opacity: root.status === BottomEdge.Committed ? 0 : 1
                 z: 100
                 anchors.fill: parent
-                color: UbuntuColors.blue
+                color: LomiriColors.blue
                 text: i18n.tr("Quick Expense")
             }
         }
@@ -114,7 +114,7 @@ BottomEdge {
                 z: 100
                 anchors.fill: parent
 
-                color: UbuntuColors.warmGrey
+                color: LomiriColors.warmGrey
                 text: i18n.tr("Back")
                 onOpacityChanged: {
                     if (opacity === 0) {
@@ -159,7 +159,7 @@ BottomEdge {
 //                opacity: root.status === BottomEdge.Committed ? 0 : 1
 //                z: 100
 //                anchors.fill: parent
-//                color: UbuntuColors.red
+//                color: LomiriColors.red
 //                text: i18n.tr("New Debt")
 //            }
 //        }

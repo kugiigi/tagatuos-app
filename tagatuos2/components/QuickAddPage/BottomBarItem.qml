@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 AbstractButton {
     id: bottomBarItem
@@ -16,9 +16,9 @@ AbstractButton {
         opacity: visible ? 1 : 0
 
         Behavior on opacity {
-            UbuntuNumberAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+            LomiriNumberAnimation {
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.BriskDuration
             }
         }
     }

@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components 1.3
+import Lomiri.Components.Popups 1.3
 import "../components"
 import "../components/Common"
 import "../components/Dialogs"
@@ -36,12 +36,12 @@ Page {
             flickableDirection: Flickable.VerticalFlick
             clip: true
 
-            UbuntuNumberAnimation on opacity {
+            LomiriNumberAnimation on opacity {
                 running: flickableTravel.visible
                 from: 0
                 to: 1
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.FastDuration
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.FastDuration
             }
 
             SwitchItem {

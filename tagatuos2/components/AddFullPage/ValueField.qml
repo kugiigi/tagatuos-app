@@ -1,7 +1,7 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Themes.Ambiance 1.3
-import Ubuntu.Keyboard 0.1
+import Lomiri.Components 1.3
+import Lomiri.Components.Themes.Ambiance 1.3
+import Lomiri.Keyboard 0.1
 import "../../library/ApplicationFunctions.js" as AppFunctions
 
 Column {

@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../Common"
 import "../ListModels"
 import "../QChart/QChart.js" as Charts
@@ -161,8 +161,8 @@ Item {
         target: root
         from: 0
         to: 1
-        easing: UbuntuAnimation.StandardEasing
-        duration: UbuntuAnimation.SlowDuration
+        easing: LomiriAnimation.StandardEasing
+        duration: LomiriAnimation.SlowDuration
         alwaysRunToEnd: true
 //        onStopped: console.log("show")
     }
@@ -172,8 +172,8 @@ Item {
         target: root
         from: 1
         to: 0
-        easing: UbuntuAnimation.StandardEasing
-        duration: UbuntuAnimation.SlowDuration
+        easing: LomiriAnimation.StandardEasing
+        duration: LomiriAnimation.SlowDuration
         alwaysRunToEnd: true
         onStopped: {
             emptyStateLoader.active = false
@@ -228,7 +228,7 @@ Item {
 
         chartAnimated: false
         chartAnimationEasing: Easing.InBounce
-        chartAnimationDuration: UbuntuAnimation.BriskDuration
+        chartAnimationDuration: LomiriAnimation.BriskDuration
         chartOptions: {
             "scaleFontColor": theme.palette.normal.backgroundText,
                             "scaleGridLineColor": theme.palette.normal.base

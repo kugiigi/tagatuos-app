@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../../library/ApplicationFunctions.js" as ApplicationFunctions
 
 Label {
@@ -31,7 +31,7 @@ Label {
         }
 
         onColorChanged: {
-            categoryLabel.color = ApplicationFunctions.getContrastYIQ(categoryRectangle.color) ? UbuntuColors.jet : UbuntuColors.porcelain
+            categoryLabel.color = ApplicationFunctions.getContrastYIQ(categoryRectangle.color) ? LomiriColors.jet : LomiriColors.porcelain
         }
     }
 

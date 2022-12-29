@@ -1,7 +1,7 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../../components/Common"
-import Ubuntu.Components.ListItems 1.3 as ListItems
+import Lomiri.Components.ListItems 1.3 as ListItems
 
 Column {
     id: travelFields
@@ -22,8 +22,8 @@ Column {
     }
 
 //    Behavior on height { PropertyAnimation {
-//            easing: UbuntuAnimation.StandardEasing
-//            duration: UbuntuAnimation.SleepyDuration
+//            easing: LomiriAnimation.StandardEasing
+//            duration: LomiriAnimation.SleepyDuration
 //        onRunningChanged: console.log("running!")
 //        }
 //    }
@@ -100,12 +100,12 @@ Column {
             right: parent.right
         }
 
-        UbuntuNumberAnimation on opacity {
+        LomiriNumberAnimation on opacity {
             running: editCurrencyLoader.visible
             from: 0
             to: 1
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.SlowDuration
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.SlowDuration
         }
 
     }

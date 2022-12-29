@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItems
+import Lomiri.Components 1.3
+import Lomiri.Components.ListItems 1.3 as ListItems
 import "../../library/ApplicationFunctions.js" as AppFunctions
 
 Item {
@@ -19,7 +19,7 @@ Item {
 
     height: mainShape.height + units.gu(2)
 
-    //    UbuntuShape {
+    //    LomiriShape {
     Rectangle {
         id: mainShape
 
@@ -35,17 +35,17 @@ Item {
         //        radius: "small"
         radius: units.gu(1)
         //        relativeRadius: 0.1
-        //        aspect: UbuntuShape.Flat
+        //        aspect: LomiriShape.Flat
 
         //        Behavior on backgroundColor {
         Behavior on color {
             ColorAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.BriskDuration
             }
         }
 
-        UbuntuListView {
+        LomiriListView {
             id: listView
             interactive: false
             model: root.cloneModel !== null ? root.cloneModel.childModel : null
@@ -100,10 +100,10 @@ Item {
             }
             onPressedChanged: {
                 if (pressed) {
-                    //                    mainShape.aspect = UbuntuShape.Inset
+                    //                    mainShape.aspect = LomiriShape.Inset
                     mainShape.color = theme.palette.highlighted.foreground //base
                 } else {
-                    //                    mainShape.aspect = UbuntuShape.Flat
+                    //                    mainShape.aspect = LomiriShape.Flat
                     //                    mainShape.backgroundColor = theme.palette.normal.foreground //base
                     mainShape.color = "transparent"
                 }

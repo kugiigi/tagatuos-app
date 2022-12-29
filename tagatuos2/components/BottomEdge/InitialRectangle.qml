@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Rectangle {
     id: root
@@ -8,9 +8,9 @@ Rectangle {
     visible: opacity === 0 ? false : true
 
     Behavior on opacity {
-        UbuntuNumberAnimation {
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.FastDuration
+        LomiriNumberAnimation {
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.FastDuration
         }
     }
 
@@ -20,7 +20,7 @@ Rectangle {
         visible: root.height >= units.gu(5) ? true : false
         fontSizeMode: Text.HorizontalFit
         font.bold: true
-        color: UbuntuColors.porcelain//theme.palette.normal.foregroundText
+        color: LomiriColors.porcelain//theme.palette.normal.foregroundText
         textSize: Label.Large
         minimumPixelSize: units.gu(2)
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere

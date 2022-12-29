@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Item {
     id: itemSelector
@@ -72,7 +72,7 @@ Item {
 //    }
 
 
-    UbuntuListView {
+    LomiriListView {
         id: listView
 
 
@@ -98,7 +98,7 @@ Item {
 
 
         displaced: Transition {
-            UbuntuNumberAnimation { property: "y"; duration: UbuntuAnimation.BriskDuration }
+            LomiriNumberAnimation { property: "y"; duration: LomiriAnimation.BriskDuration }
         }
 
         delegate: ListItemDelegate {

@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 PageHeader {
     id: selectorHeader
@@ -7,7 +7,7 @@ PageHeader {
     StyleHints {
         foregroundColor: theme.palette.normal.overlayText
         backgroundColor: theme.palette.normal.overlay
-        dividerColor: UbuntuColors.slate
+        dividerColor: LomiriColors.slate
     }
 
     title: root.multipleSelection ? i18n.tr("Select values") : i18n.tr("Select a value")

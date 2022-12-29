@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQml.Models 2.1
 import "../components"
 import "../components/Common"
@@ -272,16 +272,16 @@ Page {
         }
 
         Behavior on anchors.topMargin {
-            UbuntuNumberAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+            LomiriNumberAnimation {
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.BriskDuration
             }
         }
 
         Behavior on opacity {
-            UbuntuNumberAnimation {
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.BriskDuration
+            LomiriNumberAnimation {
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.BriskDuration
             }
         }
 

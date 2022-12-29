@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
-//import Ubuntu.Components.ListItems 1.3 as ListItem
+import Lomiri.Components 1.3
+//import Lomiri.Components.ListItems 1.3 as ListItem
 import "../components"
 import "../components/Common"
 import "../components/BaseComponents"
@@ -39,12 +39,12 @@ Page {
             contentHeight: _settingsColumn.height
             anchors.fill: parent
 
-            UbuntuNumberAnimation on opacity {
+            LomiriNumberAnimation on opacity {
                 running: settingsListView.visible
                 from: 0
                 to: 1
-                easing: UbuntuAnimation.StandardEasing
-                duration: UbuntuAnimation.FastDuration
+                easing: LomiriAnimation.StandardEasing
+                duration: LomiriAnimation.FastDuration
             }
 
             function positionViewAtBeginning() {
@@ -284,7 +284,7 @@ Page {
                     title: i18n.tr("Administration")
                 }
 
-                UbuntuListView {
+                LomiriListView {
                     id: navigationListView
 
                     interactive: false
@@ -293,8 +293,8 @@ Page {
                     highlightFollowsCurrentItem: true
                     highlight: ListViewHighlight {
                     }
-                    highlightMoveDuration: UbuntuAnimation.SnapDuration
-                    highlightResizeDuration: UbuntuAnimation.SnapDuration
+                    highlightMoveDuration: LomiriAnimation.SnapDuration
+                    highlightResizeDuration: LomiriAnimation.SnapDuration
                     height: units.gu(7) * navigationsModel.count //contentHeight
 
                     anchors {
@@ -305,12 +305,12 @@ Page {
                     }
                     model: navigationsModel
 
-                    UbuntuNumberAnimation on opacity {
+                    LomiriNumberAnimation on opacity {
                         running: navigationListView.visible
                         from: 0
                         to: 1
-                        easing: UbuntuAnimation.StandardEasing
-                        duration: UbuntuAnimation.FastDuration
+                        easing: LomiriAnimation.StandardEasing
+                        duration: LomiriAnimation.FastDuration
                     }
 
                     delegate: NavigationItem {

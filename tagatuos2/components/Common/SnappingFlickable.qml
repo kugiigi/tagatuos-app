@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Flickable {
     id: root
@@ -25,7 +25,7 @@ Flickable {
         smoothedAnimation.duration = 0 //do not animate when resizing
         cancelFlick()
         contentX = singleItemWidth * currentIndex
-        smoothedAnimation.duration = UbuntuAnimation.BriskDuration
+        smoothedAnimation.duration = LomiriAnimation.BriskDuration
 //        returnToBounds()
     }
 
@@ -48,24 +48,24 @@ Flickable {
     }
 
     Behavior on anchors.topMargin {
-        UbuntuNumberAnimation {
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.BriskDuration
+        LomiriNumberAnimation {
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
     Behavior on opacity {
-        UbuntuNumberAnimation {
-            easing: UbuntuAnimation.StandardEasing
-            duration: UbuntuAnimation.BriskDuration
+        LomiriNumberAnimation {
+            easing: LomiriAnimation.StandardEasing
+            duration: LomiriAnimation.BriskDuration
         }
     }
 
     Behavior on contentX {
         //SmoothedAnimation {
-        UbuntuNumberAnimation{
+        LomiriNumberAnimation{
             id: smoothedAnimation
-            duration: UbuntuAnimation.BriskDuration
+            duration: LomiriAnimation.BriskDuration
 //            reversingMode: SmoothedAnimation.Immediate
             easing.type: Easing.InOutQuad
             onRunningChanged: {

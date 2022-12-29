@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../components"
 import "../components/Common"
 import "../components/DetailView"
@@ -331,7 +331,7 @@ Page {
             bottom: statsBar.state === "floating" ? parent.bottom : statsBar.top
         }
 
-        UbuntuListView {
+        LomiriListView {
             id: listView
             model: mainView.listModels.modelSortFilterExpense //modelTodayExpenses//sortFilterExpenseModel//modelTodayExpenses
             clip: true

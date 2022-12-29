@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "../components/Common"
 import "../components/Dashboard"
 
@@ -38,7 +38,7 @@ Page {
 //    PageBackGround {
 //    }
 
-//    UbuntuListView {
+//    LomiriListView {
 //        id: mainFlickable
 //        interactive: true
 //        anchors.fill: parent
