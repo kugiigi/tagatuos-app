@@ -3,7 +3,7 @@ TARGET = tagatuos2
 
 load(ubuntu-click)
 
-QT += qml quick
+QT += qml quick quickcontrols2
 
 SOURCES += main.cpp
 
@@ -25,6 +25,7 @@ OTHER_FILES += $${CONF_FILES} \
                $${QML_FILES} \
                $${AP_TEST_FILES} \
                tagatuos2.desktop \
+               clickable.json \
     components/Common/ExpandableListItem.qml \
     components/Common/PoppingDialog.qml \
     components/Common/PopupItemSelector.qml \

@@ -7,30 +7,30 @@
 
 */
 
-.import "ProcessFunc.js" as Process
+.import "functions.js" as Functions
 
 
-function formatMoney(value, noSymbol){
+function formatMoney(value, noSymbol) {
     var options = {
-        symbol : noSymbol ? "" : tempSettings.currentCurrencySymbol,
-        decimal : tempSettings.currentCurrencyDecimal,
-        thousand: tempSettings.currentCurrencyThousand,
-        precision : tempSettings.currentCurrencyPrecision,
-        format: tempSettings.currentCurrencyFormat
+        symbol : noSymbol ? "" : mainView.settings.currentCurrencySymbol,
+        decimal : mainView.settings.currentCurrencyDecimal,
+        thousand: mainView.settings.currentCurrencyThousand,
+        precision : mainView.settings.currentCurrencyPrecision,
+        format: mainView.settings.currentCurrencyFormat
     };
-    return Process.formatMoney(value, tempSettings.currentCurrency,options)
+    return Functions.formatMoney(value, mainView.settings.currentCurrency,options)
 
 }
 
-function formatMoneyTravel(value, noSymbol){
+function formatMoneyTravel(value, noSymbol) {
     var options = {
-        symbol : noSymbol ? "" : tempSettings.travelCurrencySymbol,
-        decimal : tempSettings.travelCurrencyDecimal,
-        thousand: tempSettings.travelCurrencyThousand,
-        precision : tempSettings.travelCurrencyPrecision,
-        format: tempSettings.travelCurrencyFormat
+        symbol : noSymbol ? "" : mainView.settings.travelCurrencySymbol,
+        decimal : mainView.settings.travelCurrencyDecimal,
+        thousand: mainView.settings.travelCurrencyThousand,
+        precision : mainView.settings.travelCurrencyPrecision,
+        format: mainView.settings.travelCurrencyFormat
     };
-    return Process.formatMoney(value, tempSettings.travelCurrency,options)
+    return Functions.formatMoney(value, mainView.settings.travelCurrency,options)
 
 }
 
