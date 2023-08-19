@@ -9,7 +9,6 @@ BasePickerDialog {
     property alias dateTime: datePicker.baseDate
     property alias selectedDate: datePicker.selectedDate
 
-    
     Common.DatePicker {
         id: datePicker
 

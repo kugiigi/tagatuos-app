@@ -20,29 +20,78 @@ String.prototype.bindValues = function (charBind, arrValues) {
     return txtNewString
 }
 
-function scrollToView(item, flickable, topMargin,  bottomMargin) {
-    var mappedY
-    var itemHeightY
-    var currentViewport
-    var intendedContentY
-    var maxContentY
 
-    mappedY = item.mapToItem(flickable.contentItem, 0, 0).y
-    itemHeightY = mappedY + item.height
-    currentViewport = flickable.contentY - flickable.originY + flickable.height
+function elideText(inputText, charLimit) {
+    let elideString = "..."
+    charLimit = charLimit ? charLimit : 20
+    let returnValue = inputText
 
-    if (itemHeightY > currentViewport) {
-        maxContentY = flickable.contentHeight - flickable.height
-        intendedContentY = itemHeightY - flickable.height + commentTextArea.height + (bottomMargin ? bottomMargin : 0)
-
-        if (intendedContentY > maxContentY) {
-            flickable.contentY = maxContentY
-        } else {
-            flickable.contentY = intendedContentY
-        }
-    } else if (mappedY < flickable.contentY) {
-        flickable.contentY = mappedY - (topMargin ? topMargin : 0)
+    if (returnValue.length > charLimit) {
+        returnValue = returnValue.substring(0, charLimit) + elideString
     }
+
+    return returnValue
+}
+
+function elideMidText(inputText, charLimit) {
+    let elideString = "..."
+    charLimit = charLimit ? charLimit : 20
+    let returnValue = inputText
+
+    if (returnValue.length > charLimit) {
+        let sideCharLimit = Math.floor((charLimit - elideString.length) / 2)
+        let extraFirstChar = (charLimit - elideString.length) % 2
+        let firstChars = returnValue.substring(0, sideCharLimit + extraFirstChar)
+        let lastChars = returnValue.substring(returnValue.length - sideCharLimit)
+        returnValue = firstChars + elideString + lastChars
+    }
+
+    return returnValue
+}
+
+function bulletText(inputText, customBullet) {
+    let bulletChar = customBullet ? customBullet : "•"
+
+    return "%1 %2".arg(bulletChar).arg(inputText)
+}
+
+function bulletTextArray(inputTextArray, customBullet) {
+    let bulletChar = customBullet ? customBullet : "•"
+
+    return bulletText(inputTextArray.join("%1%2 ".arg("\n").arg(bulletChar)), customBullet)
+}
+
+function scrollToView(item, flickable, topMargin=0,  bottomMargin=0) {
+    let _mappedY
+    let _itemHeightY
+    let _currentViewport
+    let _intendedContentY
+    let _maxContentY
+
+    _mappedY = item.mapToItem(flickable.contentItem, 0, 0).y
+    _itemHeightY = _mappedY + item.height
+    _currentViewport = flickable.contentY - flickable.originY + flickable.height - flickable.bottomMargin + flickable.topMargin
+
+    console.log("_mappedY: " + _mappedY)
+    console.log("_itemHeightY: " + _itemHeightY)
+    console.log("_currentViewport: " + _currentViewport)
+    if (_itemHeightY > _currentViewport) {
+        _maxContentY = flickable.contentHeight - flickable.height + flickable.bottomMargin
+        _intendedContentY = _itemHeightY - flickable.height + item.height + flickable.bottomMargin + bottomMargin
+
+        if (_intendedContentY > _maxContentY) {
+            console.log("maxContentY")
+            flickable.contentY = _maxContentY
+        } else {
+            console.log("intendedContentY")
+            flickable.contentY = _intendedContentY
+        }
+    } else if (_mappedY < flickable.contentY) {
+        console.log("compute")
+        flickable.contentY = _mappedY - topMargin - flickable.topMargin
+    }
+
+    console.log("Final:" + flickable.contentY)
 }
 
 function round_number(num, dec) {
@@ -91,6 +140,14 @@ function addDays(petsa, days) {
 function addMonths(petsa, months) {
     var momentDate = moment(petsa)
     return momentDate.add(months, 'month').format("YYYY-MM-DD HH:mm:ss.SSS")
+}
+
+function checkIfWithinDateRange(inputDate, fromDate, toDate) {
+    let _inputDateMom = moment(inputDate)
+    let _fromDateMom = moment(fromDate)
+    let _toDateMom = moment(toDate)
+
+    return _inputDateMom.isBetween(_fromDateMom, _toDateMom,'day',[])
 }
 
 function getStartEndDate(date,mode){

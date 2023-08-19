@@ -23,6 +23,16 @@
         <file>components/pages/detailedlistpage/SummaryValuesDelegate.qml</file>
         <file>components/pages/detailedlistpage/CriteriaPopup.qml</file>
         <file>components/pages/detailedlistpage/ValuesSectionDelegate.qml</file>
+        <file>components/pages/NewExpenseView.qml</file>
+        <file>components/pages/newexpenseview/ContextActionsListView.qml</file>
+        <file>components/pages/newexpenseview/QuickListGridDelegate.qml</file>
+        <file>components/pages/newexpenseview/QuickListGridView.qml</file>
+        <file>components/pages/newexpenseview/QuickListToolbar.qml</file>
+        <file>components/pages/newexpenseview/NameField.qml</file>
+        <file>components/pages/newexpenseview/DescriptionField.qml</file>
+        <file>components/pages/newexpenseview/ValueField.qml</file>
+        <file>components/pages/newexpenseview/CategoryField.qml</file>
+        <file>components/pages/newexpenseview/DateField.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
@@ -32,6 +42,8 @@
         <file>components/EmptyState.qml</file>
         <file>components/LoadingComponent.qml</file>
         <file>components/ColoredLabel.qml</file>
+        <file>components/ExpenseData.qml</file>
+        <file>components/FocusScrollConnections.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandle.qml</file>
         <file>common/gestures/BottomSwipeArea.qml</file>
@@ -51,6 +63,7 @@
         <file>common/dialogs/BasePopup.qml</file>
         <file>common/dialogs/BasePickerDialog.qml</file>
         <file>common/dialogs/DatePickerDialog.qml</file>
+        <file>common/dialogs/TimePickerDialog.qml</file>
         <file>common/dialogs/DeleteConfirmDialog.qml</file>
 
         <file>common/listitems/BaseItemDelegate.qml</file>
@@ -61,7 +74,7 @@
         <file>common/listitems/CustomizedButton.qml</file>
         <file>common/listitems/CustomizedTextField.qml</file>
         <file>common/listitems/CustomizedSpinBoxDelegate.qml</file>
-        <file>common/listitems/CustomizedCheckBoxDelegate.qml</file>
+        <file>common/listitems/BaseCheckBoxDelegate.qml</file>
 
         <file>common/menus/BaseMenu.qml</file>
         <file>common/menus/BaseMenuItem.qml</file>
@@ -89,5 +102,9 @@
         <file>common/BaseListModel.qml</file>
         <file>common/KeyboardRectangle.qml</file>
         <file>common/IconGroupedProperties.qml</file>
+        <file>common/BaseToolbar.qml</file>
+        <file>common/ToolbarActions.qml</file>
+        <file>common/ToolbarButton.qml</file>
+        <file>common/TimePicker.qml</file>
     </qresource>
 </RCC>

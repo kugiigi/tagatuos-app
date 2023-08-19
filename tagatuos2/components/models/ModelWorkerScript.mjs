@@ -31,9 +31,9 @@ WorkerScript.onMessage = function (msg) {
 
     switch (msg.modelId) {
         case "Profiles":
-            for (var i = 0; i < msg.result.length; i++) {
-                txtProfileId = msg.result[i].profile_id
-                txtDisplayName = msg.result[i].display_name
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtProfileId = msg.result[i].profile_id
+                let txtDisplayName = msg.result[i].display_name
                 msg.model.append({
                                      profileId: txtProfileId
                                      , displayName: txtDisplayName
@@ -41,34 +41,49 @@ WorkerScript.onMessage = function (msg) {
             }
             break;
         case "Categories":
-            for (i = 0; i < msg.result.length; i++) {
+            for (let i = 0; i < msg.result.length; i++) {
                 let txtName = msg.result[i].category_name
                 let txtDescr = msg.result[i].descr
                 let txtIcon = msg.result[i].icon
                 let txtColor = msg.result[i].color
                 msg.model.append({
                                      category_name: txtName,
+                                     value: txtName, // For category combo box
                                      descr: txtDescr,
                                      icon: txtIcon,
                                      colorValue: txtColor
                                  })
             }
             break
-        case "MonitorItems":
-            for (var i = 0; i < msg.result.length; i++) {
-                txtItemId = msg.result[i].item_id
-                txtDisplayName = msg.result[i].display_name
-                txtDescr = msg.result[i].descr
-                txtDisplayFormat = msg.result[i].display_format
-                txtUnit = msg.result[i].unit
-                txtSymbol = msg.result[i].display_symbol
+        case "QuickExpenses":
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtID = msg.result[i].quick_id
+                let txtCategoryName = msg.result[i].category_name
+                let txtName = msg.result[i].name
+                let txtDescr = msg.result[i].descr
+                let txtValue = msg.result[i].value
+
                 msg.model.append({
-                                     itemId: txtItemId
-                                     , displayName: txtDisplayName
-                                     , descr: txtDescr
-                                     , displayFormat: txtDisplayFormat
-                                     , unit: txtUnit
-                                     , displaySymbol: txtSymbol
+                                     quickID: txtID
+                                     , categoryName: txtCategoryName
+                                     , name: txtName
+                                     , description: txtDescr
+                                     , value: txtValue
+                                 })
+            }
+            break;
+        case "HistoryEntry":
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtName = msg.result[i].name
+                let txtCategoryName = msg.result[i].category_name
+                let txtDescr = msg.result[i].descr
+                let txtValue = msg.result[i].value
+
+                msg.model.append({
+                                     name: txtName
+                                     , categoryName: txtCategoryName
+                                     , description: txtDescr
+                                     , value: txtValue
                                  })
             }
             break;

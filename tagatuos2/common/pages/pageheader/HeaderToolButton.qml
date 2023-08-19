@@ -14,7 +14,7 @@ ToolButton {
     property string tooltipText
 
     // TODO: Enable once UT's issue with hover is fixed
-//~     hoverEnabled: false
+    hoverEnabled: false
 
     text: display == AbstractButton.TextUnderIcon ? action.shortText : action.text
     visible: (action && action.visible) || !action

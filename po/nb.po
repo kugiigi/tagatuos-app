@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-09 18:38+0000\n"
+"POT-Creation-Date: 2023-08-19 17:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: JanConGitHub <janc@sherdahl.no>\n"
 "Language-Team: NORWEGIAN <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:123
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:140
 msgid "No expense yet for today"
 msgstr "Ingen utgifter enn for i dag"
 
@@ -74,76 +74,134 @@ msgstr "Ny utgift"
 msgid "New"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:130
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:131
 #, fuzzy
 msgid "View Today"
 msgstr "I dag"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:131
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:216
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:132
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:273
 msgid "Today"
 msgstr "I dag"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:141
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:142
 #, fuzzy
 msgid "View Last Data"
 msgstr "Vis detaljer"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:150
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:151
 #, fuzzy
 msgid "View Next Data"
 msgstr "Vis detaljer"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:159
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:160
 msgid "Sort"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:169
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:170
 msgid "Switch Profile"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:178
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:179
 msgid "Edit"
 msgstr "Rediger"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:189
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:190
 msgid "Delete"
 msgstr "Slett"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:204
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:205
 #, fuzzy
-msgid "Delete this value?"
+msgid "Delete this expense?"
 msgstr "Velg en verdi"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:206
-msgid "Delete all with the same date/time"
-msgstr ""
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:212
+#, fuzzy
+msgid "Expense deleted"
+msgstr "Utgiftsnavn"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:213
-msgid "Value deleted"
-msgstr ""
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:215
+#, fuzzy
+msgid "Deletion failed"
+msgstr "Utgifter"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:216
-msgid "Error deleting"
-msgstr ""
-
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:296
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:283
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/CriteriaPopup.qml:73
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:55
 msgid "All"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:364
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:351
 msgid "No data"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:365
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:352
 msgid "Loading data"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:366
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:353
 msgid "Please wait"
 msgstr "Vennligst vent"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:78
+#, fuzzy
+msgid "New expense added"
+msgstr "Utgifter"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:81
+#, fuzzy
+msgid "New expense failed"
+msgstr "Utgifter"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:100
+msgid "Please fill required fields"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:294
+#, fuzzy
+msgid "New Expense"
+msgstr "Utgifter"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:294
+msgid "Quick Expense"
+msgstr "Hurtigutgift"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:386
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/NameField.qml:13
+#, fuzzy
+msgid "Enter expense name"
+msgstr "Tast inn utgiftsnavn"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:673
+msgid "Show list"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:673
+msgid "Show grid"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:674
+msgid "List"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:674
+msgid "Grid"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:687
+msgid "Save"
+msgstr "Lagre"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:694
+msgid "Search or create new expense"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:706
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:706
+msgid "Close"
+msgstr "Lukk"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/pageheader/HeaderActions.qml:67
 #, fuzzy
@@ -167,184 +225,205 @@ msgstr ""
 msgid "Lowest"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValueListDelegate.qml:146
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValueListDelegate.qml:148
 #, qt-format
 msgid "@ %1"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:130
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/ContextActionsListView.qml:30
+msgid "↵ Enter"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/ContextActionsListView.qml:31
+msgid "↵"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/DateField.qml:30
+msgid "Use current date and time"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/DescriptionField.qml:13
+#, fuzzy
+msgid "Add description, more details or comments"
+msgstr "Legg til detaljer / kommentarer"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:129
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
 msgstr "Mat"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:130
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:129
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
 msgstr "Frokost, lunsj, middag, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:132
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:131
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Transportation"
 msgstr "Transport"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:132
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:131
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
 msgstr "Taxi, buss, tog, bensin, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:134
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:133
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
 msgstr "Klr"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:134
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:133
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Shirts, Pants, underwear, etc."
 msgstr "Skjorter, bukser, underty, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:136
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:135
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Household"
 msgstr "Husholdning"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:136
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:135
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Electricity, Groceries, Rent etc."
 msgstr "Elektrisitet, dagligvarer, leie, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:138
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:137
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Leisure"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:138
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:137
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Movies, Books, Sports etc."
 msgstr "Kino, bker, sport etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:140
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:139
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Savings"
 msgstr "Sparing"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:140
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:139
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Investments, Reserve Funds etc."
 msgstr "Investeringer, reservefond etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:142
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:141
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
 msgstr "Helse"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:142
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:141
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
 msgstr "Tannhelse, sykehusutgifter, medisiner etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:144
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:143
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:144
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:143
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Other expenses"
 msgstr "Andre utgifter"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:256
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:414
+msgid "Default"
+msgstr "Standard"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:308
 msgid "Today's Total"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:258
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:310
 #, fuzzy
 msgid "This week's Total"
 msgstr "denne uken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:260
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:312
 #, fuzzy
 msgid "Recent Total"
 msgstr "De siste dagene"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:265
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:317
 msgid "Today's Average"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:267
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:319
 #, fuzzy
 msgid "This Week's Average"
 msgstr "Denne uken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:269
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:321
 #, fuzzy
 msgid "This Month's Average"
 msgstr "Denne mneden"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:271
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:323
 msgid "Average"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:274
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:326
 #, fuzzy
 msgid "Recent Daily Average"
 msgstr "De siste dagene"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:276
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:328
 #, fuzzy
 msgid "Recent Average"
 msgstr "De siste dagene"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:285
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:337
 msgid "Highest Today"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:287
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:339
 #, fuzzy
 msgid "Highest This Week"
 msgstr "Denne uken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:289
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:341
 msgid "Highest Recently"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:181
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:219
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:238
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:276
 msgid "Yesterday"
 msgstr "I gr"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:222
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:279
 msgid "Tomorrow"
 msgstr "I morgen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:225
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:282
 msgid "On "
 msgstr "P"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:228
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:285
 msgid "Last Week"
 msgstr "Forrige uke"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:231
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:288
 msgid "Next Week"
 msgstr "Neste uke"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:234
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:291
 msgid "Last Month"
 msgstr "Forrige mned"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:237
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:294
 msgid "Next Month"
 msgstr "Neste mned"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:240
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:297
 msgid "This Month"
 msgstr "Denne mneden"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:243
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:300
 msgid "Older"
 msgstr "Eldre"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:246
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/functions.js:303
 msgid "In The Future"
 msgstr "I fremtiden"
 
@@ -353,23 +432,30 @@ msgid "Tagatuos"
 msgstr "Utgifter"
 
 #, fuzzy
+#~ msgid "Enter expense name "
+#~ msgstr "Tast inn utgiftsnavn"
+
+#, fuzzy
+#~ msgid "Grid options"
+#~ msgstr "Beskrivelse"
+
+#, fuzzy
+#~ msgid "Search tabs"
+#~ msgstr "Sk historikk"
+
+#, fuzzy
+#~ msgid "New tab"
+#~ msgstr "Ny utgift"
+
+#, fuzzy
 #~ msgid "Most recent"
 #~ msgstr "Mest brukt"
-
-#~ msgid "Default"
-#~ msgstr "Standard"
 
 #~ msgid "Add Expense"
 #~ msgstr "Legg til utgift"
 
-#~ msgid "Quick Expense"
-#~ msgstr "Hurtigutgift"
-
 #~ msgid "Back"
 #~ msgstr "Tilbake"
-
-#~ msgid "Close"
-#~ msgstr "Lukk"
 
 #~ msgid "About"
 #~ msgstr "Om"
@@ -433,12 +519,6 @@ msgstr "Utgifter"
 
 #~ msgid "Add"
 #~ msgstr "Legg til"
-
-#~ msgid "Save"
-#~ msgstr "Lagre"
-
-#~ msgid "Cancel"
-#~ msgstr "Avbryt"
 
 #~ msgid "Category already exists!"
 #~ msgstr "Kategori eksisterer allerede"
@@ -609,9 +689,6 @@ msgstr "Utgifter"
 #~ msgid "Color"
 #~ msgstr "Farge"
 
-#~ msgid "Description"
-#~ msgstr "Beskrivelse"
-
 #~ msgid "Add description (optional)"
 #~ msgstr "Legg til beskrivelse (valgfritt)"
 
@@ -623,9 +700,6 @@ msgstr "Utgifter"
 
 #~ msgid "Details/Comments"
 #~ msgstr "Detaljer/kommentarer"
-
-#~ msgid "Add details / comments"
-#~ msgstr "Legg til detaljer / kommentarer"
 
 #~ msgid "Date"
 #~ msgstr "Dato"
@@ -671,12 +745,6 @@ msgstr "Utgifter"
 
 #~ msgid "To"
 #~ msgstr "Til"
-
-#~ msgid "Expense Name"
-#~ msgstr "Utgiftsnavn"
-
-#~ msgid "Enter Expense Name"
-#~ msgstr "Tast inn utgiftsnavn"
 
 #~ msgid "Enter report name "
 #~ msgstr "Tast inn rapportnavn"
@@ -782,9 +850,6 @@ msgstr "Utgifter"
 
 #~ msgid "Find"
 #~ msgstr "Finn"
-
-#~ msgid "Search History"
-#~ msgstr "Sk historikk"
 
 #~ msgid "Custom Add"
 #~ msgstr "Legg til tilpasset"

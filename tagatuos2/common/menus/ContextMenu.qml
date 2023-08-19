@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import Lomiri.Components 1.3 as UT
 
@@ -32,7 +32,8 @@ Menu {
             
             Component {
                 id: separatorComponent
-                MenuSeparator{
+
+                MenuSeparator {
                     topPadding: Suru.units.gu(1)
                     bottomPadding: Suru.units.gu(1)
                 }
@@ -42,22 +43,24 @@ Menu {
                 id: menuItemComponent
         
                 MenuItem {
+                    id: menuItem
+
                     text: modelData ? modelData.text : ""
                     onTriggered: {
                         contextMenu.close()
-                        modelData.trigger(false)
+                        modelData.trigger(false, menuItem)
                     }
-                    height: 45
+                    height: Suru.units.gu(6)
                     indicator: UT.Icon {
                          id: iconMenu
                          
-                         implicitWidth: name ? 20 : 0
+                         implicitWidth: name ? Suru.units.gu(3) : 0
                          implicitHeight: implicitWidth
                          anchors.left: parent.left
-                         anchors.leftMargin: 10
+                         anchors.leftMargin: Suru.units.gu(1)
                          anchors.verticalCenter: parent.verticalCenter
                          name: modelData ? modelData.iconName : ""
-                         color: theme.palette.normal.baseText
+                         color: Suru.foregroundColor
                      }
                      leftPadding: iconMenu.implicitWidth + (iconMenu.anchors.leftMargin * 2)
                 }

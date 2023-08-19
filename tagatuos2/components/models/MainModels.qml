@@ -1,17 +1,21 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
 import "../../library/dataUtils.js" as DataUtils
+import "../../library/functions.js" as Functions
 import "../../common/" as Common
 
 Item {
     id: mainModels
 
+    readonly property string profilesID: "Profiles"
     readonly property string categoriesID: "Categories"
     readonly property string firstDetailedListID: "Detailed_1"
     readonly property string secondDetailedListID: "Detailed_2"
     readonly property string thirdDetailedListID: "Detailed_3"
+    readonly property string quickExpensesID: "QuickExpenses"
+    readonly property string historyEntryExpensesID: "HistoryEntry"
     
-//~     property alias profilesModel: profilesModel
+    property alias profilesModel: profilesModel
 //~     property alias dashboardModel: dashboardModel
 //~     property alias dashItemsModel: dashItemsModel
     property var detailedListModels: [ firstDetailedListModel, secondDetailedListModel, thirdDetailedListModel ]
@@ -19,8 +23,23 @@ Item {
     property alias secondDetailedListModel: secondDetailedListModel
     property alias thirdDetailedListModel: thirdDetailedListModel
     property alias categoriesModel: categoriesModel
-//~     property alias monitorItemsModel: monitorItemsModel
-//~     property alias monitorItemsFieldsModel: monitorItemsFieldsModel
+    property alias quickExpensesModel: quickExpensesModel
+    property alias historyEntryExpensesModel: historyEntryExpensesModel
+
+    signal refreshValues(string entryDate)
+
+    // Refresh models that are affected by new, edited or deleted expense values
+    onRefreshValues: {
+        if (Functions.checkIfWithinDateRange(entryDate, firstDetailedListModel.fromDate, firstDetailedListModel.toDate)) {
+            firstDetailedListModel.refresh()
+        } 
+        if (Functions.checkIfWithinDateRange(entryDate, secondDetailedListModel.fromDate, secondDetailedListModel.toDate)) {
+            secondDetailedListModel.refresh()
+        } 
+        if (Functions.checkIfWithinDateRange(entryDate, thirdDetailedListModel.fromDate, thirdDetailedListModel.toDate)) {
+            thirdDetailedListModel.refresh()
+        }
+    }
     
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
@@ -29,9 +48,9 @@ Item {
 
         onMessage: {
             switch (messageObject.modelId) {
-//~             case "Profiles":
-//~                 profilesModel.loadingStatus = "Ready"
-//~                 break;
+            case "Profiles":
+                profilesModel.loadingStatus = "Ready"
+                break;
 //~             case "MonitorItemsFields":
 //~                 monitorItemsFieldsModel.loadingStatus = "Ready"
 //~                 break;
@@ -43,6 +62,12 @@ Item {
 //~                 break;
             case mainModels.categoriesID:
                 categoriesModel.loadingStatus = "Ready"
+                break
+            case mainModels.quickExpensesID:
+                quickExpensesModel.loadingStatus = "Ready"
+                break
+            case mainModels.historyEntryExpensesID:
+                historyEntryExpensesModel.loadingStatus = "Ready"
                 break
             case mainModels.firstDetailedListID:
                 firstDetailedListModel.summaryValues = messageObject.result
@@ -64,41 +89,17 @@ Item {
         }
     }
 
-//~     BaseListModel {
-//~         id: profilesModel
+    Common.BaseListModel {
+        id: profilesModel
   
-//~         worker: workerLoader
-//~         modelId: "Profiles"
-//~         Component.onCompleted: refresh()
+        worker: workerLoader
+        modelId: mainModels.profilesID
+        Component.onCompleted: refresh()
         
-//~         function refresh() {
-//~             fillData(mainView.profiles.list())
-//~         }
-//~     }
-
-//~     BaseListModel {
-//~         id: monitorItemsModel
-  
-//~         worker: workerLoader
-//~         modelId: "MonitorItems"
-//~         Component.onCompleted: refresh()
-        
-//~         function refresh() {
-//~             fillData(mainView.monitoritems.list())
-//~         }
-//~     }
-
-//~     BaseListModel {
-//~         id: monitorItemsFieldsModel
-  
-//~         worker: workerLoader
-//~         modelId: "MonitorItemsFields"
-//~         Component.onCompleted: refresh()
-        
-//~         function refresh() {
-//~             fillData(mainView.monitoritems.fieldsList())
-//~         }
-//~     }
+        function refresh() {
+            fillData(mainView.profiles.list())
+        }
+    }
 
 //~     BaseListModel {
 //~         id: dashItemsModel
@@ -112,7 +113,8 @@ Item {
 //~         }
 //~     }
 
-    BaseValuesModel {
+//~     BaseValuesModel {
+    Common.BaseListModel {
         id: categoriesModel
 
         property bool isListOnly: false
@@ -147,12 +149,40 @@ Item {
 //~         }
 
         function getColor(category) {
-            var i
-            for (var i = 0; i < count; i++) {
+            for (let i = 0; i < count; i++) {
                 if (get(i).category_name === category) {
                     return get(i).colorValue
                 }
             }
+        }
+    }
+
+    Common.BaseListModel {
+        id: quickExpensesModel
+  
+        worker: workerLoader
+        modelId: mainModels.quickExpensesID
+        Component.onCompleted: refresh()
+
+        function refresh() {
+            fillData(mainView.quickExpenses.list())
+        }
+    }
+
+    Common.BaseListModel {
+        id: historyEntryExpensesModel
+
+        property string searchText: ""
+        property int resultLimit: 10
+
+        worker: workerLoader
+        modelId: mainModels.historyEntryExpensesID
+        Component.onCompleted: refresh()
+
+        onSearchTextChanged: refresh()
+
+        function refresh() {
+            fillData(mainView.expenses.historyDataForEntry(searchText, resultLimit))
         }
     }
 

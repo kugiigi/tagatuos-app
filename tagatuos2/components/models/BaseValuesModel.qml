@@ -5,6 +5,13 @@ Common.BaseListModel {
     id: baseValuesModel
 
     property var summaryValues
+
+    // Current values if data was loaded
+    property string category
+    property string fromDate
+    property string toDate
+    property string scope
+
 //~     property string totalValue: getTotalValue()
 //~     property string totalTravelValue: getTotalTravelValue()
 
@@ -22,11 +29,19 @@ Common.BaseListModel {
 //~         return dashItems
 //~     }
 
-    function load(itemId, scope, dateFrom, dateTo) {
-//~         var dashItems = getDashItems(itemId);
-//~         properties = { dashItems: dashItems }
+    function refresh() {
+        if (fromDate && toDate) {
+            load(category, scope, fromDate, toDate)
+        }
+    }
+
+    function load(categoryName, inputScope, dateFrom, dateTo) {
         properties = { scope: scope }
-        fillData(mainView.expenses.detailedData(itemId, scope, dateFrom, dateTo))
+        category = categoryName
+        fromDate = dateFrom
+        toDate = dateTo
+        scope = inputScope
+        fillData(mainView.expenses.detailedData(categoryName, scope, dateFrom, dateTo))
     }
 
 //~     function getTotalValue(){

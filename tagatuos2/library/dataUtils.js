@@ -9,7 +9,7 @@ var dataUtils = dataUtils || (function (undefined) {
             return {
                 currentName: function() {
                     if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
-                      return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").displayName
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").displayName
                     } else {
                         return ""
                     }
@@ -41,27 +41,71 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
             }
         })()
-        , categories: (function () {
+        , categories: function (profile) {
 
             return {
                 list: function() {
-                    return Database.getCategories();
-                }
-                , fieldsList: function() {
-                    return Database.getItemsFields();
-                }
-                , dashList: function() {
-                    var arrResults = Database.getDashItems();
-                    arrResults.unshift({ item_id: "all", display_name: i18n.tr("All"), display_format: "", unit: "", display_symbol: "", value_type: "", scope: "" })
-                    return arrResults
+                    return Database.getCategories(profile);
                 }
             }
-        })()
+        }
+        , quickExpenses: function (profile) {
+
+            return {
+                list: function() {
+                    return Database.getQuickExpenses(profile, "");
+                }
+            }
+        }
         , expenses: function (profile) {
 
             return {
-                add: function(entryDate, fieldId, itemId, value) {
-                    return Database.addNewValue(entryDate, fieldId, profile, itemId, value);
+                add: function(expenseData) {
+                    let _txtDate = expenseData.entryDate
+                    let _txtName = expenseData.name
+                    let _realValue = expenseData.value
+                    let _txtDescr = expenseData.description
+                    let _txtCategory = expenseData.category
+                    let _travelData = null
+
+                    // Travel Data
+                    if (mainView.settings.travelMode) {
+                        let _realRate = mainView.settings.exchangeRate
+                        let _txtHomeCur = mainView.settings.currentCurrency
+                        let _txtTravelCur = mainView.settings.travelCurrency
+                        //~ let _realTravelValue = 0
+                        let _realTravelValue = _realValue
+                        _realValue = _realTravelValue * _realRate
+
+                        //~ if (itemHomeCur === mainView.settings.currentCurrency && itemTravelCur === mainView.settings.travelCurrency) {
+                            //~ _realTravelValue = _realValue
+                            //~ _realValue = realTravelValue * _realRate
+                        //~ } else {
+                            //~ _realTravelValue = _realValue / _realRate
+                        //~ }
+
+                        _travelData = {
+                            "rate": _realRate
+                            , "homeCur": _txtHomeCur
+                            , "travelCur": _txtTravelCur
+                            , "value": _realTravelValue
+                        }
+                    }
+
+                    const _data = {
+                        "entryDate": _txtDate
+                        , "name": _txtName
+                        , "description": _txtDescr
+                        , "category": _txtCategory
+                        , "value": _realValue
+                    }
+
+                    let _result = Database.addNewExpense(profile, _data, _travelData)
+                    if (_result.success) {
+                        mainView.mainModels.refreshValues(_data.entryDate)
+                    }
+
+                    return _result.success
                 }
                 , edit: function(entryDate, fieldId, itemId, value, comments) {
                     return Database.updateItemValue(entryDate, fieldId, profile, itemId, value)
@@ -69,8 +113,13 @@ var dataUtils = dataUtils || (function (undefined) {
                 , editEntryDate: function(entryDate, newEntryDate) {
                     return Database.updateItemEntryDate(entryDate, newEntryDate, profile)
                 }
-                , delete: function(entryDate, itemId, deleteAll) {
-                    return Database.deleteValue(profile, entryDate, itemId, deleteAll);
+                , delete: function(expenseID, entryDate) {
+                    let _result = Database.deleteExpense(profile, expenseID)
+                    if (_result.success) {
+                        mainView.mainModels.refreshValues(entryDate)
+                    }
+
+                    return _result.success
                 }
                 , addComment: function(entryDate, comments) {
                     return Database.addNewComment(entryDate, profile, comments);
@@ -83,6 +132,9 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
                 , detailedData: function(category, scope, dateFrom, dateTo) {
                     return Database.getExpenseDetailedData(profile, category, scope, dateFrom, dateTo)
+                }
+                , historyDataForEntry: function(searchText, limit) {
+                    return Database.getHistoryExpenses(profile, searchText, limit)
                 }
                 , lastDateWithData: function(category, dateBase) {
                     return Database.getDateWithData(false, profile, category, dateBase)

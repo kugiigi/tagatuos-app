@@ -17,8 +17,10 @@ ListItems.BaseItemDelegate {
     readonly property bool displayTravelValueAsMain: isTravelMode && currentTravelCurrency == travelCurrency
                                                             && hasTravelValue
     readonly property bool hasTravelValue: travelValue > 0
+    readonly property alias formattedValue: mainValueLabel.text
 
     property bool isTravelMode: false
+    property string expenseID
     property string currentTravelCurrency
     property real homeValue
     property real travelValue

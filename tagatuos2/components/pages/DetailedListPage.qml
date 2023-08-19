@@ -28,7 +28,7 @@ Pages.BasePage {
     title: i18n.tr("Expenses")
     
     signal refresh
-    signal itemDeleted
+//~     signal itemDeleted
 
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction, sortAction, profilesAction]
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction]
@@ -48,10 +48,10 @@ Pages.BasePage {
 //~         }
 //~     }
 
-    onItemDeleted: {
-        refresh()
+//~     onItemDeleted: {
+//~         refresh()
 //~         mainModels.dashboardModel.refresh();
-    }
+//~     }
 
     function next() {
         dateViewPath.incrementCurrentIndex()
@@ -62,17 +62,17 @@ Pages.BasePage {
     }
 
     function newEntry() {
-        if (isToday) {
-            newEntrySelection.openWithInitial(currentCategory)
-        } else {
-            newEntrySelection.openWithInitial(currentCategory, dateViewPath.currentItem.fromDate)
-        }
+        mainView.newExpenseView.openInSearchMode()
+//~         if (isToday) {
+//~             newEntrySelection.openWithInitial(currentCategory)
+//~         } else {
+//~             newEntrySelection.openWithInitial(currentCategory, dateViewPath.currentItem.fromDate)
+//~         }
     }
     
     function goToday() {
         if (scope == "day") {
             internal.setBaseDate(Functions.getToday())
-            console.log(Functions.getToday())
         }
     }
 
@@ -81,7 +81,7 @@ Pages.BasePage {
         if (lastDate) {
             internal.setBaseDate(lastDate)
         } else {
-            tooltip.display(i18n.tr("No older data"))
+            mainView.tooltip.display(i18n.tr("No older data"))
         }
     }
 
@@ -90,7 +90,7 @@ Pages.BasePage {
         if (lastDate) {
             internal.setBaseDate(lastDate)
         } else {
-            tooltip.display(i18n.tr("No newer data"))
+            mainView.tooltip.display(i18n.tr("No newer data"))
         }
     }
 
@@ -120,6 +120,7 @@ Pages.BasePage {
         text: i18n.tr("New Entry")
         shortText: i18n.tr("New")
         iconName: "add"
+        shortcut: StandardKey.New
 
         onTrigger: newEntry()
     }
@@ -201,39 +202,30 @@ Pages.BasePage {
     Dialogs.DeleteConfirmDialog {
         id: deleteConfirmDialog
 
-        title: i18n.tr("Delete this value?")
-        subtitle: ("%1 - %2 %3").arg(contextMenu.itemProperties.entryDate).arg(contextMenu.itemProperties.value).arg(contextMenu.itemProperties.unit)
-        checkBoxTitle: i18n.tr("Delete all with the same date/time")
+        title: i18n.tr("Delete this expense?")
+        subtitle: ("%1 - %2 (%3)").arg(contextMenu.itemProperties.entryDate).arg(contextMenu.itemProperties.name).arg(contextMenu.itemProperties.value)
 
         onAccepted: {
-            var result = mainView.expenses.delete(contextMenu.itemProperties.entryDateId, contextMenu.itemProperties.itemId, checked)
-            var tooltipMsg
+            let _tooltipMsg
 
-            if (result.success) {
-                tooltipMsg = i18n.tr("Value deleted")
-                detailedListPage.itemDeleted()
+            if (mainView.expenses.delete(contextMenu.itemProperties.expenseID, contextMenu.itemProperties.entryDateValue)) {
+                _tooltipMsg = i18n.tr("Expense deleted")
+//~                 detailedListPage.itemDeleted()
             } else {
-                tooltipMsg = i18n.tr("Error deleting")
+                _tooltipMsg = i18n.tr("Deletion failed")
             }
             
-            tooltip.display(tooltipMsg)
-        }
-
-        onAboutToShow: {
-            if (mainView.expenses.entryDateMultiple(contextMenu.itemProperties.entryDateId, contextMenu.itemProperties.itemId)) {
-                showCheckbox = true
-            } else {
-                showCheckbox = false
-            }
+            mainView.tooltip.display(_tooltipMsg)
         }
     }
 
     Menus.ContextMenu {
         id: contextMenu
 
-        itemProperties: { "entryDateId": "", "entryDate": "", "fields": "", "itemId": "", "value": "", "comments": "", "unit": "" }
+        itemProperties: { "expenseID": "", "name": "", "entryDate": "", "entryDateValue": "", "description": "", "value": "" }
 
-        actions: [editAction, separatorAction, deleteAction]
+//~         actions: [ editAction, separatorAction, deleteAction ]
+        actions: [ editAction, deleteAction, separatorAction ]
         listView: dateViewPath.currentItem.view
     }
     
@@ -256,12 +248,7 @@ Pages.BasePage {
     }
 
     ColumnLayout {
-//~         anchors.fill: parent
-        anchors {
-            fill: parent
-//~             bottomMargin: summaryValues.visible && !summaryValues.isExpanded ? summaryValues.height + summaryValues.anchors.bottomMargin
-//~                                 : 0
-        }
+        anchors.fill: parent
         spacing: 0
 
         Rectangle {
@@ -417,6 +404,7 @@ Pages.BasePage {
 
                         isTravelMode: mainView.settings.travelMode
                         currentTravelCurrency: mainView.settings.travelCurrency
+                        expenseID: model.expense_id
                         homeValue: model.value
                         travelValue: model.travel_value
                         travelCurrency: model.travel_currency
@@ -427,10 +415,12 @@ Pages.BasePage {
                         highlighted: listView.currentIndex == index
 
                         onShowContextMenu: {
-                            var itemProperties = { entryDateId: model.entryDateId
-                                    , entryDate: model.entryDate, fields: model.fields
-                                    , itemId: model.itemId, value: model.values
-                                    , comments: model.comments, unit: model.unit
+                            let itemProperties = { expenseID: expenseID
+                                    , name: itemName
+                                    , entryDate: entryDate
+                                    , entryDateValue: model.dateValue
+                                    , value: formattedValue
+                                    , description: comments
                             }
 
                             listView.currentIndex = index
@@ -485,6 +475,44 @@ Pages.BasePage {
             NumberAnimation {
                 duration: Suru.animations.FastDuration
                 easing: Suru.animations.EasingOut
+            }
+        }
+    }
+
+    Connections {
+        target: detailedListPage.pageManager.middleBottomGesture
+        ignoreUnknownSignals: true
+
+        onStageChanged: {
+            if (target.dragging) {
+                switch (target.stage) {
+                    case 0:
+                        break
+                    case 1:
+                    case 2:
+                    case 3:
+                        if (mainView.newExpenseView.searchMode) {
+                            Common.Haptics.playSubtle()
+                        }
+                        mainView.newExpenseView.searchMode = false
+                        break
+                    case 4:
+                        if (!mainView.newExpenseView.searchMode) {
+                            Common.Haptics.play()
+                        }
+                        mainView.newExpenseView.searchMode = true
+                        break
+                    case 5:
+                    default:
+                        break
+                }
+            }
+        }
+
+        onDraggingChanged: {
+            if (!target.dragging && target.towardsDirection 
+                    && target.stage >= 1) {
+                mainView.newExpenseView.open()
             }
         }
     }

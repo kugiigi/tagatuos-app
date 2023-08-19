@@ -25,6 +25,7 @@ QQC2.ToolBar {
     readonly property Common.BaseAction leftVisibleAction: leftHeaderActions.firstVisibleAction
     readonly property Common.BaseAction rightVisibleAction: rightHeaderActions.firstVisibleAction
 
+    property string title
     property list<Common.BaseAction> leftActions
     property list<Common.BaseAction> rightActions
     property Item currentItem
@@ -116,7 +117,7 @@ QQC2.ToolBar {
             Layout.fillHeight: true
             Suru.textLevel: Suru.HeadingOne
             horizontalAlignment: Text.AlignHCenter
-            text: pageHeader.currentItem && pageHeader.currentItem.title ? pageHeader.currentItem.title : ""
+            text: pageHeader.currentItem && pageHeader.currentItem.title ? pageHeader.currentItem.title : pageHeader.title
             opacity: pageHeader.height - pageHeader.defaultHeight < pageHeader.maxHeight * 0.2 ? 0
                                 : 1 - ((pageHeader.maxHeight - pageHeader.height) / ((pageHeader.maxHeight * 0.8) - pageHeader.defaultHeight))
             visible: opacity > 0

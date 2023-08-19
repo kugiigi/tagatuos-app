@@ -1,7 +1,8 @@
-import QtQuick 2.9
+import QtQuick 2.12
 import Lomiri.Components 1.3
 import QtQuick.Window 2.2
 import "." as Local
+import ".." as Common
 
 Local.SwipeGestureHandler {
     id: horizontalSwipeHandle
@@ -40,7 +41,7 @@ Local.SwipeGestureHandler {
                 if (swipeHold) {
                     if (rightSwipeHoldEnabled) {
                         leftAction.heldState = true
-                        Local.Haptics.play()
+                        Common.Haptics.play()
                         rightSwipeHeld()
                         internal.delayedHideActions()
                     } else {
@@ -58,7 +59,7 @@ Local.SwipeGestureHandler {
                 if (swipeHold) {
                     if (leftSwipeHoldEnabled) {
                         rightAction.heldState = true
-                        Local.Haptics.play()
+                        Common.Haptics.play()
                         leftSwipeHeld()
                         internal.delayedHideActions()
                     } else {
@@ -90,18 +91,18 @@ Local.SwipeGestureHandler {
                 if (distance > 0 && rightSwipeEnabled) {
                     leftAction.show()
                     if (!leftAction.visible) {
-                        Local.Haptics.play()
+                        Common.Haptics.play()
                     }
                 } else if (distance < 0 && leftSwipeEnabled) {
                     rightAction.show()
                     if (!rightAction.visible) {
-                        Local.Haptics.play()
+                        Common.Haptics.play()
                     }
                 }
             } else {
                 internal.hideActions()
                 if (leftAction.opacity > 0 || rightAction.opacity > 0) {
-                    Local.Haptics.playSubtle()
+                    Common.Haptics.playSubtle()
                 }
             }
         }

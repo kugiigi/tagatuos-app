@@ -34,19 +34,18 @@ function formatMoneyTravel(value, noSymbol) {
 
 }
 
+function getCategoryColor(category) {
+    return mainView.mainModels.categoriesModel.getColor(category)
+}
+
 
 function getContrastYIQ(hexcolor){
-//    hexcolor = String(hexcolor).substring(1)
-//    var r = parseInt(hexcolor.substr(0,2),16);
-//    var g = parseInt(hexcolor.substr(2,2),16);
-//    var b = parseInt(hexcolor.substr(4,2),16);
+    let rgb = hexToRgb(hexcolor)
+    let r = rgb.r
+    let g = rgb.g
+    let b = rgb.b
 
-    var rgb = hexToRgb(hexcolor)
-    var r = rgb.r
-    var g = rgb.g
-    var b = rgb.b
-
-    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    let yiq = ((r*299)+(g*587)+(b*114))/1000;
     return (yiq >= 128)
 }
 

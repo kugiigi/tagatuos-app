@@ -11,7 +11,7 @@ import UserMetrics 0.1
 //~ import "components/ListModels"
 //~ import "components/Common"
 //~ import "ui"
-import "library/DataProcess.js" as DataProcess
+import "library/database.js" as Database
 import "library/dataUtils.js" as DataUtils
 import "library/functions.js" as Functions
 import "common/pages" as PageComponents
@@ -43,17 +43,26 @@ ApplicationWindow {
         }
     
     property string displayMode: "Phone" //"Desktop" //"Phone" //"Tablet"
+    property bool isWideLayout: width >= Suru.units.gu(90)
 //~     property QtObject theme: Suru.theme === 1 ? suruDarkTheme : ambianceTheme
     property var dataUtils: DataUtils.dataUtils
-//~     property var profiles: dataUtils.profiles
-    property var categories: dataUtils.categories
+    property var profiles: dataUtils.profiles
+    property var categories: dataUtils.categories(settings.activeProfile)
     property var expenses: dataUtils.expenses(settings.activeProfile)   
+    property var quickExpenses: dataUtils.quickExpenses(settings.activeProfile)   
+//~     property var dataUtils
+//~     property var profiles
+//~     property var categories
+//~     property var expenses
     property string currentDate: Functions.getToday()
     
     property alias settings: settingsLoader.item
+    property alias tooltip: globalTooltip
     property alias mainModels: listModelsLoader.item
     property alias keyboard: keyboardRec.keyboard
+    property alias keyboardRectangle: keyboardRec
     property alias mainPage: mainPageLoader.item
+    property alias newExpenseView: newExpenseViewLoader.item
 //~     property alias corePage: corePage
 
     title: "Tagatuos"
@@ -94,14 +103,22 @@ ApplicationWindow {
 
     Component.onCompleted: {
         /*Meta data processing*/
-        var currentDataBaseVersion = DataProcess.checkUserVersion()
+        var currentDataBaseVersion = Database.checkUserVersion()
 
         if (currentDataBaseVersion === 0) {
-            DataProcess.createInitialData()
+            Database.createInitialData()
         }
 
-        DataProcess.databaseUpgrade(currentDataBaseVersion)
+        Database.databaseUpgrade(currentDataBaseVersion)
         settingsLoader.active = true
+    }
+
+    function initDataUtils() {
+        dataUtils = Qt.binding( function() { return DataUtils.dataUtils } )
+        profiles = Qt.binding( function() { return dataUtils.profiles } )
+        categories = Qt.binding( function() { return dataUtils.categories(settings.activeProfile) } )
+        expenses = Qt.binding( function() { return dataUtils.expenses(settings.activeProfile) } )
+        listModelsLoader.active = true
     }
 
 //~     Ambiance.Palette { id: ambianceTheme }
@@ -186,9 +203,9 @@ ApplicationWindow {
 //~     }
 
     Common.GlobalTooltip {
-        id: tooltip
+        id: globalTooltip
         parent: mainView.mainPage
-        marginTop: mainPage.mainPage ? mainPage.mainPage.pageHeader.height + units.gu(5) : 0
+        marginTop: mainPage.mainPage ? mainPage.mainPage.pageHeader.height + Suru.units.gu(5) : 0
     }
 
     Loader {
@@ -199,6 +216,7 @@ ApplicationWindow {
         sourceComponent: SettingsComponent {}
 
         onLoaded: listModelsLoader.active = true
+//~         onLoaded: mainView.initDataUtils()
     }
 
     Loader {
@@ -233,10 +251,43 @@ ApplicationWindow {
         sourceComponent: PageComponents.BasePageStack {
             id: corePage
             initialItem: Pages.DetailedListPage {}
+            isWideLayout: mainView.isWideLayout
+            enableBottomGestureHint: true
+            enableHorizontalSwipe: true
+        }
+        onLoaded: {
+            newExpenseViewLoader.active = true
+        }
+    }
+
+    Loader {
+        id: newExpenseViewLoader
+
+        active: false
+        asynchronous: true
+        visible: status == Loader.Ready
+        anchors.fill: parent
+        sourceComponent: Pages.NewExpenseView {
+            isWideLayout: mainView.isWideLayout
+            dragDistance: mainPage.middleBottomGesture.dragging ? mainPage.middleBottomGesture.distance : 0
         }
     }
 
     Common.KeyboardRectangle {
         id: keyboardRec
+    }
+
+    // Customize the global attached tooltip in QQC2 components
+    Control {
+        ToolTip.toolTip {
+            readonly property real centeredImplicitWidth: Math.max(ToolTip.toolTip.background ? ToolTip.toolTip.background.implicitWidth : 0,
+                                ToolTip.toolTip.contentItem.implicitWidth + ToolTip.toolTip.leftPadding + ToolTip.toolTip.rightPadding)
+            implicitWidth: Math.min(parent.width, centeredImplicitWidth)
+            contentItem: Label {
+                text: ToolTip.toolTip.text
+                wrapMode: Text.WordWrap
+                color: Suru.backgroundColor
+            }
+        }
     }
 }

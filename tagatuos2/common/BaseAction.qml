@@ -5,7 +5,7 @@ QQC2.Action {
 
     property bool visible: true
     property bool separator: false
-    property string shortText: ""
+    property string shortText: text
     property string tooltipText
     property string iconName
     icon.name: iconName

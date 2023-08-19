@@ -15,8 +15,11 @@ QQC2.Page {
     property alias currentItem: mainStackView.currentItem
     property alias depth: mainStackView.depth
     property alias stackView: mainStackView
+    property alias middleBottomGesture: middleBottomEdgeHandler
     property var defaultLeftActions: []
     property var defaultRightActions: []
+
+    property bool isWideLayout: false
 
     // Gestures
     property bool enableBottomGestureHint: false
@@ -66,6 +69,9 @@ QQC2.Page {
         anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.pageManager = basePageStack
+            if (currentItem.hasOwnProperty("isWideLayout")) {
+                currentItem.isWideLayout = basePageStack.isWideLayout
+            }
         }
     }
 
@@ -254,6 +260,21 @@ QQC2.Page {
                 onRightSwipe:  pageHeader.triggerLeftFromBottom()
                 onLeftSwipe:  pageHeader.triggerRightFromBottom()
                 onPressedChanged: if (pressed) Common.Haptics.playSubtle()
+            }
+
+            Gestures.SwipeGestureHandler {
+                id: middleBottomEdgeHandler
+
+                enabled: true
+                usePhysicalUnit: basePageStack.physicalBasedGestures
+                immediateRecognition: !bottomBackForwardHandle.enabled
+                height: basePageStack.bottomGestureAreaHeight
+                swipeHoldDuration:  500
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
             }
         }
 
