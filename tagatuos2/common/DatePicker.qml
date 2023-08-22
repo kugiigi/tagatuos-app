@@ -235,7 +235,7 @@ ColumnLayout {
         delegate: Item {
             id: pathViewDelegate
 
-            property date baseDate: Functions.addMonths(root.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index))
+            property date baseDate: Functions.addMonths(root.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index), false)
 
             width: parent.width
             height: daysGrid.height

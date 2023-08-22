@@ -33,6 +33,7 @@
         <file>components/pages/newexpenseview/ValueField.qml</file>
         <file>components/pages/newexpenseview/CategoryField.qml</file>
         <file>components/pages/newexpenseview/DateField.qml</file>
+        <file>components/pages/newexpenseview/TravelDataFields.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
@@ -43,6 +44,7 @@
         <file>components/LoadingComponent.qml</file>
         <file>components/ColoredLabel.qml</file>
         <file>components/ExpenseData.qml</file>
+        <file>components/Currency.qml</file>
         <file>components/FocusScrollConnections.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandle.qml</file>

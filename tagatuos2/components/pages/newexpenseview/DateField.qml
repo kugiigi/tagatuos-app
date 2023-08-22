@@ -24,7 +24,6 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: Suru.units.gu(6)
 
-//~         Suru.textLevel: Suru.Paragraph
         alignment: Qt.AlignLeft
         label.font.pixelSize: Suru.units.gu(2)
         text: i18n.tr("Use current date and time")

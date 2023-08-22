@@ -250,7 +250,10 @@ ApplicationWindow {
         anchors.fill: parent
         sourceComponent: PageComponents.BasePageStack {
             id: corePage
-            initialItem: Pages.DetailedListPage {}
+            initialItem: Pages.DetailedListPage {
+                isTravelMode: mainView.settings.travelMode
+                travelCurrency: mainView.settings.travelCurrency
+            }
             isWideLayout: mainView.isWideLayout
             enableBottomGestureHint: true
             enableHorizontalSwipe: true
@@ -268,6 +271,11 @@ ApplicationWindow {
         visible: status == Loader.Ready
         anchors.fill: parent
         sourceComponent: Pages.NewExpenseView {
+            currentHomeCurrency: mainView.settings.currentCurrency
+            currentTravelCurrency: mainView.settings.travelCurrency
+            currentExchangeRate: mainView.settings.exchangeRate
+            isColoredText: mainView.settings.coloredText
+            isTravelMode: mainView.settings.travelMode
             isWideLayout: mainView.isWideLayout
             dragDistance: mainPage.middleBottomGesture.dragging ? mainPage.middleBottomGesture.distance : 0
         }

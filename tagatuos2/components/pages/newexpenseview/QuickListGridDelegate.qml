@@ -17,6 +17,9 @@ Item {
     property string description
     property string value
 
+    property bool isTravelMode: false
+    property string travelCurrency
+
     signal clicked
     signal rightClicked(real mouseX, real mouseY)
     signal doubleClicked
@@ -167,7 +170,8 @@ Item {
                     Suru.textLevel: gridDelegate.isGridDisplay ? Suru.Paragraph : Suru.HeadingThree
                     verticalAlignment: Text.AlignVCenter
                     visible: gridDelegate.value > 0
-                    text: AppFunctions.formatMoney(gridDelegate.value, false)
+                    text: gridDelegate.isTravelMode ? AppFunctions.formatMoneyTravel(gridDelegate.value, false)
+                                        : AppFunctions.formatMoney(gridDelegate.value, false)
                     role: "value"
                 }
 

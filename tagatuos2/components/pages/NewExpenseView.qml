@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
-//~ import QtQml.Models 2.2
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
@@ -18,10 +17,18 @@ FocusScope {
     readonly property bool contextActionsShown: resultsIsEmpty || internal.forceContextActions
     readonly property bool isGridDisplay: displayType == QuickListGridView.GridType.Rectangle
     readonly property bool isOpen: internal.isOpen
+    readonly property bool isEditMode: internal.currentExpenseID > -1 && entryMode
     readonly property bool animating: showAnimation.running
+    readonly property bool hasTravelData: internal.expenseData.travelData.rate > 0 && internal.expenseData.travelData.value > 0
+    readonly property bool processTravelData: hasTravelData || (isTravelMode && !isEditMode)
 
+    property string currentHomeCurrency
+    property string currentTravelCurrency
+    property real currentExchangeRate
     property alias view: mainFlickable
     property alias searchText: searchField.text
+    property bool isColoredText: false
+    property bool isTravelMode: false
     property bool entryMode: false
     property bool searchMode: false
     property real dragDistance: 0
@@ -29,7 +36,6 @@ FocusScope {
     property int displayType: QuickListGridView.GridType.Rectangle
 
     focus: isOpen
-
     opacity: isOpen || dragDistance > 0 || animating ? 1 : 0
     visible: opacity > 0
 
@@ -56,6 +62,12 @@ FocusScope {
                 return false
             }
 
+            categoryField.accepted()
+            if (categoryField.currentIndex == -1) {
+                categoryField.forceActiveFocus()
+                return false
+            }
+
             return true
         }
 
@@ -73,12 +85,31 @@ FocusScope {
         id: expenseDataObj
     }
 
+    Components.Currency {
+        id: travelCurrencyObj
+        currencyID: currentTravelCurrency
+    }
+
+    Components.Currency {
+        id: homeCurrencyObj
+        currencyID: currentHomeCurrency
+    }
+
     function createNewExpense() {
         if (mainView.expenses.add(internal.expenseData)) {
             mainView.tooltip.display(i18n.tr("New expense added"))
             close()
         } else {
             mainView.tooltip.display(i18n.tr("New expense failed"))
+        }
+    }
+
+    function updateExpense() {
+        if (mainView.expenses.edit(internal.expenseData)) {
+            mainView.tooltip.display(i18n.tr("Expense updated"))
+            close()
+        } else {
+            mainView.tooltip.display(i18n.tr("Update failed"))
         }
     }
 
@@ -103,56 +134,33 @@ FocusScope {
                 let _txtName = nameField.text
                 let _txtDescr = descriptionField.text
                 let _txtCategory = categoryField.currentText
-                let _realValue = valueField.text
+                // Replace commas since it's accepted even with the validator
+                let _realValue = valueField.text.replace(/,/g, "")
                 let _txtDate = Functions.getToday()
 
-                if (!dateField.checked) {
+                if (!dateField.checked || isEditMode) {
                     _txtDate = Functions.formatDateForDB(dateField.dateValue)
                 }
 
-                internal.expenseData.reset()
+//~                 if (!isEditMode) {
+//~                     internal.expenseData.reset()
+//~                 }
+
                 internal.expenseData.entryDate = _txtDate
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
-                internal.expenseData.value = _realValue
 
-//~                 var newExpense
-//~                 var today = new Date(Process.getToday())
-//~                 var txtDate = Process.dateFormat(0, dateLabel.date)
-//~                 var realTravelValue
+                if (valueField.processTravelData) {
+                    internal.expenseData.value = valueField.convertedValue
+                    internal.expenseData.travelData.value = _realValue
+                } else {
+                    internal.expenseData.value = _realValue
+                }
 
-//~                 //Travel Data
-//~                 var travelData
-
-//~                 if(travelFields.visible){
-//~                     var realRate = travelFields.rate
-//~                     var txtHomeCur = travelFields.homeCurrency
-//~                     var txtTravelCur = travelFields.travelCurrency
-
-//~                     realTravelValue = parseFloat(valueTextField.text)
-//~                     realValue = valueTextField.homeValue
-
-//~                     travelData = {"rate": realRate, "homeCur": txtHomeCur, "travelCur": txtTravelCur, "value": realTravelValue}
-
-//~                 }else{
-//~                     realValue = parseFloat(valueTextField.text)
-//~                 }
-
-                if (internal.currentExpenseID > -1) {
-//~                     var updatedItem = {
-//~                         expense_id: root.itemID,
-//~                         category_name: txtCategory,
-//~                         name: txtName,
-//~                         descr: txtDescr,
-//~                         date: txtDate,
-//~                         value: realValue,
-//~                         travel: travelData
-//~                     }
-//~                     updateExpense(_data)
+                if (isEditMode) {
                     updateExpense()
                 } else {
-//~                     createNewExpense(_data)
                     createNewExpense()
                 }
             }
@@ -165,24 +173,27 @@ FocusScope {
         contextActionsListView.currentIndex = -1
         quickListGridView.currentIndex = -1
         historyGridView.currentIndex = -1
+
+        // Reset fields
+        dateField.dateValue = new Date()
         dateField.checkState = Qt.Checked
 
         searchText = ""
         internal.isOpen = false
         internal.partiallyShown = false
         internal.forceContextActions = false
+        travelCurrencyObj.currencyID = currentTravelCurrency
+        homeCurrencyObj.currencyID = currentHomeCurrency
         searchMode = false
         exitEntryMode()
     }
 
-    function openInSearchMode() {
-        searchMode = true
-        open()
-    }
-
     function open() {
         if (searchMode) {
-            focusInput()
+            focusSearchInput()
+        }
+
+        if (searchMode || entryMode) {
             animateToFull()
         } else {
             if (internal.tall) {
@@ -193,6 +204,34 @@ FocusScope {
         }
 
         forceActiveFocus()
+    }
+
+    function openInSearchMode() {
+        searchMode = true
+        open()
+    }
+
+    function openInEditMode(expenseDataForEdit) {
+        internal.expenseData.reset()
+        internal.expenseData.expenseID = expenseDataForEdit.expenseID
+        internal.expenseData.entryDate = expenseDataForEdit.entryDate
+        internal.expenseData.name = expenseDataForEdit.name
+        internal.expenseData.description = expenseDataForEdit.description
+        internal.expenseData.category = expenseDataForEdit.category
+        internal.expenseData.value = expenseDataForEdit.value
+        internal.expenseData.travelData.rate = expenseDataForEdit.travelData.rate
+        internal.expenseData.travelData.homeCur = expenseDataForEdit.travelData.homeCur
+        internal.expenseData.travelData.travelCur = expenseDataForEdit.travelData.travelCur
+        internal.expenseData.travelData.value = expenseDataForEdit.travelData.value
+
+        // Set date/time fields to current values
+        dateField.dateValue = Functions.convertDBToDate(expenseDataForEdit.entryDate)
+        dateField.checkState = Qt.Unchecked
+
+        travelCurrencyObj.currencyID = expenseDataForEdit.travelData.travelCur
+
+        switchToEntryMode()
+        open()
     }
 
     function close() {
@@ -212,7 +251,7 @@ FocusScope {
         showAnimation.restart()
     }
 
-    function focusInput() {
+    function focusSearchInput() {
         searchMode = true
         searchField.selectAll();
         searchField.forceActiveFocus()
@@ -248,11 +287,11 @@ FocusScope {
                 mainFlickable.focus = true;
                 break;
             case Qt.Key_Up:
-                focusInput();
+                focusSearchInput();
                 break;
         }
         if (event.text.trim() !== "") {
-            focusInput();
+            focusSearchInput();
             searchText = event.text;
         }
 
@@ -268,7 +307,7 @@ FocusScope {
 
     Rectangle {
         visible: opacity > 0
-        color: "black"
+        color: "#000000"
         anchors.fill: parent
         opacity: 0.8
 
@@ -292,8 +331,19 @@ FocusScope {
         opacity: height > Suru.units.gu(6) && !closeSwipeAreaLoader.dragging ? 1 : 0
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        text: newExpenseView.searchMode || newExpenseView.entryMode ? i18n.tr("New Expense") : i18n.tr("Quick Expense")
-        color: Suru.backgroundColor
+//~         text: newExpenseView.searchMode || newExpenseView.entryMode ? i18n.tr("New Expense") : i18n.tr("Quick Expense")
+        text: {
+            if (newExpenseView.searchMode || newExpenseView.entryMode) {
+                if (newExpenseView.isEditMode) {
+                    return i18n.tr("Edit Expense")
+                }
+
+                return i18n.tr("New Expense")
+            }
+
+            return i18n.tr("Quick Expense")
+        }
+        color: "#ffffff"
         anchors {
             top: parent.top
             left: parent.left
@@ -502,6 +552,9 @@ FocusScope {
 
                         gridType: newExpenseView.displayType
                         type: QuickListGridView.Type.QuickList
+                        isTravelMode: newExpenseView.isTravelMode
+                        travelCurrency: newExpenseView.currentTravelCurrency
+                        exchangeRate: newExpenseView.currentExchangeRate
                         baseModel: mainView.mainModels.quickExpensesModel
                         expenseData: internal.expenseData
 
@@ -518,6 +571,9 @@ FocusScope {
 
                         gridType: newExpenseView.displayType
                         type: QuickListGridView.Type.History
+                        isTravelMode: newExpenseView.isTravelMode
+                        travelCurrency: newExpenseView.currentTravelCurrency
+                        exchangeRate: newExpenseView.currentExchangeRate
                         baseModel: mainView.mainModels.historyEntryExpensesModel
                         expenseData: internal.expenseData
 
@@ -537,12 +593,25 @@ FocusScope {
                     spacing: Suru.units.gu(2)
                     visible: newExpenseView.entryMode
 
+                    TravelDataFields {
+                        id: travelDataFields
+
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: Suru.units.gu(6)
+                        visible: newExpenseView.processTravelData
+                        isEditMode: newExpenseView.isEditMode
+                        homeCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentHomeCurrency : internal.expenseData.travelData.homeCur
+                        travelCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentTravelCurrency : internal.expenseData.travelData.travelCur
+                        rate: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentExchangeRate : internal.expenseData.travelData.rate
+                    }
+
                     DateField {
                         id: dateField
 
-//~                         readonly property bool dateModified: priv.editEntryDate != Functions.formatDateForDB(dateField.dateValue)
+//~                         readonly property bool modified: internal.editEntryDate != Functions.formatDateForDB(dateField.dateValue)
 
                         Layout.fillWidth: true
+                        showToggle: !newExpenseView.isEditMode
                     }
 
                     NameField {
@@ -559,15 +628,37 @@ FocusScope {
                         Layout.fillWidth: true
                         flickable: mainFlickable
                         currentIndex: internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0
+                        onVisibleChanged: {
+                            if (!visible) {
+                                // Rebind value
+                                currentIndex = Qt.binding( function() { return internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0 } )
+                            }
+                        }
                     }
 
                     ValueField {
                         id: valueField
 
+                        readonly property real mainValue: hasTravelData ? travelData.value : internal.expenseData.value
+
                         Layout.fillWidth: true
 
+                        isColoredText: newExpenseView.isColoredText
                         flickable: mainFlickable
-                        text: internal.expenseData.value == 0 ? "" : internal.expenseData.value
+                        hasTravelData: newExpenseView.hasTravelData
+                        processTravelData: newExpenseView.processTravelData
+                        isTravelMode: newExpenseView.isTravelMode
+                        travelData: internal.expenseData.travelData
+                        homeCurrencyData: homeCurrencyObj.currencyData
+                        travelCurrencyData: travelCurrencyObj.currencyData
+                        text: mainValue == 0 ? "" : mainValue
+                        convertedValue: hasTravelData ? internal.expenseData.value : 0 //Only useful when travel mode is on or has travel data
+                        onVisibleChanged: {
+                            if (visible) {
+                                // Rebind value
+                                convertedValue = Qt.binding( function() { return hasTravelData ? internal.expenseData.value : 0 } )
+                            }
+                        }
                     }
 
                     DescriptionField {
@@ -696,7 +787,7 @@ FocusScope {
                 iconName: "compose"
                 visible: !newExpenseView.entryMode
 
-                onTrigger: newExpenseView.focusInput();
+                onTrigger: newExpenseView.focusSearchInput();
             }
         ]
     }
@@ -708,7 +799,7 @@ FocusScope {
         iconName: newExpenseView.entryMode ? "cancel" : "close"
 
         onTrigger: {
-            if (newExpenseView.entryMode) {
+            if (newExpenseView.entryMode && !newExpenseView.isEditMode) {
                 newExpenseView.exitEntryMode()
             } else {
                 newExpenseView.close()

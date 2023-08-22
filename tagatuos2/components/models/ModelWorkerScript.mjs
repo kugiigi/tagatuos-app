@@ -78,12 +78,20 @@ WorkerScript.onMessage = function (msg) {
                 let txtCategoryName = msg.result[i].category_name
                 let txtDescr = msg.result[i].descr
                 let txtValue = msg.result[i].value
+                let realTravelValue = msg.result[i].travel_value
+                let realRate = msg.result[i].rate
+                let txtHomeCur = msg.result[i].home_currency
+                let txtTravelCur = msg.result[i].travel_currency
 
                 msg.model.append({
                                      name: txtName
                                      , categoryName: txtCategoryName
                                      , description: txtDescr
                                      , value: txtValue
+                                     , rate: realRate
+                                     , home_currency: txtHomeCur
+                                     , travel_currency: txtTravelCur
+                                     , travel_value: realTravelValue
                                  })
             }
             break;
@@ -176,8 +184,8 @@ WorkerScript.onMessage = function (msg) {
                     category_id: [txtCategory, realTotal, realTravelTotal].join("|"),
                     name: txtName,
                     descr: txtDescr,
-                    entry_date: txtDate,
-                    dateValue: txtDateValue,
+                    entry_date: txtDateValue,
+                    entry_date_relative: txtDate,
                     value: realValue,
                     rate: realRate,
                     home_currency: txtHomeCur,

@@ -13,13 +13,17 @@ Item {
     property bool enableLineCountScroll: true
 
     function focusPrevious() {
-        let _prevItem = target.nextItemInFocusChain(false)
-        _prevItem.forceActiveFocus()
+        if (target.activeFocus) {
+            let _prevItem = target.nextItemInFocusChain(false)
+            _prevItem.forceActiveFocus()
+        }
     }
 
     function focusNext() {
-        let _nextItem = target.nextItemInFocusChain(true)
-        _nextItem.forceActiveFocus()
+        if (target.activeFocus) {
+            let _nextItem = target.nextItemInFocusChain(true)
+            _nextItem.forceActiveFocus()
+        }
     }
 
     Connections {

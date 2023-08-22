@@ -21,26 +21,28 @@ Pages.BasePage {
 
     property string currentCategory: "all"
     property string scope: "day"
+    property bool isTravelMode: false
+    property string travelCurrency
 
     flickable: dateViewPath.currentItem.view
 
-//~     title: mainView.profiles.currentName()
-    title: i18n.tr("Expenses")
+    title: mainView.profiles.currentName()
+//~     title: i18n.tr("Expenses")
     
     signal refresh
 //~     signal itemDeleted
 
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction, sortAction, profilesAction]
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction]
-    headerRightActions: [addAction, todayAction]
-    
+    headerRightActions: [ addAction, todayAction ]
+
     Connections {
         target: mainView.settings
         onActiveProfileChanged: {
             refresh()
         }
     }
-    
+
 //~     Connections {
 //~         target: newEntryPopup
 //~         onAccepted: {
@@ -56,7 +58,7 @@ Pages.BasePage {
     function next() {
         dateViewPath.incrementCurrentIndex()
     }
-    
+
     function previous() {
         dateViewPath.decrementCurrentIndex()
     }
@@ -180,7 +182,7 @@ Pages.BasePage {
         iconName: "edit"
 
         onTrigger:{
-            newEntryPopup.openEdit(contextMenu.itemProperties.entryDateId, contextMenu.itemProperties.itemId, contextMenu.itemProperties.comments, contextMenu.itemProperties.fields)
+            mainView.newExpenseView.openInEditMode(contextMenu.itemData)
         }
     }
 
@@ -203,12 +205,14 @@ Pages.BasePage {
         id: deleteConfirmDialog
 
         title: i18n.tr("Delete this expense?")
-        subtitle: ("%1 - %2 (%3)").arg(contextMenu.itemProperties.entryDate).arg(contextMenu.itemProperties.name).arg(contextMenu.itemProperties.value)
+//~         subtitle: ("%1 - %2 (%3)").arg(contextMenu.itemProperties.entryDate).arg(contextMenu.itemProperties.name).arg(contextMenu.itemProperties.value)
+        subtitle: ("%1 - %2 (%3)").arg(Functions.relativeDate(contextMenu.itemData.entryDate, "ddd, MMM d, yyyy", "Basic")).arg(contextMenu.itemData.name).arg(contextMenu.itemData.value)
 
         onAccepted: {
             let _tooltipMsg
 
-            if (mainView.expenses.delete(contextMenu.itemProperties.expenseID, contextMenu.itemProperties.entryDateValue)) {
+//~             if (mainView.expenses.delete(contextMenu.itemProperties.expenseID, contextMenu.itemProperties.entryDateValue)) {
+            if (mainView.expenses.delete(contextMenu.itemData.expenseID, contextMenu.itemData.entryDate)) {
                 _tooltipMsg = i18n.tr("Expense deleted")
 //~                 detailedListPage.itemDeleted()
             } else {
@@ -222,7 +226,11 @@ Pages.BasePage {
     Menus.ContextMenu {
         id: contextMenu
 
-        itemProperties: { "expenseID": "", "name": "", "entryDate": "", "entryDateValue": "", "description": "", "value": "" }
+        readonly property Components.ExpenseData itemData: Components.ExpenseData {
+            id: expenseDataObj
+        }
+
+//~         itemProperties: { "expenseID": "", "name": "", "entryDate": "", "entryDateValue": "", "description": "", "value": "" }
 
 //~         actions: [ editAction, separatorAction, deleteAction ]
         actions: [ editAction, deleteAction, separatorAction ]
@@ -325,7 +333,7 @@ Pages.BasePage {
                 property alias model: listView.model
                 property alias count: listView.count
                 property alias view: listView
-                property string fromDate: Functions.addDays(dateViewPath.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index))
+                property string fromDate: Functions.addDays(dateViewPath.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index), true)
                 property string toDate: fromDate
 
                 height: parent.height
@@ -402,29 +410,42 @@ Pages.BasePage {
                             margins: units.gu(1)
                         }
 
-                        isTravelMode: mainView.settings.travelMode
-                        currentTravelCurrency: mainView.settings.travelCurrency
+                        isTravelMode: detailedListPage.isTravelMode
+                        currentTravelCurrency: detailedListPage.travelCurrency
                         expenseID: model.expense_id
                         homeValue: model.value
+                        homeCurrency: model.home_currency
                         travelValue: model.travel_value
                         travelCurrency: model.travel_currency
                         exchangeRate: model.rate
                         entryDate: model.entry_date
+                        entryDateRelative: model.entry_date_relative
                         comments: model.descr
                         itemName: model.name
                         highlighted: listView.currentIndex == index
 
                         onShowContextMenu: {
-                            let itemProperties = { expenseID: expenseID
-                                    , name: itemName
-                                    , entryDate: entryDate
-                                    , entryDateValue: model.dateValue
-                                    , value: formattedValue
-                                    , description: comments
-                            }
+//~                             let itemProperties = { expenseID: expenseID
+//~                                     , name: itemName
+//~                                     , entryDate: entryDate
+//~                                     , entryDateValue: model.dateValue
+//~                                     , value: formattedValue
+//~                                     , description: comments
+//~                             }
+                            contextMenu.itemData.expenseID = expenseID
+                            contextMenu.itemData.name = itemName
+                            contextMenu.itemData.entryDate = entryDate
+                            contextMenu.itemData.category = model.category_name
+                            contextMenu.itemData.value = homeValue
+                            contextMenu.itemData.description = comments
+                            contextMenu.itemData.travelData.rate = exchangeRate
+                            contextMenu.itemData.travelData.homeCur = homeCurrency
+                            contextMenu.itemData.travelData.travelCur = travelCurrency
+                            contextMenu.itemData.travelData.value = travelValue
 
                             listView.currentIndex = index
-                            contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY, itemProperties)
+//~                             contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY, itemProperties)
+                            contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY)
                         }
 
                         onClicked: {
@@ -457,8 +478,8 @@ Pages.BasePage {
             horizontalCenter: parent.horizontalCenter
         }
 
-        isTravelMode: mainView.settings.travelMode
-        currentTravelCurrency: mainView.settings.travelCurrency
+        isTravelMode: detailedListPage.isTravelMode
+        currentTravelCurrency: detailedListPage.travelCurrency
         opacity: dateViewPath.currentItem.view.moving ? 0.5 : 1
         valuesModel: dateViewPath.currentItem.model.summaryValues
         visible: dateViewPath.currentItem.model.ready && !dateViewPath.currentItem.isEmpty && dateViewPath.currentItem.model.count > 1

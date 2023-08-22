@@ -7,7 +7,7 @@ import "../.." as Components
 ComboBox {
     id: categoryField
 
-    readonly property bool highlighted: false
+    readonly property bool highlighted: activeFocus
     property color color: Suru.InformationHighlight ? Suru.activeFocusColor : Suru.foregroundColor
     property Flickable flickable
 
@@ -17,18 +17,24 @@ ComboBox {
     font.pixelSize: Suru.units.gu(2.5)
     editable: true
     focus: false
-//~     inputMethodHints: Qt.ImhNoPredictiveText
 
     onAccepted: focusScrollConnections.focusNext()
     onActiveFocusChanged: {
-        if (!activeFocus && find(editText) === -1) {
-             editText = currentText
+        if (!activeFocus) {
+            // Always select a valid value
+            let _itemFound = find(editText, Qt.MatchStartsWith)
+            if (_itemFound > -1) {
+                currentIndex = _itemFound
+            } else {
+                editText = currentText
+            }
         }
     }
 
     background: Common.BaseBackgroundRectangle {
         control: categoryField
         radius: Suru.units.gu(1)
+        highlightColor: "transparent"
     }
 
     Components.FocusScrollConnections {
@@ -92,16 +98,6 @@ ComboBox {
         verticalAlignment: Text.AlignVCenter
 
         background: Item {}
-
-//~         function focusPrevious() {
-//~             let _prevItem = nextItemInFocusChain(false)
-//~             _prevItem.forceActiveFocus()
-//~         }
-
-//~         function focusNext() {
-//~             let _nextItem = nextItemInFocusChain(true)
-//~             _nextItem.forceActiveFocus()
-//~         }
 
         onActiveFocusChanged: {
             if (activeFocus) {

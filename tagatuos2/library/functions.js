@@ -72,26 +72,26 @@ function scrollToView(item, flickable, topMargin=0,  bottomMargin=0) {
     _itemHeightY = _mappedY + item.height
     _currentViewport = flickable.contentY - flickable.originY + flickable.height - flickable.bottomMargin + flickable.topMargin
 
-    console.log("_mappedY: " + _mappedY)
-    console.log("_itemHeightY: " + _itemHeightY)
-    console.log("_currentViewport: " + _currentViewport)
+    //~ console.log("_mappedY: " + _mappedY)
+    //~ console.log("_itemHeightY: " + _itemHeightY)
+    //~ console.log("_currentViewport: " + _currentViewport)
     if (_itemHeightY > _currentViewport) {
         _maxContentY = flickable.contentHeight - flickable.height + flickable.bottomMargin
         _intendedContentY = _itemHeightY - flickable.height + item.height + flickable.bottomMargin + bottomMargin
 
         if (_intendedContentY > _maxContentY) {
-            console.log("maxContentY")
+            //~ console.log("maxContentY")
             flickable.contentY = _maxContentY
         } else {
-            console.log("intendedContentY")
+            //~ console.log("intendedContentY")
             flickable.contentY = _intendedContentY
         }
     } else if (_mappedY < flickable.contentY) {
-        console.log("compute")
+        //~ console.log("compute")
         flickable.contentY = _mappedY - topMargin - flickable.topMargin
     }
 
-    console.log("Final:" + flickable.contentY)
+    //~ console.log("Final:" + flickable.contentY)
 }
 
 function round_number(num, dec) {
@@ -132,14 +132,24 @@ function isToday(petsa) {
     return dtPetsa.isSame(today,'day')
 }
 
-function addDays(petsa, days) {
-    var momentDate = moment(petsa)
-    return momentDate.add(days, 'day').format("YYYY-MM-DD HH:mm:ss.SSS")
+function addDays(petsa, days, toDBString = false) {
+    let _momentDate = moment(petsa)
+    _momentDate.add(days, 'day')
+    if (toDBString) {
+        return _momentDate.format("YYYY-MM-DD HH:mm:ss.SSS")
+    } else {
+        return _momentDate.toDate()
+    }
 }
 
-function addMonths(petsa, months) {
-    var momentDate = moment(petsa)
-    return momentDate.add(months, 'month').format("YYYY-MM-DD HH:mm:ss.SSS")
+function addMonths(petsa, months, toDBString = false) {
+    let _momentDate = moment(petsa)
+    _momentDate.add(months, 'month')
+    if (toDBString) {
+        return _momentDate.format("YYYY-MM-DD HH:mm:ss.SSS")
+    } else {
+        return _momentDate.toDate()
+    }
 }
 
 function checkIfWithinDateRange(inputDate, fromDate, toDate) {

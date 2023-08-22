@@ -4,43 +4,53 @@ import QtQuick.Controls.Suru 2.2
 import "../.." as Components
 import "../../../common" as Common
 import "../../../library/ApplicationFunctions.js" as AppFunctions
+import "../../../library/functions.js" as Functions
 
 TextField {
     id: valueField
 
-    property Flickable flickable
+    readonly property bool highlighted: activeFocus
+    property bool hasTravelData: false
+    property bool processTravelData: false
 
+    property Flickable flickable
+    property alias convertedValue: convertedValueLabel.value // Home currency value when in travel mode
+    property bool isColoredText: false
+    property var travelData
+    property var homeCurrencyData
+    property var travelCurrencyData
+    property bool isTravelMode: false
+
+    color: isColoredText ? Suru.highlightColor : Suru.foregroundColor
+    rightPadding: convertedValueLabel.visible ? convertedValueLabel.width : Suru.units.gu(1.5)
     placeholderText: AppFunctions.formatMoney(0, true)
     font.pixelSize: Suru.units.gu(3)
     horizontalAlignment: TextInput.AlignHCenter
     wrapMode: TextInput.WordWrap
+    selectByMouse: true
     inputMethodHints: Qt.ImhDigitsOnly
     validator: DoubleValidator {
-//~         decimals: root.travelCurData ? root.travelCurData.precision : (tempSettings.travelMode ? tempSettings.travelCurrencyPrecision : tempSettings.currentCurrencyPrecision)
-        decimals: mainView.settings.travelMode ? mainView.settings.travelCurrencyPrecision : mainView.settings.currentCurrencyPrecision
+        decimals: isTravelMode ? travelCurrencyData.precision : homeCurrencyData.precision
     }
 
-    color: mainView.settings.coloredText ? Suru.highlightColor : Suru.foregroundColor
+    Suru.highlightType: isColoredText ? Suru.PositiveHighlight : Suru.InformationHighlight
 
-    Suru.highlightType: mainView.settings.coloredText ? Suru.PositiveHighlight : Suru.InformationHighlight
-
-//~     function focusPrevious() {
-//~         let _prevItem = nextItemInFocusChain(false)
-//~         _prevItem.forceActiveFocus()
-//~     }
-
-//~     function focusNext() {
-//~         let _nextItem = nextItemInFocusChain(true)
-//~         _nextItem.forceActiveFocus()
-//~     }
-
-//~     onAccepted: focusNext()
     Keys.onUpPressed: focusScrollConnections.focusPrevious()
     Keys.onDownPressed: focusScrollConnections.focusNext()
 
     onActiveFocusChanged: {
         if (activeFocus) {
             selectAll()
+        }
+    }
+
+    onTextChanged: {
+        if (processTravelData) {
+            if (text !== "") {
+                convertedValue = parseFloat(text) * travelData.rate
+            } else {
+                convertedValue = 0
+            }
         }
     }
 
@@ -54,21 +64,34 @@ TextField {
     background: Common.BaseBackgroundRectangle {
         control: valueField
         radius: Suru.units.gu(1)
+        highlightColor: "transparent"
         
         Label {
             id: currencySymbolLabel
 
             Suru.textLevel: Suru.HeadingThree
-    //            text: root.withTravelData ? (typeof root.travelCurData.symbol !== 'undefined' ? root.travelCurData.symbol : "") : (tempSettings.travelMode ? tempSettings.travelCurrencySymbol : tempSettings.currentCurrencySymbol)
-    //~         text: if (root.mode === "edit") {
-    //~                   root.withTravelData ? (typeof root.travelCurData.symbol !== 'undefined' ? root.travelCurData.symbol : "") : tempSettings.currentCurrencySymbol
-    //~               } else {
-            text: mainView.settings.travelMode ? mainView.settings.travelCurrencySymbol : mainView.settings.currentCurrencySymbol
-    //~               }
+            text: valueField.processTravelData ? valueField.travelCurrencyData.symbol : valueField.homeCurrencyData.symbol
             color: Suru.secondaryForegroundColor
             anchors {
                 left: parent.left
                 leftMargin: Suru.units.gu(2)
+                verticalCenter: parent.verticalCenter
+            }
+        }
+
+        Label {
+            id: convertedValueLabel
+
+            property real value
+
+            Suru.textLevel: Suru.Small
+            visible: valueField.processTravelData
+            text: i18n.tr("= %1").arg(Functions.formatMoney(value, valueField.travelData.homeCur))
+            color: Suru.tertiaryForegroundColor
+            horizontalAlignment: Text.AlignRight
+            anchors {
+                right: parent.right
+                rightMargin: Suru.units.gu(2)
                 verticalCenter: parent.verticalCenter
             }
         }

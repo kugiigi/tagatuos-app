@@ -24,6 +24,9 @@ GridView {
     readonly property int minimumColumns: 2
     readonly property real itemMargins: Suru.units.gu(1)
 
+    property bool isTravelMode: false
+    property string travelCurrency
+    property real exchangeRate
     property alias baseModel: filteredModel.model
     property Components.ExpenseData expenseData
     property int gridType: QuickListGridView.GridType.Rectangle
@@ -142,12 +145,16 @@ GridView {
 
         delegate: QuickListGridDelegate {
             readonly property bool hasValue: value > 0
+            readonly property bool showTravelValue: isTravelMode && travelCurrency != ""
+                                    && travelCurrency == quickListGridView.travelCurrency
 
             type: quickListGridView.type
             expenseName: model.name
-            value: model.value
+            value: showTravelValue ? model.travel_value : model.value
             description: model.description
             categoryName: model.categoryName
+            isTravelMode: quickListGridView.isTravelMode
+            travelCurrency: model.travel_currency ? model.travel_currency : ""
 
             function createOrRequestNewExpense() {
                 quickListGridView.expenseData.reset()
@@ -156,6 +163,14 @@ GridView {
                 quickListGridView.expenseData.description = description
                 quickListGridView.expenseData.category = categoryName
                 quickListGridView.expenseData.value = value
+
+                if (showTravelValue) {
+                    quickListGridView.expenseData.value = model.value
+                    quickListGridView.expenseData.travelData.value = model.travel_value
+                } else if (isTravelMode) {
+                    quickListGridView.expenseData.value = value * quickListGridView.exchangeRate
+                    quickListGridView.expenseData.travelData.value = value
+                }
 
                 if (hasValue) {
                     quickListGridView.createNewExpense()
@@ -169,7 +184,15 @@ GridView {
                 expenseData.name = expenseName
                 expenseData.description = description
                 expenseData.category = categoryName
-                expenseData.value = value
+                expenseData.value = value                
+
+                if (showTravelValue) {
+                    expenseData.value = model.value
+                    expenseData.travelData.value = model.travel_value
+                } else if (isTravelMode) {
+                    expenseData.value = value * quickListGridView.exchangeRate
+                    expenseData.travelData.value = value
+                }
 
                 quickListGridView.requestNewExpense()
             }

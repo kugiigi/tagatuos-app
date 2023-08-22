@@ -9,13 +9,14 @@ TextField {
     id: nameField
 
     property Flickable flickable
+    readonly property bool highlighted: activeFocus
 
     placeholderText: i18n.tr("Enter expense name")
     font.pixelSize: Suru.units.gu(3.5)
     horizontalAlignment: TextInput.AlignHCenter
     wrapMode: TextInput.WordWrap
     inputMethodHints: Qt.ImhNoPredictiveText
-    property bool highlighted: false
+    selectByMouse: true
 
     Keys.onUpPressed: console.log("Do not rmeove focus")
     Keys.onDownPressed: focusScrollConnections.focusNext()
@@ -30,8 +31,6 @@ TextField {
     background: Common.BaseBackgroundRectangle {
         control: nameField
         radius: Suru.units.gu(1)
-//~         backgroundColor: control.activeFocus ? Suru.backgroundColor
-//~                                 : Suru.backgroundColor.hslLightness > 0.5 ? Qt.darker(Suru.backgroundColor, 1.5) : Qt.lighter(Suru.backgroundColor, 2.0)
-//~         borderColor: backgroundColor
+        highlightColor: "transparent"
     }
 }

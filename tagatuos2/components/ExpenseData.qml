@@ -11,6 +11,13 @@ QtObject {
     property string category: ""
     property real value: 0
 
+    readonly property QtObject travelData: QtObject {
+        property real rate: mainView.settings.exchangeRate
+        property string homeCur: mainView.settings.currentCurrency
+        property string travelCur: mainView.settings.travelCurrency
+        property real value: 0
+    }
+
     function reset() {
         expenseID = -1
         entryDate = Functions.getToday()
@@ -18,5 +25,10 @@ QtObject {
         description = ""
         category = ""
         value = 0
+
+        travelData.rate = mainView.settings.exchangeRate
+        travelData.homeCur = mainView.settings.currentCurrency
+        travelData.travelCur = mainView.settings.travelCurrency
+        travelData.value = 0
     }
 }

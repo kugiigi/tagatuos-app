@@ -24,9 +24,11 @@ ListItems.BaseItemDelegate {
     property string currentTravelCurrency
     property real homeValue
     property real travelValue
+    property string homeCurrency
     property string travelCurrency
     property real exchangeRate
     property string entryDate
+    property string entryDateRelative
     property string comments
     property string itemName
     property bool isExpanded: false

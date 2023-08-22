@@ -27,25 +27,34 @@ function select(txtStatement, bindValues) {
     var db = openDB()
     var rs = null
     var arrResult = []
+    
+    if (bindValues) {
+        try {
+            db.transaction(function (tx) {
+                if (bindValues) {
+                    rs = tx.executeSql(txtStatement,bindValues)
+                }else{
+                    rs = tx.executeSql(txtStatement)
+                }
 
-    db.transaction(function (tx) {
-        if (bindValues) {
-            rs = tx.executeSql(txtStatement,bindValues)
-        }else{
-            rs = tx.executeSql(txtStatement)
+
+                arrResult.length = rs.rows.length
+
+                for (var i = 0; i < rs.rows.length; i++) {
+                    //add new row in the array
+                    arrResult[i] = []
+
+                    //assign values to the array
+                    arrResult[i] = rs.rows.item(i)
+                }
+            })
+        } catch (err) {
+            console.log("Select: " + txtStatement)
+            console.log("Bind: " + bindValues)
+            console.log("Error message: " + err)
         }
+    }
 
-
-        arrResult.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            //add new row in the array
-            arrResult[i] = []
-
-            //assign values to the array
-            arrResult[i] = rs.rows.item(i)
-        }
-    })
     return arrResult
 }
 
@@ -724,18 +733,18 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     let txtLimitStatement = ""
 
     // List items that match the name before descr
-    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value"
+    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value, home_currency, travel_currency, rate, travel_value"
     txtFromStatement = "FROM ( \
-                        SELECT name, category_name, descr, value, date, 1 as score \
+                        SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 1 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
-                        AND name LIKE ? \
+                        AND UPPER(name) LIKE UPPER(?) \
                         GROUP BY name, category_name, descr, value \
                         UNION \
-                        SELECT name, category_name, descr, value, date, 0 as score \
+                        SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 0 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
-                        AND descr LIKE ? \
+                        AND UPPER(descr) LIKE UPPER(?) \
                         GROUP BY name, category_name, descr, value \
                         ORDER BY score desc, date DESC \
                         )"
@@ -798,11 +807,12 @@ function addNewExpense(intProfileId, expenseData, travelData) {
         db.transaction(function (tx) {
             tx.executeSql(txtSaveStatement,
                           [intProfileId, _txtCategory, _txtName, _txtDescr, _txtEntryDate, _realValue])
-          
-            rs = tx.executeSql("SELECT MAX(expense_id) as id FROM expenses")
-            let _newID = rs.rows.item(0).id
-            //Save Travel Data
+
+            // Add Travel Data
             if (travelData) {
+                rs = tx.executeSql("SELECT MAX(expense_id) as id FROM expenses")
+                let _newID = rs.rows.item(0).id
+
                 addTravelData(_newID, travelData)
             }
     
@@ -838,36 +848,65 @@ function addTravelData(id, travelData) {
     })
 }
 
-function updateItemValue(txtEntryDate, txtFieldId, intProfileId, txtItemId, realValue) {
-    var txtSaveStatement
-    var db = openDB()
-    var rs = null
-    var newID
-    var success
-    var errorMsg
-    var result
+function updateExpense(expenseData, travelData) {
+    let _txtUpdateStatement
+    let _db = openDB()
+    let _rs = null
+    let _success
+    let _errorMsg
+    let _result
+    let _oldEntryDate
+    
+    let _txtID = expenseData.expenseID
+    let _txtEntryDate = expenseData.entryDate
+    let _txtName = expenseData.name
+    let _txtCategory = expenseData.category
+    let _txtDescr = expenseData.description
+    let _realValue = expenseData.value
+    let _travelData = travelData
 
-    txtSaveStatement = 'UPDATE monitor_items_values SET value = ? \
-                        WHERE strftime("%Y-%m-%d %H:%M:%f", entry_date, "localtime") = strftime("%Y-%m-%d %H:%M:%f", ?) \
-                        AND field_id = ? AND profile_id = ? AND item_id = ?'
+    _txtUpdateStatement = 'UPDATE expenses SET category_name = ?, name = ?, descr = ?, date = strftime("%Y-%m-%d %H:%M:%f", ?, "utc"), value = ? WHERE expense_id = ?'
 
     try {
-        db.transaction(function (tx) {
-            tx.executeSql(txtSaveStatement,
-                          [realValue, txtEntryDate, txtFieldId, intProfileId, txtItemId])
-    
+        _db.transaction(function (tx) {
+            // Check old entry date
+            _rs = tx.executeSql("SELECT strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date FROM expenses WHERE expense_id = ?", _txtID)
+            _oldEntryDate = _rs.rows.item(0).entry_date
+
+            tx.executeSql(_txtUpdateStatement, [_txtCategory, _txtName, _txtDescr, _txtEntryDate, _realValue, _txtID])
         })
 
-        success = true
+        // Update Travel Data
+        if (_travelData.rate > 0 && _travelData.homeCur != ""
+                && _travelData.travelCur != "" && _travelData.value > 0) {
+            updateTravelExpense(_txtID, _travelData)
+        }
+
+        _success = true
     } catch (err) {
         console.log("Database error: " + err)
-        errorMsg = err
-        success = false
+        _errorMsg = err
+        _success = false
     }
 
-    result = {"success": success, "error": errorMsg}
+    _result = {"success": _success, "error": _errorMsg, "oldEntryDate": _oldEntryDate}
     
-    return result
+    return _result
+}
+
+function updateTravelExpense(id, travelData) {
+    let _db = openDB()
+
+    let _homeCur = travelData.homeCur
+    let _travelCur = travelData.travelCur
+    let _rate = travelData.rate
+    let _value = travelData.value
+
+    _db.transaction(function (tx) {
+        tx.executeSql(
+                    "UPDATE travel_expenses SET home_currency = ?, travel_currency = ?, rate = ?, value = ? WHERE expense_id = ?",
+                    [_homeCur, _travelCur, _rate, _value, id])
+    })
 }
 
 function updateItemEntryDate(txtEntryDate, txtNewEntryDate, intProfileId) {

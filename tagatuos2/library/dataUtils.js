@@ -66,16 +66,18 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
-                    let _travelData = null
+                    //~ let _travelData = expenseData.travelData
+                    let _travelData
 
                     // Travel Data
                     if (mainView.settings.travelMode) {
-                        let _realRate = mainView.settings.exchangeRate
-                        let _txtHomeCur = mainView.settings.currentCurrency
-                        let _txtTravelCur = mainView.settings.travelCurrency
+                        _travelData = expenseData.travelData
+                        //~ let _realRate = mainView.settings.exchangeRate
+                        //~ let _txtHomeCur = mainView.settings.currentCurrency
+                        //~ let _txtTravelCur = mainView.settings.travelCurrency
                         //~ let _realTravelValue = 0
-                        let _realTravelValue = _realValue
-                        _realValue = _realTravelValue * _realRate
+                        //~ let _realTravelValue = _realValue
+                        //~ _realValue = _realTravelValue * _realRate
 
                         //~ if (itemHomeCur === mainView.settings.currentCurrency && itemTravelCur === mainView.settings.travelCurrency) {
                             //~ _realTravelValue = _realValue
@@ -84,12 +86,12 @@ var dataUtils = dataUtils || (function (undefined) {
                             //~ _realTravelValue = _realValue / _realRate
                         //~ }
 
-                        _travelData = {
-                            "rate": _realRate
-                            , "homeCur": _txtHomeCur
-                            , "travelCur": _txtTravelCur
-                            , "value": _realTravelValue
-                        }
+                        //~ _travelData = {
+                            //~ "rate": _realRate
+                            //~ , "homeCur": _txtHomeCur
+                            //~ , "travelCur": _txtTravelCur
+                            //~ , "value": _realTravelValue
+                        //~ }
                     }
 
                     const _data = {
@@ -107,8 +109,33 @@ var dataUtils = dataUtils || (function (undefined) {
 
                     return _result.success
                 }
-                , edit: function(entryDate, fieldId, itemId, value, comments) {
-                    return Database.updateItemValue(entryDate, fieldId, profile, itemId, value)
+                , edit: function(expenseData) {
+                    let _txtID = expenseData.expenseID
+                    let _txtDate = expenseData.entryDate
+                    let _txtName = expenseData.name
+                    let _realValue = expenseData.value
+                    let _txtDescr = expenseData.description
+                    let _txtCategory = expenseData.category
+                    let _travelData = expenseData.travelData
+
+                    const _data = {
+                        "expenseID": _txtID
+                        , "entryDate": _txtDate
+                        , "name": _txtName
+                        , "description": _txtDescr
+                        , "category": _txtCategory
+                        , "value": _realValue
+                    }
+
+                    let _result = Database.updateExpense(_data, _travelData)
+                    if (_result.success) {
+                        mainView.mainModels.refreshValues(_data.entryDate)
+                        if (_result.oldEntryDate != _data.entryDate) {
+                            mainView.mainModels.refreshValues(_result.oldEntryDate)
+                        }
+                    }
+
+                    return _result.success
                 }
                 , editEntryDate: function(entryDate, newEntryDate) {
                     return Database.updateItemEntryDate(entryDate, newEntryDate, profile)

@@ -10,6 +10,7 @@ Rectangle {
     property bool transparentBackground: false
     property color backgroundColor: Suru.backgroundColor
     property color borderColor: Suru.backgroundColor
+    property color highlightColor: Suru.highlightColor
     property color highlightedBorderColor: Suru.highlightColor
 
     radius: Suru.units.gu(1.5)
@@ -44,7 +45,7 @@ Rectangle {
         radius: backgroundRec.radius
         color: {
             if (control.highlighted)
-                return Suru.highlightColor
+                return backgroundRec.highlightColor
 
             let _factor = 1.0
 
