@@ -29,24 +29,5 @@ Row {
                 Common.Haptics.playSubtle()
 			}
         }
-
-//~         ToolbarButton {
-//~             id: toolButton
-
-//~             anchors.bottom: parent.bottom
-//~             tooltipText: modelData.text
-//~             visible: modelData.visible
-//~             height: Suru.units.gu(5)
-//~             width: height
-//~             icon.name: modelData ? model.icon.name : ""
-//~             icon.width: Suru.units.gu(3)
-//~             icon.height: iconWidth
-//~             icon.color: Suru.foregroundColor
-
-//~             onClicked: {
-//~ 				modelData.trigger(toolbarActions.position == ToolBar.Footer, toolButton)
-//~                 Common.Haptics.playSubtle()
-//~ 			}
-//~         }
     }
 }

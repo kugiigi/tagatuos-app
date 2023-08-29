@@ -51,13 +51,33 @@ FocusScope {
         property Components.ExpenseData expenseData: expenseDataObj
         property int currentExpenseID: expenseData.expenseID
 
-        function checkRequiredFields() {
+        function selectFirstItem() {
+            if (contextActionsListView.visible) {
+                contextActionsListView.currentIndex = 0
+                contextActionsListView.currentItem.clicked()
+                return
+            }
+
+            if (quickListGridView.visible) {
+                let _firstItem = quickListGridView.itemAt(0, 0)
+                _firstItem.clicked()
+                return
+            }
+
+            if (historyGridView.visible) {
+                let _firstItem = historyGridView.itemAt(0, 0)
+                _firstItem.clicked()
+                return
+            }
+        }
+
+        function checkRequiredFields(asQuickOnly = false) {
             if (nameField.text.trim() == "") {
                 nameField.forceActiveFocus()
                 return false
             }
 
-            if (valueField.text.trim() == "") {
+            if (valueField.text.trim() == "" && !asQuickOnly) {
                 valueField.forceActiveFocus()
                 return false
             }
@@ -78,6 +98,28 @@ FocusScope {
             }
 
             categoryField.forceActiveFocus()
+        }
+
+        function saveAsQuick() {
+            /*Commits the OSK*/
+            mainView.keyboard.commit()
+
+            if (!checkRequiredFields(true)) {
+                mainView.tooltip.display(i18n.tr("Please fill required fields"))
+                return
+            } else {
+                let _txtName = nameField.text
+                let _txtDescr = descriptionField.text
+                let _txtCategory = categoryField.currentText
+                let _realValue = valueField.text.trim() == "" ? 0 : Functions.cleanExpenseValue(valueField.text)
+
+                internal.expenseData.name = _txtName
+                internal.expenseData.description = _txtDescr
+                internal.expenseData.category = _txtCategory
+                internal.expenseData.value = _realValue
+
+                newExpenseView.createQuickExpense()
+            }
         }
     }
 
@@ -104,6 +146,19 @@ FocusScope {
         }
     }
 
+    function createQuickExpense() {
+        let _result = mainView.quickExpenses.add(internal.expenseData)
+        if (_result.success) {
+            mainView.tooltip.display(i18n.tr("Quick expense added"))
+        } else {
+            if (_result.exists) {
+                mainView.tooltip.display(i18n.tr("Already exists"))
+            } else {
+                mainView.tooltip.display(i18n.tr("Quick expense failed"))
+            }
+        }
+    }
+
     function updateExpense() {
         if (mainView.expenses.edit(internal.expenseData)) {
             mainView.tooltip.display(i18n.tr("Expense updated"))
@@ -127,24 +182,19 @@ FocusScope {
             /*Commits the OSK*/
             mainView.keyboard.commit()
 
-            if (!internal.checkRequiredFields()) {
+            if (!internal.checkRequiredFields(false)) {
                 mainView.tooltip.display(i18n.tr("Please fill required fields"))
                 return
             } else {
                 let _txtName = nameField.text
                 let _txtDescr = descriptionField.text
                 let _txtCategory = categoryField.currentText
-                // Replace commas since it's accepted even with the validator
-                let _realValue = valueField.text.replace(/,/g, "")
+                let _realValue = Functions.cleanExpenseValue(valueField.text)
                 let _txtDate = Functions.getToday()
 
                 if (!dateField.checked || isEditMode) {
                     _txtDate = Functions.formatDateForDB(dateField.dateValue)
                 }
-
-//~                 if (!isEditMode) {
-//~                     internal.expenseData.reset()
-//~                 }
 
                 internal.expenseData.entryDate = _txtDate
                 internal.expenseData.name = _txtName
@@ -281,14 +331,6 @@ FocusScope {
             case Qt.Key_Escape:
                 closeAction.triggered()
                 return;
-            case Qt.Key_Right:
-            case Qt.Key_Left:
-            case Qt.Key_Down:
-                mainFlickable.focus = true;
-                break;
-            case Qt.Key_Up:
-                focusSearchInput();
-                break;
         }
         if (event.text.trim() !== "") {
             focusSearchInput();
@@ -305,18 +347,15 @@ FocusScope {
         }
     }
 
-    Rectangle {
+    Common.BackgroundBlur {
         visible: opacity > 0
-        color: "#000000"
         anchors.fill: parent
-        opacity: 0.8
-
-        Behavior on opacity {
-            NumberAnimation {
-                easing: Suru.animations.EasingIn
-                duration: Suru.animations.SnapDuration
-            }
-        }
+        color: Suru.foregroundColor
+        blurRadius: Suru.units.gu(5)
+        backgroundOpacity: 0.1
+        sourceItem: mainPage
+        blurRect: Qt.rect(0, 0, sourceItem.width, sourceItem.height)
+        occluding: false
 
         MouseArea {
             anchors.fill: parent
@@ -331,7 +370,6 @@ FocusScope {
         opacity: height > Suru.units.gu(6) && !closeSwipeAreaLoader.dragging ? 1 : 0
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-//~         text: newExpenseView.searchMode || newExpenseView.entryMode ? i18n.tr("New Expense") : i18n.tr("Quick Expense")
         text: {
             if (newExpenseView.searchMode || newExpenseView.entryMode) {
                 if (newExpenseView.isEditMode) {
@@ -343,7 +381,7 @@ FocusScope {
 
             return i18n.tr("Quick Expense")
         }
-        color: "#ffffff"
+        color: Suru.foregroundColor
         anchors {
             top: parent.top
             left: parent.left
@@ -437,8 +475,16 @@ FocusScope {
                 placeholderText: i18n.tr("Enter expense name")
                 inputMethodHints: Qt.ImhNoPredictiveText
 
-                KeyNavigation.down: internal.contextActionsShown ? contextActionsListView 
-                                                : quickListGridView.count > 0 ? quickListGridView : historyGridView
+                KeyNavigation.down: {
+                    if (contextActionsListView.visible) {
+                        return contextActionsListView
+                    }
+                    if (quickListGridView.visible) {
+                        return quickListGridView
+                    }
+
+                    return historyGridView
+                }
 
                 focus: visible
                 onTextChanged: {
@@ -457,16 +503,7 @@ FocusScope {
                         searchDelay.restart()
                     }
                 }
-    //~             onAccepted: tabslist.selectFirstItem()
-    //~             onActiveFocusChanged: {
-    //~                 if (activeFocus) {
-    //~                     tabslist.searchMode = true
-    //~                 }
-
-    //~                 if (KeyNavigation.down == tabslist.view) {
-    //~                     tabslist.view.processFocusChange()
-    //~                 }
-    //~             }
+                onAccepted: internal.selectFirstItem()
 
                 Timer {
                     id: searchDelay
@@ -481,192 +518,210 @@ FocusScope {
             }
         }
 
-        Flickable {
-            id: mainFlickable
-            
-            readonly property real defaultTopMargin: Suru.units.gu(2)
-
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            boundsBehavior: Flickable.DragOverBounds
-            boundsMovement: Flickable.StopAtBounds
-            clip: true
-            topMargin: defaultTopMargin
-            bottomMargin: toolbar.height
-            contentHeight: contentsColumnLayout.height
-            interactive: !internal.partiallyShown
+            Common.BaseFlickable {
+                id: mainFlickable
+                
+                readonly property real defaultTopMargin: Suru.units.gu(2)
 
-            function resetScroll() {
-                contentY = -defaultTopMargin
-            }
+                anchors.fill: parent
 
-            onMovingChanged: {
-                if (moving && searchField.text.trim() == "" && !internal.tall && !newExpenseView.isWideLayout) {
-                    newExpenseView.searchMode = false
-                }
-            }
+                boundsBehavior: Flickable.DragOverBounds
+                boundsMovement: Flickable.StopAtBounds
+                clip: true
+                topMargin: defaultTopMargin
+                bottomMargin: toolbar.height
+                contentHeight: contentsColumnLayout.height
+                interactive: !internal.partiallyShown
 
-            ColumnLayout {
-                id: contentsColumnLayout
-
-                anchors {
-                    left: parent.left
-                    right: parent.right
+                function resetScroll() {
+                    contentY = -defaultTopMargin
                 }
 
-                ColumnLayout {
-                    Layout.fillHeight: false
-
-                    visible: !newExpenseView.entryMode
-
-                    ContextActionsListView {
-                        id: contextActionsListView
-
-                        Layout.fillWidth: true
-                        Layout.margins: Suru.units.gu(1)
-                        Layout.topMargin: 0
-                        Layout.preferredHeight: contentHeight
-
-                        visible: newExpenseView.contextActionsShown
-                        focus: visible
-                        isWideLayout: newExpenseView.isWideLayout
-
-                        function requestExpense() {
-                            internal.expenseData.reset()
-                            internal.expenseData.entryDate = Functions.getToday()
-                            internal.expenseData.name = searchField.text
-
-                            newExpenseView.switchToEntryMode()
-                        }
-
-                        onRequestNewExpense: requestExpense()
-                        onRequestNewQuickExpense: requestExpense()
-                    }
-
-                    QuickListGridView {
-                        id: quickListGridView
-
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: contentHeight
-
-                        gridType: newExpenseView.displayType
-                        type: QuickListGridView.Type.QuickList
-                        isTravelMode: newExpenseView.isTravelMode
-                        travelCurrency: newExpenseView.currentTravelCurrency
-                        exchangeRate: newExpenseView.currentExchangeRate
-                        baseModel: mainView.mainModels.quickExpensesModel
-                        expenseData: internal.expenseData
-
-                        onRequestNewExpense: newExpenseView.switchToEntryMode()
-                        onCreateNewExpense: newExpenseView.createNewExpense()
-                        onRequestClose: newExpenseView.close()
-                    }
-
-                    QuickListGridView {
-                        id: historyGridView
-
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: contentHeight
-
-                        gridType: newExpenseView.displayType
-                        type: QuickListGridView.Type.History
-                        isTravelMode: newExpenseView.isTravelMode
-                        travelCurrency: newExpenseView.currentTravelCurrency
-                        exchangeRate: newExpenseView.currentExchangeRate
-                        baseModel: mainView.mainModels.historyEntryExpensesModel
-                        expenseData: internal.expenseData
-
-                        onRequestNewExpense: newExpenseView.switchToEntryMode()
-                        onCreateNewExpense: newExpenseView.createNewExpense()
-                        onRequestClose: newExpenseView.close()
+                onMovingChanged: {
+                    if (moving && searchField.text.trim() == "" && !internal.tall && !newExpenseView.isWideLayout) {
+                        newExpenseView.searchMode = false
                     }
                 }
 
                 ColumnLayout {
-                    Layout.fillHeight: false
-                    Layout.topMargin: Suru.units.gu(5)
-                    Layout.bottomMargin: Suru.units.gu(2)
-                    Layout.leftMargin: Suru.units.gu(2)
-                    Layout.rightMargin: Suru.units.gu(2)
+                    id: contentsColumnLayout
 
-                    spacing: Suru.units.gu(2)
-                    visible: newExpenseView.entryMode
-
-                    TravelDataFields {
-                        id: travelDataFields
-
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: Suru.units.gu(6)
-                        visible: newExpenseView.processTravelData
-                        isEditMode: newExpenseView.isEditMode
-                        homeCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentHomeCurrency : internal.expenseData.travelData.homeCur
-                        travelCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentTravelCurrency : internal.expenseData.travelData.travelCur
-                        rate: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentExchangeRate : internal.expenseData.travelData.rate
+                    anchors {
+                        left: parent.left
+                        right: parent.right
                     }
 
-                    DateField {
-                        id: dateField
+                    ColumnLayout {
+                        Layout.fillHeight: false
 
-//~                         readonly property bool modified: internal.editEntryDate != Functions.formatDateForDB(dateField.dateValue)
+                        visible: !newExpenseView.entryMode
 
-                        Layout.fillWidth: true
-                        showToggle: !newExpenseView.isEditMode
-                    }
+                        ContextActionsListView {
+                            id: contextActionsListView
 
-                    NameField {
-                        id: nameField
+                            Layout.fillWidth: true
+                            Layout.margins: Suru.units.gu(1)
+                            Layout.topMargin: 0
+                            Layout.preferredHeight: contentHeight
 
-                        Layout.fillWidth: true
-                        flickable: mainFlickable
-                        text: internal.expenseData.name
-                    }
+                            visible: newExpenseView.contextActionsShown
+                            isWideLayout: newExpenseView.isWideLayout
 
-                    CategoryField {
-                        id: categoryField
+                            function requestExpense() {
+                                internal.expenseData.reset()
+                                internal.expenseData.entryDate = Functions.getToday()
+                                internal.expenseData.name = searchField.text
 
-                        Layout.fillWidth: true
-                        flickable: mainFlickable
-                        currentIndex: internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0
-                        onVisibleChanged: {
-                            if (!visible) {
-                                // Rebind value
-                                currentIndex = Qt.binding( function() { return internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0 } )
+                                newExpenseView.switchToEntryMode()
                             }
+
+                            onRequestNewExpense: requestExpense()
+                            onRequestNewQuickExpense: requestExpense()
+                        }
+
+                        QuickListGridView {
+                            id: quickListGridView
+
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: contentHeight
+
+                            visible: count > 0
+                            gridType: newExpenseView.displayType
+                            flickable: mainFlickable
+                            type: QuickListGridView.Type.QuickList
+                            isTravelMode: newExpenseView.isTravelMode
+                            travelCurrency: newExpenseView.currentTravelCurrency
+                            exchangeRate: newExpenseView.currentExchangeRate
+                            baseModel: mainView.mainModels.quickExpensesModel
+                            expenseData: internal.expenseData
+                            KeyNavigation.up: contextActionsListView.visible ? contextActionsListView : searchField
+                            KeyNavigation.down: historyGridView.count > 0 ? historyGridView : null
+
+                            onRequestNewExpense: newExpenseView.switchToEntryMode()
+                            onCreateNewExpense: newExpenseView.createNewExpense()
+                            onRequestClose: newExpenseView.close()
+                        }
+
+                        QuickListGridView {
+                            id: historyGridView
+
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: contentHeight
+
+                            visible: count > 0
+                            gridType: newExpenseView.displayType
+                            flickable: mainFlickable
+                            type: QuickListGridView.Type.History
+                            isTravelMode: newExpenseView.isTravelMode
+                            travelCurrency: newExpenseView.currentTravelCurrency
+                            exchangeRate: newExpenseView.currentExchangeRate
+                            baseModel: mainView.mainModels.historyEntryExpensesModel
+                            expenseData: internal.expenseData
+                            KeyNavigation.up: {
+                                if (quickListGridView.visible) {
+                                    return quickListGridView
+                                }
+
+                                if (contextActionsListView.visible) {
+                                    return contextActionsListView
+                                }
+
+                                return searchField
+                            }
+
+                            onRequestNewExpense: newExpenseView.switchToEntryMode()
+                            onCreateNewExpense: newExpenseView.createNewExpense()
+                            onRequestClose: newExpenseView.close()
                         }
                     }
 
-                    ValueField {
-                        id: valueField
+                    ColumnLayout {
+                        Layout.fillHeight: false
+                        Layout.topMargin: Suru.units.gu(5)
+                        Layout.bottomMargin: Suru.units.gu(2)
+                        Layout.leftMargin: Suru.units.gu(2)
+                        Layout.rightMargin: Suru.units.gu(2)
 
-                        readonly property real mainValue: hasTravelData ? travelData.value : internal.expenseData.value
+                        spacing: Suru.units.gu(2)
+                        visible: newExpenseView.entryMode
 
-                        Layout.fillWidth: true
+                        TravelDataFields {
+                            id: travelDataFields
 
-                        isColoredText: newExpenseView.isColoredText
-                        flickable: mainFlickable
-                        hasTravelData: newExpenseView.hasTravelData
-                        processTravelData: newExpenseView.processTravelData
-                        isTravelMode: newExpenseView.isTravelMode
-                        travelData: internal.expenseData.travelData
-                        homeCurrencyData: homeCurrencyObj.currencyData
-                        travelCurrencyData: travelCurrencyObj.currencyData
-                        text: mainValue == 0 ? "" : mainValue
-                        convertedValue: hasTravelData ? internal.expenseData.value : 0 //Only useful when travel mode is on or has travel data
-                        onVisibleChanged: {
-                            if (visible) {
-                                // Rebind value
-                                convertedValue = Qt.binding( function() { return hasTravelData ? internal.expenseData.value : 0 } )
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Suru.units.gu(6)
+                            visible: newExpenseView.processTravelData
+                            isEditMode: newExpenseView.isEditMode
+                            homeCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentHomeCurrency : internal.expenseData.travelData.homeCur
+                            travelCurrency: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentTravelCurrency : internal.expenseData.travelData.travelCur
+                            rate: newExpenseView.isTravelMode && !isEditMode ? newExpenseView.currentExchangeRate : internal.expenseData.travelData.rate
+                        }
+
+                        DateField {
+                            id: dateField
+
+                            Layout.fillWidth: true
+                            showToggle: !newExpenseView.isEditMode
+                        }
+
+                        NameField {
+                            id: nameField
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            text: internal.expenseData.name
+                        }
+
+                        CategoryField {
+                            id: categoryField
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            currentIndex: internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0
+                            onVisibleChanged: {
+                                if (!visible) {
+                                    // Rebind value
+                                    currentIndex = Qt.binding( function() { return internal.expenseData.category ? model.find(internal.expenseData.category, "value") : 0 } )
+                                }
                             }
                         }
-                    }
 
-                    DescriptionField {
-                        id: descriptionField
+                        ValueField {
+                            id: valueField
 
-                        Layout.fillWidth: true
-                        flickable: mainFlickable
-                        text: internal.expenseData.description
+                            readonly property real mainValue: hasTravelData ? travelData.value : internal.expenseData.value
+
+                            Layout.fillWidth: true
+
+                            isColoredText: newExpenseView.isColoredText
+                            flickable: mainFlickable
+                            hasTravelData: newExpenseView.hasTravelData
+                            processTravelData: newExpenseView.processTravelData
+                            isTravelMode: newExpenseView.isTravelMode
+                            travelData: internal.expenseData.travelData
+                            homeCurrencyData: homeCurrencyObj.currencyData
+                            travelCurrencyData: travelCurrencyObj.currencyData
+                            text: mainValue == 0 ? "" : mainValue
+                            convertedValue: hasTravelData ? internal.expenseData.value : 0 //Only useful when travel mode is on or has travel data
+                            onVisibleChanged: {
+                                if (visible) {
+                                    // Rebind value
+                                    convertedValue = Qt.binding( function() { return hasTravelData ? internal.expenseData.value : 0 } )
+                                }
+                            }
+                        }
+
+                        DescriptionField {
+                            id: descriptionField
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            text: internal.expenseData.description
+                        }
                     }
                 }
             }
@@ -732,31 +787,30 @@ FocusScope {
     QuickListToolbar {
         id: toolbar
 
+        height: Suru.units.gu(7)
         anchors {
             left: mainLayout.left
             right: mainLayout.right
         }
 
+        state: internal.isOpen ? "shown" : "hidden"
+
         states: [
             State {
-                name: "default"
-                AnchorChanges {
+                name: "hidden"
+                PropertyChanges {
                     target: toolbar
-                    anchors.bottom: undefined
+                    y: toolbar.parent.height
                 }
-            }
-            , State {
-                name: "anchored"
-                when: newExpenseView.entryMode
-                AnchorChanges {
+            },
+            State {
+                name: "shown"
+                PropertyChanges {
                     target: toolbar
-                    anchors.bottom: mainLayout.bottom
+                    y: toolbar.parent.height - toolbar.height - mainView.keyboardRectangle.height
                 }
             }
         ]
-        height: Suru.units.gu(7)
-
-        state: internal.isOpen ? "shown" : "hidden"
 
         leftActions: [ closeAction ]
 
@@ -765,6 +819,7 @@ FocusScope {
                 text: newExpenseView.isGridDisplay ? i18n.tr("Show list") : i18n.tr("Show grid")
                 shortText: newExpenseView.isGridDisplay ? i18n.tr("List") : i18n.tr("Grid")
                 icon.name: newExpenseView.isGridDisplay ? "view-list-symbolic" : "view-grid-symbolic"
+                triggerOnTriggered: false
                 visible: !newExpenseView.entryMode
 
                 onTrigger: {
@@ -776,15 +831,26 @@ FocusScope {
                 }
             }
             , Common.BaseAction {
+                text: i18n.tr("Save as Quick Expense")
+                iconName: "starred"
+                triggerOnTriggered: false
+                visible: newExpenseView.entryMode && !newExpenseView.isEditMode
+
+                onTrigger: internal.saveAsQuick()
+            }
+            , Common.BaseAction {
                 text: i18n.tr("Save")
                 iconName: "save"
+                triggerOnTriggered: false
                 visible: newExpenseView.entryMode
+                shortcut: StandardKey.Save
 
                 onTrigger: newExpenseView.save();
             }
             , Common.BaseAction {
                 text: i18n.tr("Search or create new expense")
                 iconName: "compose"
+                triggerOnTriggered: false
                 visible: !newExpenseView.entryMode
 
                 onTrigger: newExpenseView.focusSearchInput();
@@ -797,8 +863,9 @@ FocusScope {
 
         text: newExpenseView.entryMode ? i18n.tr("Cancel") : i18n.tr("Close")
         iconName: newExpenseView.entryMode ? "cancel" : "close"
+        triggerOnTriggered: false
 
-        onTrigger: {
+        onTrigger: { 
             if (newExpenseView.entryMode && !newExpenseView.isEditMode) {
                 newExpenseView.exitEntryMode()
             } else {

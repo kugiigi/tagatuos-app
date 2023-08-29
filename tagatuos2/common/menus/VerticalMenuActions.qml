@@ -1,5 +1,6 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2 as QQC2
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls.Suru 2.2
 import Lomiri.Components 1.3
 
 QQC2.Menu {
@@ -33,7 +34,7 @@ QQC2.Menu {
 
             height: visible ? units.gu(6) : 0
             icon.name: modelData ? modelData.iconName : ""
-            icon.color: theme.palette.normal.foregroundText
+            icon.color: Suru.foregroundColor
             icon.width: units.gu(2)
             icon.height: units.gu(2)
         }

@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import Lomiri.Components 1.3 as UT
 import QtQuick.Layouts 1.12
+import "../../../common" as Common
 import "../../../common/listitems" as ListItems
 import "../../../library/ApplicationFunctions.js" as AppFunctions
 import "../.." as Components
@@ -11,6 +12,7 @@ Item {
     id: gridDelegate
 
     readonly property bool isGridDisplay: GridView.view.gridType == QuickListGridView.GridType.Rectangle
+    property alias highlighted: itemDelegate.highlighted
     property int type: QuickListGridView.Type.QuickList
     property string expenseName
     property string categoryName
@@ -31,6 +33,8 @@ Item {
     height: GridView.view.cellHeight
 
     ListItems.BaseItemDelegate {
+        id: itemDelegate
+
         anchors {
             fill: parent
             margins: gridDelegate.isGridDisplay ? Suru.units.gu(1) : Suru.units.gu(0.8)
@@ -39,7 +43,10 @@ Item {
         onClicked: gridDelegate.clicked()
         onRightClicked: gridDelegate.rightClicked(mouseX, mouseY)
         onDoubleClicked: gridDelegate.doubleClicked()
-        onPressAndHold: gridDelegate.pressAndHold()
+        onPressAndHold: {
+            Common.Haptics.play()
+            gridDelegate.pressAndHold()
+        }
         onPressed: gridDelegate.pressed()
         onReleased: gridDelegate.released()
 

@@ -11,7 +11,8 @@ Item {
     property real maxScale: 1.5
     property real pulseScale: 2
 
-    property alias iconName: iconItem.name
+//~     property alias iconName: iconItem.name
+    property string iconName
     property real swipeProgress
     property bool enabled: true
     property bool heldState: false
@@ -41,6 +42,20 @@ Item {
     function delayedHide() {
         scale = pulseScale
         delayedHideTimer.restart()
+    }
+
+    onVisibleChanged: {
+        // Update icon if it changed
+        if (!visible && iconItem.name !== iconName) {
+            iconItem.name = iconName
+        }
+    }
+
+    onIconNameChanged: {
+        if (!visible) {
+            // Delay changing of icon to after it's hidden
+            iconItem.name = iconName
+        }
     }
 
     Timer {

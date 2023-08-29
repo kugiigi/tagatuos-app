@@ -98,6 +98,10 @@ function round_number(num, dec) {
     return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 }
 
+function formatToPercentage(value) {
+    return i18n.tr("%1 %2").arg(round_number(value * 100, 2)).arg("%")
+}
+
 function formatDateForDB(petsa) {
     return formatDate(petsa, "YYYY-MM-DD HH:mm:ss.SSS")
 }
@@ -152,6 +156,10 @@ function addMonths(petsa, months, toDBString = false) {
     }
 }
 
+function cleanExpenseValue(value) {
+    return value.replace(/,/g, "")
+}
+
 function checkIfWithinDateRange(inputDate, fromDate, toDate) {
     let _inputDateMom = moment(inputDate)
     let _fromDateMom = moment(fromDate)
@@ -160,54 +168,158 @@ function checkIfWithinDateRange(inputDate, fromDate, toDate) {
     return _inputDateMom.isBetween(_fromDateMom, _toDateMom,'day',[])
 }
 
-function getStartEndDate(date,mode){
-    var momentDate = moment(date)
-    var firstDay
-    var lastDay
+function getFirstDay(txtRange) {
+    let _today = moment()
+    let _result = _today
 
-    switch(mode){
-    case 'day':
-        firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'week':
-        firstDay = momentDate.startOf('week').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        lastDay = momentDate.endOf('week').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'month':
-        firstDay = momentDate.startOf('month').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        lastDay = momentDate.endOf('month').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'recent':
-        lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'recent exclude':
-        lastDay = momentDate.subtract(1, 'day').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'year':
-        firstDay = momentDate.startOf('year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        lastDay = momentDate.endOf('year').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    case 'all':
-        lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        firstDay = momentDate.subtract(50, 'year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
-    default:
-        firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        break;
+    switch (txtRange) {
+        case "today":
+            _result = _today
+            break
+        case "yesterday":
+            _result = _today.subtract(1, 'day')
+            break
+        case "tomorrow":
+            _result = _today.add(1, 'day')
+            break
+        case "thisweek":
+            _result = _today.startOf('week')
+            break
+        case "lastweek":
+            _result = _today.subtract(1, 'week').startOf('week')
+            break
+        case "nextweek":
+            _result = _today.add(1, 'week').startOf('week')
+            break
+        case "thismonth":
+            _result = _today.startOf('month')
+            break
+        case "lastmonth":
+            _result = _today.subtract(1, 'month').startOf('month')
+            break
+        case "nextmonth":
+            _result = _today.add(1, 'month').startOf('month')
+            break
+        case "thisyear":
+            _result = _today.startOf('year')
+            break
+        case "lastyear":
+            _result = _today.subtract(1, 'year').startOf('year')
+            break
+        case "nextyear":
+            _result = _today.add(1, 'year').startOf('year')
+            break
+        case "recent":
+            _result = _today.subtract(6, 'day')
+            break
+        case "previousrecent":
+            _result = _today.subtract(13, 'day')
+            break
     }
 
-
-
-    return {
-        start: firstDay.toString(),
-        end: lastDay.toString()
-    }
+    return _result.format("YYYY-MM-DD HH:mm:ss")
 }
+
+function getLastDay(txtRange) {
+    let _today = moment()
+    let _result = _today
+
+    switch (txtRange) {
+        case "today":
+            _result = _today
+            break
+        case "yesterday":
+            _result = _today.subtract(1, 'day')
+            break
+        case "tomorrow":
+            _result = _today.add(1, 'day')
+            break
+        case "thisweek":
+            _result = _today.endOf('week')
+            break
+        case "lastweek":
+            _result = _today.subtract(1, 'week').endOf('week')
+            break
+        case "nextweek":
+            _result = _today.add(1, 'week').endOf('week')
+            break
+        case "thismonth":
+            _result = _today.endOf('month')
+            break
+        case "lastmonth":
+            _result = _today.subtract(1, 'month').endOf('month')
+            break
+        case "nextmonth":
+            _result = _today.add(1, 'month').endOf('month')
+            break
+        case "thisyear":
+            _result = _today.endOf('year')
+            break
+        case "lastyear":
+            _result = _today.subtract(1, 'year').endOf('year')
+            break
+        case "nextyear":
+            _result = _today.add(1, 'year').endOf('year')
+            break
+        case "recent":
+            _result = _today
+            break
+        case "previousrecent":
+            _result = _today.subtract(7, 'day')
+            break
+    }
+
+    return _result.format("YYYY-MM-DD HH:mm:ss")
+}
+
+//~ function getStartEndDate(date,mode){
+    //~ var momentDate = moment(date)
+    //~ var firstDay
+    //~ var lastDay
+
+    //~ switch(mode){
+    //~ case 'day':
+        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'week':
+        //~ firstDay = momentDate.startOf('week').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ lastDay = momentDate.endOf('week').endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'month':
+        //~ firstDay = momentDate.startOf('month').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ lastDay = momentDate.endOf('month').endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'recent':
+        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'recent exclude':
+        //~ lastDay = momentDate.subtract(1, 'day').endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'year':
+        //~ firstDay = momentDate.startOf('year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ lastDay = momentDate.endOf('year').endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ case 'all':
+        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ firstDay = momentDate.subtract(50, 'year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ default:
+        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
+        //~ break;
+    //~ }
+
+
+
+    //~ return {
+        //~ start: firstDay.toString(),
+        //~ end: lastDay.toString()
+    //~ }
+//~ }
 
 function formatMoney(value, currency, options) {
     var formattedMoney

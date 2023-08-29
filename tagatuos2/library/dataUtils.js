@@ -49,11 +49,104 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
             }
         }
+        , dashboard: function (profile) {
+
+            return {
+                breakdown: function(range) {
+                    let _current = []
+                    let _previous = []
+
+                    switch (range) {
+                        case "today":
+                            _current = Database.getCategoryBreakdown(profile, "today");
+                            _previous = Database.getCategoryBreakdown(profile, "yesterday");
+                            break
+                        case "thisweek":
+                            _current = Database.getCategoryBreakdown(profile, "thisweek");
+                            _previous = Database.getCategoryBreakdown(profile, "lastweek");
+                            break
+                        case "thismonth":
+                            _current = Database.getCategoryBreakdown(profile, "thismonth");
+                            _previous = Database.getCategoryBreakdown(profile, "lastmonth");
+                            break
+                        case "thisyear":
+                            _current = Database.getCategoryBreakdown(profile, "thisyear");
+                            _previous = Database.getCategoryBreakdown(profile, "lastyear");
+                            break
+                        case "recent":
+                            _current = Database.getCategoryBreakdown(profile, "recent");
+                            _previous = Database.getCategoryBreakdown(profile, "previousrecent");
+                            break
+                    }
+
+                    return [ _current, _previous ]
+                    //~ let _current = []
+                    //~ let _previous = []
+                    //~ let _currentData = []
+                    //~ let _previousData = []
+
+                    //~ switch (range) {
+                        //~ case "today":
+                            //~ _current = Database.getCategoryBreakdown(profile, "today");
+                            //~ _previous = Database.getCategoryBreakdown(profile, "yesterday");
+                            //~ break
+                        //~ case "thisweek":
+                            //~ _current = Database.getCategoryBreakdown(profile, "thisweek");
+                            //~ _previous = Database.getCategoryBreakdown(profile, "lastweek");
+                            //~ break
+                        //~ case "thismonth":
+                            //~ _current = Database.getCategoryBreakdown(profile, "thismonth");
+                            //~ _previous = Database.getCategoryBreakdown(profile, "lastmonth");
+                            //~ break
+                        //~ case "thisyear":
+                            //~ _current = Database.getCategoryBreakdown(profile, "thisyear");
+                            //~ _previous = Database.getCategoryBreakdown(profile, "lastyear");
+                            //~ break
+                        //~ case "recent":
+                            //~ _current = Database.getCategoryBreakdown(profile, "recent");
+                            //~ _previous = Database.getCategoryBreakdown(profile, "previousrecent");
+                            //~ break
+                    //~ }
+
+                    //~ for (let i = 0; i < _current.length; i++) {
+                        //~ _currentData.push({ label: _current[i].category_name, value: _current[i].total, color: _current[i].color })
+                    //~ }
+                    //~ for (let i = 0; i < _previous.length; i++) {
+                        //~ _previousData.push({ label: _previous[i].category_name, value: _previous[i].total, color: _previous[i].color })
+                    //~ }
+
+                    //~ return [
+                        //~ { data: _currentData }
+                        //~ , { data: _previousData }
+                    //~ ]
+                },
+            }
+        }
         , quickExpenses: function (profile) {
 
             return {
                 list: function() {
                     return Database.getQuickExpenses(profile, "");
+                }
+                , add: function(expenseData) {
+                    let _txtName = expenseData.name
+                    let _realValue = expenseData.value
+                    let _txtDescr = expenseData.description
+                    let _txtCategory = expenseData.category
+
+                    const _data = {
+                        "name": _txtName
+                        , "description": _txtDescr
+                        , "category": _txtCategory
+                        , "value": _realValue
+                    }
+
+                    let _result = Database.addQuickExpense(profile, _data)
+                    if (_result.success) {
+                        mainView.mainModels.refreshQuickExpense()
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists}
                 }
             }
         }
@@ -66,32 +159,11 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
-                    //~ let _travelData = expenseData.travelData
                     let _travelData
 
                     // Travel Data
                     if (mainView.settings.travelMode) {
                         _travelData = expenseData.travelData
-                        //~ let _realRate = mainView.settings.exchangeRate
-                        //~ let _txtHomeCur = mainView.settings.currentCurrency
-                        //~ let _txtTravelCur = mainView.settings.travelCurrency
-                        //~ let _realTravelValue = 0
-                        //~ let _realTravelValue = _realValue
-                        //~ _realValue = _realTravelValue * _realRate
-
-                        //~ if (itemHomeCur === mainView.settings.currentCurrency && itemTravelCur === mainView.settings.travelCurrency) {
-                            //~ _realTravelValue = _realValue
-                            //~ _realValue = realTravelValue * _realRate
-                        //~ } else {
-                            //~ _realTravelValue = _realValue / _realRate
-                        //~ }
-
-                        //~ _travelData = {
-                            //~ "rate": _realRate
-                            //~ , "homeCur": _txtHomeCur
-                            //~ , "travelCur": _txtTravelCur
-                            //~ , "value": _realTravelValue
-                        //~ }
                     }
 
                     const _data = {

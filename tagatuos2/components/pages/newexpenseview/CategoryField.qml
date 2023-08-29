@@ -9,7 +9,7 @@ ComboBox {
 
     readonly property bool highlighted: activeFocus
     property color color: Suru.InformationHighlight ? Suru.activeFocusColor : Suru.foregroundColor
-    property Flickable flickable
+    property Common.BaseFlickable flickable
 
     model: mainView.mainModels.categoriesModel
     textRole: "category_name"

@@ -95,16 +95,21 @@ WorkerScript.onMessage = function (msg) {
                                  })
             }
             break;
-        case "DashItems":
-            for (var i = 0; i < msg.result.length; i++) {
-                txtItemId = msg.result[i].item_id
-                txtValueType = msg.result[i].value_type
-                txtScope = msg.result[i].scope
-                msg.model.append({
-                                     itemId: txtItemId
-                                     , valueType: txtValueType
-                                     , scope: txtScope
-                                 })
+        case "TodayBreakdownChart":
+        case "ThisWeekBreakdownChart":
+        case "ThisMonthBreakdownChart":
+        case "ThisYearBreakdownChart":
+        case "RecentBreakdownChart":
+            let _data = []
+
+            for (let i = 0; i < msg.result.length; i++) {
+                _data = [] // Reset first
+
+                for (let h = 0; h < msg.result[i].length; h++) {
+                    _data.push({ label: msg.result[i][h].category_name, value: msg.result[i][h].total, color: msg.result[i][h].color })
+                }
+
+                msg.model.append( { data: _data } )
             }
             break;
         case "MonitorItemsFields":

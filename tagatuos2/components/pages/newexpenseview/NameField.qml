@@ -8,7 +8,7 @@ import "../../../library/functions.js" as Functions
 TextField {
     id: nameField
 
-    property Flickable flickable
+    property Common.BaseFlickable flickable
     readonly property bool highlighted: activeFocus
 
     placeholderText: i18n.tr("Enter expense name")

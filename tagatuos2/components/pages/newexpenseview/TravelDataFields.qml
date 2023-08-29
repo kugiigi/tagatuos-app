@@ -39,8 +39,6 @@ ListItems.BaseItemDelegate {
                 readonly property color secondaryFontColor: Suru.tertiaryForegroundColor
 
                 Suru.textLevel: Suru.HeadingThree
-//~                 text: travelDataFields.rate + " " + '<font color=\"' + secondaryFontColor + '\">' + travelDataFields.homeCurrency
-//~                       + '</font>' + " = 1 " + '<font color=\"' + secondaryFontColor + '\">' + travelDataFields.travelCurrency +'</font>'
                 text: i18n.tr('%1 <font color=\"%2\">%3</font> = 1 <font color=\"%4\">%5</font>').arg(travelDataFields.rate)
                                 .arg(secondaryFontColor).arg(travelDataFields.homeCurrency).arg(secondaryFontColor)
                                 .arg(travelDataFields.travelCurrency)

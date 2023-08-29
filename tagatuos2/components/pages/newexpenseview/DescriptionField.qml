@@ -8,7 +8,7 @@ import "../../../library/functions.js" as Functions
 TextArea {
     id: descriptionField
 
-    property Flickable flickable
+    property Common.BaseFlickable flickable
     readonly property bool highlighted: activeFocus
 
     placeholderText: i18n.tr("Add description, more details or comments")

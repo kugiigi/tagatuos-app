@@ -13,7 +13,7 @@ TextField {
     property bool hasTravelData: false
     property bool processTravelData: false
 
-    property Flickable flickable
+    property Common.BaseFlickable flickable
     property alias convertedValue: convertedValueLabel.value // Home currency value when in travel mode
     property bool isColoredText: false
     property var travelData

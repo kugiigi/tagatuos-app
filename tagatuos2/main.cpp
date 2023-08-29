@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QSettings>
@@ -7,11 +7,11 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setApplicationName("Tagatuos");
-    QGuiApplication::setApplicationName("tagatuos2.kugiigi");
-    //~ QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setApplicationName("Tagatuos");
+    QApplication::setApplicationName("tagatuos2.kugiigi");
+    //~ QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QSettings settings;
     QString style = QQuickStyle::name();

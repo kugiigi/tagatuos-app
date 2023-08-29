@@ -12,28 +12,9 @@ Common.BaseToolbar {
     Behavior on y {
         NumberAnimation {
             easing: Suru.animations.EasingOut
-            duration: Suru.animations.BriskDuration
+            duration: Suru.animations.FastDuration
         }
     }
 
     backgroundColor: Suru.backgroundColor
-
-    state: "shown"
-
-    states: [
-        State {
-            name: "hidden"
-            PropertyChanges {
-                target: toolbar
-                y: toolbar.parent.height
-            }
-        },
-        State {
-            name: "shown"
-            PropertyChanges {
-                target: toolbar
-                y: toolbar.parent.height - toolbar.height
-            }
-        }
-    ]
 }

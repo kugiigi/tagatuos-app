@@ -3,6 +3,7 @@ import QtQml.Models 2.2
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import "../.." as Components
+import "../../../common" as Common
 import "../../../library/functions.js" as Functions
 
 GridView {
@@ -24,6 +25,8 @@ GridView {
     readonly property int minimumColumns: 2
     readonly property real itemMargins: Suru.units.gu(1)
 
+//~     property Flickable flickable
+    property Common.BaseFlickable flickable
     property bool isTravelMode: false
     property string travelCurrency
     property real exchangeRate
@@ -41,25 +44,38 @@ GridView {
     signal requestNewExpense()
     signal requestClose
 
-    // Process separately from activeFocusChanged
-    // so it won't execute in other activeFocus changes
-    // such as window unfocus and menus
-//~     function processFocusChange() {
-//~         if (activeFocus) {
-//~             if (searchField.text.trim() == "" && !internal.tall) {
-//~                 quickListGridView.searchMode = false
-//~             }
-//~             currentIndex = 0
-//~         } else {
-//~             currentIndex = -1
-//~         }
-//~     }
+    QtObject {
+        id: internal
 
-//~     clip: true
+        property int previousIndex: 0
+    }
+
     model: filteredModel
+    currentIndex: -1
     interactive: false
+    keyNavigationEnabled: true
     boundsMovement: contentY == 0 ? Flickable.StopAtBounds : Flickable.FollowBoundsBehavior
     boundsBehavior: Flickable.DragOverBounds
+
+    onActiveFocusChanged: {
+        if (!activeFocus) {
+            internal.previousIndex = currentIndex
+            currentIndex = -1
+        } else {
+            if (internal.previousIndex > -1) {
+                currentIndex = internal.previousIndex
+            }
+        }
+    }
+
+    onVisibleChanged: {
+        if (!visible) {
+            currentIndex = -1
+            internal.previousIndex = 0
+        } else {
+            currentIndex = -1
+        }
+    }
 
     cellWidth: {
         switch (quickListGridView.gridType) {
@@ -80,9 +96,8 @@ GridView {
         }
     }
 
-//~     KeyNavigation.up: internal.goToSearchShown ? goToListView : searchField
-//~     Keys.onEnterPressed: quickListGridView.tabSelected(tabsModel.indexOf(currentItem.tabObj), currentItem.tabObj.preview, currentItem.previewContainer)
-//~     Keys.onReturnPressed: quickListGridView.tabSelected(tabsModel.indexOf(currentItem.tabObj), currentItem.tabObj.preview, currentItem.previewContainer)
+    Keys.onEnterPressed: currentItem.clicked()
+    Keys.onReturnPressed: currentItem.clicked()
 
     add: Transition {
         NumberAnimation {
@@ -148,6 +163,14 @@ GridView {
             readonly property bool showTravelValue: isTravelMode && travelCurrency != ""
                                     && travelCurrency == quickListGridView.travelCurrency
 
+            highlighted: GridView.isCurrentItem
+            scale: highlighted ? 1.05 : 1
+            Behavior on scale {
+                NumberAnimation {
+                    easing: Suru.animations.EasingIn
+                    duration: Suru.animations.FastDuration
+                }
+            }
             type: quickListGridView.type
             expenseName: model.name
             value: showTravelValue ? model.travel_value : model.value
@@ -179,12 +202,18 @@ GridView {
                 }
             }
 
+            onHighlightedChanged: {
+                if (highlighted) {
+                    quickListGridView.flickable.scrollToItem(this, 0, 0)
+                }
+            }
+
             onClicked: {
                 expenseData.reset()
                 expenseData.name = expenseName
                 expenseData.description = description
                 expenseData.category = categoryName
-                expenseData.value = value                
+                expenseData.value = value
 
                 if (showTravelValue) {
                     expenseData.value = model.value

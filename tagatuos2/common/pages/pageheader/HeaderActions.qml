@@ -49,7 +49,6 @@ RowLayout {
                 id: button
 
                 action: modelData
-//~                 display: QQC2.AbstractButton.TextUnderIcon
                 display: headerActions.buttonDisplay
                 tooltipText: modelData ? modelData.tooltipText : ""
             }
@@ -59,7 +58,6 @@ RowLayout {
     HeaderToolButton {
         id: overflowButton
 
-//~         display: QQC2.AbstractButton.TextUnderIcon
         display: headerActions.buttonDisplay
         action: Common.BaseAction {
             visible: headerActions.showOverflow

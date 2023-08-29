@@ -8,6 +8,7 @@ import ".." as Common
 QQC2.Page {
     id: basePageStack
 
+    property bool enableShortcuts: false
     property alias headerExpanded: pageHeader.expanded
     property alias pageHeader: pageHeader
     property alias customTitleItem: pageHeader.customTitleItem
@@ -16,7 +17,7 @@ QQC2.Page {
     property alias depth: mainStackView.depth
     property alias stackView: mainStackView
     property alias middleBottomGesture: middleBottomEdgeHandler
-    property var defaultLeftActions: []
+    property var defaultLeftActions: [ backAction ]
     property var defaultRightActions: []
 
     property bool isWideLayout: false
@@ -33,6 +34,9 @@ QQC2.Page {
     property real bottomGestureAreaHeight: units.gu(2)
     property real directActionsHeight: 3
 
+    clip: true
+    focus: true
+
     function push(item) {
         mainStackView.push(item)
     }
@@ -45,8 +49,17 @@ QQC2.Page {
         mainStackView.clear()
     }
 
-    clip: true
-    focus: true
+    Common.BaseAction {
+        id: backAction
+
+        text: i18n.tr("Back")
+        tooltipText: i18n.tr("Go back to previous page")
+        iconName: "back"
+        visible: mainStackView.depth > 1
+        shortcut: enableShortcuts ? StandardKey.Cancel : ""
+
+        onTrigger: mainStackView.pop()
+    }
 
     header: BasePageHeader {
         id: pageHeader

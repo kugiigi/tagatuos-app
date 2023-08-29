@@ -38,7 +38,6 @@ function getCategoryColor(category) {
     return mainView.mainModels.categoriesModel.getColor(category)
 }
 
-
 function getContrastYIQ(hexcolor){
     let rgb = hexToRgb(hexcolor)
     let r = rgb.r

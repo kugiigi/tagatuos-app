@@ -34,9 +34,13 @@
         <file>components/pages/newexpenseview/CategoryField.qml</file>
         <file>components/pages/newexpenseview/DateField.qml</file>
         <file>components/pages/newexpenseview/TravelDataFields.qml</file>
+        <file>components/pages/DashboardPage.qml</file>
+        <file>components/pages/dashboardpage/BreakdownPieChart.qml</file>
+        <file>components/pages/dashboardpage/BreakdownPieChartLegend.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
+        <file>components/models/BreakdownChartModel.qml</file>
         <file>components/models/ModelWorkerScript.mjs</file>
 
         <file>components/SettingsComponent.qml</file>
@@ -46,6 +50,7 @@
         <file>components/ExpenseData.qml</file>
         <file>components/Currency.qml</file>
         <file>components/FocusScrollConnections.qml</file>
+        <file>components/DeleteExpenseDialog.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandle.qml</file>
         <file>common/gestures/BottomSwipeArea.qml</file>
@@ -62,11 +67,11 @@
         <file>common/pages/BasePage.qml</file>
 
         <file>common/dialogs/BaseDialog.qml</file>
+        <file>common/dialogs/DialogWithContents.qml</file>
         <file>common/dialogs/BasePopup.qml</file>
         <file>common/dialogs/BasePickerDialog.qml</file>
         <file>common/dialogs/DatePickerDialog.qml</file>
         <file>common/dialogs/TimePickerDialog.qml</file>
-        <file>common/dialogs/DeleteConfirmDialog.qml</file>
 
         <file>common/listitems/BaseItemDelegate.qml</file>
         <file>common/listitems/CustomizedSliderDelegate.qml</file>
@@ -87,6 +92,7 @@
 
         <file>common/qmldir</file>
         <file>common/PullDownFlickableConnections.qml</file>
+        <file>common/BackgroundBlur.qml</file>
         <file>common/Haptics.qml</file>
         <file>common/BaseBackgroundRectangle.qml</file>
         <file>common/BaseFlickable.qml</file>

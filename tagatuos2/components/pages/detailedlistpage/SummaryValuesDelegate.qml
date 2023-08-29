@@ -12,7 +12,7 @@ Common.BaseButton {
     id: summaryValues
 
     readonly property bool multipleValues: valuesModel && valuesModel.length > 1 ? true : false
-    readonly property var travelTotalArray: valuesModel.filter(x => x.value_type == "TRAVEL_TOTAL")
+    readonly property var travelTotalArray: valuesModel ? valuesModel.filter(x => x.value_type == "TRAVEL_TOTAL") : []
     readonly property bool travelTotalCount: travelTotalArray.length
     // Indicates that current data only has one travel currency and would determine which total to display
     readonly property bool onlyOneTravelTotal: travelTotalCount == 1

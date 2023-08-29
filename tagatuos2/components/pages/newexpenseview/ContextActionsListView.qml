@@ -49,8 +49,8 @@ ListView {
     Keys.onEnterPressed: currentItem.clicked()
     Keys.onReturnPressed: currentItem.clicked()
 
-    onFocusChanged: {
-        if (!focus) {
+    onActiveFocusChanged: {
+        if (!activeFocus) {
             previousIndex = currentIndex
             currentIndex = -1
         } else {
@@ -60,13 +60,13 @@ ListView {
         }
     }
 
-//~                     onActiveFocusChanged: tabslist.view.processFocusChange()
-
     onVisibleChanged: {
         if (!visible) {
             focus = false
             currentIndex = -1
             previousIndex = 0
+        } else {
+            currentIndex = 0
         }
     }
 
@@ -83,10 +83,12 @@ ListView {
                                  type: "expense"
                                  , text: i18n.tr('Add "%1" as new expense').arg(_elidedText)
                              })
+                /*
                 contextActions.model.append({
                                  type: "quick"
                                  , text: i18n.tr('Add "%1" as new quick expense').arg(_elidedText)
                              })
+               */ 
             }
         }
     }

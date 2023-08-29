@@ -10,7 +10,6 @@ import "../../common/pages" as Pages
 import "../../common/menus" as Menus
 import "../../common/dialogs" as Dialogs
 import "../../library/functions.js" as Functions
-//~ import "../../library/ApplicationFunctions.js" as AppFunctions
 
 Pages.BasePage {
     id: detailedListPage
@@ -25,12 +24,10 @@ Pages.BasePage {
     property string travelCurrency
 
     flickable: dateViewPath.currentItem.view
-
     title: mainView.profiles.currentName()
-//~     title: i18n.tr("Expenses")
-    
+    focus: !mainView.newExpenseView.isOpen
+
     signal refresh
-//~     signal itemDeleted
 
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction, sortAction, profilesAction]
 //~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction]
@@ -43,18 +40,6 @@ Pages.BasePage {
         }
     }
 
-//~     Connections {
-//~         target: newEntryPopup
-//~         onAccepted: {
-//~             refresh()
-//~         }
-//~     }
-
-//~     onItemDeleted: {
-//~         refresh()
-//~         mainModels.dashboardModel.refresh();
-//~     }
-
     function next() {
         dateViewPath.incrementCurrentIndex()
     }
@@ -65,11 +50,6 @@ Pages.BasePage {
 
     function newEntry() {
         mainView.newExpenseView.openInSearchMode()
-//~         if (isToday) {
-//~             newEntrySelection.openWithInitial(currentCategory)
-//~         } else {
-//~             newEntrySelection.openWithInitial(currentCategory, dateViewPath.currentItem.fromDate)
-//~         }
     }
     
     function goToday() {
@@ -96,26 +76,6 @@ Pages.BasePage {
         }
     }
 
-    Shortcut {
-        sequence: StandardKey.MoveToNextChar
-        onActivated: next()
-    }
-
-    Shortcut {
-        sequence: StandardKey.MoveToPreviousChar
-        onActivated: previous()
-    }
-
-    Shortcut {
-        sequence: StandardKey.MoveToNextWord
-        onActivated: goToNextData()
-    }
-
-    Shortcut {
-        sequence: StandardKey.MoveToPreviousWord
-        onActivated: goToLastData()
-    }
-
     Common.BaseAction {
         id: addAction
 
@@ -139,10 +99,32 @@ Pages.BasePage {
     }
 
     Common.BaseAction {
+        id: nextAction
+
+        enabled: detailedListPage.focus
+        text: i18n.tr("Next")
+        iconName: "go-next"
+        shortcut: StandardKey.MoveToNextChar
+        onTrigger: next()
+    }
+
+    Common.BaseAction {
+        id: previousAction
+
+        enabled: detailedListPage.focus
+        text: i18n.tr("Previous")
+        iconName: "go-previous"
+        shortcut: StandardKey.MoveToPreviousChar
+        onTrigger: previous()
+    }
+
+    Common.BaseAction {
         id: lastDataAction
 
+        enabled: detailedListPage.focus
         text: i18n.tr("View Last Data")
-        iconName: "go-previous"
+        iconName: "go-first"
+        shortcut: StandardKey.MoveToPreviousWord
 
         onTrigger: goToLastData()
     }
@@ -150,8 +132,10 @@ Pages.BasePage {
     Common.BaseAction {
         id: nextDataAction
 
+        enabled: detailedListPage.focus
         text: i18n.tr("View Next Data")
-        iconName: "go-next"
+        iconName: "go-last"
+        shortcut: StandardKey.MoveToNextWord
 
         onTrigger: goToNextData()
     }
@@ -192,7 +176,21 @@ Pages.BasePage {
         text: i18n.tr("Delete")
         iconName: "delete"
 
-        onTrigger: deleteConfirmDialog.openNormal()
+        onTrigger: {
+            let _popup = deleteExpenseDialogComponent.createObject(detailedListPage, { expenseData: contextMenu.itemData })
+            _popup.proceed.connect(function() {
+                let _tooltipMsg
+
+                if (mainView.expenses.delete(contextMenu.itemData.expenseID, contextMenu.itemData.entryDate)) {
+                    _tooltipMsg = i18n.tr("Expense deleted")
+                } else {
+                    _tooltipMsg = i18n.tr("Deletion failed")
+                }
+                
+                mainView.tooltip.display(_tooltipMsg)
+            })
+            _popup.openBottom();
+        }
     }
 
     Common.BaseAction {
@@ -201,25 +199,11 @@ Pages.BasePage {
         separator: true
     }
 
-    Dialogs.DeleteConfirmDialog {
-        id: deleteConfirmDialog
+    Component {
+        id: deleteExpenseDialogComponent
 
-        title: i18n.tr("Delete this expense?")
-//~         subtitle: ("%1 - %2 (%3)").arg(contextMenu.itemProperties.entryDate).arg(contextMenu.itemProperties.name).arg(contextMenu.itemProperties.value)
-        subtitle: ("%1 - %2 (%3)").arg(Functions.relativeDate(contextMenu.itemData.entryDate, "ddd, MMM d, yyyy", "Basic")).arg(contextMenu.itemData.name).arg(contextMenu.itemData.value)
-
-        onAccepted: {
-            let _tooltipMsg
-
-//~             if (mainView.expenses.delete(contextMenu.itemProperties.expenseID, contextMenu.itemProperties.entryDateValue)) {
-            if (mainView.expenses.delete(contextMenu.itemData.expenseID, contextMenu.itemData.entryDate)) {
-                _tooltipMsg = i18n.tr("Expense deleted")
-//~                 detailedListPage.itemDeleted()
-            } else {
-                _tooltipMsg = i18n.tr("Deletion failed")
-            }
+        Components.DeleteExpenseDialog {
             
-            mainView.tooltip.display(_tooltipMsg)
         }
     }
 
@@ -230,9 +214,6 @@ Pages.BasePage {
             id: expenseDataObj
         }
 
-//~         itemProperties: { "expenseID": "", "name": "", "entryDate": "", "entryDateValue": "", "description": "", "value": "" }
-
-//~         actions: [ editAction, separatorAction, deleteAction ]
         actions: [ editAction, deleteAction, separatorAction ]
         listView: dateViewPath.currentItem.view
     }
@@ -292,10 +273,10 @@ Pages.BasePage {
                                     : mainView.mainModels.categoriesModel.getItem(detailedListPage.currentCategory, "category_name").category_name
 
                     onCriteria: criteriaPopup.openPopup()
-                    onNext: detailedListPage.next()
-                    onPrevious: detailedListPage.previous()
-                    onNextData: detailedListPage.goToNextData()
-                    onPreviousData: detailedListPage.goToLastData()
+                    onNext: nextAction.triggered()
+                    onPrevious: previousAction.triggered()
+                    onNextData: nextDataAction.triggered()
+                    onPreviousData: lastDataAction.triggered()
                 }
 
                 ToolSeparator {
@@ -425,13 +406,6 @@ Pages.BasePage {
                         highlighted: listView.currentIndex == index
 
                         onShowContextMenu: {
-//~                             let itemProperties = { expenseID: expenseID
-//~                                     , name: itemName
-//~                                     , entryDate: entryDate
-//~                                     , entryDateValue: model.dateValue
-//~                                     , value: formattedValue
-//~                                     , description: comments
-//~                             }
                             contextMenu.itemData.expenseID = expenseID
                             contextMenu.itemData.name = itemName
                             contextMenu.itemData.entryDate = entryDate
@@ -444,7 +418,6 @@ Pages.BasePage {
                             contextMenu.itemData.travelData.value = travelValue
 
                             listView.currentIndex = index
-//~                             contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY, itemProperties)
                             contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY)
                         }
 
@@ -496,44 +469,6 @@ Pages.BasePage {
             NumberAnimation {
                 duration: Suru.animations.FastDuration
                 easing: Suru.animations.EasingOut
-            }
-        }
-    }
-
-    Connections {
-        target: detailedListPage.pageManager.middleBottomGesture
-        ignoreUnknownSignals: true
-
-        onStageChanged: {
-            if (target.dragging) {
-                switch (target.stage) {
-                    case 0:
-                        break
-                    case 1:
-                    case 2:
-                    case 3:
-                        if (mainView.newExpenseView.searchMode) {
-                            Common.Haptics.playSubtle()
-                        }
-                        mainView.newExpenseView.searchMode = false
-                        break
-                    case 4:
-                        if (!mainView.newExpenseView.searchMode) {
-                            Common.Haptics.play()
-                        }
-                        mainView.newExpenseView.searchMode = true
-                        break
-                    case 5:
-                    default:
-                        break
-                }
-            }
-        }
-
-        onDraggingChanged: {
-            if (!target.dragging && target.towardsDirection 
-                    && target.stage >= 1) {
-                mainView.newExpenseView.open()
             }
         }
     }

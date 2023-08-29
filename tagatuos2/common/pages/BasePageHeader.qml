@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
+import QtGraphicalEffects 1.12
 import ".." as Common
 import "../menus" as Menus
 import "pageheader"
@@ -29,6 +30,7 @@ QQC2.ToolBar {
     property list<Common.BaseAction> leftActions
     property list<Common.BaseAction> rightActions
     property Item currentItem
+    property bool enableDropShadow: false
     property bool expanded: false
     property bool expandable: false
     property bool showDivider: true
@@ -50,6 +52,18 @@ QQC2.ToolBar {
             height: Suru.units.dp(1)
             color: Suru.neutralColor
             visible: pageHeader.showDivider
+        }
+        
+        layer.enabled: pageHeader.enableDropShadow
+        layer.effect: DropShadow {
+            readonly property color shadowColor: Suru.foregroundColor
+
+            cached: true
+            verticalOffset: 10
+            radius: (samples - 1) * 0.5
+            samples: 25
+            color: Qt.hsla(shadowColor.hslHue, shadowColor.hslSaturation, shadowColor.hslLightness, 0.2)
+            source: pageHeader.background
         }
     }
 

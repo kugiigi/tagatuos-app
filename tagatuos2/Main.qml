@@ -1,16 +1,9 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
-//~ import Lomiri.Components.Themes.Ambiance 1.3 as Ambiance
-//~ import Lomiri.Components.Themes.SuruDark 1.3 as SuruDark
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
-//~ import Qt.labs.settings 1.0
 import UserMetrics 0.1
-//~ import "components"
-//~ import "components/ListModels"
-//~ import "components/Common"
-//~ import "ui"
 import "library/database.js" as Database
 import "library/dataUtils.js" as DataUtils
 import "library/functions.js" as Functions
@@ -27,18 +20,23 @@ ApplicationWindow {
 //~     readonly property QtObject drawer: drawerLoader.item
     readonly property string current_version: "1.0"
     readonly property var suruTheme: switch(settings.currentTheme) {
-            case "System":
-                if (Theme.name == "Lomiri.Components.Themes.SuruDark") {
-                    Suru.Dark
-                } else {
-                    Suru.Light
-                }
-                break
             case "Ambiance":
-                Suru.Light
+            case "Ubuntu.Components.Themes.Ambiance":
+            case "Lomiri.Components.Themes.Ambiance":
+                return Suru.Light
                 break
             case "SuruDark":
-                Suru.Dark
+            case "Ubuntu.Components.Themes.SuruDark":
+            case "Lomiri.Components.Themes.SuruDark":
+                return Suru.Dark
+                break
+            case "System":
+            default:
+                if (Theme.name == "Lomiri.Components.Themes.SuruDark") {
+                    return Suru.Dark
+                } else {
+                    return Suru.Light
+                }
                 break
         }
     
@@ -50,10 +48,7 @@ ApplicationWindow {
     property var categories: dataUtils.categories(settings.activeProfile)
     property var expenses: dataUtils.expenses(settings.activeProfile)   
     property var quickExpenses: dataUtils.quickExpenses(settings.activeProfile)   
-//~     property var dataUtils
-//~     property var profiles
-//~     property var categories
-//~     property var expenses
+    property var dashboard: dataUtils.dashboard(settings.activeProfile)   
     property string currentDate: Functions.getToday()
     
     property alias settings: settingsLoader.item
@@ -65,10 +60,9 @@ ApplicationWindow {
     property alias newExpenseView: newExpenseViewLoader.item
 //~     property alias corePage: corePage
 
-    title: "Tagatuos"
-//~     visible: false
-    visible: true
-    minimumWidth: 300
+    title: "Tagatuos - Your expense diary"
+    visible: false
+    minimumWidth: Suru.units.gu(30)
 
     Suru.theme: suruTheme //Suru.Light //Suru.Dark
 
@@ -120,9 +114,6 @@ ApplicationWindow {
         expenses = Qt.binding( function() { return dataUtils.expenses(settings.activeProfile) } )
         listModelsLoader.active = true
     }
-
-//~     Ambiance.Palette { id: ambianceTheme }
-//~     SuruDark.Palette { id: suruDarkTheme }
 
     function checkIfDayChanged() {
         if (!Functions.isToday(currentDate)) {
@@ -238,46 +229,93 @@ ApplicationWindow {
         onLoaded: {
 //~             listModels.modelCategories.getItems()
             mainPageLoader.active = true
-        }
-    }
-
-    Loader {
-        id: mainPageLoader
-
-        active: false
-        asynchronous: true
-        visible: status == Loader.Ready
-        anchors.fill: parent
-        sourceComponent: PageComponents.BasePageStack {
-            id: corePage
-            initialItem: Pages.DetailedListPage {
-                isTravelMode: mainView.settings.travelMode
-                travelCurrency: mainView.settings.travelCurrency
-            }
-            isWideLayout: mainView.isWideLayout
-            enableBottomGestureHint: true
-            enableHorizontalSwipe: true
-        }
-        onLoaded: {
             newExpenseViewLoader.active = true
         }
     }
 
-    Loader {
-        id: newExpenseViewLoader
+    FocusScope {
+        id: mainFocusScope
 
-        active: false
-        asynchronous: true
-        visible: status == Loader.Ready
         anchors.fill: parent
-        sourceComponent: Pages.NewExpenseView {
-            currentHomeCurrency: mainView.settings.currentCurrency
-            currentTravelCurrency: mainView.settings.travelCurrency
-            currentExchangeRate: mainView.settings.exchangeRate
-            isColoredText: mainView.settings.coloredText
-            isTravelMode: mainView.settings.travelMode
-            isWideLayout: mainView.isWideLayout
-            dragDistance: mainPage.middleBottomGesture.dragging ? mainPage.middleBottomGesture.distance : 0
+
+        Loader {
+            id: mainPageLoader
+
+            active: false
+            asynchronous: true
+            visible: status == Loader.Ready
+            anchors.fill: parent
+            sourceComponent: PageComponents.BasePageStack {
+                id: corePage
+
+                isWideLayout: mainView.isWideLayout
+                enableBottomGestureHint: true
+                enableHorizontalSwipe: true
+                initialItem: Pages.DashboardPage {
+                    isTravelMode: mainView.settings.travelMode
+                    travelCurrency: mainView.settings.travelCurrency
+                }
+                
+                Connections {
+                    target: corePage.middleBottomGesture
+                    ignoreUnknownSignals: true
+
+                    onStageChanged: {
+                        if (target.dragging) {
+                            switch (target.stage) {
+                                case 0:
+                                    break
+                                case 1:
+                                case 2:
+                                case 3:
+                                    if (mainView.newExpenseView.searchMode) {
+                                        Common.Haptics.playSubtle()
+                                    }
+                                    mainView.newExpenseView.searchMode = false
+                                    break
+                                case 4:
+                                    if (!mainView.newExpenseView.searchMode) {
+                                        Common.Haptics.play()
+                                    }
+                                    mainView.newExpenseView.searchMode = true
+                                    break
+                                case 5:
+                                default:
+                                    break
+                            }
+                        }
+                    }
+
+                    onDraggingChanged: {
+                        if (!target.dragging && target.towardsDirection 
+                                && target.stage >= 1) {
+                            mainView.newExpenseView.open()
+                        }
+                    }
+                }
+            }
+            onLoaded: {
+                mainView.visible = true
+//~                 newExpenseViewLoader.active = true
+            }
+        }
+
+        Loader {
+            id: newExpenseViewLoader
+
+            active: false
+            asynchronous: true
+            visible: status == Loader.Ready
+            anchors.fill: parent
+            sourceComponent: Pages.NewExpenseView {
+                currentHomeCurrency: mainView.settings.currentCurrency
+                currentTravelCurrency: mainView.settings.travelCurrency
+                currentExchangeRate: mainView.settings.exchangeRate
+                isColoredText: mainView.settings.coloredText
+                isTravelMode: mainView.settings.travelMode
+                isWideLayout: mainView.isWideLayout
+                dragDistance: mainPage.middleBottomGesture.dragging ? mainPage.middleBottomGesture.distance : 0
+            }
         }
     }
 

@@ -5,6 +5,7 @@ QQC2.Action {
 
     property bool visible: true
     property bool separator: false
+    property bool triggerOnTriggered: true
     property string shortText: text
     property string tooltipText
     property string iconName
@@ -12,4 +13,5 @@ QQC2.Action {
     enabled: visible
 
     signal trigger(bool isBottom, var caller)
+    onTriggered: if (triggerOnTriggered) trigger(false, parent)
 }

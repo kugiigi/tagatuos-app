@@ -3,7 +3,7 @@ TARGET = tagatuos2
 
 load(ubuntu-click)
 
-QT += qml quick quickcontrols2
+QT += qml quick quickcontrols2 widgets
 
 SOURCES += main.cpp
 

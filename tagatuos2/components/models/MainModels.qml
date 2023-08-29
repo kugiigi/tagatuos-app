@@ -14,6 +14,11 @@ Item {
     readonly property string thirdDetailedListID: "Detailed_3"
     readonly property string quickExpensesID: "QuickExpenses"
     readonly property string historyEntryExpensesID: "HistoryEntry"
+    readonly property string todayBreakdownChartID: "TodayBreakdownChart"
+    readonly property string thisWeekBreakdownChartID: "ThisWeekBreakdownChart"
+    readonly property string thisMonthBreakdownChartID: "ThisMonthBreakdownChart"
+    readonly property string thisYearBreakdownChartID: "ThisYearBreakdownChart"
+    readonly property string recentBreakdownChartID: "RecentBreakdownChart"
     
     property alias profilesModel: profilesModel
 //~     property alias dashboardModel: dashboardModel
@@ -26,21 +31,60 @@ Item {
     property alias quickExpensesModel: quickExpensesModel
     property alias historyEntryExpensesModel: historyEntryExpensesModel
 
+    // Breakdown Chart Models
+    property alias todayBreakdownChartModel: todayBreakdownChartModel
+    property alias thisWeekBreakdownChartModel: thisWeekBreakdownChartModel
+    property alias thisMonthBreakdownChartModel: thisMonthBreakdownChartModel
+    property alias thisYearBreakdownChartModel: thisYearBreakdownChartModel
+    property alias recentBreakdownChartModel: recentBreakdownChartModel
+
     signal refreshValues(string entryDate)
+    signal refreshQuickExpense()
 
     // Refresh models that are affected by new, edited or deleted expense values
     onRefreshValues: {
+        // Refresh quick history model
+        if (Functions.isToday(entryDate)) {
+            historyEntryExpensesModel.refresh()
+        }
+
+        // Refresh detailed list models
         if (Functions.checkIfWithinDateRange(entryDate, firstDetailedListModel.fromDate, firstDetailedListModel.toDate)) {
             firstDetailedListModel.refresh()
-        } 
+        }
+
         if (Functions.checkIfWithinDateRange(entryDate, secondDetailedListModel.fromDate, secondDetailedListModel.toDate)) {
             secondDetailedListModel.refresh()
-        } 
+        }
+
         if (Functions.checkIfWithinDateRange(entryDate, thirdDetailedListModel.fromDate, thirdDetailedListModel.toDate)) {
             thirdDetailedListModel.refresh()
         }
+
+        // Refresh breakdown chart models
+        if (Functions.checkIfWithinDateRange(entryDate, todayBreakdownChartModel.getFromDate(), todayBreakdownChartModel.getToDate())) {
+            todayBreakdownChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, thisWeekBreakdownChartModel.getFromDate(), thisWeekBreakdownChartModel.getToDate())) {
+            thisWeekBreakdownChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, thisMonthBreakdownChartModel.getFromDate(), thisMonthBreakdownChartModel.getToDate())) {
+            thisMonthBreakdownChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, thisYearBreakdownChartModel.getFromDate(), thisYearBreakdownChartModel.getToDate())) {
+            thisYearBreakdownChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, recentBreakdownChartModel.getFromDate(), recentBreakdownChartModel.getToDate())) {
+            recentBreakdownChartModel.refresh()
+        }
     }
-    
+
+    onRefreshQuickExpense: quickExpensesModel.refresh()
+
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
         id: workerLoader
@@ -51,15 +95,6 @@ Item {
             case "Profiles":
                 profilesModel.loadingStatus = "Ready"
                 break;
-//~             case "MonitorItemsFields":
-//~                 monitorItemsFieldsModel.loadingStatus = "Ready"
-//~                 break;
-//~             case "MonitorItems":
-//~                 monitorItemsModel.loadingStatus = "Ready"
-//~                 break;
-//~             case "DashItems":
-//~                 dashItemsModel.loadingStatus = "Ready"
-//~                 break;
             case mainModels.categoriesID:
                 categoriesModel.loadingStatus = "Ready"
                 break
@@ -69,6 +104,8 @@ Item {
             case mainModels.historyEntryExpensesID:
                 historyEntryExpensesModel.loadingStatus = "Ready"
                 break
+
+            // Detailed List Models
             case mainModels.firstDetailedListID:
                 firstDetailedListModel.summaryValues = messageObject.result
                 firstDetailedListModel.loadingStatus = "Ready"
@@ -80,6 +117,23 @@ Item {
             case mainModels.thirdDetailedListID:
                 thirdDetailedListModel.summaryValues = messageObject.result
                 thirdDetailedListModel.loadingStatus = "Ready"
+                break;
+
+            // Breakdown Chart Models
+            case mainModels.todayBreakdownChartID:
+                todayBreakdownChartModel.loadingStatus = "Ready"
+                break;
+            case mainModels.thisWeekBreakdownChartID:
+                thisWeekBreakdownChartModel.loadingStatus = "Ready"
+                break;
+            case mainModels.thisMonthBreakdownChartID:
+                thisMonthBreakdownChartModel.loadingStatus = "Ready"
+                break;
+            case mainModels.thisYearBreakdownChartID:
+                thisYearBreakdownChartModel.loadingStatus = "Ready"
+                break;
+            case mainModels.recentBreakdownChartID:
+                recentBreakdownChartModel.loadingStatus = "Ready"
                 break;
 //~             case "Dashboard":
 //~                 dashboardModel.loadingStatus = "Ready"
@@ -113,7 +167,6 @@ Item {
 //~         }
 //~     }
 
-//~     BaseValuesModel {
     Common.BaseListModel {
         id: categoriesModel
 
@@ -186,6 +239,7 @@ Item {
         }
     }
 
+    // Detailed List Models
     BaseValuesModel {
         id: firstDetailedListModel
 
@@ -205,6 +259,52 @@ Item {
 
         modelId: mainModels.thirdDetailedListID
         worker: workerLoader
+    }
+
+    // Breakdown Charts
+    BreakdownChartModel {
+        id: todayBreakdownChartModel
+
+        dataID: "today"
+        modelFunction: mainView.dashboard.breakdown
+        worker: workerLoader
+        modelId: mainModels.todayBreakdownChartID
+    }
+
+    BreakdownChartModel {
+        id: thisWeekBreakdownChartModel
+
+        dataID: "thisweek"
+        modelFunction: mainView.dashboard.breakdown
+        worker: workerLoader
+        modelId: mainModels.thisWeekBreakdownChartID
+    }
+
+    BreakdownChartModel {
+        id: thisMonthBreakdownChartModel
+
+        dataID: "thismonth"
+        modelFunction: mainView.dashboard.breakdown
+        worker: workerLoader
+        modelId: mainModels.thisMonthBreakdownChartID
+    }
+
+    BreakdownChartModel {
+        id: thisYearBreakdownChartModel
+
+        dataID: "thisyear"
+        modelFunction: mainView.dashboard.breakdown
+        worker: workerLoader
+        modelId: mainModels.thisYearBreakdownChartID
+    }
+
+    BreakdownChartModel {
+        id: recentBreakdownChartModel
+
+        dataID: "recent"
+        modelFunction: mainView.dashboard.breakdown
+        worker: workerLoader
+        modelId: mainModels.recentBreakdownChartID
     }
 
 //~     BaseListModel {

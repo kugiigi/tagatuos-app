@@ -25,12 +25,6 @@ ToolButton {
         color: Suru.foregroundColor
     }
 
-    onClicked: {
-        if (action) {
-            action.trigger(false, headerToolButton)
-        }
-    }
-
     background: Common.BaseBackgroundRectangle {
         id: backgroundRectangle
 
