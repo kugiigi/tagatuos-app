@@ -14,15 +14,19 @@ Item {
     readonly property string thirdDetailedListID: "Detailed_3"
     readonly property string quickExpensesID: "QuickExpenses"
     readonly property string historyEntryExpensesID: "HistoryEntry"
+
     readonly property string todayBreakdownChartID: "TodayBreakdownChart"
     readonly property string thisWeekBreakdownChartID: "ThisWeekBreakdownChart"
     readonly property string thisMonthBreakdownChartID: "ThisMonthBreakdownChart"
     readonly property string thisYearBreakdownChartID: "ThisYearBreakdownChart"
     readonly property string recentBreakdownChartID: "RecentBreakdownChart"
+
+    readonly property string thisWeekTrendChartID: "ThisWeekTrendChart"
+    readonly property string recentTrendChartID: "RecentTrendChart"
+    readonly property string thisMonthTrendChartID: "ThisMonthTrendChart"
+    readonly property string thisYearTrendChartID: "ThisYearTrendChart"
     
     property alias profilesModel: profilesModel
-//~     property alias dashboardModel: dashboardModel
-//~     property alias dashItemsModel: dashItemsModel
     property var detailedListModels: [ firstDetailedListModel, secondDetailedListModel, thirdDetailedListModel ]
     property alias firstDetailedListModel: firstDetailedListModel
     property alias secondDetailedListModel: secondDetailedListModel
@@ -37,6 +41,12 @@ Item {
     property alias thisMonthBreakdownChartModel: thisMonthBreakdownChartModel
     property alias thisYearBreakdownChartModel: thisYearBreakdownChartModel
     property alias recentBreakdownChartModel: recentBreakdownChartModel
+    
+    // Trend Chart Models
+    property alias thisWeekTrendChartModel: thisWeekTrendChartModel
+    property alias recentTrendChartModel: recentTrendChartModel
+    property alias thisMonthTrendChartModel: thisMonthTrendChartModel
+    property alias thisYearTrendChartModel: thisYearTrendChartModel
 
     signal refreshValues(string entryDate)
     signal refreshQuickExpense()
@@ -80,6 +90,23 @@ Item {
 
         if (Functions.checkIfWithinDateRange(entryDate, recentBreakdownChartModel.getFromDate(), recentBreakdownChartModel.getToDate())) {
             recentBreakdownChartModel.refresh()
+        }
+
+        // Refresh trend chart models
+        if (Functions.checkIfWithinDateRange(entryDate, thisWeekTrendChartModel.getFromDate(), thisWeekTrendChartModel.getToDate())) {
+            thisWeekTrendChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, thisMonthTrendChartModel.getFromDate(), thisMonthTrendChartModel.getToDate())) {
+            thisMonthTrendChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, thisYearTrendChartModel.getFromDate(), thisYearTrendChartModel.getToDate())) {
+            thisYearTrendChartModel.refresh()
+        }
+
+        if (Functions.checkIfWithinDateRange(entryDate, recentTrendChartModel.getFromDate(), recentTrendChartModel.getToDate())) {
+            recentTrendChartModel.refresh()
         }
     }
 
@@ -135,10 +162,27 @@ Item {
             case mainModels.recentBreakdownChartID:
                 recentBreakdownChartModel.loadingStatus = "Ready"
                 break;
-//~             case "Dashboard":
-//~                 dashboardModel.loadingStatus = "Ready"
-//~                 dashboardModel.updateUserMetric()
-//~                 break;
+            case mainModels.recentBreakdownChartID:
+                recentBreakdownChartModel.loadingStatus = "Ready"
+                break;
+
+            // Trend Chart Models
+            case mainModels.thisWeekTrendChartID:
+                thisWeekTrendChartModel.loadingStatus = "Ready"
+                thisWeekTrendChartModel.modelData = messageObject.result
+                break;
+            case mainModels.recentTrendChartID:
+                recentTrendChartModel.loadingStatus = "Ready"
+                recentTrendChartModel.modelData = messageObject.result
+                break;
+            case mainModels.thisMonthTrendChartID:
+                thisMonthTrendChartModel.loadingStatus = "Ready"
+                thisMonthTrendChartModel.modelData = messageObject.result
+                break;
+            case mainModels.thisYearTrendChartID:
+                thisYearTrendChartModel.loadingStatus = "Ready"
+                thisYearTrendChartModel.modelData = messageObject.result
+                break;
             }
         }
     }
@@ -154,18 +198,6 @@ Item {
             fillData(mainView.profiles.list())
         }
     }
-
-//~     BaseListModel {
-//~         id: dashItemsModel
-  
-//~         worker: workerLoader
-//~         modelId: "DashItems"
-//~         Component.onCompleted: refresh()
-        
-//~         function refresh() {
-//~             fillData(mainView.monitoritems.dashList())
-//~         }
-//~     }
 
     Common.BaseListModel {
         id: categoriesModel
@@ -305,6 +337,47 @@ Item {
         modelFunction: mainView.dashboard.breakdown
         worker: workerLoader
         modelId: mainModels.recentBreakdownChartID
+    }
+
+    // Trend Chart Models
+    TrendChartModel {
+        id: thisWeekTrendChartModel
+
+        chartRange: "thisweek"
+        chartMode: "day"
+        modelFunction: mainView.dashboard.trend
+        worker: workerLoader
+        modelId: mainModels.thisWeekTrendChartID
+    }
+
+    TrendChartModel {
+        id: recentTrendChartModel
+
+        chartRange: "recent"
+        chartMode: "day"
+        modelFunction: mainView.dashboard.trend
+        worker: workerLoader
+        modelId: mainModels.recentTrendChartID
+    }
+
+    TrendChartModel {
+        id: thisMonthTrendChartModel
+
+        chartRange: "thismonth"
+        chartMode: "week"
+        modelFunction: mainView.dashboard.trend
+        worker: workerLoader
+        modelId: mainModels.thisMonthTrendChartID
+    }
+
+    TrendChartModel {
+        id: thisYearTrendChartModel
+
+        chartRange: "thisyear"
+        chartMode: "month"
+        modelFunction: mainView.dashboard.trend
+        worker: workerLoader
+        modelId: mainModels.thisYearTrendChartID
     }
 
 //~     BaseListModel {

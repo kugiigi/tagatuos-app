@@ -484,6 +484,18 @@ function alterMetaViewsForVersion4() {
         tx.executeSql("DROP VIEW IF EXISTS expenses_lastmonth")
         tx.executeSql("DROP VIEW IF EXISTS expenses_vw")
 
+        // New views for trend charts
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_monthsOfYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfWeek")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfPreviousRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfLastMonth")
+
 
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_vw AS SELECT a.profile_id, a.expense_id, a.category_name, a.name, a.descr, a.date, a.value \
@@ -540,6 +552,80 @@ function alterMetaViewsForVersion4() {
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','start of year','-1 year') AND date('now','localtime','start of year','-1 day')")
+
+        // Date List Views for Charts
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfThisYear AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of year') AS dt, date('now','start of year','+1 year','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfLastYear AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of year','-1 year') as dt, date('now','localtime','start of year','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_monthsOfYear AS WITH RECURSIVE rec AS ( \
+                                SELECT 1 AS month_num \
+                                UNION ALL SELECT month_num + 1 FROM rec WHERE month_num < 12 \
+                            ) \
+                            SELECT PRINTF('%02d', month_num) AS month_num FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT 0 AS day_num \
+                                UNION ALL SELECT day_num + 1 FROM rec WHERE day_num < 6 \
+                            ) \
+                            SELECT cast(day_num as text) AS day_num FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfRecent AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','-6 day') AS dt, date('now','localtime') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) as day_num, dt as date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfPreviousRecent AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','-13 day') AS dt, date('now','localtime','-7 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) as day_num, dt as date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfThisMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of month') AS dt, date('now','localtime','start of month','+1 month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfLastMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of month','-1 month') AS dt, date('now','localtime','start of month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfThisMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of month') AS dt, date('now','localtime','start of month','+1 month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%d', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfLastMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of month','-1 month') AS dt, date('now','localtime','start of month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%d', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfThisWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','weekday 6','-6 days') AS dt, date('now','localtime','weekday 6') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfLastWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','weekday 6', '-13 days') AS dt, date('now','localtime','weekday 6', '-7 days') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) AS day_num, dt AS date FROM rec")
     })
 }
 
@@ -797,6 +883,154 @@ function getCategoryBreakdown(intProfileId, txtRange, txtFromDate, txtToDate) {
             _rs = tx.executeSql(_txtStatement, [intProfileId, txtFromDate, txtToDate])
         } else {
             _rs = tx.executeSql(_txtStatement, [intProfileId])
+        }
+
+        _arrResults.length = _rs.rows.length
+
+        for (let i = 0; i < _rs.rows.length; i++) {
+            _arrResults[i] = _rs.rows.item(i)
+        }
+    })
+
+    return _arrResults
+}
+
+function getExpenseTrend(intProfileId, txtRange, txtMode, arrCategories, txtFromDate, txtToDate) {
+    let _db = openDB()
+    let _arrResults = []
+    let _rs = null
+    let _txtFullStatement = ""
+    let _txtSelectStatement = ""
+    let _txtSelectLabel = ""
+    let _txtFromStatement = ""
+    let _txtMainRecord = ""
+    let _txtDateListRecord = ""
+    let _txtWhereStatement = ""
+    let _txtExtraWhereStatement = ""
+    let _txtCategoryWhereStatement = ""
+    let _txtGroupStatement = ""
+    let _txtOrderStatement = ""
+    let _isCustom = false
+
+    _txtWhereStatement = "ON profile_id = ?"
+    _txtGroupStatement = "GROUP BY label"
+    _txtOrderStatement = "ORDER BY label ASC"
+
+    switch (txtMode) {
+        case "day":
+            _txtSelectLabel = "datelist.date"
+            if (txtRange == "thismonth" || txtRange == "lastmonth") {
+                _txtExtraWhereStatement = "AND strftime('%d', date(expense.date, 'localtime')) = datelist.day_num"
+            } else {
+                _txtExtraWhereStatement = "AND strftime('%w', date(expense.date, 'localtime')) = datelist.day_num"
+            }
+            break
+        case "week":
+            if (txtRange == "thismonth" || txtRange == "lastmonth") {
+                _txtSelectLabel = "ROW_NUMBER() OVER(ORDER BY datelist.date)"
+                _txtGroupStatement = "GROUP BY strftime('%W', datelist.date)"
+            } else {
+                _txtSelectLabel = "strftime('%W', datelist.date)"
+            }
+            _txtExtraWhereStatement = "AND strftime('%W', date(expense.date, 'localtime')) = datelist.week_num"
+            break
+        case "month":
+            _txtSelectLabel = "datelist.month_num"
+            _txtExtraWhereStatement = "AND strftime('%m', date(expense.date, 'localtime')) = datelist.month_num"
+            break
+        default:
+            _txtSelectLabel = "strftime(?, date)"
+            break
+    }
+
+    switch (txtRange) {
+        case "today":
+            _txtMainRecord = "expenses_today"
+            break
+        case "yesterday":
+            _txtMainRecord = "expenses_yesterday"
+            break
+        case "thisweek":
+            _txtMainRecord = "expenses_thisweek"
+            _txtDateListRecord = "datelist_daysOfThisWeek"
+            break
+        case "lastweek":
+            _txtMainRecord = "expenses_lastweek"
+            _txtDateListRecord = "datelist_daysOfLastWeek"
+            break
+        case "recent":
+            _txtMainRecord = "expenses_recent"
+            _txtDateListRecord = "datelist_daysOfRecent"
+            break
+        case "previousrecent":
+            _txtMainRecord = "expenses_previousrecent"
+            _txtDateListRecord = "datelist_daysOfPreviousRecent"
+            break
+        case "thismonth":
+            _txtMainRecord = "expenses_thismonth"
+            if (txtMode =="day") {
+                _txtDateListRecord = "datelist_daysOfThisMonth"
+            } else if (txtMode =="week") {
+                _txtDateListRecord = "datelist_weeksOfThisMonth"
+            }
+            break
+        case "lastmonth":
+            _txtMainRecord = "expenses_lastmonth"
+            if (txtMode =="day") {
+                _txtDateListRecord = "datelist_daysOfLastMonth"
+            } else if (txtMode =="week") {
+                _txtDateListRecord = "datelist_weeksOfLastMonth"
+            }
+            break
+        case "thisyear":
+            _txtMainRecord = "expenses_thisyear"
+            if (txtMode =="week") {
+                _txtDateListRecord = "datelist_weeksOfThisYear"
+            } else if (txtMode =="month") {
+                _txtDateListRecord = "datelist_monthsOfYear"
+            }
+            break
+        case "lastyear":
+            _txtMainRecord = "expenses_lastyear"
+            if (txtMode =="week") {
+                _txtDateListRecord = "datelist_weeksOfLastYear"
+            } else if (txtMode =="month") {
+                _txtDateListRecord = "datelist_monthsOfYear"
+            }
+            break
+        default:
+            _txtMainRecord = "expenses_vw"
+            // TODO: Properly implement custom date range
+            _txtWhereStatement = [_txtWhereStatement, "AND date(date, 'localtime') BETWEEN date(?,'localtime') AND date(?,'localtime')"].join(" ")
+            _isCustom = true
+            break
+    }
+
+    _txtSelectStatement = 'SELECT ' + _txtSelectLabel + ' as label, TOTAL(value) as total'
+    _txtFromStatement = ["FROM", _txtDateListRecord, "datelist LEFT OUTER JOIN", _txtMainRecord, "expense"].join(" ")
+
+    if (arrCategories && arrCategories.length > 0) {
+        _txtCategoryWhereStatement = "AND ("
+        for (let i= 0; i < arrCategories.length; i++) {
+            if (i == 0) {
+                _txtCategoryWhereStatement = _txtCategoryWhereStatement + "expense.category_name = " + "'" + arrCategories[i] + "'"
+            } else {
+                _txtCategoryWhereStatement = _txtCategoryWhereStatement + " OR expense.category_name = " + "'" + arrCategories[i] + "'"
+            }
+        }
+        _txtCategoryWhereStatement = _txtCategoryWhereStatement + ")"
+    }
+
+    _txtFullStatement = [_txtSelectStatement, _txtFromStatement
+                                , _txtWhereStatement, _txtExtraWhereStatement, _txtCategoryWhereStatement
+                                , _txtGroupStatement, _txtOrderStatement].join(" ")
+
+    //~ console.log(_txtFullStatement)
+    _db.transaction(function (tx) {
+        if (_isCustom) {
+            _rs = tx.executeSql(_txtFullStatement, [intProfileId, fromDate, toDate])
+        } else {
+            _rs = tx.executeSql(_txtFullStatement, intProfileId)
         }
 
         _arrResults.length = _rs.rows.length

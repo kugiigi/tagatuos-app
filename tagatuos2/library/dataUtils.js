@@ -80,45 +80,33 @@ var dataUtils = dataUtils || (function (undefined) {
                     }
 
                     return [ _current, _previous ]
-                    //~ let _current = []
-                    //~ let _previous = []
-                    //~ let _currentData = []
-                    //~ let _previousData = []
+                },
+                trend: function(range, mode, categories, fromDate, toDate) {
+                    let _current = []
+                    let _previous = []
 
-                    //~ switch (range) {
-                        //~ case "today":
-                            //~ _current = Database.getCategoryBreakdown(profile, "today");
-                            //~ _previous = Database.getCategoryBreakdown(profile, "yesterday");
-                            //~ break
-                        //~ case "thisweek":
-                            //~ _current = Database.getCategoryBreakdown(profile, "thisweek");
-                            //~ _previous = Database.getCategoryBreakdown(profile, "lastweek");
-                            //~ break
-                        //~ case "thismonth":
-                            //~ _current = Database.getCategoryBreakdown(profile, "thismonth");
-                            //~ _previous = Database.getCategoryBreakdown(profile, "lastmonth");
-                            //~ break
-                        //~ case "thisyear":
-                            //~ _current = Database.getCategoryBreakdown(profile, "thisyear");
-                            //~ _previous = Database.getCategoryBreakdown(profile, "lastyear");
-                            //~ break
-                        //~ case "recent":
-                            //~ _current = Database.getCategoryBreakdown(profile, "recent");
-                            //~ _previous = Database.getCategoryBreakdown(profile, "previousrecent");
-                            //~ break
-                    //~ }
+                    switch (range) {
+                        case "thisweek":
+                            _current = Database.getExpenseTrend(profile, "thisweek", mode, categories, fromDate, toDate);
+                            _previous = Database.getExpenseTrend(profile, "lastweek", mode, categories, fromDate, toDate);
+                            break
+                        case "thismonth":
+                            _current = Database.getExpenseTrend(profile, "thismonth", mode, categories, fromDate, toDate);
+                            _previous = Database.getExpenseTrend(profile, "lastmonth", mode, categories, fromDate, toDate);
+                            break
+                        case "thisyear":
+                            _current = Database.getExpenseTrend(profile, "thisyear", mode, categories, fromDate, toDate);
+                            _previous = Database.getExpenseTrend(profile, "lastyear", mode, categories, fromDate, toDate);
+                            break
+                        case "recent":
+                            _current = Database.getExpenseTrend(profile, "recent", mode, categories, fromDate, toDate);
+                            _previous = Database.getExpenseTrend(profile, "previousrecent", mode, categories, fromDate, toDate);
+                            break
+                    }
+                    
+                    //~ console.log(JSON.stringify([ _current, _previous ]))
 
-                    //~ for (let i = 0; i < _current.length; i++) {
-                        //~ _currentData.push({ label: _current[i].category_name, value: _current[i].total, color: _current[i].color })
-                    //~ }
-                    //~ for (let i = 0; i < _previous.length; i++) {
-                        //~ _previousData.push({ label: _previous[i].category_name, value: _previous[i].total, color: _previous[i].color })
-                    //~ }
-
-                    //~ return [
-                        //~ { data: _currentData }
-                        //~ , { data: _previousData }
-                    //~ ]
+                    return [ _current, _previous ]
                 },
             }
         }

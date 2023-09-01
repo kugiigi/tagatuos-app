@@ -13,9 +13,12 @@ ItemDelegate {
     id: breakdownPieChart
 
     readonly property int currentTheme: mainView.suruTheme == Suru.Light ? ChartView.ChartThemeLight : ChartView.ChartThemeDark
-    readonly property bool isEmpty: currentLabel.value == 0 && previousLabel.value == 0
-//~     readonly property bool isEmpty: currentLabel.value == 0 || previousLabel.value == 0
-    property alias chartTitle: titleLabel.text
+    readonly property bool isEmpty: currentIsEmpty && previousIsEmpty
+    readonly property bool currentIsEmpty: currentLabel.value == 0
+    readonly property bool previousIsEmpty: previousLabel.value == 0
+    property string currentTitle
+    property string previousTitle
+    property alias highlightPrevious: chartView.highlightPrevious
     property alias model: instantiator.model
     property alias chart: chartView
     property real sideMargins: Suru.units.gu(1)
@@ -23,6 +26,7 @@ ItemDelegate {
     property Item originalParent: parent
     property Item selectedParent: parent
 
+    signal showLegend
     signal rightClicked(real mouseX, real mouseY)
 
     topPadding: 0
@@ -31,10 +35,32 @@ ItemDelegate {
     rightPadding: 0
     hoverEnabled: true
 
-    onClicked: checked = true
+    onClicked: {
+        if (checked) {
+            highlightPrevious = !highlightPrevious
+        } else {
+            checked = true
+        }
+    }
+    onPressAndHold: if (checked) showLegend()
+    onRightClicked: if (checked) showLegend()
 
     onCurrentThemeChanged: {
         delayPropertyChanges.restart()
+    }
+    
+    onHighlightPreviousChanged: {
+        let _currentPieSeries = chartView.series("current")
+
+        if (_currentPieSeries) {
+            _currentPieSeries.opacity = highlightPrevious ? 0.5 : 1
+        }
+
+        let _previousPieSeries = chartView.series("previous")
+
+        if (_previousPieSeries) {
+            _previousPieSeries.opacity = highlightPrevious ? 1 : 0.5
+        }
     }
 
     states: [
@@ -95,6 +121,8 @@ ItemDelegate {
     contentItem: ChartView {
         id: chartView
 
+        readonly property real chartPlotSize: height - margins.top - margins.bottom - margins.left - margins.right
+        property bool highlightPrevious: false
         property bool currentHasLoaded: false
         property bool previousHasLoaded: false
 
@@ -152,7 +180,7 @@ ItemDelegate {
                 if (index == 0) {
                     pieSeries.size = 1
                     pieSeries.holeSize = 0.8
-                    pieSeries.opacity = 1
+                    pieSeries.opacity = breakdownPieChart.highlightPrevious ? 0.5 : 1
 
                     if (breakdownPieChart.showDifference) {
                         let _previous = chartView.series(0)
@@ -166,7 +194,7 @@ ItemDelegate {
                 } else {
                     pieSeries.size = 0.75
                     pieSeries.holeSize = 0.6
-                    pieSeries.opacity = 0.5
+                    pieSeries.opacity = breakdownPieChart.highlightPrevious ? 1 : 0.5
                 }
             }
 
@@ -178,18 +206,21 @@ ItemDelegate {
         }
 
         ColumnLayout {
+            id: centerLabel
+
             anchors {
                 left: parent.left
                 right: parent.right
                 verticalCenter: parent.verticalCenter
-                verticalCenterOffset: chartView.margins.top / 2
+                verticalCenterOffset: (chartView.margins.top / 2) - (chartView.margins.bottom / 2)
             }
 
             Label {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignCenter
+                Layout.maximumWidth: chartView.chartPlotSize * 0.9
 
-                text: breakdownPieChart.chartTitle
+                text: i18n.tr("%1 & %2").arg(breakdownPieChart.currentTitle).arg(breakdownPieChart.previousTitle)
                 visible: text.trim() !== "" && breakdownPieChart.isEmpty
                 font.pixelSize: chartView.height * 0.08
                 horizontalAlignment: Text.AlignHCenter
@@ -200,53 +231,44 @@ ItemDelegate {
             Label {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignCenter
+                Layout.maximumWidth: chartView.chartPlotSize * 0.9
 
                 visible: text.trim() !== "" && breakdownPieChart.isEmpty
                 font.pixelSize: chartView.height * 0.05
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.WordWrap
-//~                 text: i18n.tr("No expenses for %1").arg(breakdownPieChart.chartTitle)
                 text: i18n.tr("No expense")
             }
 
             ColumnLayout {
                 Layout.alignment: Qt.AlignCenter
-                Layout.fillWidth: true
-                Layout.maximumWidth: parent.width * 0.35
+                Layout.fillWidth: false
+                Layout.preferredWidth: chartView.chartPlotSize * 0.55
 
                 visible: !breakdownPieChart.isEmpty
 
-                Components.ColoredLabel {
+                ValueLabel {
                     id: currentLabel
-
-                    property real value
 
                     Layout.alignment: Qt.AlignCenter
                     Layout.fillWidth: true
-                    role: "value"
-                    fontSizeMode: Text.HorizontalFit
-                    font.pixelSize: chartView.height * 0.1
-                    minimumPixelSize: Suru.units.gu(1)
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+
+                    enableAnimation: breakdownPieChart.checked
+                    chartHeight: chartView.height
+                    highlight: !breakdownPieChart.highlightPrevious
                     text: AppFunctions.formatMoney(value)
                 }
 
-                Components.ColoredLabel {
+                ValueLabel {
                     id: previousLabel
-
-                    property real value
 
                     Layout.alignment: Qt.AlignCenter
                     Layout.fillWidth: true
-                    role: "value"
-                    opacity: 0.7
-                    fontSizeMode: Text.HorizontalFit
-                    font.pixelSize: chartView.height * 0.05
-                    minimumPixelSize: Suru.units.gu(0.5)
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+
+                    enableAnimation: breakdownPieChart.checked
+                    chartHeight: chartView.height
+                    highlight: breakdownPieChart.highlightPrevious
                     text: AppFunctions.formatMoney(value)
                 }
             }
@@ -267,40 +289,43 @@ ItemDelegate {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
-        }
-        
-        Rectangle {
-            visible: breakdownPieChart.isEmpty
-            radius: width / 2
-            color: "transparent"
-            border {
-                width: Suru.units.dp(2)
-                color: Suru.tertiaryForegroundColor
-            }
-            anchors {
-                fill: parent
-                leftMargin: chartView.margins.left
-                rightMargin: chartView.margins.right
-                topMargin: chartView.margins.top
-                bottomMargin: chartView.margins.bottom
-            }
+            text: breakdownPieChart.highlightPrevious ? breakdownPieChart.previousTitle : breakdownPieChart.currentTitle
         }
 
-        AbstractButton {
+        Rectangle {
+            visible: breakdownPieChart.currentIsEmpty
+            radius: width / 2
+            color: "transparent"
+            opacity: 0.2
+            border {
+                width: breakdownPieChart.isEmpty ? Suru.units.dp(1) : chartView.chartPlotSize * 0.1
+                color: Suru.tertiaryForegroundColor
+            }
+            anchors.centerIn: centerLabel
+            height: chartView.chartPlotSize
+            width: height
+        }
+
+        MouseArea {
             id: abstractButton
 
             property bool highlighted: false
+            readonly property bool interactive: enabled
+            readonly property bool down: pressed
+            readonly property bool hovered: hoverEnabled && containsMouse
 
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: false
-            onClicked: breakdownPieChart.clicked()
+
+            onClicked: {
+                if (mouse.button == Qt.RightButton) {
+                    breakdownPieChart.rightClicked(mouse.x, mouse.y)
+                } else {
+                    breakdownPieChart.clicked()
+                }
+            }
             onPressAndHold: breakdownPieChart.pressAndHold()
-        }
-
-        Common.MouseAreaContext {
-            anchors.fill: parent
-
-            onTrigger: breakdownPieChart.rightClicked(mouseX, mouseY)
         }
     }
 }

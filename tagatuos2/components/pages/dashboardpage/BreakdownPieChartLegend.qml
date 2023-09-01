@@ -13,18 +13,14 @@ ListItems.BaseItemDelegate {
     property alias model: repeater.model
     property bool showValues: false
 
-//~     implicitHeight: flow.implicitHeight + (breakdownLegend.verticalMargin * 2)
-//~     implicitHeight: gridLayout.implicitHeight + (breakdownLegend.verticalMargin * 2)
-//~     implicitHeight: Math.max(background ? background.implicitHeight : 0,
-//~                              contentItem.implicitHeight + topPadding + bottomPadding)
-
     function updateData(chart) {
         let _legendModel = []
-        let _currentSeries = chart.series("current")
+        let _seriesName = chart.highlightPrevious ? "previous" : "current"
+        let _pieSeries = chart.series(_seriesName)
 
-        if (_currentSeries) {
-            for (let i = 0; i < _currentSeries.count; i++) {
-                let _slice = _currentSeries.at(i)
+        if (_pieSeries) {
+            for (let i = 0; i < _pieSeries.count; i++) {
+                let _slice = _pieSeries.at(i)
                 _legendModel.push( { label: _slice.label, color: _slice.color, value: _slice.value, percentage: _slice.percentage } )
             }
         }
@@ -45,6 +41,8 @@ ListItems.BaseItemDelegate {
                 updateData(target)
             }
         }
+
+        onHighlightPreviousChanged: updateData(target)
     }
 
     contentItem: Item {
@@ -98,8 +96,9 @@ ListItems.BaseItemDelegate {
                     ColumnLayout {
                         visible: breakdownLegend.showValues
 
-                        Label {
+                        Components.ColoredLabel {
                             Layout.fillWidth: true
+                            role: "value"
                             text: AppFunctions.formatMoney(modelData.value)
                             wrapMode: Text.WordWrap
                             horizontalAlignment: Text.AlignHCenter

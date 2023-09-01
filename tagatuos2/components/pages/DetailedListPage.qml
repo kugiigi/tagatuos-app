@@ -214,7 +214,7 @@ Pages.BasePage {
             id: expenseDataObj
         }
 
-        actions: [ editAction, deleteAction, separatorAction ]
+        actions: [ editAction, separatorAction, deleteAction ]
         listView: dateViewPath.currentItem.view
     }
     

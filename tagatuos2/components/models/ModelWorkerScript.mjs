@@ -281,6 +281,159 @@ WorkerScript.onMessage = function (msg) {
                                  })
             }
             break;
+        case "ThisWeekTrendChart":
+        case "RecentTrendChart":
+        case "ThisMonthTrendChart":
+        case "ThisYearTrendChart":
+
+            let datasets
+            let arrDatasets = []
+            let arrData = []
+            let arrCurrentLabels = []
+            let arrPreviousLabels = []
+            let chartData
+            let realCurrentTotal = 0
+            let realPreviousTotal = 0
+            let realCurrentAverage = 0
+            let realPreviousAverage = 0
+
+            if (msg.properties.data.length > 1) {
+
+                switch (msg.properties.type) {
+                case "LINE":
+
+                    for (let h = 0; h < msg.properties.data.length; h++) {
+                        let arrAvg = []
+                        let averageDataset
+                        let total = 0
+                        let average = 0
+                        let intTotal = 0
+                        let txtLabel = ""
+                        let _series = msg.properties.data[h]
+                        let _hasData = false
+                        let _isCurrent = h == 0
+
+                        arrData = []
+
+                        for (let i = 0; i < _series.length; i++) {
+                            let _itemTotal = _series[i].total
+                            if (_itemTotal > 0) {
+                                _hasData = true
+                            }
+                            total = total + _itemTotal
+                        }
+
+                        average = Math.round((total / _series.length) * 100) / 100
+
+                        if (_isCurrent) {
+                            realCurrentTotal = total
+                            realCurrentAverage = average
+                        } else {
+                            realPreviousTotal = total
+                            realPreviousAverage = average
+                        }
+
+                        for (let i = 0; i < _series.length; i++) {
+                            intTotal = _series[i].total
+
+                            txtLabel = _series[i].label
+
+                            switch (msg.properties.dateMode) {
+                                case "month":
+                                    txtLabel = moment().month(parseInt(txtLabel) - 1).format("MMM")
+                                    break
+                                case "week":
+                                     txtLabel = "Week " + txtLabel
+                                    break
+                                case "day":
+                                    let _dateMoment = moment(txtLabel)
+                                    let _date = _dateMoment.date()
+                                    let _dayName = _dateMoment.format('ddd')
+
+                                    if (msg.modelId == "ThisWeekTrendChart") {
+                                        txtLabel = _dayName
+                                    } else if (msg.modelId == "ThisMonthTrendChart") {
+                                        txtLabel = _date
+                                    } else {
+                                        txtLabel = _date  + "-" + _dayName
+                                    }
+                                    break
+                            }
+
+                            if (_isCurrent) {
+                                arrCurrentLabels.push(txtLabel)
+                            } else {
+                                arrPreviousLabels.push(txtLabel)
+                            }
+                            arrData.push(Math.round(intTotal * 100) / 100)
+                            arrAvg.push(average)
+                        }
+
+                        datasets = {
+                            hasData: _hasData,
+                            fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: _hasData ? "rgba(220,220,220,1)" : "transparent",
+                            pointStrokeColor: _hasData ? "#ffffff" : "transparent",
+                            data: arrData
+                        }
+
+                        arrDatasets.push(datasets)
+
+                        averageDataset = {
+                            hasData: _hasData,
+                            fillColor: "transparent",
+                            strokeColor: _hasData ? _isCurrent ? "lightsalmon" : "green" : "transparent",
+                            pointColor: "transparent",
+                            pointStrokeColor: "transparent",
+                            data: arrAvg
+                        }
+
+                        arrDatasets.push(averageDataset)
+                    }
+
+                    chartData = {
+                        labels: arrCurrentLabels
+                        , currentLabels: arrCurrentLabels
+                        , previousLabels: arrPreviousLabels
+                        , currentTotal: realCurrentTotal
+                        , previousTotal: realPreviousTotal
+                        , currentAverage: realCurrentAverage
+                        , previousAverage: realPreviousAverage
+                        , datasets: arrDatasets
+                    }
+
+                    break
+                case "PIE":
+                    total = 0
+
+                    for (i = 0; i < msg.properties.data.length; i++) {
+                            total = total + msg.properties.data[i].value
+                    }
+
+
+                    for (i = 0; i < msg.properties.data.length; i++) {
+                        datasets = {
+                            value: msg.properties.data[i].value
+                            ,color: msg.properties.data[i].color
+                            ,category: msg.properties.data[i].category
+                            ,percentage: Math.round(((msg.properties.data[i].value / total) * 100) * 100) / 100
+                        }
+
+                        arrDatasets.push(datasets)
+                    }
+
+                    chartData = arrDatasets
+
+                    break
+                }
+            } else {
+                chartData = null
+            }
+
+            result = chartData
+
+            break
     }
 
     if (msg.model) {

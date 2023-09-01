@@ -16,6 +16,9 @@
 
         <file>library/external/accounting.js</file>
         <file>library/external/moment.mjs</file>
+
+        <file>library/external/qchart/QChart.js</file>
+        <file>library/external/qchart/QChart.qml</file>
         
         <file>components/pages/DetailedListPage.qml</file>
         <file>components/pages/detailedlistpage/ValuesNavigationRow.qml</file>
@@ -36,11 +39,18 @@
         <file>components/pages/newexpenseview/TravelDataFields.qml</file>
         <file>components/pages/DashboardPage.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChart.qml</file>
+        <file>components/pages/dashboardpage/BreakdownPieChartContainer.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChartLegend.qml</file>
+        <file>components/pages/dashboardpage/BreakdownChartsView.qml</file>
+        <file>components/pages/dashboardpage/TrendChartsView.qml</file>
+        <file>components/pages/dashboardpage/TrendLineChart.qml</file>
+        <file>components/pages/dashboardpage/ValueLabel.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
         <file>components/models/BreakdownChartModel.qml</file>
+        <file>components/models/TrendChartModel.qml</file>
+        <file>components/models/ChartModel.qml</file>
         <file>components/models/ModelWorkerScript.mjs</file>
 
         <file>components/SettingsComponent.qml</file>
@@ -89,6 +99,10 @@
         <file>common/menus/AdvancedMenu.qml</file>
         <file>common/menus/MenuSeparator.qml</file>
         <file>common/menus/VerticalMenuActions.qml</file>
+
+        <file>common/qchart/Chart.qml</file>
+        <file>common/qchart/ChartLegend.qml</file>
+        <file>common/qchart/ChartLegendItem.qml</file>
 
         <file>common/qmldir</file>
         <file>common/PullDownFlickableConnections.qml</file>
