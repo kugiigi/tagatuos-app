@@ -25,7 +25,6 @@ GridView {
     readonly property int minimumColumns: 2
     readonly property real itemMargins: Suru.units.gu(1)
 
-//~     property Flickable flickable
     property Common.BaseFlickable flickable
     property bool isTravelMode: false
     property string travelCurrency

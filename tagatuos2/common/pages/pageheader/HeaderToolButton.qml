@@ -17,7 +17,7 @@ ToolButton {
     hoverEnabled: false
 
     text: display == AbstractButton.TextUnderIcon ? action.shortText : action.text
-    visible: (action && action.visible) || !action
+    visible: ((action && action.visible) || !action) && !action.onlyShowInBottom
     display: AbstractButton.IconOnly
     icon {
         width: Suru.units.gu(2)

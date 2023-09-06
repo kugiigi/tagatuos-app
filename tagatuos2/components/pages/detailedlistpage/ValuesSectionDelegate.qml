@@ -12,9 +12,10 @@ Rectangle {
     property var view
     property bool displayTravelTotal: false
     property string travelCurrency
-    readonly property string categoryName: sectionObj.split("|")[0]
-    readonly property real categoryTotal: sectionObj.split("|")[1]
-    readonly property real categoryTravelTotal: sectionObj.split("|")[2]
+    property string type: "category"
+    readonly property string groupName: sectionObj.split("|")[0]
+    readonly property real groupTotal: sectionObj.split("|")[1]
+    readonly property real groupTravelTotal: sectionObj.split("|")[2]
 
     color: Suru.backgroundColor
     height: Suru.units.gu(4)
@@ -29,8 +30,8 @@ Rectangle {
 
         Components.ColoredLabel {
             Suru.textLevel: Suru.HeadingThree
-            text: sectionItem.categoryName
-            role: "category"
+            text: sectionItem.groupName
+            role: sectionItem.type == "category" ? "category" : "date"
         }
 
         Components.ColoredLabel {
@@ -38,12 +39,12 @@ Rectangle {
             Suru.textLevel: Suru.Caption
 
             text: {
-                if (sectionItem.view.currentIndex > -1 && sectionItem.categoryName) {
+                if (sectionItem.view.currentIndex > -1 && sectionItem.groupName) {
                     if (sectionItem.displayTravelTotal) {
-                        return Functions.formatMoney(sectionItem.categoryTravelTotal, sectionItem.travelCurrency, null)
+                        return Functions.formatMoney(sectionItem.groupTravelTotal, sectionItem.travelCurrency, null)
                     }
 
-                    return AppFunctions.formatMoney(sectionItem.categoryTotal, false)
+                    return AppFunctions.formatMoney(sectionItem.groupTotal, false)
                 }
 
                 return ""

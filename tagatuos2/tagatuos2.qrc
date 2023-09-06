@@ -19,13 +19,15 @@
 
         <file>library/external/qchart/QChart.js</file>
         <file>library/external/qchart/QChart.qml</file>
-        
+
         <file>components/pages/DetailedListPage.qml</file>
+        <file>components/pages/detailedlistpage/ExpenseSearchView.qml</file>
         <file>components/pages/detailedlistpage/ValuesNavigationRow.qml</file>
         <file>components/pages/detailedlistpage/ValueListDelegate.qml</file>
         <file>components/pages/detailedlistpage/SummaryValuesDelegate.qml</file>
         <file>components/pages/detailedlistpage/CriteriaPopup.qml</file>
         <file>components/pages/detailedlistpage/ValuesSectionDelegate.qml</file>
+        <file>components/pages/BottomSwipeUpConnection.qml</file>
         <file>components/pages/NewExpenseView.qml</file>
         <file>components/pages/newexpenseview/ContextActionsListView.qml</file>
         <file>components/pages/newexpenseview/QuickListGridDelegate.qml</file>
@@ -61,6 +63,7 @@
         <file>components/Currency.qml</file>
         <file>components/FocusScrollConnections.qml</file>
         <file>components/DeleteExpenseDialog.qml</file>
+        <file>components/CategoryRectangle.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandle.qml</file>
         <file>common/gestures/BottomSwipeArea.qml</file>
@@ -86,7 +89,7 @@
         <file>common/listitems/BaseItemDelegate.qml</file>
         <file>common/listitems/CustomizedSliderDelegate.qml</file>
         <file>common/listitems/CustomizedRadioButton.qml</file>
-        <file>common/listitems/CustomizedRadioDelegate.qml</file>
+        <file>common/listitems/BaseRadioDelegate.qml</file>
         <file>common/listitems/CustomizedSwitchDelegate.qml</file>
         <file>common/listitems/CustomizedButton.qml</file>
         <file>common/listitems/CustomizedTextField.qml</file>

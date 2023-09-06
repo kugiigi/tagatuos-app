@@ -73,6 +73,16 @@ function insert(txtStatement) {
     })
 }
 
+/*************Extra functions*************/
+function processTextForGLOB (text) {
+    return ["*", text, "*"].join("")
+}
+
+function processTextForLIKE (text) {
+    return ["%", text, "%"].join("")
+}
+
+
 /*************Meta data functions*************/
 
 //Create initial data
@@ -738,86 +748,129 @@ function checkProfileData(intProfileId) {
     return exists
 }
 
-function getDateWithData(forward, intProfileId, txtCategory, txtDateBase) {
-    var db = openDB()
-    var rs = null
-    var txtSelectStatement
-    var txtWhereStatement
-    var txtFullStatement
-    var arrArgs = []
-    var lastDate
+function getDateWithData(forward, intProfileId, txtCategory, txtDateBase, txtScope) {
+    let _db = openDB()
+    let _rs = null
+    let _txtSelectStatement
+    let _txtWhereStatement
+    let _txtFullStatement
+    let _arrArgs = []
+    let _lastDate
 
-    db.transaction(function (tx) {
-        txtWhereStatement = "WHERE profile_id = ?"
-        //~ txtWhereStatement = "WHERE"
+    _db.transaction(function (tx) {
+        _txtWhereStatement = "WHERE profile_id = ?"
 
         if (forward) {
-            txtSelectStatement = "SELECT min((strftime('%Y-%m-%d %H:%M:%f', date, 'localtime'))) as entry_date"
-            txtWhereStatement = txtWhereStatement + " AND date(expenses_vw.date, 'localtime') > date(?)"
-            //~ txtWhereStatement = txtWhereStatement + " date(expenses_vw.date, 'localtime') > date(?)"
+            _txtSelectStatement = "SELECT min((strftime('%Y-%m-%d %H:%M:%f', date, 'localtime'))) as entry_date"
+            switch (txtScope) {
+                case "week":
+                    _txtWhereStatement = _txtWhereStatement + " AND  date(date, 'localtime') > date(?,'weekday 6')"
+                    break
+                case "month":
+                    _txtWhereStatement = _txtWhereStatement + " AND  date(date, 'localtime') > date(?,'start of month','+1 month','-1 day')"
+                    break
+                case "day":
+                default:
+                    _txtWhereStatement = _txtWhereStatement + " AND date(date, 'localtime') > date(?)"
+            }
         } else {
-            txtSelectStatement = "SELECT max((strftime('%Y-%m-%d %H:%M:%f', date, 'localtime'))) as entry_date"
-            txtWhereStatement = txtWhereStatement + " AND date(expenses_vw.date, 'localtime') < date(?)"
-            //~ txtWhereStatement = txtWhereStatement + " date(expenses_vw.date, 'localtime') < date(?)"
+            _txtSelectStatement = "SELECT max((strftime('%Y-%m-%d %H:%M:%f', date, 'localtime'))) as entry_date"
+
+            switch (txtScope) {
+                case "week":
+                    _txtWhereStatement = _txtWhereStatement + " AND  date(date, 'localtime') <  date(?,'weekday 6','-6 days')"
+                    break
+                case "month":
+                    _txtWhereStatement = _txtWhereStatement + " AND  date(date, 'localtime') < date(?,'start of month')"
+                    break
+                case "day":
+                default:
+                    _txtWhereStatement = _txtWhereStatement + " AND date(date, 'localtime') < date(?)"
+            }
         }
 
-        txtSelectStatement = txtSelectStatement + " FROM expenses_vw"
+        _txtSelectStatement = _txtSelectStatement + " FROM expenses_vw"
 
         if (txtCategory !== "all") {
-            txtWhereStatement = txtWhereStatement + " AND category_name = ?"
-            arrArgs = [intProfileId, txtDateBase, txtCategory]
-            //~ arrArgs = [txtDateBase, txtCategory]
+            _txtWhereStatement = _txtWhereStatement + " AND category_name = ?"
+            _arrArgs = [intProfileId, txtDateBase, txtCategory]
         } else {
-            arrArgs = [intProfileId, txtDateBase]
-            //~ arrArgs = [txtDateBase]
+            _arrArgs = [intProfileId, txtDateBase]
         }
 
-        txtFullStatement = txtSelectStatement + " " + txtWhereStatement
-        rs = tx.executeSql(txtFullStatement, arrArgs)
-        lastDate = rs.rows.item(0).entry_date
+        _txtFullStatement = [_txtSelectStatement, _txtWhereStatement].join(" ")
+        _rs = tx.executeSql(_txtFullStatement, _arrArgs)
+        _lastDate = _rs.rows.item(0).entry_date
     })
 
-    return lastDate
+    return _lastDate
 }
 
-function getExpenseDetailedData(intProfileId, txtCategory, txtScope, txtxDateFrom, txtDateTo) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-    var txtSelectStatement
-    var txtWhereStatement
-    var txtOrderStatement
-    var txtFullStatement
-    var arrArgs = []
-    //~ console.log (txtxDateFrom + " - " + txtDateTo)
-    db.transaction(function (tx) {
-        txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                , TOTAL(value) OVER (PARTITION BY category_name) AS category_total \
-                                , TOTAL(travel_value) OVER (PARTITION BY category_name) AS category_travel_total \
-                                ,value, home_currency, travel_currency, rate, travel_value \
-                                FROM expenses_vw"
-        txtWhereStatement = "WHERE profile_id = ? AND date(date, 'localtime') BETWEEN date(?) AND date(?)"
+function getExpenseDetailedData(intProfileId, txtCategory, txtScope, txtDateFrom, txtDateTo, txtSort="category", txtOrder="asc") {
+    let _db = openDB()
+    let _arrResults = []
+    let _rs = null
+    let _txtSelectStatement = ""
+    let _txtFromStatement = ""
+    let _txtWhereStatement = ""
+    let _txtDateStatement =""
+    let _txtOrderStatement = ""
+    let _txtFullStatement = ""
+    let _arrArgs = []
+
+    //~ console.log (txtDateFrom + " - " + txtDateTo)
+    _db.transaction(function (tx) {
+        _txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
+                                ,value, home_currency, travel_currency, rate, travel_value"
+        if (txtSort == "category") {
+            _txtSelectStatement = _txtSelectStatement + ", TOTAL(value) OVER (PARTITION BY category_name) AS group_total \
+                                                         , TOTAL(travel_value) OVER (PARTITION BY category_name) AS group_travel_total"
+        } else if (txtSort == "date" && txtScope !== "day") {
+            _txtSelectStatement = _txtSelectStatement + ", TOTAL(value) OVER (PARTITION BY strftime('%Y-%m-%d', date, 'localtime')) AS group_total \
+                                                         , TOTAL(travel_value) OVER (PARTITION BY strftime('%Y-%m-%d', date, 'localtime')) AS group_travel_total"
+        }
+
+        _txtFromStatement = "FROM expenses_vw"
+        _txtWhereStatement = "WHERE profile_id = ?"
+
+        switch (txtScope) {
+            case "week":
+                _txtDateStatement =  "AND date(date, 'localtime') BETWEEN date(?,'weekday 6','-6 days') AND date(?,'weekday 6')"
+                break
+            case "month":
+                _txtDateStatement =  "AND date(date, 'localtime') BETWEEN date(?, 'start of month') AND date(?,'start of month','+1 month','-1 day')"
+                break
+            case "day":
+            _txtDateStatement =  "AND date(date, 'localtime') BETWEEN date(?) AND date(?)"
+        }
 
         if (txtCategory !== "all") {
-            txtWhereStatement = txtWhereStatement + " AND category_name = ?"
-            //~ arrArgs = [txtxDateFrom, txtDateTo, txtCategory]
-            arrArgs = [intProfileId, txtxDateFrom, txtDateTo, txtCategory]
+            _txtWhereStatement = _txtWhereStatement + " AND category_name = ?"
+            _arrArgs = [intProfileId, txtCategory, txtDateFrom, txtDateTo]
         } else {
-            //~ arrArgs = [txtxDateFrom, txtDateTo]
-            arrArgs = [intProfileId, txtxDateFrom, txtDateTo]
+            _arrArgs = [intProfileId, txtDateFrom, txtDateTo]
         }
-        txtOrderStatement = "ORDER BY category_name, date desc"
 
-        txtFullStatement = txtSelectStatement + " " + txtWhereStatement + " " + txtOrderStatement
-        rs = tx.executeSql(txtFullStatement, arrArgs)
-        arrResults.length = rs.rows.length
+        switch (txtSort) {
+            case "date":
+                _txtOrderStatement = "ORDER BY date " + txtOrder + ", category_name ASC"
+                break
+            case "category":
+            default:
+                _txtOrderStatement = "ORDER BY category_name ASC, date " + txtOrder
+                break
+        }
 
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
+        _txtFullStatement = [_txtSelectStatement, _txtFromStatement, _txtWhereStatement, _txtDateStatement, _txtOrderStatement].join(" ")
+        _rs = tx.executeSql(_txtFullStatement, _arrArgs)
+        _arrResults.length = _rs.rows.length
+
+        for (let i = 0; i < _rs.rows.length; i++) {
+            _arrResults[i] = _rs.rows.item(i)
         }
     })
 
-    return arrResults
+    return _arrResults
 }
 
 function getCategoryBreakdown(intProfileId, txtRange, txtFromDate, txtToDate) {
@@ -1166,7 +1219,7 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     txtFullStatement = [txtSelectStatement, txtFromStatement, txtLimitStatement].join(" ")
     //console.log(txtSelectStatement)
     db.transaction(function (tx) {
-        let wildcard = "%" + txtSearchText + "%"
+        let wildcard = processTextForLIKE(txtSearchText)
         rs = tx.executeSql(txtFullStatement, [intProfileId, wildcard, intProfileId, wildcard, intLimit])
 
         arrResults.length = rs.rows.length
@@ -1175,6 +1228,90 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
             arrResults[i] = rs.rows.item(i)
         }
     })
+
+    return arrResults
+}
+
+function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc") {
+    let arrResults = []
+
+    if (txtSearchText.trim() !== "") {
+        let db = openDB()
+        let rs = null
+        let txtFullStatement = ""
+        let txtSelectStatement = ""
+        let txtFromStatement = ""
+        let txtWhereStatement = ""
+        let txtOrderStatement = ""
+        let txtLimitStatement = ""
+        let txtFullSearchTextGLOB = processTextForGLOB(txtSearchText)
+        let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText)
+        let arrBindValues = [txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextLIKE]
+        let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
+
+        txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
+                                , value, home_currency, travel_currency, rate, travel_value \
+                                , CASE WHEN name GLOB ? THEN 1 \
+                                     WHEN descr GLOB ? THEN 2 \
+                                     WHEN name LIKE ? THEN 3 \
+                                     WHEN descr LIKE ? THEN 4"
+
+        let _arrSearchTerms = txtSearchText.split(" ")
+
+        for (let i = 0; i < _arrSearchTerms.length; i++) {
+            let _term = _arrSearchTerms[i]
+            // Continue counting the score from 4 then continue from 8
+            let _score = (4 * (i + 1)) + 1
+            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + _score
+            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + (_score + 1)
+            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 2)
+            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 3)
+            
+            let _txtTermGLOB = processTextForGLOB(_term)
+            let _txtTermLIKE = processTextForLIKE(_term)
+            arrBindValues.push(_txtTermGLOB, _txtTermGLOB, _txtTermLIKE, _txtTermLIKE)
+        }
+
+        txtSelectStatement = txtSelectStatement + " END as score"
+
+        arrBindValues.push(intProfileId)
+
+        txtFromStatement = "FROM expenses_vw"
+        txtWhereStatement = "WHERE profile_id = ? AND ("
+
+        for (let i = 0; i < _arrSearchTerms.length; i++) {
+            let _term = _arrSearchTerms[i]
+
+            if (i == 0) {
+                txtWhereStatement = txtWhereStatement + "name GLOB ?"
+            } else {
+                txtWhereStatement = txtWhereStatement + " OR name GLOB ?"
+            }
+            txtWhereStatement = txtWhereStatement + " OR descr GLOB ?"
+            txtWhereStatement = txtWhereStatement + " OR name LIKE ?"
+            txtWhereStatement = txtWhereStatement + " OR descr LIKE ?"
+
+            let _txtTermGLOB = processTextForGLOB(_term)
+            let _txtTermLIKE = processTextForLIKE(_term)
+            arrBindValues.push(_txtTermGLOB, _txtTermGLOB, _txtTermLIKE, _txtTermLIKE)
+        }
+        txtWhereStatement = txtWhereStatement + ")"
+        txtOrderStatement = "ORDER BY score ASC, entry_date " + txtSortBy
+        txtLimitStatement = "LIMIT ?"
+        arrBindValues.push(intLimit)
+        txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
+        //~ console.log(txtFullStatement)
+        //~ console.log(JSON.stringify(arrBindValues))
+        db.transaction(function (tx) {
+            rs = tx.executeSql(txtFullStatement, arrBindValues)
+
+            arrResults.length = rs.rows.length
+
+            for (let i = 0; i < rs.rows.length; i++) {
+                arrResults[i] = rs.rows.item(i)
+            }
+        })
+    }
 
     return arrResults
 }

@@ -129,11 +129,26 @@ function convertDBToDate(petsa) {
 }
 
 function isToday(petsa) {
-    //check if current date
-    var dtPetsa = moment(petsa)
-    var today = moment(new Date())
+    let dtPetsa = moment(petsa)
+    let today = moment(new Date())
 
     return dtPetsa.isSame(today,'day')
+}
+
+function isThisWeek(petsa) {
+    let dtPetsa = moment(petsa)
+    let thisWeekStart = moment(new Date()).startOf("week")
+    let thisWeekEnd = moment(new Date()).endOf("week")
+    
+    return dtPetsa.isBetween(thisWeekStart,thisWeekEnd,'day',[])
+}
+
+function isThisMonth(petsa) {
+    let dtPetsa = moment(petsa)
+    let thisMonthStart = moment(new Date()).startOf("month")
+    let thisMonthEnd = moment(new Date()).endOf("month")
+
+    return dtPetsa.isBetween(thisMonthStart,thisMonthEnd,'day',[])
 }
 
 function addDays(petsa, days, toDBString = false) {
@@ -168,158 +183,141 @@ function checkIfWithinDateRange(inputDate, fromDate, toDate) {
     return _inputDateMom.isBetween(_fromDateMom, _toDateMom,'day',[])
 }
 
-function getFirstDay(txtRange) {
-    let _today = moment()
-    let _result = _today
+function getFirstDay(txtRange, txtDate) {
+    let _date
+
+    if (txtDate) {
+        _date = moment(txtDate)
+    } else {
+        _date = moment()
+    }
+
+    let _result = _date
 
     switch (txtRange) {
         case "today":
-            _result = _today
+            _result = _date
             break
         case "yesterday":
-            _result = _today.subtract(1, 'day')
+            _result = _date.subtract(1, 'day')
             break
         case "tomorrow":
-            _result = _today.add(1, 'day')
+            _result = _date.add(1, 'day')
             break
         case "thisweek":
-            _result = _today.startOf('week')
+            _result = _date.startOf('week')
             break
         case "lastweek":
-            _result = _today.subtract(1, 'week').startOf('week')
+            _result = _date.subtract(1, 'week').startOf('week')
             break
         case "nextweek":
-            _result = _today.add(1, 'week').startOf('week')
+            _result = _date.add(1, 'week').startOf('week')
             break
         case "thismonth":
-            _result = _today.startOf('month')
+            _result = _date.startOf('month')
             break
         case "lastmonth":
-            _result = _today.subtract(1, 'month').startOf('month')
+            _result = _date.subtract(1, 'month').startOf('month')
             break
         case "nextmonth":
-            _result = _today.add(1, 'month').startOf('month')
+            _result = _date.add(1, 'month').startOf('month')
             break
         case "thisyear":
-            _result = _today.startOf('year')
+            _result = _date.startOf('year')
             break
         case "lastyear":
-            _result = _today.subtract(1, 'year').startOf('year')
+            _result = _date.subtract(1, 'year').startOf('year')
             break
         case "nextyear":
-            _result = _today.add(1, 'year').startOf('year')
+            _result = _date.add(1, 'year').startOf('year')
             break
         case "recent":
-            _result = _today.subtract(6, 'day')
+            _result = _date.subtract(6, 'day')
             break
         case "previousrecent":
-            _result = _today.subtract(13, 'day')
+            _result = _date.subtract(13, 'day')
+            break
+        case "week":
+            _result = _date.startOf('week')
+            break
+        case "month":
+            _result = _date.startOf('month')
+            break
+        case "year":
+            _result = _date.startOf('year')
             break
     }
 
     return _result.format("YYYY-MM-DD HH:mm:ss")
 }
 
-function getLastDay(txtRange) {
-    let _today = moment()
-    let _result = _today
+function getLastDay(txtRange, txtDate) {
+    let _date
+
+    if (txtDate) {
+        _date = moment(txtDate)
+    } else {
+        _date = moment()
+    }
+
+    let _result = _date
 
     switch (txtRange) {
         case "today":
-            _result = _today
+            _result = _date
             break
         case "yesterday":
-            _result = _today.subtract(1, 'day')
+            _result = _date.subtract(1, 'day')
             break
         case "tomorrow":
-            _result = _today.add(1, 'day')
+            _result = _date.add(1, 'day')
             break
         case "thisweek":
-            _result = _today.endOf('week')
+            _result = _date.endOf('week')
             break
         case "lastweek":
-            _result = _today.subtract(1, 'week').endOf('week')
+            _result = _date.subtract(1, 'week').endOf('week')
             break
         case "nextweek":
-            _result = _today.add(1, 'week').endOf('week')
+            _result = _date.add(1, 'week').endOf('week')
             break
         case "thismonth":
-            _result = _today.endOf('month')
+            _result = _date.endOf('month')
             break
         case "lastmonth":
-            _result = _today.subtract(1, 'month').endOf('month')
+            _result = _date.subtract(1, 'month').endOf('month')
             break
         case "nextmonth":
-            _result = _today.add(1, 'month').endOf('month')
+            _result = _date.add(1, 'month').endOf('month')
             break
         case "thisyear":
-            _result = _today.endOf('year')
+            _result = _date.endOf('year')
             break
         case "lastyear":
-            _result = _today.subtract(1, 'year').endOf('year')
+            _result = _date.subtract(1, 'year').endOf('year')
             break
         case "nextyear":
-            _result = _today.add(1, 'year').endOf('year')
+            _result = _date.add(1, 'year').endOf('year')
             break
         case "recent":
-            _result = _today
+            _result = _date
             break
         case "previousrecent":
-            _result = _today.subtract(7, 'day')
+            _result = _date.subtract(7, 'day')
+            break
+        case "week":
+            _result = _date.endOf('week')
+            break
+        case "month":
+            _result = _date.endOf('month')
+            break
+        case "year":
+            _result = _date.endOf('year')
             break
     }
 
     return _result.format("YYYY-MM-DD HH:mm:ss")
 }
-
-//~ function getStartEndDate(date,mode){
-    //~ var momentDate = moment(date)
-    //~ var firstDay
-    //~ var lastDay
-
-    //~ switch(mode){
-    //~ case 'day':
-        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'week':
-        //~ firstDay = momentDate.startOf('week').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ lastDay = momentDate.endOf('week').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'month':
-        //~ firstDay = momentDate.startOf('month').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ lastDay = momentDate.endOf('month').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'recent':
-        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'recent exclude':
-        //~ lastDay = momentDate.subtract(1, 'day').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ firstDay = momentDate.subtract(6, 'day').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'year':
-        //~ firstDay = momentDate.startOf('year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ lastDay = momentDate.endOf('year').endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ case 'all':
-        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ firstDay = momentDate.subtract(50, 'year').startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ default:
-        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ firstDay = momentDate.startOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ lastDay = momentDate.endOf('day').format("YYYY-MM-DD HH:mm:ss")
-        //~ break;
-    //~ }
-
-
-
-    //~ return {
-        //~ start: firstDay.toString(),
-        //~ end: lastDay.toString()
-    //~ }
-//~ }
 
 function formatMoney(value, currency, options) {
     var formattedMoney
@@ -374,6 +372,110 @@ function relativeTime(petsa, format) {
 }
 
 
+function formatDateForNavigation(petsa, scope) {
+    let engPetsa
+    let defaultFormat = "ddd, MMM DD"
+
+    if (petsa !== null) {
+        let dtPetsa = moment(petsa)
+        let formattedDate    
+        let comparisonValues = getDateComparisonValues(petsa)
+
+        formattedDate = " - " + dtPetsa.format(defaultFormat)
+        
+        switch (scope) {
+            case "day":
+                switch (true) {
+                    case dtPetsa.isSame(comparisonValues.today,'day'):
+                        engPetsa = i18n.tr("Today") + formattedDate
+                        break
+                    case dtPetsa.isSame(comparisonValues.yesterday,'day'):
+                        engPetsa = i18n.tr("Yesterday") + formattedDate
+                        break
+                    case dtPetsa.isSame(comparisonValues.tomorrow,'day'):
+                        engPetsa = i18n.tr("Tomorrow") + formattedDate
+                        break
+                    case dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
+                            || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day'):
+                        engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
+                        break
+                    default:
+                        engPetsa = dtPetsa.format("ddd, MMM DD")
+                }
+                break
+            case "week":
+                let _tagString = ""
+                let _weekStart = moment(petsa).startOf('week')
+                let _weekEnd = moment(petsa).endOf('week')
+                let _weekStartMonth = moment(_weekStart).startOf("month")
+                let _weekEndMonth = moment(_weekEnd).startOf("month")
+                let _fromString = _weekStart.format("MMM DD")
+                let _toString = ""
+                let _endIsSameMonth = _weekStartMonth.isSame(_weekEndMonth)
+
+                switch (true) {
+                    case _weekStart.isBetween(comparisonValues.thisWeekFirstDay,comparisonValues.thisWeekLastDay,'day',[]):
+                        _tagString = i18n.tr("This Week")
+                        break
+                    case _weekStart.isBetween(comparisonValues.lastWeekFirstDay,comparisonValues.lastWeekLastDay,'day',[]):
+                        _tagString = i18n.tr("Last Week")
+                        break
+                    case _weekStart.isBetween(comparisonValues.nextWeekFirstDay,comparisonValues.nextWeekLastDay,'day',[]):
+                        _tagString = i18n.tr("Next Week")
+                        break
+                    default:
+                        _tagString = ""
+                }
+
+                if (_weekEnd.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
+                        || _weekEnd.isAfter(comparisonValues.endOfThisYear, 'day')) {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD, YYYY")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD, YYYY")
+                    }
+                } else {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD")
+                    }
+                }
+
+                if (_tagString) {
+                    engPetsa = i18n.tr("%1 (%2 - %3)").arg(_tagString).arg(_fromString).arg(_toString)
+                } else {
+                    engPetsa = i18n.tr("%1 - %2").arg(_fromString).arg(_toString)
+                }
+
+                break
+            case "month":
+                switch (true) {
+                    case dtPetsa.isBetween(comparisonValues.lastMonthFirstDay,comparisonValues.lastMonthLastDay,'day',[]):
+                        engPetsa = i18n.tr("Last Month - %1").arg(dtPetsa.format("MMMM"))
+                        break
+                    case dtPetsa.isBetween(comparisonValues.nextMonthFirstDay,comparisonValues.nextMonthLastDay,'day',[]):
+                        engPetsa = i18n.tr("Next Month - %1").arg(dtPetsa.format("MMMM"))
+                        break
+                    case dtPetsa.isBetween(comparisonValues.thisMonthFirstDay,comparisonValues.thisMonthLastDay,'day',[]):
+                        engPetsa = i18n.tr("This Month - %1").arg(dtPetsa.format("MMMM"))
+                        break
+                    case dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
+                                || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day'):
+                        engPetsa = dtPetsa.format("MMMM YYYY")
+                        break
+                    default:
+                        engPetsa = dtPetsa.format("MMMM")
+                }
+                break
+            default:
+                engPetsa = dtPetsa.format(defaultFormat)
+        }
+    }
+
+    return engPetsa
+}
+
 //Converts dates into user friendly format when necessary
 function relativeDate(petsa, format, mode){
     var defaultFormat = "ddd, MMM DD"
@@ -403,7 +505,7 @@ function relativeDate(petsa, format, mode){
             case dtPetsa.isBetween(comparisonValues.thisWeekFirstDay,comparisonValues.thisWeekLastDay,'day',[]) && mode === "Advanced":
                 engPetsa = i18n.tr("On ") + dtPetsa.format("dddd")
                 break
-            case dtPetsa.isBetween(comparisonValues.lastWeekFirstDay,comparisonValues.astWeekLastDay,'day',[]) && mode === "Advanced":
+            case dtPetsa.isBetween(comparisonValues.lastWeekFirstDay,comparisonValues.lastWeekLastDay,'day',[]) && mode === "Advanced":
                 engPetsa = i18n.tr("Last Week")
                 break
             case dtPetsa.isBetween(comparisonValues.nextWeekFirstDay,comparisonValues.nextWeekLastDay,'day',[]) && mode === "Advanced":
@@ -495,6 +597,8 @@ function getDateComparisonValues(){
     var thisWeekFirstDay
     var thisWeekLastDay
     var sevenDaysago
+    var startOfThisYear
+    var endOfThisYear
     var endOfLastYear
     var result = []
 
@@ -516,6 +620,8 @@ function getDateComparisonValues(){
         thisWeekLastDay = moment().endOf('week')
         sevenDaysago = moment().subtract(7, 'day')
         endOfLastYear = moment().subtract(1, 'year').endOf('year')
+        startOfThisYear = moment().startOf('year')
+        endOfThisYear = moment().endOf('year')
 
     result = {
         today: today,
@@ -534,6 +640,8 @@ function getDateComparisonValues(){
         thisWeekFirstDay: thisWeekFirstDay,
         thisWeekLastDay: thisWeekLastDay,
         sevenDaysago: sevenDaysago,
+        startOfThisYear: startOfThisYear,
+        endOfThisYear: endOfThisYear,
         endOfLastYear: endOfLastYear
     }
 

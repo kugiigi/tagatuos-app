@@ -31,7 +31,10 @@ ListItems.BaseItemDelegate {
     property string entryDateRelative
     property string comments
     property string itemName
+    property string categoryName
     property bool isExpanded: false
+    property bool showDate: false
+    property bool showCategory: false
 
     signal showContextMenu(real mouseX, real mouseY)
 
@@ -46,21 +49,19 @@ ListItems.BaseItemDelegate {
 
     contentItem: RowLayout {
         spacing: Suru.units.gu(2)
-//~         Components.ColoredLabel {
-//~             id: dateLabel
-
-//~             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-//~             visible: !valueListDelegate.itemName
-//~             Suru.textLevel: Suru.HeadingThree
-//~             font.pointSize: 11
-//~             text: valueListDelegate.entryDate
-//~             font.italic: true
-//~             role: "date"
-//~         }
 
         ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+
+            Components.ColoredLabel {
+                Layout.fillWidth: true
+                visible: valueListDelegate.entryDateRelative && valueListDelegate.showDate
+                Suru.textLevel: Suru.Caption
+                text: valueListDelegate.entryDateRelative
+                elide: Text.ElideRight
+                role: "date"
+            }
 
             Components.ColoredLabel {
                 id: itemLabel
@@ -92,8 +93,19 @@ ListItems.BaseItemDelegate {
             Layout.fillHeight: true
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
+            
+            Components.CategoryRectangle {
+                id: categoryRec
+
+                Layout.alignment: Qt.AlignRight
+
+                categoryName: valueListDelegate.categoryName
+                visible: valueListDelegate.showCategory && categoryName
+            }
 
             RowLayout {
+                Layout.alignment: Qt.AlignRight
+
                 spacing: Suru.units.gu(1)
 
                 UT.Icon {

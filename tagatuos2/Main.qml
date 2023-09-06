@@ -17,7 +17,6 @@ ApplicationWindow {
     id: mainView
     objectName: "mainView"
 
-//~     readonly property QtObject drawer: drawerLoader.item
     readonly property string current_version: "1.0"
     readonly property var suruTheme: switch(settings.currentTheme) {
             case "Ambiance":
@@ -41,8 +40,7 @@ ApplicationWindow {
         }
     
     property string displayMode: "Phone" //"Desktop" //"Phone" //"Tablet"
-    property bool isWideLayout: width >= Suru.units.gu(90)
-//~     property QtObject theme: Suru.theme === 1 ? suruDarkTheme : ambianceTheme
+    property bool isWideLayout: width >= Suru.units.gu(110)
     property var dataUtils: DataUtils.dataUtils
     property var profiles: dataUtils.profiles
     property var categories: dataUtils.categories(settings.activeProfile)
@@ -50,17 +48,22 @@ ApplicationWindow {
     property var quickExpenses: dataUtils.quickExpenses(settings.activeProfile)   
     property var dashboard: dataUtils.dashboard(settings.activeProfile)   
     property string currentDate: Functions.getToday()
-    
+
+    property alias userMetric: userMetric
     property alias settings: settingsLoader.item
     property alias tooltip: globalTooltip
     property alias mainModels: listModelsLoader.item
     property alias keyboard: keyboardRec.keyboard
     property alias keyboardRectangle: keyboardRec
-    property alias mainPage: mainPageLoader.item
+    property var mainPage: mainPageLoader.item.mainPage
+    property var sidePage: mainPageLoader.item.sidePage
+    property var detailedListPage: mainPageLoader.item.detailedListPage
+    property var mainSurface: mainPageLoader.item
     property alias newExpenseView: newExpenseViewLoader.item
-//~     property alias corePage: corePage
 
-    title: "Tagatuos - Your expense diary"
+    readonly property bool sidePageIsOpen: sidePage && sidePage.visible
+
+    title: i18n.tr("Tagatuos - Your expense diary")
     visible: false
     minimumWidth: Suru.units.gu(30)
 
@@ -123,7 +126,7 @@ ApplicationWindow {
 
     Metric {
         id: userMetric
-        
+
         property string circleMetric
 
         name: "expenseCounter"
@@ -156,43 +159,6 @@ ApplicationWindow {
         }
     }
 
-//~     /* Reload data when day changes */
-//~     LiveTimer {
-//~         property var prevDate: new Date().setHours(0,0,0,0)
-//~         frequency: LiveTimer.Hour
-//~         onTrigger: {
-//~             var now = new Date().setHours(0,0,0,0)
-
-//~             if (+now !== +prevDate) {
-//~                 var currentDate1 = mainPage.detailView.currentDate1
-//~                 var currentDate2 = mainPage.detailView.currentDate2
-                
-//~                 switch (mainPage.detailView.currentMode) {
-//~                     case "today":
-//~                     case "recent":
-//~                     case "yesterday":
-//~                     case "yesterday":
-//~                     case "thisweek":
-//~                     case "thismonth":
-//~                     case "lastweek":
-//~                     case "lastmonth":
-//~                         mainView.listModels.modelSortFilterExpense.model.load("Category")
-//~                         break
-//~                     case "calendar-daily":
-//~                         mainView.listModels.modelSortFilterExpense.model.load("Category", currentDate1)
-//~                         break
-//~                     case "calendar-weekly":
-//~                     case "calendar-monthly":
-//~                         mainView.listModels.modelSortFilterExpense.model.load("Category", currentDate1, currentDate2)
-//~                         break
-//~                 }
-                
-//~                 mainView.listModels.dashboardModel.initialise()
-//~             }
-//~             prevDate = now
-//~         }
-//~     }
-
     Common.GlobalTooltip {
         id: globalTooltip
         parent: mainView.mainPage
@@ -207,7 +173,6 @@ ApplicationWindow {
         sourceComponent: SettingsComponent {}
 
         onLoaded: listModelsLoader.active = true
-//~         onLoaded: mainView.initDataUtils()
     }
 
     Loader {
@@ -217,17 +182,9 @@ ApplicationWindow {
         asynchronous: true
         sourceComponent: Models.MainModels {
             id: listModels
-
-//~             Connections {
-//~                 target: tempSettings
-//~                 onDashboardItemsChanged: {
-//~                     dashboardModel.initialise()
-//~                 }
-//~             }
         }
 
         onLoaded: {
-//~             listModels.modelCategories.getItems()
             mainPageLoader.active = true
             newExpenseViewLoader.active = true
         }
@@ -245,59 +202,112 @@ ApplicationWindow {
             asynchronous: true
             visible: status == Loader.Ready
             anchors.fill: parent
-            sourceComponent: PageComponents.BasePageStack {
-                id: corePage
+            sourceComponent: Item {
+                property alias sidePage: sidePage
+                property alias mainPage: corePage
+                property alias detailedListPage: detailedListPage
 
-                isWideLayout: mainView.isWideLayout
-                enableBottomGestureHint: true
-                enableHorizontalSwipe: true
-                initialItem: Pages.DashboardPage {
-                    isTravelMode: mainView.settings.travelMode
-                    travelCurrency: mainView.settings.travelCurrency
-                }
-                
-                Connections {
-                    target: corePage.middleBottomGesture
-                    ignoreUnknownSignals: true
+                PageComponents.BasePageStack {
+                    id: corePage
 
-                    onStageChanged: {
-                        if (target.dragging) {
-                            switch (target.stage) {
-                                case 0:
-                                    break
-                                case 1:
-                                case 2:
-                                case 3:
-                                    if (mainView.newExpenseView.searchMode) {
-                                        Common.Haptics.playSubtle()
-                                    }
-                                    mainView.newExpenseView.searchMode = false
-                                    break
-                                case 4:
-                                    if (!mainView.newExpenseView.searchMode) {
-                                        Common.Haptics.play()
-                                    }
-                                    mainView.newExpenseView.searchMode = true
-                                    break
-                                case 5:
-                                default:
-                                    break
-                            }
+                    anchors {
+                        fill: parent
+                        rightMargin: mainView.isWideLayout ? sidePage.width : 0
+                    }
+
+                    isWideLayout: width > Suru.units.gu(90)
+                    enableBottomGestureHint: true
+                    enableHorizontalSwipe: true
+                    enableDirectActions: true
+                    initialItem: Pages.DashboardPage {
+                        isTravelMode: mainView.settings.travelMode
+                        travelCurrency: mainView.settings.travelCurrency
+                    }
+
+                    Behavior on anchors.rightMargin {
+                        NumberAnimation {
+                            easing: Suru.animations.EasingIn
+                            duration: Suru.animations.SnapDuration
                         }
                     }
 
-                    onDraggingChanged: {
-                        if (!target.dragging && target.towardsDirection 
-                                && target.stage >= 1) {
-                            mainView.newExpenseView.open()
+                    Pages.BottomSwipeUpConnection {
+                        target: corePage.middleBottomGesture
+                        enabled: !sidePage.middleBottomGesture.dragging
+                    }
+                }
+
+                Rectangle {
+                    anchors {
+                        horizontalCenter: corePage.right
+                        top: parent.top
+                        bottom: parent.bottom
+                        margins: Suru.units.gu(2)
+                    }
+                    width: Suru.units.dp(1)
+                    visible: sidePage.visible && !(!mainView.isWideLayout && sidePage.forceShowInNarrow)
+                    color: Suru.neutralColor
+                }
+
+                PageComponents.BasePageStack {
+                    id: sidePage
+
+                    readonly property bool shownInNarrow: !mainView.isWideLayout
+                    property bool forceShowInNarrow: false
+
+                    anchors {
+                        top: parent.top
+                        bottom: parent.bottom
+                        right: parent.right
+                    }
+
+                    width: shownInNarrow ? parent.width : Suru.units.gu(50)
+                    isWideLayout: width > Suru.units.gu(60)
+                    forceShowBackButton: shownInNarrow
+                    enableShortcuts: true
+                    enableBottomGestureHint: true
+                    enableHorizontalSwipe: true
+                    enableDirectActions: true
+                    initialItem: Pages.DetailedListPage {
+                        id: detailedListPage
+
+                        isTravelMode: mainView.settings.travelMode
+                        travelCurrency: mainView.settings.travelCurrency
+                    }
+
+                    visible: opacity > 0
+                    opacity: mainView.isWideLayout || forceShowInNarrow ? 1 : 0
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            easing: Suru.animations.EasingIn
+                            duration: Suru.animations.SnapDuration
                         }
+                    }
+
+                    function show() {
+                        forceShowInNarrow = true
+                    }
+
+                    function hide() {
+                        forceShowInNarrow = false
+                    }
+
+                    onBack: hide()
+                    onCurrentItemChanged: {
+                        if (currentItem.hasOwnProperty("shownInNarrow")) {
+                            currentItem.shownInNarrow = Qt.binding(function() { return sidePage.shownInNarrow } )
+                        }
+                    }
+
+                    Pages.BottomSwipeUpConnection {
+                        target: sidePage.middleBottomGesture
+                        enabled: !corePage.middleBottomGesture.dragging
                     }
                 }
             }
-            onLoaded: {
-                mainView.visible = true
-//~                 newExpenseViewLoader.active = true
-            }
+
+            onLoaded: mainView.visible = true
         }
 
         Loader {
@@ -314,7 +324,17 @@ ApplicationWindow {
                 isColoredText: mainView.settings.coloredText
                 isTravelMode: mainView.settings.travelMode
                 isWideLayout: mainView.isWideLayout
-                dragDistance: mainPage.middleBottomGesture.dragging ? mainPage.middleBottomGesture.distance : 0
+                dragDistance: {
+                    if (mainPage.middleBottomGesture.dragging) {
+                        return mainPage.middleBottomGesture.distance
+                    }
+
+                    if (sidePage.middleBottomGesture.dragging) {
+                        return sidePage.middleBottomGesture.distance
+                    }
+
+                    return 0
+                }
             }
         }
     }

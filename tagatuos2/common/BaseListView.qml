@@ -1,4 +1,6 @@
 import QtQuick 2.12
+import QtQuick.Controls.Suru 2.2
+import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 import "pages" as PageComponents
 
@@ -17,14 +19,15 @@ ListView {
     }
 
     Loader {
-        active: baseListView.enableScrollPositioner
+        active: baseListView.parent instanceof Layout ? false : baseListView.enableScrollPositioner
         z: 1
         parent: baseListView.parent
+
         anchors {
-            right: parent.right
-            rightMargin: units.gu(2)
-            bottom: parent.bottom
-            bottomMargin: units.gu(3)
+            right: active ? parent.right : undefined
+            rightMargin: Suru.units.gu(2)
+            bottom: active ? parent.bottom : undefined
+            bottomMargin: Suru.units.gu(3) //+ baseListView.bottomMargin
         }
 
         sourceComponent: ScrollPositioner {

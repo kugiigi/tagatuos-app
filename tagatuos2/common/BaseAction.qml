@@ -4,6 +4,7 @@ QQC2.Action {
     id: action
 
     property bool visible: true
+    property bool onlyShowInBottom: false
     property bool separator: false
     property bool triggerOnTriggered: true
     property string shortText: text

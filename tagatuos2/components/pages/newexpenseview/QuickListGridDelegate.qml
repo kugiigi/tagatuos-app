@@ -63,30 +63,12 @@ Item {
 
             RowLayout {
                 id: indicatorLayout
-
-                Rectangle {
+                
+                Components.CategoryRectangle {
                     id: categoryRec
 
-                    radius: height / 4
-                    color: AppFunctions.getCategoryColor(gridDelegate.categoryName)
-                    width: categoryLayout.width
-                    height: categoryLayout.height
-
-                    RowLayout {
-                        id: categoryLayout
-
-                        Label {
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-                            Layout.bottomMargin: Suru.units.gu(0.2)
-                            Layout.topMargin: Suru.units.gu(0.2)
-                            Layout.leftMargin: Suru.units.gu(0.5)
-                            Layout.rightMargin: Suru.units.gu(0.5)
-                            Suru.textLevel: Suru.Small
-                            color: AppFunctions.getContrastYIQ(categoryRec.color) ? "#111111" : "#F7F7F7" // Black - White
-                            text: gridDelegate.categoryName
-                        }
-                    }
+                    categoryName: gridDelegate.categoryName
+                    visible: categoryName
                 }
 
                 Rectangle {

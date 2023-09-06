@@ -18,7 +18,7 @@ TextField {
     inputMethodHints: Qt.ImhNoPredictiveText
     selectByMouse: true
 
-    Keys.onUpPressed: console.log("Do not rmeove focus")
+    Keys.onUpPressed: console.log("Do not remove focus")
     Keys.onDownPressed: focusScrollConnections.focusNext()
 
     Components.FocusScrollConnections {

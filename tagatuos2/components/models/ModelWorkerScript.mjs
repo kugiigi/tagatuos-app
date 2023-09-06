@@ -3,26 +3,6 @@ import { mom } from "../../library/external/moment.mjs"
 var moment = mom();
 
 WorkerScript.onMessage = function (msg) {
-    //~ var txtProfileId, txtDisplayName
-    //~ var txtItemId, txtDescr, txtDisplayFormat
-    //~ var txtUnit, txtSymbol, txtFieldName
-    //~ var txtValueType, txtScope
-    //~ var txtFieldId, intPrecision
-    //~ var arrFields = []
-    //~ var arrItems = []
-    //~ var currentSortField, previousSortField
-    //~ var txtEntryDate, txtComments, txtFormattedEntryDate
-    //~ var realValue
-    //~ var intFieldSeq, currentIndex
-    //~ var currentEntryDate, currentItemId, prevEntryDate, prevItemId
-    //~ var txtDisplayFormatWithValue, txtFormattedValue
-    //~ var modelFields
-    //~ var dashItems
-    //~ var total = 0
-    //~ var valueCount = 0
-    //~ var average = 0
-    //~ var highest
-    //~ var last
     let result
 
     if (msg.model) {
@@ -112,70 +92,37 @@ WorkerScript.onMessage = function (msg) {
                 msg.model.append( { data: _data } )
             }
             break;
-        case "MonitorItemsFields":
-            for (var i = 0; i < msg.result.length; i++) {
-                txtItemId = msg.result[i].item_id
-                txtDisplayName = msg.result[i].display_name
-                txtFieldId = msg.result[i].field_id
-                txtFieldName = msg.result[i].field_name
-                txtSymbol = msg.result[i].display_symbol
-                intPrecision = msg.result[i].precision
-
-                currentSortField = txtItemId
-
-                if (previousSortField !== currentSortField) {
-                    arrFields.push({
-                                        fieldId: txtFieldId
-                                        , title: txtFieldName
-                                        , unit: txtSymbol
-                                        , precision: intPrecision
-                                    })
-                    msg.model.append({
-                                     itemId: txtItemId
-                                     , displayName: txtDisplayName
-                                     , fields: arrFields
-                                 })
-                    arrFields = []
-                } else {
-                    var currentIndex = msg.model.count - 1
-    
-                    msg.model.get(currentIndex).fields.append({
-                                                                fieldId: txtFieldId
-                                                                , title: txtFieldName
-                                                                , unit: txtSymbol
-                                                              })
-                }
-
-                previousSortField = currentSortField
-            }
-            break;
         case "Detailed_1":
         case "Detailed_2":
         case "Detailed_3":
-            //~ dashItems = msg.properties.dashItems
-            let scope = msg.properties.scope
+        case "SearchExpense":
             let total = 0
-            //~ let travelTotal = 0
+            let scope = msg.properties && msg.properties.scope ? msg.properties.scope : ""
+            let sort = msg.properties && msg.properties.sort ? msg.properties.sort : ""
+            let order = msg.properties && msg.properties.order ? msg.properties.order : ""
             const travelTotals = []
             const highest = []
             const lowest = []
 
-            for (var i = 0; i < msg.result.length; i++) {
+            for (let i = 0; i < msg.result.length; i++) {
                 let intID = msg.result[i].expense_id
                 let txtCategory = msg.result[i].category_name
-                let realTotal = msg.result[i].category_total
-                let realTravelTotal = msg.result[i].category_travel_total
+                let realTotal = msg.result[i].group_total
+                let realTravelTotal = msg.result[i].group_travel_total
                 let txtName = msg.result[i].name
                 let txtDescr = msg.result[i].descr
                 let txtDateValue = msg.result[i].entry_date
-                let txtDate = relativeDate(txtDateValue, "ddd, MMM d, yyyy", "Basic")
+                let txtDate = formatDateForItem(txtDateValue, scope, sort)
                 let realValue = msg.result[i].value
                 let realTravelValue = msg.result[i].travel_value
                 let realRate = msg.result[i].rate
                 let txtHomeCur = msg.result[i].home_currency
                 let txtTravelCur = msg.result[i].travel_currency
 
-                //~ console.log(txtCategory + " - " + txtName + " - " + txtDateValue)
+                let groupName = txtCategory
+                if (sort == "date") {
+                    groupName = formatDateForSection(txtDateValue, scope)
+                }
 
                 let currentExpenseId = intID
                 let prevExpenseId = 0
@@ -184,9 +131,9 @@ WorkerScript.onMessage = function (msg) {
                 let currentItemData = {
                     expense_id: intID,
                     category_name: txtCategory,
-                    category_total: realTotal,
-                    category_travel_total: realTravelTotal,
-                    category_id: [txtCategory, realTotal, realTravelTotal].join("|"),
+                    group_total: realTotal,
+                    group_travel_total: realTravelTotal,
+                    group_id: [groupName, realTotal, realTravelTotal].join("|"),
                     name: txtName,
                     descr: txtDescr,
                     entry_date: txtDateValue,
@@ -198,41 +145,43 @@ WorkerScript.onMessage = function (msg) {
                     travel_value: realTravelValue
                 }
 
-                if (currentExpenseId !== prevExpenseId) {
-                    total += realValue
+                if (msg.modelId !== "SearchExpense") {
+                    if (currentExpenseId !== prevExpenseId) {
+                        total += realValue
 
-                    // Get add to total of the same travel currency
-                    if (txtTravelCur) {
-                        let _foundIndex = travelTotals.findIndex((element) => element.currency == txtTravelCur)
-                        if (_foundIndex > -1) {
-                            travelTotals[_foundIndex].total += realTravelValue
-                        } else {
-                            travelTotals.push( { "currency": txtTravelCur, "total": realTravelValue } )
-                        }
-                    }
-
-                    if (highest.length > 0) {
-                        if (realValue >= highest[0].value) {
-                            if (realValue > highest[0].value) {
-                                highest.length = 0
+                        // Get add to total of the same travel currency
+                        if (txtTravelCur) {
+                            let _foundIndex = travelTotals.findIndex((element) => element.currency == txtTravelCur)
+                            if (_foundIndex > -1) {
+                                travelTotals[_foundIndex].total += realTravelValue
+                            } else {
+                                travelTotals.push( { "currency": txtTravelCur, "total": realTravelValue } )
                             }
+                        }
 
+                        if (highest.length > 0) {
+                            if (realValue >= highest[0].value) {
+                                if (realValue > highest[0].value) {
+                                    highest.length = 0
+                                }
+
+                                highest.push(currentItemData)
+                            }
+                        } else {
                             highest.push(currentItemData)
                         }
-                    } else {
-                        highest.push(currentItemData)
-                    }
 
-                    if (lowest.length > 0) {
-                        if (realValue <= lowest[0].value) {
-                            if (realValue < lowest[0].value) {
-                                lowest.length = 0
+                        if (lowest.length > 0) {
+                            if (realValue <= lowest[0].value) {
+                                if (realValue < lowest[0].value) {
+                                    lowest.length = 0
+                                }
+
+                                lowest.push(currentItemData)
                             }
-
+                        } else {
                             lowest.push(currentItemData)
                         }
-                    } else {
-                        lowest.push(currentItemData)
                     }
                 }
 
@@ -242,20 +191,22 @@ WorkerScript.onMessage = function (msg) {
                 msg.model.append(currentItemData)
             }
 
-            result = []
+            if (msg.modelId !== "SearchExpense") {
+                result = []
 
-            switch (scope) {
-                case "day":
-                default:
-                    result.push( { value_type: "TOTAL", data: total } )
+                switch (scope) {
+                    case "day":
+                    default:
+                        result.push( { value_type: "TOTAL", data: total } )
 
-                    for (let i = 0; i < travelTotals.length; i++) {
-                        result.push( { value_type: "TRAVEL_TOTAL", data: travelTotals[i].total, currency: travelTotals[i].currency } )
-                    }
+                        for (let i = 0; i < travelTotals.length; i++) {
+                            result.push( { value_type: "TRAVEL_TOTAL", data: travelTotals[i].total, currency: travelTotals[i].currency } )
+                        }
 
-                    result.push( { value_type: "HIGHEST", data: highest } )
-                    result.push( { value_type: "LOWEST", data: lowest } )
-                    break
+                        result.push( { value_type: "HIGHEST", data: highest } )
+                        result.push( { value_type: "LOWEST", data: lowest } )
+                        break
+                }
             }
 
             break;
@@ -350,7 +301,7 @@ WorkerScript.onMessage = function (msg) {
                                     let _date = _dateMoment.date()
                                     let _dayName = _dateMoment.format('ddd')
 
-                                    if (msg.modelId == "ThisWeekTrendChart") {
+                                    if (msg.modelId == "ThisWeekTrendChart" || msg.modelId == "RecentTrendChart") {
                                         txtLabel = _dayName
                                     } else if (msg.modelId == "ThisMonthTrendChart") {
                                         txtLabel = _date
@@ -459,6 +410,102 @@ function formatValue(format, sequence, value) {
     return format.replace("%" + sequence, value)
 }
 
+function formatDateForSection(petsa, scope) {
+    let engPetsa
+    let defaultFormat = "ddd, MMM DD, YYYY"
+
+    if (petsa !== null) {
+        let dtPetsa = moment(petsa)
+        let _tagString = ""
+        let comparisonValues = getDateComparisonValues(petsa)
+
+        switch (scope) {
+            case "day":
+                engPetsa = dtPetsa.format("hh:mm a")
+                break
+            case "week":
+            case "month":
+                switch (true) {
+                    case dtPetsa.isSame(comparisonValues.today,'day'):
+                        _tagString = "Today"
+                        break
+                    case dtPetsa.isSame(comparisonValues.yesterday,'day'):
+                        _tagString = "Yesterday"
+                        break
+                    case dtPetsa.isSame(comparisonValues.tomorrow,'day'):
+                        _tagString = "Tomorrow"
+                        break
+                }
+
+                if (dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
+                        || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day')) {
+                    engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
+                } else {
+                    if (_tagString) {
+                        engPetsa = ("%1 - %2").arg(_tagString).arg(dtPetsa.format("ddd, MMM DD"))
+                    } else {
+                        engPetsa = dtPetsa.format("ddd, MMM DD")
+                    }
+                }
+                break
+            default:
+                engPetsa = dtPetsa.format(defaultFormat)
+        }
+    }
+
+    return engPetsa
+}
+
+function formatDateForItem(petsa, scope, sort) {
+    let engPetsa
+    let defaultFormat = "ddd, MMM DD, YYYY"
+
+    if (petsa !== null) {
+        let dtPetsa = moment(petsa)
+        let _tagString = ""
+        let comparisonValues = getDateComparisonValues(petsa)
+
+        switch (scope) {
+            case "day":
+                engPetsa = dtPetsa.format("hh:mm a")
+                break
+            case "week":
+            case "month":
+                switch (true) {
+                    case dtPetsa.isSame(comparisonValues.today,'day'):
+                        _tagString = "Today"
+                        break
+                    case dtPetsa.isSame(comparisonValues.yesterday,'day'):
+                        _tagString = "Yesterday"
+                        break
+                    case dtPetsa.isSame(comparisonValues.tomorrow,'day'):
+                        _tagString = "Tomorrow"
+                        break
+                }
+
+                if (sort == "date") {
+                    engPetsa = dtPetsa.format("hh:mm a")
+                } else {
+                    if (dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
+                            || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day')) {
+                        engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
+                    } else {
+                        if (_tagString) {
+                            engPetsa = ("%1 - %2").arg(_tagString).arg(dtPetsa.format("ddd, MMM DD"))
+                        } else {
+                            engPetsa = dtPetsa.format("ddd, MMM DD")
+                        }
+                    }
+                }
+                break
+            default:
+                engPetsa = dtPetsa.format(defaultFormat)
+        }
+    }
+
+    return engPetsa
+}
+
 //Converts dates into user friendly format when necessary
 function relativeDate(petsa, format, mode){
     if(petsa !== null){
@@ -530,44 +577,53 @@ function getDateComparisonValues(){
     var thisWeekFirstDay
     var thisWeekLastDay
     var sevenDaysago
+    var startOfThisYear
+    var endOfThisYear
+    var endOfLastYear
     var result = []
 
     today = moment()
     yesterday = moment().subtract(1, 'day')
     tomorrow = moment().add(1, 'day')
 
-        lastWeekFirstDay = moment().subtract(1, 'week').startOf('week')//.subtract(1,'day')
-        lastWeekLastDay = moment().subtract(1, 'week').endOf('week')//.add(1,'day')
-        lastMonthFirstDay = moment().subtract(1, 'month').startOf('month')//.subtract(1,'day')
-        lastMonthLastDay = moment().subtract(1, 'month').endOf('month')//.add(1,'day')
-        nextWeekFirstDay = moment().add(1, 'week').startOf('week')//.subtract(1,'day')
-        nextWeekLastDay = moment().add(1, 'week').endOf('week')//.add(1,'day')
-        nextMonthFirstDay = moment().add(1, 'month').startOf('month')//.subtract(1,'day')
-        nextMonthLastDay = moment().add(1, 'month').endOf('month')//.add(1,'day')
+        lastWeekFirstDay = moment().subtract(1, 'week').startOf('week')
+        lastWeekLastDay = moment().subtract(1, 'week').endOf('week')
+        lastMonthFirstDay = moment().subtract(1, 'month').startOf('month')
+        lastMonthLastDay = moment().subtract(1, 'month').endOf('month')
+        nextWeekFirstDay = moment().add(1, 'week').startOf('week')
+        nextWeekLastDay = moment().add(1, 'week').endOf('week')
+        nextMonthFirstDay = moment().add(1, 'month').startOf('month')
+        nextMonthLastDay = moment().add(1, 'month').endOf('month')
         thisMonthFirstDay = moment().startOf('month')
         thisMonthLastDay = moment().endOf('month')
         thisWeekFirstDay = moment().startOf('week')
         thisWeekLastDay = moment().endOf('week')
-        sevenDaysago = moment().subtract(6, 'day')
+        sevenDaysago = moment().subtract(7, 'day')
+        endOfLastYear = moment().subtract(1, 'year').endOf('year')
+        startOfThisYear = moment().startOf('year')
+        endOfThisYear = moment().endOf('year')
 
-    result ={
-                    today: today,
-                    yesterday: yesterday,
-                    tomorrow: tomorrow,
-                    lastWeekFirstDay: lastWeekFirstDay,
-                    lastWeekLastDay: lastWeekLastDay,
-                    lastMonthFirstDay: lastMonthFirstDay,
-                    lastMonthLastDay: lastMonthLastDay,
-                    nextWeekFirstDay: nextWeekFirstDay,
-                    nextWeekLastDay: nextWeekLastDay,
-                    nextMonthFirstDay: nextMonthFirstDay,
-                    nextMonthLastDay: nextMonthLastDay,
-                    thisMonthFirstDay: thisMonthFirstDay,
-                    thisMonthLastDay: thisMonthLastDay,
-                    thisWeekFirstDay: thisWeekFirstDay,
-                    thisWeekLastDay: thisWeekLastDay,
-                    sevenDaysago: sevenDaysago
-                }
+    result = {
+        today: today,
+        yesterday: yesterday,
+        tomorrow: tomorrow,
+        lastWeekFirstDay: lastWeekFirstDay,
+        lastWeekLastDay: lastWeekLastDay,
+        lastMonthFirstDay: lastMonthFirstDay,
+        lastMonthLastDay: lastMonthLastDay,
+        nextWeekFirstDay: nextWeekFirstDay,
+        nextWeekLastDay: nextWeekLastDay,
+        nextMonthFirstDay: nextMonthFirstDay,
+        nextMonthLastDay: nextMonthLastDay,
+        thisMonthFirstDay: thisMonthFirstDay,
+        thisMonthLastDay: thisMonthLastDay,
+        thisWeekFirstDay: thisWeekFirstDay,
+        thisWeekLastDay: thisWeekLastDay,
+        sevenDaysago: sevenDaysago,
+        startOfThisYear: startOfThisYear,
+        endOfThisYear: endOfThisYear,
+        endOfLastYear: endOfLastYear
+    }
 
     return result;
 

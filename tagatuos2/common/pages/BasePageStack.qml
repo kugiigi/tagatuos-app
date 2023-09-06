@@ -21,6 +21,7 @@ QQC2.Page {
     property var defaultRightActions: []
 
     property bool isWideLayout: false
+    property bool forceShowBackButton: false
 
     // Gestures
     property bool enableBottomGestureHint: false
@@ -33,6 +34,8 @@ QQC2.Page {
     property bool enableHorizontalSwipe: false
     property real bottomGestureAreaHeight: units.gu(2)
     property real directActionsHeight: 3
+
+    signal back
 
     clip: true
     focus: true
@@ -55,10 +58,21 @@ QQC2.Page {
         text: i18n.tr("Back")
         tooltipText: i18n.tr("Go back to previous page")
         iconName: "back"
-        visible: mainStackView.depth > 1
-        shortcut: enableShortcuts ? StandardKey.Cancel : ""
+//~         visible: mainStackView.depth > 1
+//~         visible: mainStackView.depth > 1 || forceShowBackButton
+        visible: (mainStackView.depth > 1 || forceShowBackButton) && (mainStackView.currentItem && mainStackView.currentItem.showBackButton)
+//~         shortcut: enableShortcuts ? StandardKey.Cancel : ""
+        shortcut: enableShortcuts ? StandardKey.Back : ""
+        enabled: visible
 
-        onTrigger: mainStackView.pop()
+//~         onTrigger: mainStackView.pop()
+        onTrigger: {
+            if (mainStackView.depth > 1) {
+                mainStackView.pop()
+            } else {
+                basePageStack.back()
+            }
+        }
     }
 
     header: BasePageHeader {
@@ -83,7 +97,7 @@ QQC2.Page {
         onCurrentItemChanged: {
             currentItem.pageManager = basePageStack
             if (currentItem.hasOwnProperty("isWideLayout")) {
-                currentItem.isWideLayout = basePageStack.isWideLayout
+                currentItem.isWideLayout = Qt.binding(function() { return basePageStack.isWideLayout } )
             }
         }
     }

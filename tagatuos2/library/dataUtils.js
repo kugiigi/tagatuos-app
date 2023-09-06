@@ -103,8 +103,6 @@ var dataUtils = dataUtils || (function (undefined) {
                             _previous = Database.getExpenseTrend(profile, "previousrecent", mode, categories, fromDate, toDate);
                             break
                     }
-                    
-                    //~ console.log(JSON.stringify([ _current, _previous ]))
 
                     return [ _current, _previous ]
                 },
@@ -189,7 +187,7 @@ var dataUtils = dataUtils || (function (undefined) {
 
                     let _result = Database.updateExpense(_data, _travelData)
                     if (_result.success) {
-                        mainView.mainModels.refreshValues(_data.entryDate)
+                        mainView.mainModels.refreshValues(_data.entryDate, _txtID)
                         if (_result.oldEntryDate != _data.entryDate) {
                             mainView.mainModels.refreshValues(_result.oldEntryDate)
                         }
@@ -217,17 +215,20 @@ var dataUtils = dataUtils || (function (undefined) {
                 , deleteComment: function(entryDate) {
                     return Database.deleteComment(profile, entryDate);
                 }
-                , detailedData: function(category, scope, dateFrom, dateTo) {
-                    return Database.getExpenseDetailedData(profile, category, scope, dateFrom, dateTo)
+                , detailedData: function(category, scope, dateFrom, dateTo, sort, order) {
+                    return Database.getExpenseDetailedData(profile, category, scope, dateFrom, dateTo, sort, order)
                 }
                 , historyDataForEntry: function(searchText, limit) {
                     return Database.getHistoryExpenses(profile, searchText, limit)
                 }
-                , lastDateWithData: function(category, dateBase) {
-                    return Database.getDateWithData(false, profile, category, dateBase)
+                , search: function(searchText, limit, sort) {
+                    return Database.searchExpenses(profile, searchText, limit, sort)
                 }
-                , nextDateWithData: function(category, dateBase) {
-                    return Database.getDateWithData(true, profile, category, dateBase)
+                , lastDateWithData: function(category, dateBase, scope) {
+                    return Database.getDateWithData(false, profile, category, dateBase, scope)
+                }
+                , nextDateWithData: function(category, dateBase, scope) {
+                    return Database.getDateWithData(true, profile, category, dateBase, scope)
                 }
                 , entryDateMultiple: function(entryDate, itemId) {
                     return Database.checkEntryDateMultiple(profile, entryDate, itemId)

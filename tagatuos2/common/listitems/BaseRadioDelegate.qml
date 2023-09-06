@@ -3,7 +3,7 @@ import Lomiri.Components 1.3
 import QtQuick.Controls 2.2 as QQC2
 import QtQuick.Controls.Suru 2.2
 
-RoundedItemDelegate {
+BaseItemDelegate {
     id: customizedRadioDelegate
 
     transparentBackground: true

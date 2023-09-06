@@ -15,28 +15,55 @@ Pages.BasePage {
     id: detailedListPage
 
     readonly property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
+    readonly property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
+    readonly property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
     readonly property string currentFromDate: dateViewPath.currentItem.fromDate
     readonly property string currentBaseDate: dateViewPath.baseDate
+    readonly property bool isByMonth: scope == "month"
+    readonly property bool isByDay: scope == "day"
+    readonly property bool isByWeek: scope == "week"
+    readonly property bool isAscending: order == "asc"
+    readonly property bool isDescending: order == "desc"
+    readonly property bool isSortByCategory: sort == "category"
+    readonly property bool isSortByDate: sort == "date"
 
     property string currentCategory: "all"
     property string scope: "day"
+    property string order: "asc"
+    property string sort: "category"
     property bool isTravelMode: false
+    property bool isSearchMode: false
+    property bool shownInNarrow: false
     property string travelCurrency
 
     flickable: dateViewPath.currentItem.view
-    title: mainView.profiles.currentName()
-    focus: !mainView.newExpenseView.isOpen
+    title: {
+        let _profileName = mainView.profiles.currentName()
+        if (isSearchMode) {
+            return i18n.tr("Searching: %1").arg(_profileName)
+        }
+
+        return shownInNarrow ? _profileName : i18n.tr("Expenses")
+    }
+    focus: !mainView.newExpenseView.isOpen && mainView.sidePageIsOpen
+    showBackButton: !isSearchMode
 
     signal refresh
 
-//~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction, sortAction, profilesAction]
-//~     headerRightActions: [addAction, todayAction, lastDataAction, nextDataAction]
-    headerRightActions: [ addAction, todayAction ]
+    headerLeftActions: [ exitSearchAction ]
+    headerRightActions: [ nextDataAction, lastDataAction, searchAction, sortAction, todayAction, addAction ]
 
     Connections {
         target: mainView.settings
         onActiveProfileChanged: {
             refresh()
+        }
+    }
+
+    function showInSearchMode() {
+        if (mainView.sidePage) {
+            mainView.sidePage.show()
+            isSearchMode = true
         }
     }
 
@@ -53,13 +80,11 @@ Pages.BasePage {
     }
     
     function goToday() {
-        if (scope == "day") {
-            internal.setBaseDate(Functions.getToday())
-        }
+        internal.setBaseDate(Functions.getToday())
     }
 
     function goToLastData() {
-        let lastDate = mainView.expenses.lastDateWithData(currentCategory, currentFromDate)
+        let lastDate = mainView.expenses.lastDateWithData(currentCategory, currentFromDate, scope)
         if (lastDate) {
             internal.setBaseDate(lastDate)
         } else {
@@ -68,11 +93,17 @@ Pages.BasePage {
     }
 
     function goToNextData() {
-        let lastDate = mainView.expenses.nextDateWithData(currentCategory, currentFromDate)
+        let lastDate = mainView.expenses.nextDateWithData(currentCategory, currentFromDate, scope)
         if (lastDate) {
             internal.setBaseDate(lastDate)
         } else {
             mainView.tooltip.display(i18n.tr("No newer data"))
+        }
+    }
+
+    onIsSearchModeChanged: {
+        if (!isSearchMode) {
+            dateViewPath.forceActiveFocus()
         }
     }
 
@@ -83,8 +114,37 @@ Pages.BasePage {
         shortText: i18n.tr("New")
         iconName: "add"
         shortcut: StandardKey.New
+        visible: !detailedListPage.isSearchMode
+        enabled: visible
 
         onTrigger: newEntry()
+    }
+
+    Common.BaseAction {
+        id: exitSearchAction
+
+        text: i18n.tr("Exit")
+        iconName: "back"
+        shortcut: StandardKey.Cancel
+        visible: detailedListPage.isSearchMode
+        enabled: detailedListPage.focus && detailedListPage.visible && visible
+
+        onTrigger: detailedListPage.isSearchMode = false
+    }
+
+    Common.BaseAction {
+        id: searchAction
+
+        text: i18n.tr("Search")
+        iconName: "find"
+        shortcut: StandardKey.Find
+        visible: detailedListPage.isSearchMode ? !expenseSearchView.searchFieldIsFocused : true
+        enabled: detailedListPage.focus && detailedListPage.visible && visible
+
+        onTrigger: {
+            detailedListPage.isSearchMode = true
+            expenseSearchView.focusSearchField()
+        }
     }
 
     Common.BaseAction {
@@ -93,7 +153,11 @@ Pages.BasePage {
         text: i18n.tr("View Today")
         shortText: i18n.tr("Today")
         iconName: "calendar-today"
-        visible: !detailedListPage.isToday
+        visible: ((detailedListPage.isByDay && !detailedListPage.isToday)
+                        || (detailedListPage.isByMonth && !detailedListPage.isThisMonth)
+                        || (detailedListPage.isByWeek && !detailedListPage.isThisWeek)
+                 )
+                    && !detailedListPage.isSearchMode
 
         onTrigger: goToday()
     }
@@ -101,27 +165,30 @@ Pages.BasePage {
     Common.BaseAction {
         id: nextAction
 
-        enabled: detailedListPage.focus
+        enabled: detailedListPage.focus && detailedListPage.visible && !detailedListPage.isSearchMode
         text: i18n.tr("Next")
         iconName: "go-next"
         shortcut: StandardKey.MoveToNextChar
+
         onTrigger: next()
     }
 
     Common.BaseAction {
         id: previousAction
 
-        enabled: detailedListPage.focus
+        enabled: detailedListPage.focus && detailedListPage.visible && !detailedListPage.isSearchMode
         text: i18n.tr("Previous")
         iconName: "go-previous"
         shortcut: StandardKey.MoveToPreviousChar
+
         onTrigger: previous()
     }
 
     Common.BaseAction {
         id: lastDataAction
 
-        enabled: detailedListPage.focus
+        enabled: detailedListPage.focus && detailedListPage.visible && !detailedListPage.isSearchMode
+        onlyShowInBottom: true
         text: i18n.tr("View Last Data")
         iconName: "go-first"
         shortcut: StandardKey.MoveToPreviousWord
@@ -132,7 +199,8 @@ Pages.BasePage {
     Common.BaseAction {
         id: nextDataAction
 
-        enabled: detailedListPage.focus
+        enabled: detailedListPage.focus && detailedListPage.visible && !detailedListPage.isSearchMode
+        onlyShowInBottom: true
         text: i18n.tr("View Next Data")
         iconName: "go-last"
         shortcut: StandardKey.MoveToNextWord
@@ -145,9 +213,9 @@ Pages.BasePage {
 
         text: i18n.tr("Sort")
         iconName: "sort-listitem"
-        visible: false
+        visible: detailedListPage.isSearchMode && !expenseSearchView.isEmpty
 
-        onTrigger:{}
+        onTrigger: expenseSearchView.toggleDateSort()
     }
 
     Common.BaseAction {
@@ -167,6 +235,20 @@ Pages.BasePage {
 
         onTrigger:{
             mainView.newExpenseView.openInEditMode(contextMenu.itemData)
+        }
+    }
+
+    Common.BaseAction {
+        id: goToDateAction
+
+        text: i18n.tr("View this day")
+        iconName: "go-last"
+        visible: contextMenu.isFromSearch
+
+        onTrigger:{
+            detailedListPage.scope = "day"
+            exitSearchAction.triggered()
+            internal.setBaseDate(contextMenu.itemData.entryDate)
         }
     }
 
@@ -202,9 +284,7 @@ Pages.BasePage {
     Component {
         id: deleteExpenseDialogComponent
 
-        Components.DeleteExpenseDialog {
-            
-        }
+        Components.DeleteExpenseDialog {}
     }
 
     Menus.ContextMenu {
@@ -213,9 +293,12 @@ Pages.BasePage {
         readonly property Components.ExpenseData itemData: Components.ExpenseData {
             id: expenseDataObj
         }
+        property bool isFromSearch: false
 
-        actions: [ editAction, separatorAction, deleteAction ]
-        listView: dateViewPath.currentItem.view
+        actions: [ deleteAction, separatorAction, editAction, goToDateAction ]
+        listView: isFromSearch ? expenseSearchView.view : dateViewPath.currentItem.view
+
+        onClosed: isFromSearch = false
     }
     
     CriteriaPopup {
@@ -223,11 +306,30 @@ Pages.BasePage {
 
         activeCategory: detailedListPage.currentCategory
         dateValue: new Date(dateViewPath.currentItem.fromDate)
+        sort: detailedListPage.sort
+        scope: detailedListPage.scope
+        order: detailedListPage.order
+
         onSelect: {
             detailedListPage.currentCategory = selectedCategory
+            detailedListPage.sort = selectedSort
+            detailedListPage.scope = selectedScope
+            detailedListPage.order = selectedOrder
             internal.setBaseDate(Functions.formatDateForDB(selectedDate))
             detailedListPage.refresh()
+
+            // Rebind values
             dateValue = Qt.binding(function() { return new Date(detailedListPage.currentFromDate) } )
+            sort = Qt.binding(function() { return detailedListPage.sort } )
+            scope = Qt.binding(function() { return detailedListPage.scope } )
+            order = Qt.binding(function() { return detailedListPage.order } )
+        }
+
+        onRejected: {
+            dateValue = Qt.binding(function() { return new Date(detailedListPage.currentFromDate) } )
+            sort = Qt.binding(function() { return detailedListPage.sort } )
+            scope = Qt.binding(function() { return detailedListPage.scope } )
+            order = Qt.binding(function() { return detailedListPage.order } )
         }
     }
 
@@ -258,7 +360,7 @@ Pages.BasePage {
                     id: navigationRow
 
                     function labelRefresh() {
-                        dateTitle = Qt.binding(function() { return Functions.relativeDate(detailedListPage.currentFromDate,"ddd, MMM DD", "Basic") })
+                        dateTitle = Qt.binding(function() { return Functions.formatDateForNavigation(detailedListPage.currentFromDate, detailedListPage.scope) })
                     }
 
                     Component.onCompleted: labelRefresh()
@@ -314,19 +416,31 @@ Pages.BasePage {
                 property alias model: listView.model
                 property alias count: listView.count
                 property alias view: listView
-                property string fromDate: Functions.addDays(dateViewPath.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index), true)
+                property string fromDate: {
+                    switch (detailedListPage.scope) {
+                        case "week":
+                            return Functions.addDays(dateViewPath.baseDate, (dateViewPath.loopCurrentIndex + dateViewPath.indexType(index)) * 7, true)
+                            break
+                        case "month":
+                            return Functions.addMonths(dateViewPath.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index), true)
+                            break
+                        case "day":
+                        default:
+                            return Functions.addDays(dateViewPath.baseDate, dateViewPath.loopCurrentIndex + dateViewPath.indexType(index), true)
+                            break
+                    }
+                }
                 property string toDate: fromDate
 
                 height: parent.height
                 width: parent.width
 
                 function loadData() {
-                    listView.model.load(detailedListPage.currentCategory, detailedListPage.scope, fromDate, fromDate)
+//~                     console.log(["Before:", detailedListPage.scope, detailedListPage.sort, detailedListPage.order].join(" - "))
+                    listView.model.load(detailedListPage.currentCategory, detailedListPage.scope, fromDate, fromDate, detailedListPage.sort, detailedListPage.order)
                 }
-                
-                onFromDateChanged: {
-                    loadData()
-                }
+
+                onFromDateChanged: loadData()
 
                 Connections {
                     target: detailedListPage
@@ -356,8 +470,17 @@ Pages.BasePage {
                     focus: true
                     currentIndex: -1
                     visible: model.ready
-                    section.property: detailedListPage.currentCategory === "all" ? "category_id" : ""
+                    section.property: {
+                        if (detailedListPage.isSortByCategory) {
+                            return detailedListPage.currentCategory === "all" ? "group_id" : ""
+                        } else if(detailedListPage.isSortByDate && !detailedListPage.isByDay) {
+                            return "group_id"
+                        } else {
+                            return ""
+                        }
+                    }
                     section.delegate: ValuesSectionDelegate {
+                        type: detailedListPage.sort
                         sectionObj: section
                         view: dateViewPath
                         displayTravelTotal: summaryValues.isTravelMode && summaryValues.onlyOneTravelTotal
@@ -370,17 +493,6 @@ Pages.BasePage {
                     }
 
                     model: mainView.mainModels.detailedListModels[index]
-
-                    function getCategoryTotal(_categoryName) {
-                        let _total = 0
-                        for (let i = 0; i <= listView.model.count - 1; i++) {
-                            let _current = listView.model.get(i)
-                            if (_current.category_name == _categoryName) {
-                                _total += _current.value
-                            }
-                        }
-                        return _total
-                    }
 
                     delegate: ValueListDelegate {
                         id: valuesListDelegate
@@ -403,7 +515,10 @@ Pages.BasePage {
                         entryDateRelative: model.entry_date_relative
                         comments: model.descr
                         itemName: model.name
+                        categoryName: model.category_name
                         highlighted: listView.currentIndex == index
+                        showDate: detailedListPage.isByMonth || detailedListPage.isByWeek || detailedListPage.isSortByDate
+                        showCategory: detailedListPage.isSortByDate
 
                         onShowContextMenu: {
                             contextMenu.itemData.expenseID = expenseID
@@ -471,6 +586,18 @@ Pages.BasePage {
                 easing: Suru.animations.EasingOut
             }
         }
+    }
+    
+    ExpenseSearchView {
+        id: expenseSearchView
+
+        anchors.fill: parent
+        visible: detailedListPage.isSearchMode
+        model: mainView.mainModels.searchExpenseModel
+        pageHeader: detailedListPage.pageManager.pageHeader
+        isTravelMode: detailedListPage.isTravelMode
+        travelCurrency: detailedListPage.travelCurrency
+        contextMenu: contextMenu
     }
 
     QtObject {

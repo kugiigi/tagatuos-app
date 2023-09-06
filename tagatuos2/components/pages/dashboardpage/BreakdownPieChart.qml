@@ -19,7 +19,7 @@ ItemDelegate {
     property string currentTitle
     property string previousTitle
     property alias highlightPrevious: chartView.highlightPrevious
-    property alias model: instantiator.model
+    property ListModel model
     property alias chart: chartView
     property real sideMargins: Suru.units.gu(1)
     property bool showDifference: false
@@ -127,7 +127,7 @@ ItemDelegate {
         property bool previousHasLoaded: false
 
         backgroundColor: "transparent"
-        animationDuration: Suru.animations.SlowDuration
+        animationDuration: Suru.animations.BriskDuration
         legend.visible: false
         antialiasing: true
         theme: currentTheme
@@ -146,10 +146,20 @@ ItemDelegate {
             onTriggered: chartView.animationOptions = ChartView.NoAnimation
         }
 
+        Connections {
+            target: mainView
+            onSuruThemeChanged: {
+                // Refresh the charts since colors are reassigned when them changes
+                instantiator.model = null
+                instantiator.model = breakdownPieChart.model
+            }
+        }
+
         Instantiator {
             id: instantiator
 
             asynchronous: true
+            model: breakdownPieChart.model
 
             onObjectAdded: {
                 if (index == 0) {

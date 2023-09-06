@@ -327,17 +327,19 @@ FocusScope {
     }
 
     Keys.onPressed: {
-        switch (event.key) {
-            case Qt.Key_Escape:
-                closeAction.triggered()
-                return;
-        }
-        if (event.text.trim() !== "") {
-            focusSearchInput();
-            searchText = event.text;
-        }
+        if (newExpenseView.focus) {
+            switch (event.key) {
+                case Qt.Key_Escape:
+                    closeAction.triggered()
+                    return;
+            }
+            if (event.text.trim() !== "") {
+                focusSearchInput();
+                searchText = event.text;
+            }
 
-        event.accepted = true;
+            event.accepted = true;
+        }
     }
 
     Behavior on opacity {
@@ -353,7 +355,7 @@ FocusScope {
         color: Suru.foregroundColor
         blurRadius: Suru.units.gu(5)
         backgroundOpacity: 0.1
-        sourceItem: mainPage
+        sourceItem: mainView.mainSurface
         blurRect: Qt.rect(0, 0, sourceItem.width, sourceItem.height)
         occluding: false
 

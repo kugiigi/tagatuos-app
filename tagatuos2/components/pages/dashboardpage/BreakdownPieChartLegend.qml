@@ -10,6 +10,7 @@ import "../../../library/functions.js" as Functions
 ListItems.BaseItemDelegate {
     id: breakdownLegend
 
+    readonly property bool isEmpty: model.length == 0
     property alias model: repeater.model
     property bool showValues: false
 

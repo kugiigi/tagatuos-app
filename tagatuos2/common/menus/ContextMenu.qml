@@ -11,6 +11,8 @@ Menu {
     property var listView
     property var itemProperties
 
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
     bottomPadding: 0
 
     onClosed: {
@@ -46,11 +48,13 @@ Menu {
                     id: menuItem
 
                     text: modelData ? modelData.text : ""
+                    height: modelData.visible ? Suru.units.gu(6) : 0
+
                     onTriggered: {
                         contextMenu.close()
                         modelData.trigger(false, menuItem)
                     }
-                    height: Suru.units.gu(6)
+
                     indicator: UT.Icon {
                          id: iconMenu
                          
@@ -67,7 +71,7 @@ Menu {
             }
         }
 
-        onObjectAdded: contextMenu.insertItem(index, object)
+        onObjectAdded: contextMenu.addItem(object)
         onObjectRemoved: contextMenu.removeItem(object)
     }
 }

@@ -36,7 +36,7 @@ RowLayout {
 
         Layout.fillWidth: false
         // FIXME: There might be a better way to hide this
-        Layout.preferredWidth: headerActions.showOverflow ? 0 : implicitWidth
+        Layout.preferredWidth: headerActions.showOverflow || visibleCount == 0 ? 0 : implicitWidth
         enabled: !headerActions.showOverflow
         opacity: headerActions.showOverflow ? 0 : 1
 

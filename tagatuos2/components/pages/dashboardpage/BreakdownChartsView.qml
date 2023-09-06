@@ -53,6 +53,7 @@ ColumnLayout {
                     Layout.fillWidth: true
 
                     z: 1
+                    visible: !chartLegend.isEmpty
 
                     Behavior on Layout.preferredHeight {
                         NumberAnimation {

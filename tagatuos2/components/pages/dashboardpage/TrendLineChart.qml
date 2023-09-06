@@ -31,11 +31,11 @@ ListItems.BaseItemDelegate {
     QtObject {
         id: internal
 
-        readonly property color baseColor: Suru.secondaryForegroundColor
-        readonly property color activeColor: Qt.hsla(baseColor.hslHue, baseColor.hslSaturation, baseColor.hslLightness, 0.6)
-        readonly property color inactiveColor: Qt.hsla(activeColor.hslHue, activeColor.hslSaturation, activeColor.hslLightness, 0.2)
-        readonly property color activeAverageColor: Suru.highlightColor
-        readonly property color inactiveAverageColor: Qt.hsla(activeAverageColor.hslHue, activeAverageColor.hslSaturation, activeAverageColor.hslLightness, 0.2)
+        property color baseColor: Suru.secondaryForegroundColor
+        property color activeColor: Qt.hsla(baseColor.hslHue, baseColor.hslSaturation, baseColor.hslLightness, 0.6)
+        property color inactiveColor: Qt.hsla(activeColor.hslHue, activeColor.hslSaturation, activeColor.hslLightness, 0.2)
+        property color activeAverageColor: Suru.highlightColor
+        property color inactiveAverageColor: Qt.hsla(activeAverageColor.hslHue, activeAverageColor.hslSaturation, activeAverageColor.hslLightness, 0.4)
 
         property real currentTotal
         property real previousTotal
@@ -105,6 +105,7 @@ ListItems.BaseItemDelegate {
                 }
 
                 RowLayout {
+                    Layout.preferredHeight: contentItem.height * 0.06
                     Label {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.fillHeight: true
@@ -199,6 +200,13 @@ ListItems.BaseItemDelegate {
                 let _previousData = _datasets[2]
                 let _previousAverage = _datasets[3]
 
+                // Reassign colors since apparently colors doesn't bind when changing theme
+                internal.baseColor = Suru.secondaryForegroundColor
+                internal.activeColor = Qt.hsla(internal.baseColor.hslHue, internal.baseColor.hslSaturation, internal.baseColor.hslLightness, 0.6)
+                internal.inactiveColor = Qt.hsla(internal.activeColor.hslHue, internal.activeColor.hslSaturation, internal.activeColor.hslLightness, 0.2)
+                internal.activeAverageColor = Suru.highlightColor
+                internal.inactiveAverageColor = Qt.hsla(internal.activeAverageColor.hslHue, internal.activeAverageColor.hslSaturation, internal.activeAverageColor.hslLightness, 0.4)
+
                 if (chartView.highlightPrevious) {
                     modelData.labels = modelData.previousLabels
                     _currentData.fillColor = internal.inactiveColor
@@ -227,6 +235,11 @@ ListItems.BaseItemDelegate {
 
             onModelDataChanged: processData()
             onHighlightPreviousChanged: processData()
+
+            Connections {
+                target: mainView
+                onSuruThemeChanged: chartView.processData()
+            }
         }
     }
 }

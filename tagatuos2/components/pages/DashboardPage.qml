@@ -15,6 +15,7 @@ import "../../library/ApplicationFunctions.js" as AppFunctions
 Pages.BasePage {
     id: dashboardPage
 
+    property bool isWideLayout: false
     property bool isTravelMode: false
     property string travelCurrency
 
@@ -40,6 +41,7 @@ Pages.BasePage {
         shortText: i18n.tr("New")
         iconName: "add"
         shortcut: StandardKey.New
+        visible: !mainView.sidePageIsOpen
 
         onTrigger: mainView.newExpenseView.openInSearchMode()
     }
@@ -57,26 +59,55 @@ Pages.BasePage {
         text: i18n.tr("View expenses")
         shortText: i18n.tr("Expenses")
         iconName: "view-list-symbolic"
+        visible: !mainView.sidePageIsOpen
 
-        onTrigger: dashboardPage.pageManager.push("qrc:///components/pages/DetailedListPage.qml", { isTravelMode: dashboardPage.isTravelMode, travelCurrency: dashboardPage.travelCurrency })
+        onTrigger: {
+            if (mainView.sidePage) {
+                mainView.sidePage.show()
+            }
+        }
     }
 
     Common.BaseAction {
         id: searchAction
 
         text: i18n.tr("Search")
-        iconName: "search"
+        iconName: "find"
+        shortcut: StandardKey.Find
+        visible: !mainView.sidePageIsOpen
+        enabled: visible
+
+        onTrigger: {
+            if (mainView.detailedListPage) {
+                mainView.detailedListPage.showInSearchMode()
+            }
+        }
+    }
+
+    Common.BaseAction {
+        id: nextAction
+
+        enabled: !dashboardPage.isWideLayout && !mainView.sidePageIsOpen && dashboardPage.focus
+        text: i18n.tr("Next")
+        iconName: "go-next"
+        shortcut: StandardKey.MoveToNextChar
+        onTrigger: swipeView.incrementCurrentIndex()
+    }
+
+    Common.BaseAction {
+        id: previousAction
+
+        enabled: !dashboardPage.isWideLayout && !mainView.sidePageIsOpen && dashboardPage.focus
+        text: i18n.tr("Previous")
+        iconName: "go-previous"
+        shortcut: StandardKey.MoveToPreviousChar
+        onTrigger: swipeView.decrementCurrentIndex()
     }
 
     Common.BaseAction {
         id: separatorAction
 
         separator: true
-    }
-
-    UT.LiveTimer {
-        frequency: UT.LiveTimer.Hour
-//~         onTrigger: navigationRow.labelRefresh()
     }
 
     ColumnLayout {
@@ -91,6 +122,7 @@ Pages.BasePage {
             Layout.preferredHeight: indicatorLayout.height
 
             z: 1
+            visible: swipeView.visible
             radius: height / 2
             color: Suru.backgroundColor
 
@@ -98,32 +130,107 @@ Pages.BasePage {
                 id: indicatorLayout
 
                 PageIndicator {
+                    id: pageIndicatorItem
+
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
                     count: swipeView.count
                     currentIndex: swipeView.currentIndex
+                    interactive: true
                 }
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            spacing: 0
+            visible: dashboardPage.isWideLayout
+
+            Item {
+                id: breakdownChartWideContainer
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+
+            Item {
+                id: trendChartWideContainer
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             }
         }
 
         SwipeView {
             id: swipeView
 
-            currentIndex: 0
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            BreakdownChartsView {
-                id: breakdownChartsView
+            visible: !dashboardPage.isWideLayout
+            currentIndex: pageIndicatorItem.currentIndex
 
-                pageHeader: dashboardPage.pageManager.pageHeader
+            Item {
+                id: breakdownChartDefaultContainer
+
+                BreakdownChartsView {
+                    id: breakdownChartsView
+
+                    anchors.fill: parent
+                    pageHeader: dashboardPage.pageManager.pageHeader
+                    state: "normal"
+                    states: [
+                        State {
+                            name: "normal"
+                            when: !dashboardPage.isWideLayout
+                            ParentChange {
+                                target: breakdownChartsView
+                                parent: breakdownChartDefaultContainer
+                            }
+                        }
+                        , State {
+                            name: "wide"
+                            when: dashboardPage.isWideLayout
+                            ParentChange {
+                                target: breakdownChartsView
+                                parent: breakdownChartWideContainer
+                            }
+                        }
+                    ]
+                }
             }
 
-            TrendChartsView {
-                id: trendChartsView
+            Item {
+                id: trendChartDefaultContainer
 
-                pageHeader: dashboardPage.pageManager.pageHeader
+                TrendChartsView {
+                    id: trendChartsView
+
+                    pageHeader: dashboardPage.pageManager.pageHeader
+                    anchors.fill: parent
+                    state: "normal"
+                    states: [
+                        State {
+                            name: "normal"
+                            when: !dashboardPage.isWideLayout
+                            ParentChange {
+                                target: trendChartsView
+                                parent: trendChartDefaultContainer
+                            }
+                        }
+                        , State {
+                            name: "wide"
+                            when: dashboardPage.isWideLayout
+                            ParentChange {
+                                target: trendChartsView
+                                parent: trendChartWideContainer
+                            }
+                        }
+                    ]
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
 import "../../library/dataUtils.js" as DataUtils
 import "../../library/functions.js" as Functions
+import "../../library/ApplicationFunctions.js" as AppFunctions
 import "../../common/" as Common
 
 Item {
@@ -14,6 +15,7 @@ Item {
     readonly property string thirdDetailedListID: "Detailed_3"
     readonly property string quickExpensesID: "QuickExpenses"
     readonly property string historyEntryExpensesID: "HistoryEntry"
+    readonly property string searchExpenseID: "SearchExpense"
 
     readonly property string todayBreakdownChartID: "TodayBreakdownChart"
     readonly property string thisWeekBreakdownChartID: "ThisWeekBreakdownChart"
@@ -35,6 +37,8 @@ Item {
     property alias quickExpensesModel: quickExpensesModel
     property alias historyEntryExpensesModel: historyEntryExpensesModel
 
+    property alias searchExpenseModel: searchExpenseModel
+
     // Breakdown Chart Models
     property alias todayBreakdownChartModel: todayBreakdownChartModel
     property alias thisWeekBreakdownChartModel: thisWeekBreakdownChartModel
@@ -48,69 +52,76 @@ Item {
     property alias thisMonthTrendChartModel: thisMonthTrendChartModel
     property alias thisYearTrendChartModel: thisYearTrendChartModel
 
-    signal refreshValues(string entryDate)
-    signal refreshQuickExpense()
-
     // Refresh models that are affected by new, edited or deleted expense values
-    onRefreshValues: {
-        // Refresh quick history model
-        if (Functions.isToday(entryDate)) {
-            historyEntryExpensesModel.refresh()
+    function refreshValues(entryDate, expenseID) {
+        if (entryDate) {
+            // Refresh quick history model
+            if (Functions.isToday(entryDate)) {
+                historyEntryExpensesModel.refresh()
+            }
+
+            // Refresh detailed list models
+            if (Functions.checkIfWithinDateRange(entryDate, firstDetailedListModel.fromDate, firstDetailedListModel.toDate)) {
+                firstDetailedListModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, secondDetailedListModel.fromDate, secondDetailedListModel.toDate)) {
+                secondDetailedListModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thirdDetailedListModel.fromDate, thirdDetailedListModel.toDate)) {
+                thirdDetailedListModel.refresh()
+            }
+
+            // Refresh breakdown chart models
+            if (Functions.checkIfWithinDateRange(entryDate, todayBreakdownChartModel.getFromDate(), todayBreakdownChartModel.getToDate())) {
+                todayBreakdownChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thisWeekBreakdownChartModel.getFromDate(), thisWeekBreakdownChartModel.getToDate())) {
+                thisWeekBreakdownChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thisMonthBreakdownChartModel.getFromDate(), thisMonthBreakdownChartModel.getToDate())) {
+                thisMonthBreakdownChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thisYearBreakdownChartModel.getFromDate(), thisYearBreakdownChartModel.getToDate())) {
+                thisYearBreakdownChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, recentBreakdownChartModel.getFromDate(), recentBreakdownChartModel.getToDate())) {
+                recentBreakdownChartModel.refresh()
+            }
+
+            // Refresh trend chart models
+            if (Functions.checkIfWithinDateRange(entryDate, thisWeekTrendChartModel.getFromDate(), thisWeekTrendChartModel.getToDate())) {
+                thisWeekTrendChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thisMonthTrendChartModel.getFromDate(), thisMonthTrendChartModel.getToDate())) {
+                thisMonthTrendChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, thisYearTrendChartModel.getFromDate(), thisYearTrendChartModel.getToDate())) {
+                thisYearTrendChartModel.refresh()
+            }
+
+            if (Functions.checkIfWithinDateRange(entryDate, recentTrendChartModel.getFromDate(), recentTrendChartModel.getToDate())) {
+                recentTrendChartModel.refresh()
+            }
         }
 
-        // Refresh detailed list models
-        if (Functions.checkIfWithinDateRange(entryDate, firstDetailedListModel.fromDate, firstDetailedListModel.toDate)) {
-            firstDetailedListModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, secondDetailedListModel.fromDate, secondDetailedListModel.toDate)) {
-            secondDetailedListModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thirdDetailedListModel.fromDate, thirdDetailedListModel.toDate)) {
-            thirdDetailedListModel.refresh()
-        }
-
-        // Refresh breakdown chart models
-        if (Functions.checkIfWithinDateRange(entryDate, todayBreakdownChartModel.getFromDate(), todayBreakdownChartModel.getToDate())) {
-            todayBreakdownChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thisWeekBreakdownChartModel.getFromDate(), thisWeekBreakdownChartModel.getToDate())) {
-            thisWeekBreakdownChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thisMonthBreakdownChartModel.getFromDate(), thisMonthBreakdownChartModel.getToDate())) {
-            thisMonthBreakdownChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thisYearBreakdownChartModel.getFromDate(), thisYearBreakdownChartModel.getToDate())) {
-            thisYearBreakdownChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, recentBreakdownChartModel.getFromDate(), recentBreakdownChartModel.getToDate())) {
-            recentBreakdownChartModel.refresh()
-        }
-
-        // Refresh trend chart models
-        if (Functions.checkIfWithinDateRange(entryDate, thisWeekTrendChartModel.getFromDate(), thisWeekTrendChartModel.getToDate())) {
-            thisWeekTrendChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thisMonthTrendChartModel.getFromDate(), thisMonthTrendChartModel.getToDate())) {
-            thisMonthTrendChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, thisYearTrendChartModel.getFromDate(), thisYearTrendChartModel.getToDate())) {
-            thisYearTrendChartModel.refresh()
-        }
-
-        if (Functions.checkIfWithinDateRange(entryDate, recentTrendChartModel.getFromDate(), recentTrendChartModel.getToDate())) {
-            recentTrendChartModel.refresh()
+        if (expenseID) {
+            if (searchExpenseModel.find(expenseID, "expense_id") > -1) {
+                searchExpenseModel.refresh()
+            }
         }
     }
 
-    onRefreshQuickExpense: quickExpensesModel.refresh()
+    function refreshQuickExpense() {
+        quickExpensesModel.refresh()
+    }
 
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
@@ -130,6 +141,10 @@ Item {
                 break
             case mainModels.historyEntryExpensesID:
                 historyEntryExpensesModel.loadingStatus = "Ready"
+                break
+
+            case mainModels.searchExpenseID:
+                searchExpenseModel.loadingStatus = "Ready"
                 break
 
             // Detailed List Models
@@ -270,6 +285,27 @@ Item {
             fillData(mainView.expenses.historyDataForEntry(searchText, resultLimit))
         }
     }
+    
+    // Search Expense model
+    Common.BaseListModel {
+        id: searchExpenseModel
+
+        property string searchText: ""
+        property string order: "desc"
+        property int resultLimit: 50
+
+        modelId: mainModels.searchExpenseID
+        worker: workerLoader
+
+        function refresh() {
+            fillData(mainView.expenses.search(searchText, resultLimit, order))
+        }
+
+        Component.onCompleted: refresh()
+
+        onSearchTextChanged: refresh()
+        onOrderChanged: refresh()
+    }
 
     // Detailed List Models
     BaseValuesModel {
@@ -301,6 +337,38 @@ Item {
         modelFunction: mainView.dashboard.breakdown
         worker: workerLoader
         modelId: mainModels.todayBreakdownChartID
+        onReadyChanged: {
+            if (ready) {
+                let _currentProfileName = mainView.profiles.currentName()
+                let _currentData = get(0).data
+                let _newMetricMsg = ""
+                let _total = 0
+
+                if (_currentProfileName) {
+                    _newMetricMsg = "<b>" + i18n.tr("Today's expenses [%1]:<br>").arg(_currentProfileName) + "</b>"
+                } else {
+                    _newMetricMsg = "<b>" + i18n.tr("Today's expenses:<br>") + "</b>"
+                }
+
+                for (let i = 0; i < _currentData.count; i++) {
+                    let _currentItem = _currentData.get(i)
+                    let _label = _currentItem.label
+                    let _value = _currentItem.value
+
+                    _total += _value
+                    _newMetricMsg = _newMetricMsg + "<br>%1 - %2".arg(_label).arg(AppFunctions.formatMoney(_value))
+                    
+                }
+
+                if (_total > 0) {
+                    _newMetricMsg = _newMetricMsg + "<br><br><i>" + i18n.tr("Total: <b>%1</b>").arg(AppFunctions.formatMoney(_total)) + "</i>"
+                    mainView.userMetric.circleMetric = _newMetricMsg
+                    mainView.userMetric.increment(1)
+                } else {
+                    mainView.userMetric.circleMetric = mainView.userMetric.emptyFormat
+                }
+            }
+        }
     }
 
     BreakdownChartModel {
@@ -380,75 +448,12 @@ Item {
         modelId: mainModels.thisYearTrendChartID
     }
 
-//~     BaseListModel {
-//~         id: dashboardModel
-      
-//~         worker: workerLoader
-//~         modelId: "Dashboard"
-//~         Component.onCompleted: refresh()
-        
-//~         function refresh() {
-//~             fillData(mainView.values.dashList())
-//~         }
+    Connections {
+        target: mainView
 
-//~         function updateUserMetric() {
-//~             var curItem, curValue
-//~             var valItems = []
-//~             var msgItem
-//~             var circleMessage
-//~             var firstChar
-//~             var valueText
-
-//~             for (var i = 0; i < count; i++) {
-//~                 curItem = get(i)
-
-//~                 for (var h = 0; h < curItem.items.count; h++) {
-//~                     curValue = curItem.items.get(h)
-//~                     firstChar = curValue.title.charAt(0)
-
-//~                     // Only add values from today
-//~                     if (curItem.itemId !== "all" && curValue.type == "last" && firstChar >= "0" && firstChar <= "9") {
-//~                         valItems.push({ "name": curItem.displayName, "title": curValue.title, "value": curValue.value + " " + curItem.displaySymbol })
-//~                     }
-//~                 }
-//~             }
-            
-//~             for (var k = 0; k < valItems.length; k++) {
-//~                 msgItem = valItems[k]
-//~                 if (settings.coloredText) {
-//~                     valueText = ("<font color=\"#FF19b6ee\">%1</font><br>%3 <font color=\"#FF3eb34f\">%2</font>").arg(msgItem.name).arg(msgItem.value).arg(msgItem.title)
-//~                 } else {
-//~                     valueText = ("%1:\n%3 %2 ").arg(msgItem.name).arg(msgItem.value).arg(msgItem.title)                    
-//~                 }
-
-                
-
-//~                 if (circleMessage) {
-//~                     if (settings.coloredText) {
-//~                         circleMessage = circleMessage + "<br>" + valueText
-//~                     } else {
-//~                         circleMessage = circleMessage + "\n" + valueText
-//~                     }
-
-                    
-//~                 } else {
-//~                     circleMessage = valueText
-//~                 }
-//~             }
-
-//~             if (circleMessage) {
-//~                 userMetric.circleMetric = circleMessage
-//~                 userMetric.increment(1)
-//~             }
-//~         }
-//~     }
-
-//~     Connections {
-//~         target: mainView
-
-//~         onCurrentDateChanged: {
-//~             console.log("dashboard refreshed")
-//~             dashboardModel.refresh()
-//~         }
-//~     }
+        // Refresh 
+        onCurrentDateChanged: {
+            mainModels.refreshValues(currentDate)
+        }
+    }
 }
