@@ -31,6 +31,7 @@ Pages.BasePage {
     property string scope: "day"
     property string order: "asc"
     property string sort: "category"
+    property bool coloredCategory: false
     property bool isTravelMode: false
     property bool isSearchMode: false
     property bool shownInNarrow: false
@@ -53,12 +54,12 @@ Pages.BasePage {
     headerLeftActions: [ exitSearchAction ]
     headerRightActions: [ nextDataAction, lastDataAction, searchAction, sortAction, todayAction, addAction ]
 
-    Connections {
-        target: mainView.settings
-        onActiveProfileChanged: {
-            refresh()
-        }
-    }
+//~     Connections {
+//~         target: mainView.settings
+//~         onActiveProfileChanged: {
+//~             refresh()
+//~         }
+//~     }
 
     function showInSearchMode() {
         if (mainView.sidePage) {
@@ -211,8 +212,9 @@ Pages.BasePage {
     Common.BaseAction {
         id: sortAction
 
-        text: i18n.tr("Sort")
-        iconName: "sort-listitem"
+        text: expenseSearchView.isAscending ? i18n.tr("Ascending") : i18n.tr("Descending")
+        shortText: expenseSearchView.isAscending ? i18n.tr("Asc") : i18n.tr("Desc")
+        iconName: "calendar"
         visible: detailedListPage.isSearchMode && !expenseSearchView.isEmpty
 
         onTrigger: expenseSearchView.toggleDateSort()
@@ -259,7 +261,7 @@ Pages.BasePage {
         iconName: "delete"
 
         onTrigger: {
-            let _popup = deleteExpenseDialogComponent.createObject(detailedListPage, { expenseData: contextMenu.itemData })
+            let _popup = deleteExpenseDialogComponent.createObject(mainView.mainSurface, { expenseData: contextMenu.itemData })
             _popup.proceed.connect(function() {
                 let _tooltipMsg
 
@@ -271,7 +273,8 @@ Pages.BasePage {
                 
                 mainView.tooltip.display(_tooltipMsg)
             })
-            _popup.openBottom();
+
+            _popup.openDialog();
         }
     }
 
@@ -309,28 +312,42 @@ Pages.BasePage {
         sort: detailedListPage.sort
         scope: detailedListPage.scope
         order: detailedListPage.order
+        coloredCategory: detailedListPage.coloredCategory
+
+        function rebindValues() {
+            dateValue = Qt.binding(function() { return new Date(detailedListPage.currentFromDate) } )
+            activeCategory = Qt.binding(function() { return detailedListPage.currentCategory } )
+            sort = Qt.binding(function() { return detailedListPage.sort } )
+            scope = Qt.binding(function() { return detailedListPage.scope } )
+            order = Qt.binding(function() { return detailedListPage.order } )
+            coloredCategory = Qt.binding(function() { return detailedListPage.coloredCategory } )
+        }
 
         onSelect: {
+            let _refreshNeeded = false
+
+            if (detailedListPage.currentCategory !== selectedCategory
+                    || detailedListPage.order != selectedOrder
+                    || detailedListPage.sort != selectedSort
+                    || detailedListPage.scope != selectedScope) {
+                _refreshNeeded = true
+            }
             detailedListPage.currentCategory = selectedCategory
             detailedListPage.sort = selectedSort
             detailedListPage.scope = selectedScope
             detailedListPage.order = selectedOrder
+            detailedListPage.coloredCategory = selectedColoredCategory
             internal.setBaseDate(Functions.formatDateForDB(selectedDate))
-            detailedListPage.refresh()
+
+            if (_refreshNeeded) {
+                detailedListPage.refresh()
+            }
 
             // Rebind values
-            dateValue = Qt.binding(function() { return new Date(detailedListPage.currentFromDate) } )
-            sort = Qt.binding(function() { return detailedListPage.sort } )
-            scope = Qt.binding(function() { return detailedListPage.scope } )
-            order = Qt.binding(function() { return detailedListPage.order } )
+            rebindValues()
         }
 
-        onRejected: {
-            dateValue = Qt.binding(function() { return new Date(detailedListPage.currentFromDate) } )
-            sort = Qt.binding(function() { return detailedListPage.sort } )
-            scope = Qt.binding(function() { return detailedListPage.scope } )
-            order = Qt.binding(function() { return detailedListPage.order } )
-        }
+        onRejected: rebindValues()
     }
 
     UT.LiveTimer {
@@ -355,9 +372,12 @@ Pages.BasePage {
                     left: parent.left
                     right: parent.right
                 }
+                spacing: 0
 
                 ValuesNavigationRow {
                     id: navigationRow
+
+                    property bool allowExpandChanged: true
 
                     function labelRefresh() {
                         dateTitle = Qt.binding(function() { return Functions.formatDateForNavigation(detailedListPage.currentFromDate, detailedListPage.scope) })
@@ -366,9 +386,66 @@ Pages.BasePage {
                     Component.onCompleted: labelRefresh()
 
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Suru.units.gu(10)
+                    Layout.preferredHeight: isExpanded ? Suru.units.gu(10) : Suru.units.gu(4)
                     Layout.margins: Suru.units.gu(1)
                     z: 1
+
+                    Behavior on Layout.preferredHeight {
+                        NumberAnimation {
+                            easing: Suru.animations.EasingOut
+                            duration: Suru.animations.SnapDuration
+                        }
+                    }
+
+                    Connections {
+                        target: detailedListPage
+
+                        onFlickableChanged: navigationRow.isExpanded = true
+                    }
+
+                    Timer {
+                        id: expandDelay
+
+                        running: false
+                        interval: 50
+                        onTriggered: navigationRow.allowExpandChanged = true
+                    }
+
+                    Connections {
+                        target: detailedListPage.flickable
+
+                        onVerticalVelocityChanged: {
+                            if (navigationRow.allowExpandChanged && target.moving) {
+                                if (target.verticalVelocity > 0) {
+                                    if (navigationRow.isExpanded) {
+                                        navigationRow.allowExpandChanged = false
+                                    }
+                                    navigationRow.isExpanded = false
+                                } else if (target.verticalVelocity < 0) {
+                                    if (!navigationRow.isExpanded) {
+                                        navigationRow.allowExpandChanged = false
+                                    }
+                                    navigationRow.isExpanded = true
+                                } else {
+                                    navigationRow.allowExpandChanged = true
+                                }
+                            } else {
+                                expandDelay.restart()
+                            }
+                        }
+
+                        onContentYChanged: {
+                            if (target.contentY == target.originY) {
+                                navigationRow.isExpanded = true
+                            }
+                        }
+
+                        onContentHeightChanged: {
+                            if (target.contentHeight < target.height - target.topMargin - target.bottomMargin) {
+                                navigationRow.isExpanded = true
+                            }
+                        } 
+                    }
 
                     biggerDateLabel: detailedListPage.currentCategory === "all"
                     itemTitle: detailedListPage.currentCategory === "all" ? i18n.tr("All")
@@ -400,7 +477,6 @@ Pages.BasePage {
 
             objectName: "dateViewPath"
 
-            Layout.topMargin: Suru.units.gu(1)
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -436,7 +512,6 @@ Pages.BasePage {
                 width: parent.width
 
                 function loadData() {
-//~                     console.log(["Before:", detailedListPage.scope, detailedListPage.sort, detailedListPage.order].join(" - "))
                     listView.model.load(detailedListPage.currentCategory, detailedListPage.scope, fromDate, fromDate, detailedListPage.sort, detailedListPage.order)
                 }
 
@@ -449,7 +524,7 @@ Pages.BasePage {
 
                 Components.EmptyState {
                     id: emptyState
-                   
+
                     anchors.centerIn: parent
                     title: i18n.tr("No data")
                     loadingTitle: i18n.tr("Loading data")
@@ -462,6 +537,7 @@ Pages.BasePage {
                     id: listView
 
                     anchors.fill: parent
+                    topMargin: Suru.units.gu(1)
                     bottomMargin: summaryValues.visible && !summaryValues.isExpanded ? summaryValues.height + summaryValues.anchors.bottomMargin
                                                     : 0
                     pageHeader: detailedListPage.pageManager.pageHeader
@@ -481,11 +557,30 @@ Pages.BasePage {
                     }
                     section.delegate: ValuesSectionDelegate {
                         type: detailedListPage.sort
+                        coloredCategory: detailedListPage.coloredCategory
                         sectionObj: section
                         view: dateViewPath
                         displayTravelTotal: summaryValues.isTravelMode && summaryValues.onlyOneTravelTotal
                                                     && summaryValues.currentTravelCurrency == travelCurrency
                         travelCurrency: summaryValues.theOnlyTravelCurrency
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                    }
+
+                    ValuesSectionDelegate {
+                        visible: listView.currentSection !== "" && listView.count > 0
+                        type: detailedListPage.sort
+                        coloredCategory: detailedListPage.coloredCategory
+                        sectionObj: listView.currentSection
+                        view: dateViewPath
+                        displayTravelTotal: summaryValues.isTravelMode && summaryValues.onlyOneTravelTotal
+                                                    && summaryValues.currentTravelCurrency == travelCurrency
+                        travelCurrency: summaryValues.theOnlyTravelCurrency
+                        height: Suru.units.gu(5)
+                        topMargin: Suru.units.gu(1)
+
                         anchors {
                             left: parent.left
                             right: parent.right
@@ -519,6 +614,7 @@ Pages.BasePage {
                         highlighted: listView.currentIndex == index
                         showDate: detailedListPage.isByMonth || detailedListPage.isByWeek || detailedListPage.isSortByDate
                         showCategory: detailedListPage.isSortByDate
+                        coloredCategory: detailedListPage.coloredCategory
 
                         onShowContextMenu: {
                             contextMenu.itemData.expenseID = expenseID
@@ -598,6 +694,7 @@ Pages.BasePage {
         isTravelMode: detailedListPage.isTravelMode
         travelCurrency: detailedListPage.travelCurrency
         contextMenu: contextMenu
+        coloredCategory: detailedListPage.coloredCategory
     }
 
     QtObject {

@@ -12,6 +12,7 @@ ListView {
 
     boundsBehavior: Flickable.DragOverBounds
     boundsMovement: Flickable.StopAtBounds
+    maximumFlickVelocity: Suru.units.gu(500)
 
     PullDownFlickableConnections {
         pageHeader: baseListView.pageHeader

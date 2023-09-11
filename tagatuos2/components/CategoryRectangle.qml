@@ -8,7 +8,8 @@ Rectangle {
     id: categoryRec
 
     property string categoryName
-    
+
+    Suru.textLevel: Suru.Small
     implicitWidth: categoryLayout.width
     implicitHeight: categoryLayout.height
     radius: height / 4
@@ -25,7 +26,7 @@ Rectangle {
             Layout.topMargin: Suru.units.gu(0.2)
             Layout.leftMargin: Suru.units.gu(0.5)
             Layout.rightMargin: Suru.units.gu(0.5)
-            Suru.textLevel: Suru.Small
+            Suru.textLevel: categoryRec.Suru.textLevel
             color: AppFunctions.getContrastYIQ(categoryRec.color) ? "#111111" : "#F7F7F7" // Black - White
             text: categoryRec.categoryName
         }

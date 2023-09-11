@@ -1,10 +1,10 @@
 import QtQuick 2.12
-import Lomiri.Components 1.3
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Suru 2.2
+import ".." as Common
 
-RoundedItemDelegate {
+BaseItemDelegate {
     id: customizedSpinBoxDelegate
 
     property alias label: mainLabel
@@ -29,7 +29,7 @@ RoundedItemDelegate {
 
     contentItem: ColumnLayout {
         RowLayout {
-            QQC2.Label {
+            Label {
                 id: mainLabel
 
                 Layout.fillWidth: true
@@ -40,8 +40,8 @@ RoundedItemDelegate {
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
             }
-            
-            CustomizedButton {
+
+            Common.BaseButton {
                 id: resetButton
 
                 visible: customizedSpinBoxDelegate.defaultValue != spinBoxItem.value
@@ -58,12 +58,12 @@ RoundedItemDelegate {
                 Layout.fillWidth: true
             }
 
-            SettingsHelpButton {
+            Common.HelpButton {
                 id: helpButton
             }
         }
 
-        QQC2.SpinBox {
+        SpinBox {
             id: spinBoxItem
 
             Layout.fillWidth: true

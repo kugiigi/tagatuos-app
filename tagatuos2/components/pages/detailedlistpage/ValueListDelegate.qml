@@ -35,6 +35,7 @@ ListItems.BaseItemDelegate {
     property bool isExpanded: false
     property bool showDate: false
     property bool showCategory: false
+    property bool coloredCategory: false
 
     signal showContextMenu(real mouseX, real mouseY)
 
@@ -100,7 +101,15 @@ ListItems.BaseItemDelegate {
                 Layout.alignment: Qt.AlignRight
 
                 categoryName: valueListDelegate.categoryName
-                visible: valueListDelegate.showCategory && categoryName
+                visible: valueListDelegate.showCategory && valueListDelegate.coloredCategory && categoryName
+            }
+
+            Components.ColoredLabel {
+                Layout.alignment: Qt.AlignRight
+
+                text: valueListDelegate.categoryName
+                role: "category"
+                visible: valueListDelegate.showCategory && !categoryRec.visible && text !== ""
             }
 
             RowLayout {

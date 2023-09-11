@@ -12,13 +12,13 @@ ToolTip {
 
     function display(customText, position, customTimeout) {
         switch(position) {
+            case "BOTTOM":
+                y = Qt.binding(function() { return marginBottom } );
+                break;
             case "TOP":
+            default:
                 y = Qt.binding(function() { return marginTop } );
                 break;
-            case "BOTTOM":
-            default:
-                y = Qt.binding(function() { return marginBottom } );
-            break;
         }
 
         if (customTimeout) {

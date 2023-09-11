@@ -12,7 +12,8 @@ RowLayout {
     property alias dateTitle: dateLabel.text
     property alias scopeTItle: scopeLabel.text
     property bool biggerDateLabel: true
-    
+    property bool isExpanded: true
+
     signal criteria
     signal next
     signal previous
@@ -37,14 +38,14 @@ RowLayout {
         ColumnLayout {
             anchors {
                 top: parent.top
-                topMargin: 10
+                topMargin: Suru.units.gu(1)
                 left: parent.left
-                leftMargin: 15
+                leftMargin: Suru.units.gu(2)
                 right: parent.right
                 rightMargin: anchors.leftMargin
             }
 
-            spacing: 10
+            spacing: Suru.units.gu(1)
 
             Components.ColoredLabel {
                 id: itemLabel
@@ -53,6 +54,7 @@ RowLayout {
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignBaseline
                 Suru.textLevel: navigationRow.biggerDateLabel ? Suru.HeadingThree : Suru.HeadingOne
+                visible: navigationRow.isExpanded
                 role: "category"
             }
 
@@ -65,12 +67,18 @@ RowLayout {
       
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignBaseline
-                    Suru.textLevel: Suru.HeadingTwo
+
                     fontSizeMode: Text.HorizontalFit
-                    font.pointSize: navigationRow.biggerDateLabel ? Suru.units.gu(2.5) : Suru.units.gu(2)
-                    minimumPointSize: navigationRow.biggerDateLabel ? Suru.units.gu(1.5) : Suru.units.gu(1)
+                    font.pixelSize: navigationRow.isExpanded ? navigationRow.biggerDateLabel ? Suru.units.gu(3) : Suru.units.gu(2.5)
+                                                    : Suru.units.gu(2)
+                    minimumPixelSize: navigationRow.biggerDateLabel ? Suru.units.gu(2) : Suru.units.gu(1.5)
                     font.italic: true
                     role: "date"
+                    Behavior on font.pixelSize {
+                        NumberAnimation {
+                            duration: Suru.animations.SnapDuration
+                        }
+                    }
                 }
               
                 Components.ColoredLabel {
@@ -82,7 +90,6 @@ RowLayout {
                     visible: false
                 }
             }
-
         }
     }
 
@@ -104,8 +111,8 @@ RowLayout {
     Common.BaseButton {
         id: nextButton
 
-        display: AbstractButton.IconOnly
         Layout.fillHeight: true
+        display: AbstractButton.IconOnly
         icon {
             name: "next"
             height: Suru.units.gu(3)

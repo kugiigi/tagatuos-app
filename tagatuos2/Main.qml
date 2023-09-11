@@ -39,27 +39,30 @@ ApplicationWindow {
                 break
         }
     
-    property string displayMode: "Phone" //"Desktop" //"Phone" //"Tablet"
-    property bool isWideLayout: width >= Suru.units.gu(110)
-    property var dataUtils: DataUtils.dataUtils
-    property var profiles: dataUtils.profiles
-    property var categories: dataUtils.categories(settings.activeProfile)
-    property var expenses: dataUtils.expenses(settings.activeProfile)   
-    property var quickExpenses: dataUtils.quickExpenses(settings.activeProfile)   
-    property var dashboard: dataUtils.dashboard(settings.activeProfile)   
+    readonly property string displayMode: "Phone" //"Desktop" //"Phone" //"Tablet"
+    readonly property bool isWideLayout: width >= Suru.units.gu(110)
+    readonly property var dataUtils: DataUtils.dataUtils
+    readonly property var profiles: dataUtils.profiles
+    readonly property var currencies: dataUtils.currencies()
+    readonly property var categories: dataUtils.categories(settings.activeProfile)
+    readonly property var expenses: dataUtils.expenses(settings.activeProfile)   
+    readonly property var quickExpenses: dataUtils.quickExpenses(settings.activeProfile)   
+    readonly property var dashboard: dataUtils.dashboard(settings.activeProfile)   
     property string currentDate: Functions.getToday()
 
-    property alias userMetric: userMetric
-    property alias settings: settingsLoader.item
-    property alias tooltip: globalTooltip
-    property alias mainModels: listModelsLoader.item
-    property alias keyboard: keyboardRec.keyboard
-    property alias keyboardRectangle: keyboardRec
-    property var mainPage: mainPageLoader.item.mainPage
-    property var sidePage: mainPageLoader.item.sidePage
-    property var detailedListPage: mainPageLoader.item.detailedListPage
-    property var mainSurface: mainPageLoader.item
-    property alias newExpenseView: newExpenseViewLoader.item
+    readonly property alias userMetric: userMetric
+    readonly property alias settings: settingsLoader.item
+    readonly property alias tooltip: globalTooltip
+    readonly property alias mainModels: listModelsLoader.item
+    readonly property alias keyboard: keyboardRec.keyboard
+    readonly property alias keyboardRectangle: keyboardRec
+    readonly property var mainPage: mainPageLoader.item.mainPage
+    readonly property var sidePage: mainPageLoader.item.sidePage
+    readonly property var detailedListPage: mainPageLoader.item.detailedListPage
+    readonly property var mainSurface: mainPageLoader.item
+    readonly property alias drawer: drawerLoader.item
+    readonly property alias popupPage: popupPageLoader.item
+    readonly property alias newExpenseView: newExpenseViewLoader.item
 
     readonly property bool sidePageIsOpen: sidePage && sidePage.visible
 
@@ -161,8 +164,8 @@ ApplicationWindow {
 
     Common.GlobalTooltip {
         id: globalTooltip
-        parent: mainView.mainPage
-        marginTop: mainPage.mainPage ? mainPage.mainPage.pageHeader.height + Suru.units.gu(5) : 0
+        parent: mainView.mainFocusScope
+        marginTop: Suru.units.gu(10)
     }
 
     Loader {
@@ -187,6 +190,8 @@ ApplicationWindow {
         onLoaded: {
             mainPageLoader.active = true
             newExpenseViewLoader.active = true
+            popupPageLoader.active = true
+            drawerLoader.active = true
         }
     }
 
@@ -194,6 +199,48 @@ ApplicationWindow {
         id: mainFocusScope
 
         anchors.fill: parent
+        
+        Loader {
+            id: drawerLoader
+
+            active: false
+            asynchronous: true
+            sourceComponent: MenuDrawer {
+                id: drawer
+
+                listViewTopMargin: mainView.mainPage && mainView.mainPage.pageHeader.expanded ? mainView.mainPage.pageHeader.height : 0
+                model:  [
+                    { title: i18n.tr("Profiles"), itemCode: "PROFILES", iconName: "account" }
+                    ,{ title: i18n.tr("Categories"), itemCode: "CATEGORIES", iconName: "stock_note" }
+                    ,{ title: i18n.tr("Quick Expenses"), itemCode: "QUICK", iconName: "scope-manager" }
+                    ,{ title: i18n.tr("Travel Mode"), itemCode: "TRAVEL", iconName: "airplane-mode" }
+                    ,{ title: i18n.tr("Settings"), itemCode: "SETTINGS", iconName: "settings" }
+                    ,{ title: i18n.tr("About"), itemCode: "ABOUT", iconName: "info" }
+                ]
+
+                onItemClicked: {
+                    let _pageSource
+
+                    switch (itemCode) {
+                        case "SETTINGS":
+                        _pageSource = "qrc:///components/pages/SettingsPage.qml"
+                            break
+                        case "ABOUT":
+                            _pageSource = "qrc:///components/pages/AboutPage.qml"
+                            break
+                        case "TRAVEL":
+                            _pageSource = "qrc:///components/pages/TravelModePage.qml"
+                            break
+                    }
+
+                    if (_pageSource) {
+                        mainView.popupPage.openInPage(_pageSource)
+                    }
+                }
+            }
+
+            visible: status == Loader.Ready
+        }
 
         Loader {
             id: mainPageLoader
@@ -216,9 +263,16 @@ ApplicationWindow {
                     }
 
                     isWideLayout: width > Suru.units.gu(90)
-                    enableBottomGestureHint: true
-                    enableHorizontalSwipe: true
-                    enableDirectActions: true
+                    enableBottomGestureHint: !mainView.settings.hideBottomHint
+                    enableHeaderPullDown: mainView.settings.headerPullDown
+                    enableBottomSideSwipe: mainView.settings.sideSwipe
+                    enableDirectActions: mainView.settings.directActions
+                    enableDirectActionsDelay: mainView.settings.quickActionEnableDelay
+                    enableBottomQuickSwipe: mainView.settings.quickSideSwipe
+                    enableHorizontalSwipe: mainView.settings.horizontalSwipe
+                    bottomGestureAreaHeight: mainView.settings.bottomGesturesAreaHeight
+                    directActionsHeight: mainView.settings.quickActionsHeight
+
                     initialItem: Pages.DashboardPage {
                         isTravelMode: mainView.settings.travelMode
                         travelCurrency: mainView.settings.travelCurrency
@@ -265,14 +319,29 @@ ApplicationWindow {
                     isWideLayout: width > Suru.units.gu(60)
                     forceShowBackButton: shownInNarrow
                     enableShortcuts: true
-                    enableBottomGestureHint: true
-                    enableHorizontalSwipe: true
-                    enableDirectActions: true
+                    enableBottomGestureHint: !mainView.settings.hideBottomHint
+                    enableHeaderPullDown: mainView.settings.headerPullDown
+                    enableBottomSideSwipe: mainView.settings.sideSwipe
+                    enableDirectActions: mainView.settings.directActions
+                    enableDirectActionsDelay: mainView.settings.quickActionEnableDelay
+                    enableBottomQuickSwipe: mainView.settings.quickSideSwipe
+                    enableHorizontalSwipe: mainView.settings.horizontalSwipe
+                    bottomGestureAreaHeight: mainView.settings.bottomGesturesAreaHeight
+                    directActionsHeight: mainView.settings.quickActionsHeight
                     initialItem: Pages.DetailedListPage {
                         id: detailedListPage
 
                         isTravelMode: mainView.settings.travelMode
                         travelCurrency: mainView.settings.travelCurrency
+                        scope: mainView.settings.detailedListScope
+                        sort: mainView.settings.detailedListSort
+                        order: mainView.settings.detailedListOrder
+                        coloredCategory: mainView.settings.detailedListColoredCategory
+
+                        onScopeChanged: mainView.settings.detailedListScope = scope
+                        onSortChanged: mainView.settings.detailedListSort = sort
+                        onOrderChanged: mainView.settings.detailedListOrder = order
+                        onColoredCategoryChanged: mainView.settings.detailedListColoredCategory = coloredCategory
                     }
 
                     visible: opacity > 0
@@ -336,6 +405,14 @@ ApplicationWindow {
                     return 0
                 }
             }
+        }
+
+        Loader {
+            id: popupPageLoader
+
+            active: false
+            asynchronous: true
+            sourceComponent: PopupPageStack {}
         }
     }
 

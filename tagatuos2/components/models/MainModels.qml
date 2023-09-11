@@ -9,6 +9,7 @@ Item {
     id: mainModels
 
     readonly property string profilesID: "Profiles"
+    readonly property string currenciesID: "Currencies"
     readonly property string categoriesID: "Categories"
     readonly property string firstDetailedListID: "Detailed_1"
     readonly property string secondDetailedListID: "Detailed_2"
@@ -33,6 +34,8 @@ Item {
     property alias firstDetailedListModel: firstDetailedListModel
     property alias secondDetailedListModel: secondDetailedListModel
     property alias thirdDetailedListModel: thirdDetailedListModel
+    property alias exchangeRatesModel: exchangeRatesModel
+    property alias currenciesModel: currenciesModel
     property alias categoriesModel: categoriesModel
     property alias quickExpensesModel: quickExpensesModel
     property alias historyEntryExpensesModel: historyEntryExpensesModel
@@ -130,9 +133,12 @@ Item {
 
         onMessage: {
             switch (messageObject.modelId) {
-            case "Profiles":
+            case mainModels.profilesID:
                 profilesModel.loadingStatus = "Ready"
                 break;
+            case mainModels.currenciesID:
+                currenciesModel.loadingStatus = "Ready"
+                break
             case mainModels.categoriesID:
                 categoriesModel.loadingStatus = "Ready"
                 break
@@ -211,6 +217,63 @@ Item {
         
         function refresh() {
             fillData(mainView.profiles.list())
+        }
+    }
+    
+    Common.BaseListModel {
+        id: currenciesModel
+
+        modelId: mainModels.currenciesID
+        worker: workerLoader
+        Component.onCompleted: refresh()
+
+        function refresh() {
+            fillData(mainView.currencies.list())
+        }
+    }
+    
+    QtObject {
+        id: exchangeRatesModel
+
+        property var data: JSON.parse(mainView.settings.exchangeRateJSON)
+        property string appID: "624288a2010b46efa678686799b33599" //openexchangerates app ID
+        property string requestURL: encodeURI("https://openexchangerates.org/api/latest.json?app_id=" + appID)
+
+        property string tempJSON: '{
+                                "disclaimer": "Usage subject to terms: https://openexchangerates.org/terms",
+                               "license": "https://openexchangerates.org/license",
+                               "timestamp": 1534424400,
+                               "base": "USD",
+                               "rates": {
+                                 "AED": 3.673158,
+                                 "AFN": 72.750697,
+                                 "ALL": 110.22,
+                                 "AMD": 482.840272,
+                                 "EUR": 0.879867,
+                                 "PHP": 53.478,
+                                 "USD": 1
+                                 }
+                                }'
+        function fetchLatestJSON(callback) {
+            let _xhr = new XMLHttpRequest();
+
+            _xhr.onreadystatechange = function() {
+                if (_xhr.readyState == 4) {
+                    if (_xhr.status == 200) {
+                        console.log("exchange rate fetch success")
+                        mainView.settings.exchangeRateJSON = _xhr.responseText
+                        mainView.settings.exchangeRateDate = Functions.getToday()
+                        callback(true)
+                    } else {
+                        console.log('Failed to fetch exchange rate list');
+                        callback(false)
+                    }
+                }
+            };
+
+            _xhr.open('GET', requestURL, true);
+            _xhr.send();
+
         }
     }
 

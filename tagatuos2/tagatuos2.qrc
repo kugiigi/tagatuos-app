@@ -47,6 +47,15 @@
         <file>components/pages/dashboardpage/TrendChartsView.qml</file>
         <file>components/pages/dashboardpage/TrendLineChart.qml</file>
         <file>components/pages/dashboardpage/ValueLabel.qml</file>
+        <file>components/pages/AboutPage.qml</file>
+        <file>components/pages/aboutpage/ExternalDialog.qml</file>
+        <file>components/pages/aboutpage/SectionItem.qml</file>
+        <file>components/pages/aboutpage/IconComponent.qml</file>
+        <file>components/pages/SettingsPage.qml</file>
+        <file>components/pages/settingspage/SettingsItem.qml</file>
+        <file>components/pages/settingspage/SettingsItemFactory.qml</file>
+        <file>components/pages/TravelModePage.qml</file>
+        <file>components/pages/travelmodepage/RateField.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
@@ -64,6 +73,8 @@
         <file>components/FocusScrollConnections.qml</file>
         <file>components/DeleteExpenseDialog.qml</file>
         <file>components/CategoryRectangle.qml</file>
+        <file>components/MenuDrawer.qml</file>
+        <file>components/PopupPageStack.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandle.qml</file>
         <file>common/gestures/BottomSwipeArea.qml</file>
@@ -87,14 +98,15 @@
         <file>common/dialogs/TimePickerDialog.qml</file>
 
         <file>common/listitems/BaseItemDelegate.qml</file>
-        <file>common/listitems/CustomizedSliderDelegate.qml</file>
-        <file>common/listitems/CustomizedRadioButton.qml</file>
+        <file>common/listitems/BaseSliderDelegate.qml</file>
         <file>common/listitems/BaseRadioDelegate.qml</file>
-        <file>common/listitems/CustomizedSwitchDelegate.qml</file>
+        <file>common/listitems/BaseSwitchDelegate.qml</file>
         <file>common/listitems/CustomizedButton.qml</file>
-        <file>common/listitems/CustomizedTextField.qml</file>
-        <file>common/listitems/CustomizedSpinBoxDelegate.qml</file>
+        <file>common/listitems/BaseTextField.qml</file>
+        <file>common/listitems/BaseSpinBoxDelegate.qml</file>
         <file>common/listitems/BaseCheckBoxDelegate.qml</file>
+        <file>common/listitems/BaseComboBoxDelegate.qml</file>
+        <file>common/listitems/NavigationDelegate.qml</file>
 
         <file>common/menus/BaseMenu.qml</file>
         <file>common/menus/BaseMenuItem.qml</file>
@@ -114,6 +126,7 @@
         <file>common/BaseBackgroundRectangle.qml</file>
         <file>common/BaseFlickable.qml</file>
         <file>common/BaseListView.qml</file>
+        <file>common/HelpButton.qml</file>
         <file>common/ScrollPositioner.qml</file>
         <file>common/BaseAction.qml</file>
         <file>common/BasePathView.qml</file>
@@ -131,5 +144,7 @@
         <file>common/ToolbarActions.qml</file>
         <file>common/ToolbarButton.qml</file>
         <file>common/TimePicker.qml</file>
+        <file>common/GroupedRadioButtons.qml</file>
+        <file>common/BaseRadioButton.qml</file>
     </qresource>
 </RCC>

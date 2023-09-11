@@ -75,10 +75,18 @@ function insert(txtStatement) {
 
 /*************Extra functions*************/
 function processTextForGLOB (text) {
+    if (text.indexOf("*") > -1 || text.indexOf("?") > -1) {
+        return " "
+    }
+
     return ["*", text, "*"].join("")
 }
 
 function processTextForLIKE (text) {
+    if (text.indexOf("_") > -1 || text.indexOf("%") > -1) {
+        return " "
+    }
+
     return ["%", text, "%"].join("")
 }
 
@@ -748,6 +756,27 @@ function checkProfileData(intProfileId) {
     return exists
 }
 
+function getCurrencies() {
+    let _db = openDB()
+    let _arrResults = []
+    let _rs = null
+    let _txtSelectStatement = ""
+
+    _txtSelectStatement = "SELECT * FROM currencies"
+
+    _db.transaction(function (tx) {
+        _rs = tx.executeSql(_txtSelectStatement)
+
+        _arrResults.length = _rs.rows.length
+
+        for (let i = 0; i < _rs.rows.length; i++) {
+            _arrResults[i] = _rs.rows.item(i)
+        }
+    })
+
+    return _arrResults
+}
+
 function getDateWithData(forward, intProfileId, txtCategory, txtDateBase, txtScope) {
     let _db = openDB()
     let _rs = null
@@ -1205,13 +1234,15 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
                         SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 1 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
-                        AND UPPER(name) LIKE UPPER(?) \
+                        AND (UPPER(name) LIKE UPPER(?) \
+                        OR name GLOB ?) \
                         GROUP BY name, category_name, descr, value \
                         UNION \
                         SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 0 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
-                        AND UPPER(descr) LIKE UPPER(?) \
+                        AND (UPPER(descr) LIKE UPPER(?) \
+                        OR descr GLOB ?) \
                         GROUP BY name, category_name, descr, value \
                         ORDER BY score desc, date DESC \
                         )"
@@ -1219,8 +1250,9 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     txtFullStatement = [txtSelectStatement, txtFromStatement, txtLimitStatement].join(" ")
     //console.log(txtSelectStatement)
     db.transaction(function (tx) {
-        let wildcard = processTextForLIKE(txtSearchText)
-        rs = tx.executeSql(txtFullStatement, [intProfileId, wildcard, intProfileId, wildcard, intLimit])
+        let _likeText = processTextForLIKE(txtSearchText)
+        let _globText = processTextForGLOB(txtSearchText)
+        rs = tx.executeSql(txtFullStatement, [intProfileId, _likeText, _globText, intProfileId, _likeText, _globText, intLimit])
 
         arrResults.length = rs.rows.length
 
@@ -1248,7 +1280,7 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText)
         let arrBindValues = [txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextLIKE]
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
-
+console.log(txtFullSearchTextGLOB + " - " + txtFullSearchTextLIKE)
         txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
                                 , value, home_currency, travel_currency, rate, travel_value \
                                 , CASE WHEN name GLOB ? THEN 1 \

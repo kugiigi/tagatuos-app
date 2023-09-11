@@ -41,6 +41,14 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
             }
         })()
+        , currencies: function () {
+
+            return {
+                list: function() {
+                    return Database.getCurrencies();
+                }
+            }
+        }
         , categories: function (profile) {
 
             return {

@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls.Suru 2.2
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.12
 import "../gestures" as Gestures
@@ -58,14 +59,10 @@ QQC2.Page {
         text: i18n.tr("Back")
         tooltipText: i18n.tr("Go back to previous page")
         iconName: "back"
-//~         visible: mainStackView.depth > 1
-//~         visible: mainStackView.depth > 1 || forceShowBackButton
         visible: (mainStackView.depth > 1 || forceShowBackButton) && (mainStackView.currentItem && mainStackView.currentItem.showBackButton)
-//~         shortcut: enableShortcuts ? StandardKey.Cancel : ""
         shortcut: enableShortcuts ? StandardKey.Back : ""
         enabled: visible
 
-//~         onTrigger: mainStackView.pop()
         onTrigger: {
             if (mainStackView.depth > 1) {
                 mainStackView.pop()
@@ -213,7 +210,7 @@ QQC2.Page {
             maxQuickActionsHeightInInch: basePageStack.directActionsHeight
             availableHeight: mainStackView.height
             availableWidth: mainStackView.width
-            implicitHeight: basePageStack.bottomGestureAreaHeight
+            implicitHeight: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
 
             onTriggered: {
                 if (!basePageStack.enableDirectActions
@@ -230,8 +227,6 @@ QQC2.Page {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignBottom
-
-            visible: basePageStack.enableHorizontalSwipe
 
             MouseArea {
                 id: bottomEdgeHint
@@ -269,11 +264,12 @@ QQC2.Page {
             Gestures.HorizontalSwipeHandle {
                 id: bottomBackForwardHandle
 
+                enabled: basePageStack.enableHorizontalSwipe
                 leftAction: goBackIcon
                 rightAction: goForwardIcon
                 immediateRecognition: true
                 usePhysicalUnit: basePageStack.physicalBasedGestures
-                height: basePageStack.bottomGestureAreaHeight
+                height: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
                 swipeHoldDuration: 700
                 anchors {
                     left: parent.left
@@ -295,7 +291,7 @@ QQC2.Page {
                 enabled: true
                 usePhysicalUnit: basePageStack.physicalBasedGestures
                 immediateRecognition: !bottomBackForwardHandle.enabled
-                height: basePageStack.bottomGestureAreaHeight
+                height: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
                 swipeHoldDuration:  500
                 anchors {
                     left: parent.left
@@ -321,7 +317,7 @@ QQC2.Page {
             maxQuickActionsHeightInInch: basePageStack.directActionsHeight
             availableHeight: mainStackView.height
             availableWidth: mainStackView.width
-            implicitHeight: basePageStack.bottomGestureAreaHeight
+            implicitHeight: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
 
             onTriggered: {
                 if (!basePageStack.enableDirectActions

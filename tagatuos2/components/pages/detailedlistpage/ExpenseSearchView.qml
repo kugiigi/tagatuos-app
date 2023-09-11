@@ -14,7 +14,10 @@ Item {
     readonly property bool searchTextIsEmpty: searchField.text.trim() == ""
     readonly property bool searchFieldIsFocused: searchField.activeFocus
     readonly property ListView view: resultsListView
+    readonly property bool isAscending: resultsListView.model.order == "asc"
+    readonly property bool isDescending: resultsListView.model.order == "desc"
 
+    property bool coloredCategory: false
     property bool isTravelMode: false
     property string travelCurrency: "USD"
     property alias model: resultsListView.model
@@ -100,6 +103,7 @@ Item {
                 id: resultsListView
 
                 anchors.fill: parent
+                bottomMargin: Suru.units.gu(4)
                 clip: true
                 currentIndex: -1
                 visible: model.ready
@@ -114,6 +118,8 @@ Item {
                     }
 
                     showDate: true
+                    showCategory: true
+                    coloredCategory: expenseSearchView.coloredCategory
                     isTravelMode: expenseSearchView.isTravelMode
                     currentTravelCurrency: expenseSearchView.travelCurrency
                     expenseID: model.expense_id
@@ -144,9 +150,6 @@ Item {
 
                         resultsListView.currentIndex = index
                         expenseSearchView.contextMenu.popupMenu(valuesListDelegate, mouseX, mouseY)
-//~                         expenseSearchView.contextMenu.closed.connect(function () {
-//~                             resultsListView.currentIndex = -1
-//~                         })
                     }
 
                     onClicked: {

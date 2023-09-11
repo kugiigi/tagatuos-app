@@ -20,6 +20,18 @@ WorkerScript.onMessage = function (msg) {
                                  })
             }
             break;
+        case "Currencies":
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtCode = msg.result[i].currency_code
+                let txtDescr = msg.result[i].description
+                let txtSysmbol = msg.result[i].symbol
+                msg.model.append({
+                                     currency_code: txtCode,
+                                     descr: txtDescr,
+                                     symbol: txtSysmbol
+                                 })
+            }
+            break
         case "Categories":
             for (let i = 0; i < msg.result.length; i++) {
                 let txtName = msg.result[i].category_name
@@ -107,8 +119,8 @@ WorkerScript.onMessage = function (msg) {
             for (let i = 0; i < msg.result.length; i++) {
                 let intID = msg.result[i].expense_id
                 let txtCategory = msg.result[i].category_name
-                let realTotal = msg.result[i].group_total
-                let realTravelTotal = msg.result[i].group_travel_total
+                let realTotal = msg.result[i].group_total ? msg.result[i].group_total : 0
+                let realTravelTotal = msg.result[i].group_travel_total ? msg.result[i].group_travel_total : 0
                 let txtName = msg.result[i].name
                 let txtDescr = msg.result[i].descr
                 let txtDateValue = msg.result[i].entry_date
@@ -209,28 +221,6 @@ WorkerScript.onMessage = function (msg) {
                 }
             }
 
-            break;
-        case "Dashboard":
-            for (var i = 0; i < msg.result.length; i++) {
-                txtItemId = msg.result[i].item_id
-                txtDisplayName = msg.result[i].display_name
-                txtDisplayFormat = msg.result[i].display_format
-                txtUnit = msg.result[i].unit
-                txtSymbol = msg.result[i].display_symbol
-                txtValueType = msg.result[i].value_type
-                txtScope = msg.result[i].scope
-                arrItems = msg.result[i].items
-                msg.model.append({
-                                     itemId: txtItemId
-                                     , displayName: txtDisplayName
-                                     , displayFormat: txtDisplayFormat
-                                     , unit: txtUnit
-                                     , displaySymbol: txtSymbol
-                                     , valueType: txtValueType
-                                     , scope: txtScope
-                                     , items: arrItems
-                                 })
-            }
             break;
         case "ThisWeekTrendChart":
         case "RecentTrendChart":
@@ -442,7 +432,7 @@ function formatDateForSection(petsa, scope) {
                     engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
                 } else {
                     if (_tagString) {
-                        engPetsa = ("%1 - %2").arg(_tagString).arg(dtPetsa.format("ddd, MMM DD"))
+                        engPetsa = ("%1 (%2)").arg(dtPetsa.format("ddd, MMM DD")).arg(_tagString)
                     } else {
                         engPetsa = dtPetsa.format("ddd, MMM DD")
                     }
@@ -491,7 +481,7 @@ function formatDateForItem(petsa, scope, sort) {
                         engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
                     } else {
                         if (_tagString) {
-                            engPetsa = ("%1 - %2").arg(_tagString).arg(dtPetsa.format("ddd, MMM DD"))
+                            engPetsa = ("%1 (%2)").arg(dtPetsa.format("ddd, MMM DD")).arg(_tagString)
                         } else {
                             engPetsa = dtPetsa.format("ddd, MMM DD")
                         }

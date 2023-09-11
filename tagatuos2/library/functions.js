@@ -377,34 +377,39 @@ function formatDateForNavigation(petsa, scope) {
     let defaultFormat = "ddd, MMM DD"
 
     if (petsa !== null) {
+        let _tagString = ""
         let dtPetsa = moment(petsa)
         let formattedDate    
         let comparisonValues = getDateComparisonValues(petsa)
 
-        formattedDate = " - " + dtPetsa.format(defaultFormat)
+        formattedDate = dtPetsa.format(defaultFormat)
         
         switch (scope) {
             case "day":
                 switch (true) {
                     case dtPetsa.isSame(comparisonValues.today,'day'):
-                        engPetsa = i18n.tr("Today") + formattedDate
+                        _tagString = i18n.tr("Today")
                         break
                     case dtPetsa.isSame(comparisonValues.yesterday,'day'):
-                        engPetsa = i18n.tr("Yesterday") + formattedDate
+                        _tagString = i18n.tr("Yesterday")
                         break
                     case dtPetsa.isSame(comparisonValues.tomorrow,'day'):
-                        engPetsa = i18n.tr("Tomorrow") + formattedDate
+                        _tagString = i18n.tr("Tomorrow")
                         break
                     case dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
                             || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day'):
-                        engPetsa = dtPetsa.format("ddd, MMM DD, YYYY")
+                        formattedDate = dtPetsa.format("ddd, MMM DD, YYYY")
                         break
                     default:
-                        engPetsa = dtPetsa.format("ddd, MMM DD")
+                        formattedDate = dtPetsa.format("ddd, MMM DD")
+                }
+                if (_tagString) {
+                    engPetsa = i18n.tr("%1 (%2)").arg(formattedDate).arg(_tagString)
+                } else {
+                    engPetsa = formattedDate
                 }
                 break
             case "week":
-                let _tagString = ""
                 let _weekStart = moment(petsa).startOf('week')
                 let _weekEnd = moment(petsa).endOf('week')
                 let _weekStartMonth = moment(_weekStart).startOf("month")
@@ -443,7 +448,7 @@ function formatDateForNavigation(petsa, scope) {
                 }
 
                 if (_tagString) {
-                    engPetsa = i18n.tr("%1 (%2 - %3)").arg(_tagString).arg(_fromString).arg(_toString)
+                    engPetsa = i18n.tr("%1 - %2 (%3)").arg(_fromString).arg(_toString).arg(_tagString)
                 } else {
                     engPetsa = i18n.tr("%1 - %2").arg(_fromString).arg(_toString)
                 }
@@ -452,13 +457,13 @@ function formatDateForNavigation(petsa, scope) {
             case "month":
                 switch (true) {
                     case dtPetsa.isBetween(comparisonValues.lastMonthFirstDay,comparisonValues.lastMonthLastDay,'day',[]):
-                        engPetsa = i18n.tr("Last Month - %1").arg(dtPetsa.format("MMMM"))
+                        engPetsa = i18n.tr("%1 (Last Month)").arg(dtPetsa.format("MMMM"))
                         break
                     case dtPetsa.isBetween(comparisonValues.nextMonthFirstDay,comparisonValues.nextMonthLastDay,'day',[]):
-                        engPetsa = i18n.tr("Next Month - %1").arg(dtPetsa.format("MMMM"))
+                        engPetsa = i18n.tr("%1 (Next Month)").arg(dtPetsa.format("MMMM"))
                         break
                     case dtPetsa.isBetween(comparisonValues.thisMonthFirstDay,comparisonValues.thisMonthLastDay,'day',[]):
-                        engPetsa = i18n.tr("This Month - %1").arg(dtPetsa.format("MMMM"))
+                        engPetsa = i18n.tr("%1 (This Month)").arg(dtPetsa.format("MMMM"))
                         break
                     case dtPetsa.isSameOrBefore(comparisonValues.endOfLastYear, 'day')
                                 || dtPetsa.isAfter(comparisonValues.endOfThisYear, 'day'):

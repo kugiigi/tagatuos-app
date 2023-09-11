@@ -24,7 +24,7 @@ Pages.BasePage {
 
 //~     signal refresh
 
-    headerLeftActions: [ settingsAction ]
+    headerLeftActions: [ menuAction ]
     headerRightActions: [ searchAction, detailedPageAction, addAction  ]
 
 //~     Connections {
@@ -47,10 +47,18 @@ Pages.BasePage {
     }
 
     Common.BaseAction {
-        id: settingsAction
+        id: menuAction
 
-        text: i18n.tr("Settings")
-        iconName: "settings"
+        text: i18n.tr("Menu")
+        iconName: "navigation-menu"
+
+        onTrigger: {
+            if (isBottom) {
+                mainView.drawer.openBottom()
+            } else {
+                mainView.drawer.openTop()
+            }
+        }
     }
 
     Common.BaseAction {

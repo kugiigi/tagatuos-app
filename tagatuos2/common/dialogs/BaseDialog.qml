@@ -25,6 +25,12 @@ Dialog {
     focus: true
 
     standardButtons: Dialog.Ok | Dialog.Cancel
+    
+    function openDialog() {
+        y = Qt.binding( function() { return parent.width >= Suru.units.gu(90) ? ((parent.height - height) / 2) - (baseDialog.anchorToKeyboard ? osk.height : 0)
+                                                : (parent.height - height - bottomMargin) - (baseDialog.anchorToKeyboard ? osk.height : 0) } )
+        open()
+    }
 
     function openBottom() {
         y = Qt.binding( function() { return (parent.height - height - bottomMargin) - (baseDialog.anchorToKeyboard ? osk.height : 0) } )

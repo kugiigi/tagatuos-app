@@ -35,7 +35,12 @@ function formatMoneyTravel(value, noSymbol) {
 }
 
 function getCategoryColor(category) {
-    return mainView.mainModels.categoriesModel.getColor(category)
+    let _color = mainView.mainModels.categoriesModel.getColor(category)
+
+    if (!_color) {
+        _color = "black"
+    }
+    return _color
 }
 
 function getContrastYIQ(hexcolor){

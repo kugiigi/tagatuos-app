@@ -1,10 +1,9 @@
 import QtQuick 2.12
-import Lomiri.Components 1.3
-import QtQuick.Controls 2.2 as QQC2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Suru 2.2
 
-RoundedItemDelegate {
+BaseItemDelegate {
     id: customizedSwitchDelegate
 
     enum Position {
@@ -13,15 +12,15 @@ RoundedItemDelegate {
     }
 
     property alias label: mainLabel
-    property int switchPosition: CustomizedSwitchDelegate.Position.Right
+    property int switchPosition: BaseSwitchDelegate.Position.Right
 
     transparentBackground: true
     checkable: true
 
     contentItem: RowLayout {
-        layoutDirection: switchPosition == CustomizedSwitchDelegate.Position.Right ? Qt.LeftToRight : Qt.RightToLeft
+        layoutDirection: switchPosition == BaseSwitchDelegate.Position.Right ? Qt.LeftToRight : Qt.RightToLeft
 
-        QQC2.Label {
+        Label {
             id: mainLabel
 
             Layout.fillWidth: true
@@ -33,7 +32,7 @@ RoundedItemDelegate {
             verticalAlignment: Text.AlignVCenter
         }
 
-        QQC2.Switch {
+        Switch {
             id: switchItem
             
             onCheckedChanged: customizedSwitchDelegate.checked = checked

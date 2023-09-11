@@ -8,10 +8,6 @@ Item {
 
     property alias currentTheme: settingsItem.currentTheme
     property alias currentCurrency: settingsItem.currentCurrency
-//~         property alias dashboardItems: settingsItem.dashboardItems
-//~         property alias dashboardItemsOrder: settingsItem.dashboardItemsOrder
-//~         property alias startDashboard: settingsItem.startDashboard
-//~         property alias startingPageIndex: settingsItem.startingPageIndex
     property alias hideBottomHint: settingsItem.hideBottomHint
     property alias enableHaptics: settingsItem.enableHaptics
 
@@ -23,6 +19,22 @@ Item {
     property alias exchangeRateDate: settingsItem.exchangeRateDate
     property alias coloredText: settingsItem.coloredText
     property alias activeProfile: settingsItem.activeProfile
+
+    //Detailed List Page
+    property alias detailedListScope: settingsItem.detailedListScope
+    property alias detailedListSort: settingsItem.detailedListSort
+    property alias detailedListOrder: settingsItem.detailedListOrder
+    property alias detailedListColoredCategory: settingsItem.detailedListColoredCategory
+
+    // Gestures
+    property alias horizontalSwipe: settingsItem.horizontalSwipe
+    property alias sideSwipe: settingsItem.sideSwipe
+    property alias directActions: settingsItem.directActions
+    property alias quickActionsHeight: settingsItem.quickActionsHeight
+    property alias quickSideSwipe: settingsItem.quickSideSwipe
+    property alias quickActionEnableDelay: settingsItem.quickActionEnableDelay
+    property alias headerPullDown: settingsItem.headerPullDown
+    property alias bottomGesturesAreaHeight: settingsItem.bottomGesturesAreaHeight
 
     // Session Settings (not stored)
     property string currentCurrencySymbol: "8369"
@@ -77,15 +89,9 @@ Item {
         id: settingsItem
 
         // Settings
-    //~     property string currentTheme: "Ubuntu.Components.Themes.Ambiance"
         property string currentCurrency: "PHP"
-    //~     property string dashboardItems: "Today;Recent;This Week"
-    //~     property string dashboardItemsOrder: "Today;Yesterday;Recent;This Week;This Month;Last Week;Last Month"
-    //~     property bool startDashboard: true
-    //~     property int startingPageIndex: 1
         property bool hideBottomHint: false
         property string currentTheme: "System"
-        property bool coloredText: true
 
         //Saved data
         property int activeProfile: 1
@@ -99,6 +105,21 @@ Item {
         property string exchangeRateJSON: ""
         property string exchangeRateDate: ""
 
+        property bool coloredText: true
         property bool enableHaptics: true
+
+        property string detailedListScope: "day"
+        property string detailedListSort: "category"
+        property string detailedListOrder: "asc"
+        property bool detailedListColoredCategory: false
+
+        property bool horizontalSwipe: true
+        property bool sideSwipe: false
+        property bool directActions: false
+        property real quickActionsHeight: 3
+        property bool quickSideSwipe: false
+        property bool quickActionEnableDelay: false
+        property bool headerPullDown: true
+        property real bottomGesturesAreaHeight: 2
     }
 }

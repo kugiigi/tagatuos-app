@@ -14,7 +14,7 @@ BaseItemDelegate {
     property alias checkState: checkBoxItem.checkState
     property alias label: mainLabel
     property int checkBoxPosition: BaseCheckBoxDelegate.Position.Right
-    property int alignment: Qt.AlignCenter
+    property int alignment: Qt.AlignLeft
 
     checkable: true
 

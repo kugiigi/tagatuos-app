@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
 {
     QApplication::setApplicationName("Tagatuos");
     QApplication::setApplicationName("tagatuos2.kugiigi");
-    //~ QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
 

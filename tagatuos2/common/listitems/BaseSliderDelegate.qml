@@ -1,9 +1,11 @@
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Suru 2.2
+import Lomiri.Components 1.3 as UT
+import ".." as Common
 
-RoundedItemDelegate {
+BaseItemDelegate {
     id: customizedSliderDelegate
 
     property alias label: mainLabel
@@ -33,7 +35,7 @@ RoundedItemDelegate {
 
     transparentBackground: true
     interactive: false
-    rightPadding: units.gu(1)
+    rightPadding: Suru.units.gu(1)
 
     property var textFromValue: defaultTextFromValue
     property var defaultTextFromValue: function (v) {
@@ -54,7 +56,7 @@ RoundedItemDelegate {
 
     contentItem: ColumnLayout {
         RowLayout {
-            QQC2.Label {
+            Label {
                 id: mainLabel
 
                 Layout.fillWidth: true
@@ -71,7 +73,7 @@ RoundedItemDelegate {
                 Layout.fillWidth: true
             }
 
-            QQC2.Label {
+            Label {
                 Layout.alignment: Qt.AlignRight
                 visible: customizedSliderDelegate.displayCurrentValue
                 wrapMode: Text.WordWrap
@@ -79,11 +81,11 @@ RoundedItemDelegate {
                 text: customizedSliderDelegate.textFromValue(slider.value)
             }
 
-            CustomizedButton {
+            Common.BaseButton {
                 id: resetButton
 
                 visible: customizedSliderDelegate.defaultValue != slider.value
-                display: QQC2.AbstractButton.IconOnly
+                display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Reset to default")
                 icon.name: "reset"
                 transparentBackground: true
@@ -91,7 +93,7 @@ RoundedItemDelegate {
                 onClicked: customizedSliderDelegate.reset()
             }
 
-            SettingsHelpButton {
+            Common.HelpButton {
                 id: helpButton
             }
         }
@@ -100,11 +102,11 @@ RoundedItemDelegate {
             Layout.maximumWidth: customizedSliderDelegate.controlMaximumWidth > 0 ? customizedSliderDelegate.controlMaximumWidth
                                         : parent.width
 
-            CustomizedButton {
+            Common.BaseButton {
                 Layout.fillHeight: true
                 visible: customizedSliderDelegate.enableFineControls
                 enabled: slider.value > slider.minimumValue
-                display: QQC2.AbstractButton.IconOnly
+                display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Decrease by %1").arg(customizedSliderDelegate.stepSize)
                 icon.name: "remove"
                 transparentBackground: true
@@ -119,7 +121,7 @@ RoundedItemDelegate {
                 }
             }
 
-            Slider {
+            UT.Slider {
                 id: slider
 
                 Layout.fillWidth: true
@@ -141,11 +143,12 @@ RoundedItemDelegate {
                     }
                 }
             }
-            CustomizedButton {
+
+            Common.BaseButton {
                 Layout.fillHeight: true
                 visible: customizedSliderDelegate.enableFineControls
                 enabled: slider.value < slider.maximumValue
-                display: QQC2.AbstractButton.IconOnly
+                display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Increase by %1").arg(customizedSliderDelegate.stepSize)
                 icon.name: "add"
                 transparentBackground: true
