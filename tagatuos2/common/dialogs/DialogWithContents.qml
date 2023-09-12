@@ -2,12 +2,14 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
+import ".." as Common
 
 BaseDialog {
     id: dialogWithContents
 
     default property alias data: contentColumn.data
     readonly property real preferredHeight: contentColumn.height + Suru.units.gu(12)
+    readonly property alias flickable: baseFlickable
 
     property real contentHorizontalMargin: Suru.units.gu(2)
     property bool destroyOnClose: false
@@ -21,7 +23,9 @@ BaseDialog {
 
     onClosed: if (destroyOnClose) destroy()
 
-    Flickable {
+    Common.BaseFlickable {
+        id: baseFlickable
+
         clip: true
         anchors.fill: parent
         contentHeight: contentColumn.height

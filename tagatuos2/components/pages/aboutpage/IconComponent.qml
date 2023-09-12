@@ -31,7 +31,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
         Suru.textLevel: Suru.Paragraph
-        text: i18n.tr("%1 version %2").arg("© Subaybay").arg(mainView.current_version)
+        text: i18n.tr("%1 version %2").arg("© Tagatuos").arg(mainView.current_version)
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }

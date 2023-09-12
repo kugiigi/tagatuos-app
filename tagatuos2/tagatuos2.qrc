@@ -56,6 +56,12 @@
         <file>components/pages/settingspage/SettingsItemFactory.qml</file>
         <file>components/pages/TravelModePage.qml</file>
         <file>components/pages/travelmodepage/RateField.qml</file>
+        <file>components/pages/CategoriesPage.qml</file>
+        <file>components/pages/categoriespage/ColorField.qml</file>
+        <file>components/pages/categoriespage/NameField.qml</file>
+        <file>components/pages/categoriespage/DescriptionField.qml</file>
+        <file>components/pages/categoriespage/DeleteCategoryDialog.qml</file>
+        <file>components/pages/categoriespage/NewCategoryDialog.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>
@@ -146,5 +152,7 @@
         <file>common/TimePicker.qml</file>
         <file>common/GroupedRadioButtons.qml</file>
         <file>common/BaseRadioButton.qml</file>
+        <file>common/ColorPicker.qml</file>
+        <file>common/ColorPickerPopup.qml</file>
     </qresource>
 </RCC>

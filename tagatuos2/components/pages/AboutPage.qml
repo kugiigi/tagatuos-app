@@ -27,7 +27,7 @@ Pages.BasePage {
             _popup.openDialog();
         }
 
-        IconComponent{
+        IconComponent {
             id: iconComponent
 
             anchors {
@@ -98,7 +98,7 @@ Pages.BasePage {
                 append({"section": i18n.tr("Developers"), "text": "Kugi Eusebio", "subText": i18n.tr("Main developer"), "icon": ""
                                                                 , "urlText": "https://github.com/kugiigi"})
                 append({"section": i18n.tr("Icon"), "text": "Joan CiberSheep", "subText": i18n.tr("coin icon under license CC By Nimal Raj, chart icon under license CC By Gregor Cresnar"), "icon": ""
-                                                                , "urlText": "https://github.com/kugiigi"})
+                                                                , "urlText": "mailto:cibersheep@gmail.com"})
                 append({"section": i18n.tr("Powered by"), "text": "accounting.js", "subText": i18n.tr("Money formatting"), "icon": ""
                                                                 , "urlText": "http://openexchangerates.github.io/accounting.js/"})
                 append({"section": i18n.tr("Powered by"), "text": "chart.js for QML", "subText": i18n.tr("Charts and graphs"), "icon": ""

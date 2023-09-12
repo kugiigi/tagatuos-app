@@ -126,8 +126,6 @@ Pages.BasePage {
                 text: i18n.tr("OK")
                 onClicked: dialog.close()
             }
-
-
         }
     }
 }

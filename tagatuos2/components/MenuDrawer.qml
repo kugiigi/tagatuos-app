@@ -13,8 +13,6 @@ Drawer {
 
     property real listViewTopMargin
 
-    signal itemClicked(string itemCode)
-
     width: Math.min(Math.max(preferredWidth, minimumWidth), maximumWidth)
     height: parent.height
     dragMargin: 0
@@ -44,18 +42,20 @@ Drawer {
         topMargin: menuDrawer.listViewTopMargin
 
         delegate: ItemDelegate {
+            id: itemDelegate
+
             width: parent.width
-            text: modelData.title
+            text: modelData.text
             highlighted: ListView.isCurrentItem
             icon {
-                name: modelData ? modelData.iconName : ""
-                color: Suru.foregroundColor
+                name: modelData ? modelData.iconName : modelData.icon.name
+                color: modelData ? modelData.icon.color : Suru.foregroundColor
                 width: Suru.units.gu(2.5)
                 height: Suru.units.gu(2.5)
             }
 
             onClicked: {
-                menuDrawer.itemClicked(modelData.itemCode)
+                modelData.trigger(false, itemDelegate)
                 drawer.close()
             }
         }

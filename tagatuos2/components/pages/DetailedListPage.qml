@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
-import Lomiri.Components 1.3 as UT
 import QtQuick.Layouts 1.12
 import "detailedlistpage"
 import ".." as Components
@@ -235,7 +234,7 @@ Pages.BasePage {
         text: i18n.tr("Edit")
         iconName: "edit"
 
-        onTrigger:{
+        onTrigger: {
             mainView.newExpenseView.openInEditMode(contextMenu.itemData)
         }
     }
@@ -247,7 +246,7 @@ Pages.BasePage {
         iconName: "go-last"
         visible: contextMenu.isFromSearch
 
-        onTrigger:{
+        onTrigger: {
             detailedListPage.scope = "day"
             exitSearchAction.triggered()
             internal.setBaseDate(contextMenu.itemData.entryDate)
@@ -349,10 +348,10 @@ Pages.BasePage {
 
         onRejected: rebindValues()
     }
-
-    UT.LiveTimer {
-        frequency: UT.LiveTimer.Hour
-        onTrigger: navigationRow.labelRefresh()
+    
+    Connections {
+        target: mainView
+        onCurrentDateChanged: navigationRow.labelRefresh()
     }
 
     ColumnLayout {

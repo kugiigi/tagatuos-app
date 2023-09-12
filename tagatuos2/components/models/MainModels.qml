@@ -126,6 +126,10 @@ Item {
         quickExpensesModel.refresh()
     }
 
+    function refreshCategories() {
+        categoriesModel.refresh()
+    }
+
     /*WorkerScript for asynch loading of models*/
     WorkerScript {
         id: workerLoader
@@ -280,8 +284,6 @@ Item {
     Common.BaseListModel {
         id: categoriesModel
 
-        property bool isListOnly: false
-
         modelId: mainModels.categoriesID
         worker: workerLoader
         Component.onCompleted: refresh()
@@ -289,27 +291,6 @@ Item {
         function refresh() {
             fillData(mainView.categories.list())
         }
-
-        onIsListOnlyChanged: {
-            if (isListOnly) {
-                appendAddNew()
-            } else {
-                removeAddNew()
-            }
-        }
-
-//~         function appendAddNew() {
-//~             modelCategories.insert(0, {
-//~                                        category_name: "Add new category",
-//~                                        descr: "add new",
-//~                                        icon: "default",
-//~                                        colorValue: "white"
-//~                                    })
-//~         }
-
-//~         function removeAddNew() {
-//~             modelCategories.remove(0)
-//~         }
 
         function getColor(category) {
             for (let i = 0; i < count; i++) {

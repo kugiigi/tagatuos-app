@@ -199,7 +199,7 @@ ApplicationWindow {
         id: mainFocusScope
 
         anchors.fill: parent
-        
+
         Loader {
             id: drawerLoader
 
@@ -209,33 +209,65 @@ ApplicationWindow {
                 id: drawer
 
                 listViewTopMargin: mainView.mainPage && mainView.mainPage.pageHeader.expanded ? mainView.mainPage.pageHeader.height : 0
-                model:  [
-                    { title: i18n.tr("Profiles"), itemCode: "PROFILES", iconName: "account" }
-                    ,{ title: i18n.tr("Categories"), itemCode: "CATEGORIES", iconName: "stock_note" }
-                    ,{ title: i18n.tr("Quick Expenses"), itemCode: "QUICK", iconName: "scope-manager" }
-                    ,{ title: i18n.tr("Travel Mode"), itemCode: "TRAVEL", iconName: "airplane-mode" }
-                    ,{ title: i18n.tr("Settings"), itemCode: "SETTINGS", iconName: "settings" }
-                    ,{ title: i18n.tr("About"), itemCode: "ABOUT", iconName: "info" }
-                ]
+                model:  [ profilesAction, categoriesAction, quickExpensesAction, travelModeAction, settingsAction, aboutAction ]
 
-                onItemClicked: {
-                    let _pageSource
+                Common.BaseAction {
+                    id: profilesAction
 
-                    switch (itemCode) {
-                        case "SETTINGS":
-                        _pageSource = "qrc:///components/pages/SettingsPage.qml"
-                            break
-                        case "ABOUT":
-                            _pageSource = "qrc:///components/pages/AboutPage.qml"
-                            break
-                        case "TRAVEL":
-                            _pageSource = "qrc:///components/pages/TravelModePage.qml"
-                            break
-                    }
+                    text: i18n.tr("Profiles")
+                    iconName: "account"
 
-                    if (_pageSource) {
-                        mainView.popupPage.openInPage(_pageSource)
-                    }
+                    onTrigger: popupPage("qrc:///components/pages/SettingsPage.qml")
+                }
+
+                Common.BaseAction {
+                    id: categoriesAction
+
+                    text: i18n.tr("Categories")
+                    iconName: "stock_note"
+
+                    onTrigger: popupPage("qrc:///components/pages/CategoriesPage.qml")
+                }
+
+                Common.BaseAction {
+                    id: quickExpensesAction
+
+                    text: i18n.tr("Quick Expenses")
+                    iconName: "scope-manager"
+
+                    onTrigger: popupPage("qrc:///components/pages/SettingsPage.qml")
+                }
+
+                Common.BaseAction {
+                    id: travelModeAction
+
+                    text: i18n.tr("Travel Mode")
+                    iconName: "airplane-mode"
+                    icon.color: mainView.settings.travelMode ? Suru.activeFocusColor: Suru.foregroundColor
+
+                    onTrigger: popupPage("qrc:///components/pages/TravelModePage.qml")
+                }
+
+                Common.BaseAction {
+                    id: settingsAction
+
+                    text: i18n.tr("Settings")
+                    iconName: "settings"
+
+                    onTrigger: popupPage("qrc:///components/pages/SettingsPage.qml")
+                }
+
+                Common.BaseAction {
+                    id: aboutAction
+
+                    text: i18n.tr("About")
+                    iconName: "info"
+
+                    onTrigger: popupPage("qrc:///components/pages/AboutPage.qml")
+                }
+
+                function popupPage(source) {
+                    mainView.popupPage.openInPage(source)
                 }
             }
 

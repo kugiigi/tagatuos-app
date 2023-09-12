@@ -1,6 +1,7 @@
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Suru 2.2
 
-QQC2.Action {
+Action {
     id: action
 
     property bool visible: true
@@ -10,7 +11,10 @@ QQC2.Action {
     property string shortText: text
     property string tooltipText
     property string iconName
-    icon.name: iconName
+    icon {
+        name: iconName
+        color: Suru.foregroundColor
+    }
     enabled: visible
 
     signal trigger(bool isBottom, var caller)

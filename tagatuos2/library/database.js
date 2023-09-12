@@ -1145,6 +1145,134 @@ function getCategories(intProfileId) {
     return arrResults
 }
 
+function addCategory(intProfileId, txtName, txtDescr, txtIcon, txtColor) {
+    let _txtSaveStatement
+    let _db = openDB()
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    
+    let _existsResult = checkCategoryIfExists(intProfileId, txtName)
+
+    _txtSaveStatement = 'INSERT INTO categories(profile_id,category_name,descr,icon,color) VALUES(?,?,?,?,?)'
+
+    if (_existsResult.success && !_existsResult.exists) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(_txtSaveStatement, [intProfileId, txtName, txtDescr, txtIcon, txtColor])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _existsResult.exists}
+
+    return _result
+}
+
+function checkCategoryIfExists(intProfileId, txtCategory) {
+    let _db = openDB()
+    let _rs = null
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    let _exists = false
+
+    try {
+        _db.transaction(function (tx) {
+            _rs = tx.executeSql("SELECT * FROM categories WHERE profile_id = ? AND category_name = ?", [intProfileId, txtCategory])
+            _exists = _rs.rows.length > 0
+        })
+
+        _success = true
+    } catch (err) {
+        console.log("Database error: " + err)
+        _errorMsg = err
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _exists}
+
+    return _result
+}
+
+function deleteCategory(intProfileId, txtCategory) {
+    let _txtDeleteStatement, _txtUpdateExpensesStatement
+    let _txtNewCategory = "Uncategorized"
+    let _db = openDB()
+    let _result
+    let _success = false
+    let _errorMsg = ""
+
+    _txtDeleteStatement = 'DELETE FROM categories WHERE profile_id = ? AND category_name = ?'
+    _txtUpdateExpensesStatement = 'UPDATE expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?'
+
+    try {
+        _db.transaction(function (tx) {
+            // Disable for now since it's hard to revert back if done accidentally
+            /*
+            tx.executeSql(_txtUpdateExpensesStatement,
+                  [_txtNewCategory, intProfileId, txtCategory])
+            */ 
+            tx.executeSql(_txtDeleteStatement, [intProfileId, txtCategory])
+        })
+
+        _success = true
+    } catch (err) {
+        console.log("Database error: " + err)
+        _errorMsg = err
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg}
+
+    return _result
+}
+
+function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, txtColor) {
+    let _db = openDB()
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    let _exists = false
+
+    if (txtNewName !== txtName) {
+        let _existsResult = checkCategoryIfExists(intProfileId, txtNewName)
+        _exists = _existsResult.success && _existsResult.exists
+    }
+
+    if (!_exists) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql("UPDATE expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?",
+                      [txtNewName, intProfileId, txtName])
+                tx.executeSql(
+                            "UPDATE categories SET category_name = ?, descr = ?, icon = ?, color= ? WHERE profile_id = ? AND category_name = ?",
+                            [txtNewName, txtDescr, txtIcon, txtColor, intProfileId, txtName])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = { "success": _success, "error": _errorMsg, "exists": _exists }
+
+    return _result
+}
+
 function getQuickExpenses(intProfileId, txtSearchText) {
     let db = openDB()
     let arrResults = []

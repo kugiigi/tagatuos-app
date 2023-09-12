@@ -55,6 +55,30 @@ var dataUtils = dataUtils || (function (undefined) {
                 list: function() {
                     return Database.getCategories(profile);
                 }
+                , add: function(name, description, color) {
+                    let _result = Database.addCategory(profile, name, description, "", color);
+                    if (_result.success) {
+                        mainView.mainModels.refreshCategories()
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists}
+                }
+                , edit: function(name, newName, description, color) {
+                    let _result = Database.updateCategory(profile, name, newName, description, "", color);
+                    if (_result.success) {
+                        mainView.mainModels.refreshCategories()
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists}
+                }
+                , delete: function(name) {
+                    let _result = Database.deleteCategory(profile, name);
+                    if (_result.success) {
+                        mainView.mainModels.refreshCategories()
+                    }
+
+                    return { "success": _result.success }
+                }
             }
         }
         , dashboard: function (profile) {

@@ -25,6 +25,7 @@ Dialogs.BasePopup {
     rightPadding: defaultPadding
 
     function openInPage(item, properties, operation) {
+        pageStack.clear()
         pageStack.push(item, properties, operation)
         open()
     }
@@ -33,6 +34,7 @@ Dialogs.BasePopup {
         id: pageStack
 
         anchors.fill: parent
+        focus: true
         isWideLayout: popupPageStack.isWideLayout
         enableShortcuts: true
         enableBottomGestureHint: !mainView.settings.hideBottomHint
@@ -52,7 +54,7 @@ Dialogs.BasePopup {
 
             text: popupPageStack.isWideLayout ? i18n.tr("Close") : i18n.tr("Back")
             iconName: popupPageStack.isWideLayout ? "close" : "back"
-            shortcut: StandardKey.Cancel
+            shortcut: popupPageStack.isWideLayout ? StandardKey.Cancel : StandardKey.Back
             enabled: visible
 
             onTrigger: popupPageStack.close()
