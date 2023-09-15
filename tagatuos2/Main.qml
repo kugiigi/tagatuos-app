@@ -458,7 +458,7 @@ ApplicationWindow {
                         text: mainView.profiles.currentName()
                         Suru.textLevel: Suru.HeadingTwo
                         alignment: Qt.AlignLeft
-                        display: mainView.mainPage.headerExpanded ? AbstractButton.IconOnly : AbstractButton.TextBesideIcon
+                        display: AbstractButton.TextBesideIcon
                         secondaryIcon {
                             name: "go-down"
                             width: Suru.units.gu(1)
