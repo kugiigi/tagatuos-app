@@ -483,8 +483,8 @@ ApplicationWindow {
                         type: Menus.AdvancedMenu.Type.ItemAttached
                         doNotOverlapCaller: true
                         destroyOnClose: true
-                        minimumWidth: Suru.units.gu(15)
-                        maximumWidth: Suru.units.gu(20)
+                        minimumWidth: Suru.units.gu(20)
+                        maximumWidth: Suru.units.gu(30)
 
                         Repeater {
                             id: profilesMenuItemRepeater
