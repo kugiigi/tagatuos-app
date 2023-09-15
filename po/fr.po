@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-15 14:30+0000\n"
+"POT-Creation-Date: 2023-09-15 14:49+0000\n"
 "PO-Revision-Date: 2021-04-05 14:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -172,91 +172,91 @@ msgstr ""
 msgid "About %1"
 msgstr "À propos"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:84
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:86
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:88
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:90
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:92
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:94
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:96
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:98
 msgid "Support"
 msgstr "Aide"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:84
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:86
 msgid "Report a bug"
 msgstr "Signaler un problème"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:86
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:88
 msgid "Contact Developer"
 msgstr "Contacter le développeur"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:88
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:90
 msgid "View source"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:90
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:92
 msgid "Donate via LibrePay"
 msgstr "Faire un don via LibrePay"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:92
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:94
 msgid "Donate via PayPal"
 msgstr "Faire un don via PayPal"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:94
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:96
 msgid "View in OpenStore"
 msgstr "Afficher dans l'OpenStore"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:96
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:98
 msgid "Other apps by the developer"
 msgstr "Autres applications de ce développeur"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:98
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:100
 msgid "Developers"
 msgstr "Développeurs"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:98
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:100
 #, fuzzy
 msgid "Main developer"
 msgstr "Développeurs"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:100
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:102
 msgid "Icon"
 msgstr "Icône"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:100
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:102
 msgid ""
 "coin icon under license CC By Nimal Raj, chart icon under license CC By "
 "Gregor Cresnar"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:102
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:104
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:106
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:108
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:110
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:112
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:114
 msgid "Powered by"
 msgstr "Alimenté par"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:102
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:104
 msgid "Money formatting"
 msgstr "Format de la monnaie"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:104
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:106
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:108
 msgid "Charts and graphs"
 msgstr "Tableaux et graphiques"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:108
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:110
 #, fuzzy
 msgid "Exchange rates data"
 msgstr "Taux de conversion du"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:110
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:112
 msgid "Date and Time manipulation and formatting"
 msgstr "Manipulation et formattage de la date et de l'heure"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:112
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/AboutPage.qml:114
 msgid "Date and time pickers"
 msgstr ""
 

@@ -60,6 +60,8 @@ Pages.BasePage {
             delegate: ListItems.NavigationDelegate {
                 text: model.text
                 icon.name: model.icon
+                icon.color: Suru.foregroundColor
+                progressionIcon.color: Suru.foregroundColor
                 progressionIcon.name: "external-link"
                 tooltipText: model.subText
 
