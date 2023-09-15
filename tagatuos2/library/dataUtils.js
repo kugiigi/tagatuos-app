@@ -14,30 +14,59 @@ var dataUtils = dataUtils || (function (undefined) {
                         return ""
                     }
                 }
+                , enableOverlay: function() {
+                    if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").enableOverlay
+                    } else {
+                        return false
+                    }
+                }
+                , overlayColor: function() {
+                    if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").overlayColor
+                    } else {
+                        return "blue"
+                    }
+                }
+                , overlayOpacity: function() {
+                    if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").overlayOpacity
+                    } else {
+                        return 0.2
+                    }
+                }
                 , list: function() {
                     return Database.getProfiles();
                 }
                 , refresh: function() {
-                    mainView.mainModels.profilesModel.refresh();
+                    mainView.mainModels.refreshProfiles();
                 }
                 , exists: function(displayName) {
                     return Database.checkProfileIfExist(displayName);
                 }
-                , new: function(displayName) {
-                    var newProfileId = Database.newProfile(displayName);
-                    this.refresh();
-                    return newProfileId;
-                }
-                , edit: function(profileId, displayName) {
-                    Database.editProfile(profileId, displayName);
-                    this.refresh();
-                }
-                , delete: function(profileId) {
-                    var result = Database.deleteProfile(profileId);
-                    if (result.success) {
+                , add: function(displayName, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.newProfile(displayName, enableOverlay, overlayColor, overlayOpacity)
+                    if (_result.success) {
                         this.refresh();
                     }
-                    return result;
+
+                    return { "success": _result.success, "exists": _result.exists }
+                }
+                , edit: function(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.editProfile(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity);
+                    if (_result.success) {
+                        this.refresh();
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists }
+                }
+                , delete: function(profileId) {
+                    let _result = Database.deleteProfile(profileId);
+                    if (_result.success) {
+                        this.refresh();
+                    }
+
+                    return { "success": _result.success }
                 }
             }
         })()
@@ -58,7 +87,7 @@ var dataUtils = dataUtils || (function (undefined) {
                 , add: function(name, description, color) {
                     let _result = Database.addCategory(profile, name, description, "", color);
                     if (_result.success) {
-                        mainView.mainModels.refreshCategories()
+                        mainView.mainModels.refreshCategories("ADD")
                     }
 
                     return { "success": _result.success, "exists": _result.exists}
@@ -66,7 +95,7 @@ var dataUtils = dataUtils || (function (undefined) {
                 , edit: function(name, newName, description, color) {
                     let _result = Database.updateCategory(profile, name, newName, description, "", color);
                     if (_result.success) {
-                        mainView.mainModels.refreshCategories()
+                        mainView.mainModels.refreshCategories("EDIT")
                     }
 
                     return { "success": _result.success, "exists": _result.exists}
@@ -74,10 +103,10 @@ var dataUtils = dataUtils || (function (undefined) {
                 , delete: function(name) {
                     let _result = Database.deleteCategory(profile, name);
                     if (_result.success) {
-                        mainView.mainModels.refreshCategories()
+                        mainView.mainModels.refreshCategories("DELETE")
                     }
 
-                    return { "success": _result.success }
+                    return { "success": _result.success, "hasData": _result.hasData }
                 }
             }
         }
@@ -160,6 +189,36 @@ var dataUtils = dataUtils || (function (undefined) {
                     }
 
                     let _result = Database.addQuickExpense(profile, _data)
+                    if (_result.success) {
+                        mainView.mainModels.refreshQuickExpense()
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists}
+                }
+                , edit: function(expenseData) {
+                    let _txtID = expenseData.expenseID
+                    let _txtName = expenseData.name
+                    let _realValue = expenseData.value
+                    let _txtDescr = expenseData.description
+                    let _txtCategory = expenseData.category
+
+                    const _data = {
+                        "id": _txtID
+                        , "name": _txtName
+                        , "description": _txtDescr
+                        , "category": _txtCategory
+                        , "value": _realValue
+                    }
+
+                    let _result = Database.editQuickExpense(profile, _data)
+                    if (_result.success) {
+                        mainView.mainModels.refreshQuickExpense()
+                    }
+
+                    return { "success": _result.success, "exists": _result.exists}
+                }
+                , delete: function(expenseID) {
+                    let _result = Database.deleteQuickExpense(profile, expenseID)
                     if (_result.success) {
                         mainView.mainModels.refreshQuickExpense()
                     }

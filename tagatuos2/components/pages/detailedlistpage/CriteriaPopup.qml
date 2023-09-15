@@ -193,7 +193,7 @@ Dialogs.BasePopup {
                     Binding {
                         target: coloredCategoryCheckbox
                         property: "checkState"
-                        value: criteriaPopup.coloredCategory
+                        value: criteriaPopup.coloredCategory ? Qt.Checked : Qt.UnChecked
                     }
 
                     onCheckedChanged: criteriaPopup.coloredCategory = checked

@@ -14,9 +14,15 @@ WorkerScript.onMessage = function (msg) {
             for (let i = 0; i < msg.result.length; i++) {
                 let txtProfileId = msg.result[i].profile_id
                 let txtDisplayName = msg.result[i].display_name
+                let intEnableOverlay = msg.result[i].enable_overlay
+                let txtOverlayColor = msg.result[i].overlay_color
+                let txtOverlayOpacity = msg.result[i].overlay_opacity
                 msg.model.append({
                                      profileId: txtProfileId
                                      , displayName: txtDisplayName
+                                     , enableOverlay: intEnableOverlay == 0 ? false: true
+                                     , overlayColor: txtOverlayColor
+                                     , overlayOpacity: txtOverlayOpacity
                                  })
             }
             break;

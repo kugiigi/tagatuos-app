@@ -6,17 +6,17 @@ import QtQuick.Layouts 1.12
 import "../../../common/dialogs" as Dialogs
 
 Dialogs.DialogWithContents {
-    id: deleteCategoryDialog
+    id: deleteProfileDialog
 
-    property string categoryName
-    property string categoryDescription
+    property int profileID
+    property string displayName
 
     signal proceed
     signal cancel
 
     destroyOnClose: true
 
-    title: i18n.tr("Delete Category")
+    title: i18n.tr("Delete Profile")
 
     onProceed: close()
     onCancel: close()
@@ -24,7 +24,7 @@ Dialogs.DialogWithContents {
     Label {
         Layout.fillWidth: true
         Suru.textLevel: Suru.Paragraph
-        text: i18n.tr("Are you sure you want to delete this category?")
+        text: i18n.tr("Are you sure you want to delete this profile?")
         wrapMode: Text.WordWrap
     }
 
@@ -32,15 +32,7 @@ Dialogs.DialogWithContents {
         Layout.fillWidth: true
         Suru.textLevel: Suru.HeadingThree
         visible: text.trim() !== ""
-        text: deleteCategoryDialog.categoryName
-        wrapMode: Text.WordWrap
-    }
-
-    Label {
-        Layout.fillWidth: true
-        visible: text.trim() !== ""
-        Suru.textLevel: Suru.Paragraph
-        text: deleteCategoryDialog.categoryDescription
+        text: deleteProfileDialog.displayName
         wrapMode: Text.WordWrap
     }
 
@@ -53,7 +45,7 @@ Dialogs.DialogWithContents {
             text: i18n.tr("Delete")
             color: mainView.uitkColors.normal.negative
 
-            onClicked: deleteCategoryDialog.proceed()
+            onClicked: deleteProfileDialog.proceed()
         }
 
         UT.Button {
@@ -62,7 +54,7 @@ Dialogs.DialogWithContents {
             text: i18n.tr("Cancel")
             color: Suru.neutralColor
 
-            onClicked: deleteCategoryDialog.cancel()
+            onClicked: deleteProfileDialog.cancel()
         }
     }
 }

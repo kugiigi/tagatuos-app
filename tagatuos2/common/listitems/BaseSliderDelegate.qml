@@ -28,7 +28,7 @@ BaseItemDelegate {
     property bool roundDisplayedValue: true
     property int roundingDecimal: 0
     property bool enableFineControls: false
-    property string unit: percentageValue ? "%" : ""
+    property string unit: displayInPercentage ? "%" : ""
 
     signal reset
     signal valueModified

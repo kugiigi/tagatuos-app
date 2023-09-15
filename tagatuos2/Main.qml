@@ -4,10 +4,13 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
 import UserMetrics 0.1
+import Lomiri.Components.Themes.Ambiance 1.3 as Ambiance
+import Lomiri.Components.Themes.SuruDark 1.3 as SuruDark
 import "library/database.js" as Database
 import "library/dataUtils.js" as DataUtils
 import "library/functions.js" as Functions
 import "common/pages" as PageComponents
+import "common/menus" as Menus
 import "components/pages" as Pages
 import "components/models" as Models
 import "common" as Common
@@ -38,6 +41,7 @@ ApplicationWindow {
                 }
                 break
         }
+    readonly property QtObject uitkColors: Suru.theme === Suru.Dark ? suruDarkTheme : ambianceTheme
     
     readonly property string displayMode: "Phone" //"Desktop" //"Phone" //"Tablet"
     readonly property bool isWideLayout: width >= Suru.units.gu(110)
@@ -65,6 +69,8 @@ ApplicationWindow {
     readonly property alias newExpenseView: newExpenseViewLoader.item
 
     readonly property bool sidePageIsOpen: sidePage && sidePage.visible
+
+    property bool temporaryDisableColorOverlay: false
 
     title: i18n.tr("Tagatuos - Your expense diary")
     visible: false
@@ -103,13 +109,13 @@ ApplicationWindow {
 
     Component.onCompleted: {
         /*Meta data processing*/
-        var currentDataBaseVersion = Database.checkUserVersion()
+        let _currentDataBaseVersion = Database.checkUserVersion()
 
-        if (currentDataBaseVersion === 0) {
+        if (_currentDataBaseVersion === 0) {
             Database.createInitialData()
         }
 
-        Database.databaseUpgrade(currentDataBaseVersion)
+        Database.databaseUpgrade(_currentDataBaseVersion)
         settingsLoader.active = true
     }
 
@@ -126,6 +132,9 @@ ApplicationWindow {
             currentDate = Functions.getToday()
         }
     }
+
+    Ambiance.Palette { id: ambianceTheme }
+    SuruDark.Palette { id: suruDarkTheme }
 
     Metric {
         id: userMetric
@@ -200,6 +209,17 @@ ApplicationWindow {
 
         anchors.fill: parent
 
+        Rectangle {
+            id: colorOverlay
+
+            z: 100
+            visible: mainView.profiles.enableOverlay() && !mainView.temporaryDisableColorOverlay
+            anchors.fill: parent
+            opacity: mainView.profiles.overlayOpacity()
+            parent: mainView.overlay
+            color: mainView.profiles.overlayColor()
+        }
+
         Loader {
             id: drawerLoader
 
@@ -217,7 +237,7 @@ ApplicationWindow {
                     text: i18n.tr("Profiles")
                     iconName: "account"
 
-                    onTrigger: popupPage("qrc:///components/pages/SettingsPage.qml")
+                    onTrigger: popupPage("qrc:///components/pages/ProfilesPage.qml", { activeProfile: mainView.settings.activeProfile })
                 }
 
                 Common.BaseAction {
@@ -235,7 +255,13 @@ ApplicationWindow {
                     text: i18n.tr("Quick Expenses")
                     iconName: "scope-manager"
 
-                    onTrigger: popupPage("qrc:///components/pages/SettingsPage.qml")
+                    onTrigger: {
+                        let _properties = {
+                            coloredCategory: mainView.detailedListPage.coloredCategory
+                            , homeCurrency: mainView.settings.currentCurrency
+                        }
+                        popupPage("qrc:///components/pages/QuickExpensesPage.qml", _properties)
+                    }
                 }
 
                 Common.BaseAction {
@@ -243,7 +269,9 @@ ApplicationWindow {
 
                     text: i18n.tr("Travel Mode")
                     iconName: "airplane-mode"
-                    icon.color: mainView.settings.travelMode ? Suru.activeFocusColor: Suru.foregroundColor
+                    // WORKAROUND: Suru colors do not change when changing theme
+                    // Only happens in QtObject
+                    icon.color: mainView.settings.travelMode ? mainView.uitkColors.normal.activity: mainView.uitkColors.normal.backgroundSecondaryText
 
                     onTrigger: popupPage("qrc:///components/pages/TravelModePage.qml")
                 }
@@ -266,8 +294,8 @@ ApplicationWindow {
                     onTrigger: popupPage("qrc:///components/pages/AboutPage.qml")
                 }
 
-                function popupPage(source) {
-                    mainView.popupPage.openInPage(source)
+                function popupPage(source, properties) {
+                    mainView.popupPage.openInPage(source, properties)
                 }
             }
 
@@ -304,6 +332,13 @@ ApplicationWindow {
                     enableHorizontalSwipe: mainView.settings.horizontalSwipe
                     bottomGestureAreaHeight: mainView.settings.bottomGesturesAreaHeight
                     directActionsHeight: mainView.settings.quickActionsHeight
+
+                    customTitleItem {
+                        sourceComponent: mainView.mainModels.profilesModel.count > 1 ? profilePickerComponent : null
+                        hideOnExpand: false
+                        fillWidth: false
+                        alignment: Qt.AlignLeft
+                    }
 
                     initialItem: Pages.DashboardPage {
                         isTravelMode: mainView.settings.travelMode
@@ -379,6 +414,13 @@ ApplicationWindow {
                     visible: opacity > 0
                     opacity: mainView.isWideLayout || forceShowInNarrow ? 1 : 0
 
+                    customTitleItem {
+                        sourceComponent: shownInNarrow && mainView.mainModels.profilesModel.count > 1 ? profilePickerComponent : null
+                        hideOnExpand: false
+                        fillWidth: false
+                        alignment: Qt.AlignLeft
+                    }
+
                     Behavior on opacity {
                         NumberAnimation {
                             easing: Suru.animations.EasingIn
@@ -404,6 +446,59 @@ ApplicationWindow {
                     Pages.BottomSwipeUpConnection {
                         target: sidePage.middleBottomGesture
                         enabled: !corePage.middleBottomGesture.dragging
+                    }
+                }
+                
+                Component {
+                    id: profilePickerComponent
+
+                    Common.BaseButton {
+                        id: profileSwitcherButton
+
+                        text: mainView.profiles.currentName()
+                        Suru.textLevel: Suru.HeadingTwo
+                        alignment: Qt.AlignLeft
+                        display: mainView.mainPage.headerExpanded ? AbstractButton.IconOnly : AbstractButton.TextBesideIcon
+                        secondaryIcon {
+                            name: "go-down"
+                            width: Suru.units.gu(1)
+                            height: secondaryIcon.width
+                            color: Suru.foregroundColor
+                        }
+
+                        onClicked: {
+                            if (mainView.mainModels.profilesModel.count > 1) {
+                                profileSwitcherMenuComponent.createObject(mainView.overlay).show("", profileSwitcherButton, false)
+                            }
+                        }
+                    }
+                }
+
+                Component {
+                    id: profileSwitcherMenuComponent
+
+                    Menus.AdvancedMenu {
+                        id: profilesMenu
+
+                        type: Menus.AdvancedMenu.Type.ItemAttached
+                        doNotOverlapCaller: true
+                        destroyOnClose: true
+                        minimumWidth: Suru.units.gu(15)
+                        maximumWidth: Suru.units.gu(20)
+
+                        Repeater {
+                            id: profilesMenuItemRepeater
+
+                            model: mainView.mainModels.profilesModel
+
+                            Menus.BaseMenuItem {
+                                readonly property int profileId: model.profileId
+
+                                text: model ? model.displayName : ""
+                                visible: profileId != mainView.settings.activeProfile
+                                onTriggered: mainView.settings.activeProfile = profileId
+                            }
+                        }
                     }
                 }
             }

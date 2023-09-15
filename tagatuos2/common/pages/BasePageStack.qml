@@ -41,8 +41,12 @@ QQC2.Page {
     clip: true
     focus: true
 
-    function push(item) {
-        mainStackView.push(item)
+    function push(item, properties, operation) {
+        mainStackView.push(item, properties, operation)
+    }
+
+    function replace(target, item, properties, operation = QQC2.StackView.Transition) {
+        mainStackView.replace(target, item, properties, operation)
     }
 
     function pop() {

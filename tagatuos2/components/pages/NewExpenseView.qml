@@ -14,7 +14,7 @@ FocusScope {
 
     readonly property bool resultsIsEmpty: quickListGridView.model.count == 0
                                                     && historyGridView.model.count == 0 && !searchDelay.running
-    readonly property bool contextActionsShown: resultsIsEmpty || internal.forceContextActions
+    readonly property bool contextActionsShown: (resultsIsEmpty || internal.forceContextActions) && searchText !== ""
     readonly property bool isGridDisplay: displayType == QuickListGridView.GridType.Rectangle
     readonly property bool isOpen: internal.isOpen
     readonly property bool isEditMode: internal.currentExpenseID > -1 && entryMode
@@ -154,7 +154,7 @@ FocusScope {
             if (_result.exists) {
                 mainView.tooltip.display(i18n.tr("Already exists"))
             } else {
-                mainView.tooltip.display(i18n.tr("Quick expense failed"))
+                mainView.tooltip.display(i18n.tr("New Quick expense failed"))
             }
         }
     }
@@ -853,7 +853,7 @@ FocusScope {
                 text: i18n.tr("Search or create new expense")
                 iconName: "compose"
                 triggerOnTriggered: false
-                visible: !newExpenseView.entryMode
+                visible: !newExpenseView.entryMode && !searchField.activeFocus
 
                 onTrigger: newExpenseView.focusSearchInput();
             }

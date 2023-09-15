@@ -93,6 +93,7 @@ ItemDelegate {
                 Layout.preferredHeight: baseButton.icon.height
                 Layout.alignment: internal.centerContents ? Qt.AlignCenter : Qt.AlignVCenter
 
+                active: baseButton.icon.name !== ""
                 visible: item ? true : false
                 asynchronous: true
                 sourceComponent: {
@@ -141,6 +142,7 @@ ItemDelegate {
                 Layout.preferredHeight: baseButton.icon.height
                 Layout.alignment: Qt.AlignVCenter
 
+                active: baseButton.secondaryIcon.name !== ""
                 asynchronous: true
                 visible: item ? true : false
                 sourceComponent: {

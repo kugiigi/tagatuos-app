@@ -9,34 +9,37 @@ import "../../common/listitems" as ListItems
 import "../../common/pages" as Pages
 import "../../common/dialogs" as Dialogs
 import "../../common/menus" as Menus
-import "categoriespage"
+import "profilespage"
 
 Pages.BasePage {
-    id: categoriesPage
+    id: profilesPage
 
-    title: i18n.tr("Categories")
+    property int activeProfile: 0
+
+    title: i18n.tr("Profiles")
     headerRightActions: [ addAction ]
 
     Common.BaseAction {
         id: addAction
         
-        text: i18n.tr("New Category")
+        text: i18n.tr("New Profile")
         shortText: i18n.tr("New")
         iconName: "add"
         
         onTrigger: {
             let _popup = addEditDialog.createObject(mainView.mainSurface, { mode: "add" })
-            _popup.proceed.connect(function(categoryName, newCategoryName, categoryDescription, categoryColor) {
+            _popup.proceed.connect(function(displayName, enableOverlay, overlayColor, overlayOpacity) {
                 let _tooltipMsg
-                let _result = mainView.categories.add(newCategoryName, categoryDescription, categoryColor)
+                let _result = mainView.profiles.add(displayName, enableOverlay, overlayColor, overlayOpacity)
+
                 if (_result.success) {
-                    _tooltipMsg = i18n.tr("Category added")
+                    _tooltipMsg = i18n.tr("Profile added")
                     _popup.close()
                 } else {
                     if (_result.exists) {
-                        _tooltipMsg = i18n.tr("Same name already exists")
+                        _tooltipMsg = i18n.tr("Already exists")
                     } else {
-                        _tooltipMsg = i18n.tr("New category failed")
+                        _tooltipMsg = i18n.tr("New Profile failed")
                     }
                 }
 
@@ -56,20 +59,23 @@ Pages.BasePage {
         onTrigger: {
             let _properties = {
                 mode: "edit"
-                , categoryName: contextMenu.categoryName
-                , categoryDescription: contextMenu.categoryDescription
-                , categoryColor: contextMenu.categoryColor
+                , profileId: contextMenu.profileId
+                , displayName: contextMenu.displayName
+                , enableOverlay: contextMenu.enableOverlay
+                , overlayColor: contextMenu.overlayColor
+                , overlayOpacity: contextMenu.overlayOpacity
             }
             let _popup = addEditDialog.createObject(mainView.mainSurface, _properties)
-            _popup.proceed.connect(function(categoryName, newCategoryName, categoryDescription, categoryColor) {
+            _popup.proceed.connect(function(displayName, enableOverlay, overlayColor, overlayOpacity) {
                 let _tooltipMsg
-                let _result = mainView.categories.edit(categoryName, newCategoryName, categoryDescription, categoryColor)
+
+                let _result = mainView.profiles.edit(contextMenu.profileId, contextMenu.displayName, displayName, enableOverlay, overlayColor, overlayOpacity)
                 if (_result.success) {
-                    _tooltipMsg = i18n.tr("Category edited")
+                    _tooltipMsg = i18n.tr("Profile edited")
                     _popup.close()
                 } else {
                     if (_result.exists) {
-                        _tooltipMsg = i18n.tr("New name already exists")
+                        _tooltipMsg = i18n.tr("Same name already exists")
                     } else {
                         _tooltipMsg = i18n.tr("Editing failed")
                     }
@@ -89,23 +95,14 @@ Pages.BasePage {
         iconName: "delete"
 
         onTrigger: {
-            let _properties = {
-                categoryName: contextMenu.categoryName
-                , categoryDescription: contextMenu.categoryDescription
-            }
-            let _popup = deleteDialogComponent.createObject(mainView.mainSurface, _properties )
+            let _popup = deleteDialogComponent.createObject(mainView.mainSurface, { displayName: contextMenu.displayName } )
             _popup.proceed.connect(function() {
                 let _tooltipMsg
-                let _result = mainView.categories.delete(contextMenu.categoryName)
 
-                if (_result.success) {
-                    _tooltipMsg = i18n.tr("Category deleted")
+                if (mainView.profiles.delete(contextMenu.profileId).success) {
+                    _tooltipMsg = i18n.tr("Profile deleted")
                 } else {
-                    if (_result.hasData) {
-                        _tooltipMsg = i18n.tr("Cannot delete when assigned to expenses")
-                    } else {
-                        _tooltipMsg = i18n.tr("Deletion failed")
-                    }
+                    _tooltipMsg = i18n.tr("Deletion failed")
                 }
 
                 mainView.tooltip.display(_tooltipMsg)
@@ -124,11 +121,14 @@ Pages.BasePage {
     Menus.ContextMenu {
         id: contextMenu
 
-        property string categoryName
-        property string categoryDescription
-        property color categoryColor
+        property int profileId
+        property string displayName
+        property bool enableOverlay
+        property color overlayColor
+        property real overlayOpacity
 
-        actions: [ editAction, separatorAction, deleteAction ]
+        actions: profileId !== profilesPage.activeProfile ? [ editAction, separatorAction, deleteAction ]
+                        : [ editAction ]
         listView: listView
     }
 
@@ -136,7 +136,7 @@ Pages.BasePage {
         id: emptyState
 
         anchors.centerIn: parent
-        title: i18n.tr("No Categories")
+        title: i18n.tr("No Profiles")
         loadingTitle: i18n.tr("Loading data")
         loadingSubTitle: i18n.tr("Please wait")
         isLoading: !listView.model.ready
@@ -151,38 +151,35 @@ Pages.BasePage {
             margins: Suru.units.gu(1)
         }
         currentIndex: -1
-        pageHeader: categoriesPage.pageManager ? categoriesPage.pageManager.pageHeader : null
-        model: mainView.mainModels.categoriesModel
+        pageHeader: profilesPage.pageManager ? profilesPage.pageManager.pageHeader : null
+        model: mainView.mainModels.profilesModel
         delegate: ListItems.BaseItemDelegate {
             id: itemDelegate
 
-            text: model.category_name
+            text: model.displayName
             highlighted: listView.currentIndex == index
             anchors {
                 left: parent.left
                 right: parent.right
             }
-
-            indicator: Rectangle {
-                color: model.colorValue
-                radius: height * 0.2
-                height: Suru.units.gu(3)
-                width: height
+            
+            indicator: Label {
+                visible: model.profileId == profilesPage.activeProfile
+                text: i18n.tr("Active")
+                color: Suru.activeFocusColor
                 anchors {
                     right: parent.right
                     rightMargin: Suru.units.gu(2)
                     verticalCenter: parent.verticalCenter
                 }
-                border {
-                    color: Suru.tertiaryForegroundColor
-                    width: Suru.units.dp(1)
-                }
             }
 
             function showContextMenu(mouseX, mouseY) {
-                contextMenu.categoryName = model.category_name
-                contextMenu.categoryDescription = model.descr
-                contextMenu.categoryColor = model.colorValue
+                contextMenu.profileId = model.profileId
+                contextMenu.displayName = model.displayName
+                contextMenu.enableOverlay = model.enableOverlay
+                contextMenu.overlayColor = model.overlayColor
+                contextMenu.overlayOpacity = model.overlayOpacity
                 listView.currentIndex = index
                 contextMenu.popupMenu(itemDelegate, mouseX, mouseY)
             }
@@ -195,12 +192,12 @@ Pages.BasePage {
     Component {
         id: deleteDialogComponent
 
-        DeleteCategoryDialog {}
+        DeleteProfileDialog {}
     }
 
     Component {
         id: addEditDialog
 
-        NewCategoryDialog {}
+        NewProfileDialog {}
     }
 }

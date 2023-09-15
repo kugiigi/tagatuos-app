@@ -63,7 +63,7 @@ Dialogs.DialogWithContents {
             Layout.fillWidth: true
             text: i18n.tr("Save")
             enabled: nameField.text.trim() !== ""
-            color: theme.palette.normal.positive
+            color: mainView.uitkColors.normal.positive
 
             onClicked: {
                 mainView.keyboard.commit()

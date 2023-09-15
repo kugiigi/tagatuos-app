@@ -53,7 +53,6 @@ ColumnLayout {
                     Layout.fillWidth: true
 
                     z: 1
-                    visible: !chartLegend.isEmpty
 
                     Behavior on Layout.preferredHeight {
                         NumberAnimation {
@@ -66,14 +65,7 @@ ColumnLayout {
                         id: chartLegend
 
                         anchors.fill: parent
-                        visible: opacity > 0
-                        opacity: contentsLayout.showLegend ? 1 : 0
-                        Behavior on opacity {
-                            NumberAnimation {
-                                easing: Suru.animations.EasingIn
-                                duration: Suru.animations.FastDuration
-                            }
-                        }
+                        visible: contentsLayout.showLegend && !chartLegend.isEmpty
                     }
                 }
 

@@ -22,22 +22,13 @@ Pages.BasePage {
     title: mainView.profiles.currentName()
     focus: !mainView.newExpenseView.isOpen
 
-//~     signal refresh
-
     headerLeftActions: [ menuAction ]
     headerRightActions: [ searchAction, detailedPageAction, addAction  ]
-
-//~     Connections {
-//~         target: mainView.settings
-//~         onActiveProfileChanged: {
-//~             refresh()
-//~         }
-//~     }
 
     Common.BaseAction {
         id: addAction
 
-        text: i18n.tr("New Entry")
+        text: i18n.tr("New Expense")
         shortText: i18n.tr("New")
         iconName: "add"
         shortcut: StandardKey.New

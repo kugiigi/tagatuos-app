@@ -96,7 +96,7 @@ function processTextForLIKE (text) {
 //Create initial data
 function createInitialData() {
     createMetaTables()
-    initiateData()
+    createInitialProfielData()
 }
 
 //Create meta tables
@@ -146,28 +146,42 @@ function createMetaViews() {
     })
 }
 
-//Initialize data for first time use
-function initiateData() {
+function createInitialProfielData(intProfileId) {
     var db = openDB()
     db.transaction(function (tx) {
-        var categories = tx.executeSql('SELECT * FROM categories')
-        if (categories.rows.length === 0) {
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","cornflowerblue")',[i18n.tr("Food"),i18n.tr("Breakfast, Lunch, Dinner, etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","orangered")',[i18n.tr("Transportation"),i18n.tr("Taxi, Bus, Train, Gas, etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","chocolate")',[i18n.tr("Clothing"),i18n.tr("Shirts, Pants, underwear, etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","springgreen")',[i18n.tr("Household"),i18n.tr("Electricity, Groceries, Rent etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","palegreen")',[i18n.tr("Leisure"),i18n.tr("Movies, Books, Sports etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","purple")',[i18n.tr("Savings"),i18n.tr("Investments, Reserve Funds etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","snow")',[i18n.tr("Healthcare"),i18n.tr("Dental, Hospital, Medicines etc.")])
-            tx.executeSql(
-                        'INSERT INTO categories VALUES(?, ?,"default","darkslategrey")',[i18n.tr("Miscellaneous"),i18n.tr("Other expenses")])
+        let _categories = null
+        let _txtSqlStatement = ""
+        if (intProfileId) {
+            _categories = tx.executeSql('SELECT * FROM categories WHERE profile_id = ?', [intProfileId])
+            _txtSqlStatement = "INSERT INTO categories VALUES(?, ?, ?, ?, ?)"
+        } else {
+            // For older version with no profile id
+            _categories = tx.executeSql('SELECT * FROM categories')
+            _txtSqlStatement = "INSERT INTO categories VALUES(?, ?, ?, ?)"
+        }
+
+        if (_categories.rows.length === 0) {
+            let _categoriesData = [
+                [i18n.tr("Food"),i18n.tr("Breakfast, Lunch, Dinner, etc."), "default", "cornflowerblue"]
+                , [i18n.tr("Transportation"),i18n.tr("Taxi, Bus, Train, Gas, etc."), "default", "orangered"]
+                , [i18n.tr("Clothing"),i18n.tr("Shirts, Pants, underwear, etc."), "default", "chocolate"]
+                , [i18n.tr("Household"),i18n.tr("Electricity, Groceries, Rent etc."), "default", "springgreen"]
+                , [i18n.tr("Leisure"),i18n.tr("Movies, Books, Sports etc."), "default", "palegreen"]
+                , [i18n.tr("Savings"),i18n.tr("Investments, Reserve Funds etc."), "default", "purple"]
+                , [i18n.tr("Healthcare"),i18n.tr("Dental, Hospital, Medicines etc."), "default", "snow"]
+                , [i18n.tr("Miscellaneous"),i18n.tr("Other expenses"), "default", "darkslategrey"]
+            ]
+            let _length = _categoriesData.length
+            for (let i = 0; i < _length; i++) {
+                let _bindValues = []
+                if (intProfileId) {
+                    _bindValues = [intProfileId, ..._categoriesData[i]]
+                } else {
+                    _bindValues = _categoriesData[i]
+                }
+
+                tx.executeSql(_txtSqlStatement, _bindValues)
+            }
         }
     })
 }
@@ -214,6 +228,9 @@ function databaseUpgrade(currentVersion) {
     }
     if (currentVersion < 4) {
         executeUserVersion4()
+    }
+    if (currentVersion > 3) {
+        enableForeignKeys()
     }
 }
 
@@ -408,12 +425,22 @@ function createTravelRecord(){
 //Database Changes for User Version 4
 // Version 1.0 (Rewrite)
 function executeUserVersion4() {
+    updateExpenseDateToUTC() // Update all dates to UTC
     dropMetaViews() // To cater the changes in the meta tables
     createProfilesRecord()
     alterMetaTablesForVersion4() // Add profile id
     alterMetaViewsForVersion4() // Add profile id and if null in currency fields
     console.log("Database Upgraded to 4")
     upgradeUserVersion()
+}
+
+// Apparently doesn't work since it uses WebSQL :(
+function enableForeignKeys() {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql("PRAGMA foreign_keys = ON")
+    })
 }
 
 function dropMetaViews() {
@@ -436,9 +463,23 @@ function createProfilesRecord() {
 
     db.transaction(function (tx) {
         tx.executeSql(
-                    "CREATE TABLE IF NOT EXISTS `profiles` (`profile_id`	INTEGER PRIMARY KEY AUTOINCREMENT,`active` INTEGER NOT NULL CHECK (`active` IN (0, 1)), `display_name` TEXT)")
+                    "CREATE TABLE IF NOT EXISTS `profiles` (`profile_id`	INTEGER PRIMARY KEY AUTOINCREMENT \
+                    ,`active` INTEGER NOT NULL CHECK (`active` IN (0, 1)), `display_name` TEXT \
+                    , `enable_overlay` INTEGER NOT NULL CHECK (`enable_overlay` IN (0, 1)), `overlay_color` TEXT \
+                    , `overlay_opacity` REAL)")
         tx.executeSql(
-                        'INSERT INTO profiles ("active", "display_name") VALUES(1, ?)',[i18n.tr("Default")])
+                        'INSERT INTO profiles ("active", "display_name", "enable_overlay", "overlay_color", "overlay_opacity") VALUES(1, ?, ?, ?, ?)'
+                                    ,[ i18n.tr("Default"), 0, "blue", 0.2])
+    })
+}
+
+// Update all old data to UTC since the new logic stores everything in UTC and display them in localtime
+function updateExpenseDateToUTC() {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql(
+                    "UPDATE expenses SET date = strftime('%Y-%m-%d %H:%M:%f', date, 'utc')")
     })
 }
 
@@ -450,17 +491,23 @@ function alterMetaTablesForVersion4() {
         /* Recreate tables with foreign key profile_id */
         // Also make category name as primary key
         tx.executeSql(
-                    "CREATE TABLE IF NOT EXISTS `categories_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
-                    , `category_name`	TEXT PRIMARY KEY,`descr` TEXT,`icon` TEXT DEFAULT 'default',`color`	TEXT)")
+                    "CREATE TABLE IF NOT EXISTS `categories_new` (profile_id INTEGER DEFAULT 1 \
+                    , `category_name` TEXT NOT NULL,`descr` TEXT,`icon` TEXT DEFAULT 'default',`color`	TEXT \
+                    , PRIMARY KEY (profile_id, category_name) \
+                    , FOREIGN KEY (profile_id) REFERENCES profiles (profile_id) ON DELETE CASCADE)")
         tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS `expenses_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
-                    , `expense_id` INTEGER PRIMARY KEY AUTOINCREMENT,`category_name` TEXT,`name`	TEXT,`descr` TEXT,`date` TEXT,`value` REAL)")
+                    , `expense_id` INTEGER PRIMARY KEY AUTOINCREMENT,`category_name` TEXT NOT NULL  DEFAULT " + i18n.tr("Uncategorized") +
+                    ",`name`	TEXT,`descr` TEXT,`date` TEXT,`value` REAL \
+                    , FOREIGN KEY (profile_id, category_name) REFERENCES categories (profile_id, category_name) ON UPDATE CASCADE ON DELETE RESTRICT)")
         tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS `debts_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
                     , `debt_id` INTEGER PRIMARY KEY AUTOINCREMENT,`name` TEXT,`descr` TEXT,`date` TEXT,`value` REAL,`debtor_flag` INTEGER, `paid_flag` INTEGER)")
         tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS `quick_expenses_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
-                    , `quick_id` INTEGER PRIMARY KEY AUTOINCREMENT, `category_name`	TEXT, `name` TEXT, `descr` TEXT, `value` REAL);")
+                    , `quick_id` INTEGER PRIMARY KEY AUTOINCREMENT, `category_name`	TEXT NOT NULL DEFAULT " + i18n.tr("Uncategorized") +
+                    ", `name` TEXT, `descr` TEXT, `value` REAL \
+                    , FOREIGN KEY (profile_id, category_name) REFERENCES categories (profile_id, category_name) ON UPDATE CASCADE ON DELETE CASCADE)")
         tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS `reports_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
                     , `report_id` INTEGER PRIMARY KEY AUTOINCREMENT,`creator` TEXT DEFAULT 'user',`report_name` TEXT,`type` TEXT DEFAULT 'LINE' \
@@ -470,7 +517,7 @@ function alterMetaTablesForVersion4() {
         tx.executeSql("INSERT INTO categories_new SELECT 1, * FROM categories")
         tx.executeSql("INSERT INTO expenses_new SELECT 1, * FROM expenses")
         tx.executeSql("INSERT INTO debts_new SELECT 1, * FROM debts")
-        tx.executeSql("INSERT INTO quick_expenses_new SELECT 1, * FROM quick_expenses")
+        tx.executeSql("INSERT INTO quick_expenses_new SELECT 1, * FROM quick_expenses") 
         tx.executeSql("INSERT INTO reports_new SELECT 1, * FROM reports")
 
         /* Drop old tables */
@@ -680,80 +727,148 @@ function checkProfileIfExist(txtDisplayName) {
     return exists
 }
 
-function newProfile(txtDisplayName) {
-    var txtSaveStatement
-    var db = openDB()
-    var rs = null
-    var newID
+function newProfile(txtDisplayName, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
+    let _txtSaveStatement
+    let _db = openDB()
+    let _rs = null
+    let _result
+    let _success = false
+    let _errorMsg = ""
 
-    txtSaveStatement = 'INSERT INTO profiles(active, display_name) VALUES(1, ?)'
+    let _existsResult = checkProfileIfExist(txtDisplayName)
 
-    db.transaction(function (tx) {
-        tx.executeSql(txtSaveStatement,
-                      [txtDisplayName])
+    // Do not save when opacity is too big
+    let _saveOverlayOpacity = txtOverlayOpacity > 0.6 ? 0.6 : txtOverlayOpacity
 
-        rs = tx.executeSql("SELECT MAX(profile_id) as id FROM profiles")
-        newID = rs.rows.item(0).id
-    })
+    _txtSaveStatement = 'INSERT INTO profiles(active, display_name, enable_overlay, overlay_color, overlay_opacity) VALUES(1, ?, ?, ?, ?)'
 
+    if (!_existsResult) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(_txtSaveStatement, [txtDisplayName, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity])
 
-    return newID
+                // Intialize profile data such as Categories
+                _rs = tx.executeSql("SELECT MAX(profile_id) as id FROM profiles")
+                let _newID = _rs.rows.item(0).id
+                createInitialProfielData(_newID)
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _existsResult}
+
+    return _result
 }
 
-function editProfile(intProfileId, txtNewDisplayName) {
-    var db = openDB()
+function editProfile(intProfileId, txtDisplayName, txtNewDisplayName, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
+    let _db = openDB()
+    let _txtSaveStatement = ""
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    let _exists = false
 
-    db.transaction(function (tx) {
-        tx.executeSql(
-                    "UPDATE profiles SET display_name = ? WHERE profile_id = ?",
-                    [txtNewDisplayName, intProfileId])
-    })
+    if (txtNewDisplayName !== txtDisplayName) {
+        let _existsResult = checkProfileIfExist(txtDisplayName)
+        _exists = _existsResult.success && _existsResult.exists
+    }
+
+    // Do not save when opacity is too big
+    let _saveOverlayOpacity = txtOverlayOpacity > 0.6 ? 0.6 : txtOverlayOpacity
+
+    _txtSaveStatement = "UPDATE profiles SET display_name = ?, enable_overlay = ?, overlay_color = ?, overlay_opacity = ? WHERE profile_id = ?"
+
+    if (!_exists) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(_txtSaveStatement, [ txtNewDisplayName, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity, intProfileId ])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _exists}
+
+    return _result
 }
 
 function deleteProfile(intProfileId) {
-    var txtSqlStatement
-    var db = openDB()
-    var success
-    var errorMsg
-    var result
+    let _txtSqlStatement = ""
+    let _db = openDB()
+    let _success
+    let _errorMsg
+    let _result
 
-    // FIXME: Deactivate a profile if it has data until proper archiving is implemented
+    // FIXME: Deactivate a profile if it has expense data until proper archiving is implemented
     if (checkProfileData(intProfileId)) {
-        txtSqlStatement = `UPDATE profiles set active = 0 WHERE profile_id = ?`
+        _txtSqlStatement = 'UPDATE profiles set active = 0 WHERE profile_id = ?'
     } else {
-        txtSqlStatement = 'DELETE FROM profiles WHERE profile_id = ?'
+        _txtSqlStatement = 'DELETE FROM profiles WHERE profile_id = ?'
+        deleteProfileCategories(intProfileId)
+        deleteProfileQuickExpenses(intProfileId)
     }
 
     try {
-        db.transaction(function (tx) {
-            tx.executeSql(txtSqlStatement, [intProfileId])
+        _db.transaction(function (tx) {
+            tx.executeSql(_txtSqlStatement, [intProfileId])
         })
 
-        success = true
+        _success = true
     } catch (err) {
         console.log("Database error: " + err)
-        errorMsg = err
-        success = false
+        _errorMsg = err
+        _success = false
     }
+
+    _result = {"success": _success, "error": _errorMsg}
     
-    result = {"success": success, "error": errorMsg}
-    
-    return result
+    return _result
 }
 
-// Check if profile has values data
+// Check if profile has expense data
 function checkProfileData(intProfileId) {
-    var db = openDB()
-    var rs = null
-    var exists
+    let _db = openDB()
+    let _rs = null
+    let _exists
 
-    db.transaction(function (tx) {
-        rs = tx.executeSql("SELECT * FROM monitor_items_values WHERE profile_id = ?", [intProfileId])
+    _db.transaction(function (tx) {
+        _rs = tx.executeSql("SELECT 1 FROM expenses WHERE profile_id = ?", [intProfileId])
 
-        exists = rs.rows.length === 0 ? false : true
+        _exists = _rs.rows.length === 0 ? false : true
     })
 
-    return exists
+    return _exists
+}
+
+function deleteProfileCategories(intProfileId) {
+    let _db = openDB()
+
+    _db.transaction(function (tx) {
+        tx.executeSql("DELETE FROM categories WHERE profile_id = ?", [intProfileId])
+    })
+}
+
+function deleteProfileQuickExpenses(intProfileId) {
+    let _db = openDB()
+
+    _db.transaction(function (tx) {
+        tx.executeSql("DELETE FROM quick_expenses WHERE profile_id = ?", [intProfileId])
+    })
 }
 
 function getCurrencies() {
@@ -1177,6 +1292,45 @@ function addCategory(intProfileId, txtName, txtDescr, txtIcon, txtColor) {
     return _result
 }
 
+function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, txtColor) {
+    let _db = openDB()
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    let _exists = false
+
+    if (txtNewName !== txtName) {
+        let _existsResult = checkCategoryIfExists(intProfileId, txtNewName)
+        _exists = _existsResult.success && _existsResult.exists
+    }
+
+    if (!_exists) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(
+                            "UPDATE categories SET category_name = ?, descr = ?, icon = ?, color= ? WHERE profile_id = ? AND category_name = ?",
+                      [txtNewName, txtDescr, txtIcon, txtColor, intProfileId, txtName])
+                tx.executeSql("UPDATE expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?",
+                      [txtNewName, intProfileId, txtName])
+                tx.executeSql("UPDATE quick_expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?",
+                      [txtNewName, intProfileId, txtName])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = { "success": _success, "error": _errorMsg, "exists": _exists }
+
+    return _result
+}
+
 function checkCategoryIfExists(intProfileId, txtCategory) {
     let _db = openDB()
     let _rs = null
@@ -1210,52 +1364,17 @@ function deleteCategory(intProfileId, txtCategory) {
     let _result
     let _success = false
     let _errorMsg = ""
+    let _hasData = false
 
-    _txtDeleteStatement = 'DELETE FROM categories WHERE profile_id = ? AND category_name = ?'
-    _txtUpdateExpensesStatement = 'UPDATE expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?'
+    _hasData = checkCategoryData(intProfileId, txtCategory)
 
-    try {
-        _db.transaction(function (tx) {
-            // Disable for now since it's hard to revert back if done accidentally
-            /*
-            tx.executeSql(_txtUpdateExpensesStatement,
-                  [_txtNewCategory, intProfileId, txtCategory])
-            */ 
-            tx.executeSql(_txtDeleteStatement, [intProfileId, txtCategory])
-        })
+    if (!_hasData) {
+        _txtDeleteStatement = 'DELETE FROM categories WHERE profile_id = ? AND category_name = ?'
 
-        _success = true
-    } catch (err) {
-        console.log("Database error: " + err)
-        _errorMsg = err
-        _success = false
-    }
-
-    _result = {"success": _success, "error": _errorMsg}
-
-    return _result
-}
-
-function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, txtColor) {
-    let _db = openDB()
-    let _result
-    let _success = false
-    let _errorMsg = ""
-    let _exists = false
-
-    if (txtNewName !== txtName) {
-        let _existsResult = checkCategoryIfExists(intProfileId, txtNewName)
-        _exists = _existsResult.success && _existsResult.exists
-    }
-
-    if (!_exists) {
         try {
             _db.transaction(function (tx) {
-                tx.executeSql("UPDATE expenses SET category_name = ? WHERE profile_id = ? AND category_name = ?",
-                      [txtNewName, intProfileId, txtName])
-                tx.executeSql(
-                            "UPDATE categories SET category_name = ?, descr = ?, icon = ?, color= ? WHERE profile_id = ? AND category_name = ?",
-                            [txtNewName, txtDescr, txtIcon, txtColor, intProfileId, txtName])
+                tx.executeSql(_txtDeleteStatement, [intProfileId, txtCategory])
+                deleteCategoryQuickExpenses(intProfileId, txtCategory)
             })
 
             _success = true
@@ -1264,49 +1383,34 @@ function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, tx
             _errorMsg = err
             _success = false
         }
-    } else {
-        _success = false
     }
 
-    _result = { "success": _success, "error": _errorMsg, "exists": _exists }
+    _result = { "success": _success, "error": _errorMsg, "hasData": _hasData }
 
     return _result
 }
 
-function getQuickExpenses(intProfileId, txtSearchText) {
-    let db = openDB()
-    let arrResults = []
-    let rs = null
-    let txtSelectStatement = ""
-    let txtWhereStatement = "WHERE profile_id = ?"
-    let txtWhereStatement2 = ""
-    let txtOrderStatement = ""
+// Check if category has expense data
+function checkCategoryData(intProfileId, txtCategory) {
+    let _db = openDB()
+    let _rs = null
+    let _exists
 
-    txtOrderStatement = "ORDER BY name asc"
+    _db.transaction(function (tx) {
+        _rs = tx.executeSql("SELECT 1 FROM expenses WHERE profile_id = ? AND category_name = ?", [intProfileId, txtCategory])
 
-    txtSelectStatement = 'SELECT quick_id, category_name, name, descr, value FROM quick_expenses'
-    if(txtSearchText){
-        txtWhereStatement2 = "AND (category_name LIKE ? OR name LIKE ? OR descr LIKE ?)"
-    }
-
-    txtSelectStatement = [txtSelectStatement, txtWhereStatement, txtWhereStatement2, txtOrderStatement].join(" ")
-    //~ console.log(txtSelectStatement)
-    db.transaction(function (tx) {
-        if (txtSearchText) {
-            let wildcard = "%" + txtSearchText + "%"
-            rs = tx.executeSql(txtSelectStatement, [intProfileId, wildcard, wildcard, wildcard])
-        } else {
-            rs = tx.executeSql(txtSelectStatement, [intProfileId])
-        }
-
-        arrResults.length = rs.rows.length
-
-        for (let i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
+        _exists = _rs.rows.length === 0 ? false : true
     })
 
-    return arrResults
+    return _exists
+}
+
+function deleteCategoryQuickExpenses(intProfileId, txtCategory) {
+    let _db = openDB()
+
+    _db.transaction(function (tx) {
+        tx.executeSql("DELETE FROM quick_expenses WHERE profile_id = ? AND category_name = ?", [intProfileId, txtCategory])
+    })
 }
 
 function getTopExpenses(intProfileId, txtSearchText, intLimit=10) {
@@ -1408,7 +1512,7 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText)
         let arrBindValues = [txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextLIKE]
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
-console.log(txtFullSearchTextGLOB + " - " + txtFullSearchTextLIKE)
+
         txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
                                 , value, home_currency, travel_currency, rate, travel_value \
                                 , CASE WHEN name GLOB ? THEN 1 \
@@ -1598,6 +1702,42 @@ function updateTravelExpense(id, travelData) {
     })
 }
 
+function getQuickExpenses(intProfileId, txtSearchText) {
+    let db = openDB()
+    let arrResults = []
+    let rs = null
+    let txtSelectStatement = ""
+    let txtWhereStatement = "WHERE profile_id = ?"
+    let txtWhereStatement2 = ""
+    let txtOrderStatement = ""
+
+    txtOrderStatement = "ORDER BY name asc"
+
+    txtSelectStatement = 'SELECT quick_id, category_name, name, descr, value FROM quick_expenses'
+    if(txtSearchText){
+        txtWhereStatement2 = "AND (category_name LIKE ? OR name LIKE ? OR descr LIKE ?)"
+    }
+
+    txtSelectStatement = [txtSelectStatement, txtWhereStatement, txtWhereStatement2, txtOrderStatement].join(" ")
+    //~ console.log(txtSelectStatement)
+    db.transaction(function (tx) {
+        if (txtSearchText) {
+            let wildcard = "%" + txtSearchText + "%"
+            rs = tx.executeSql(txtSelectStatement, [intProfileId, wildcard, wildcard, wildcard])
+        } else {
+            rs = tx.executeSql(txtSelectStatement, [intProfileId])
+        }
+
+        arrResults.length = rs.rows.length
+
+        for (let i = 0; i < rs.rows.length; i++) {
+            arrResults[i] = rs.rows.item(i)
+        }
+    })
+
+    return arrResults
+}
+
 function addQuickExpense(intProfileId, expenseData) {
     let _db = openDB()
     let _rs = null
@@ -1635,6 +1775,69 @@ function addQuickExpense(intProfileId, expenseData) {
     return _result
 }
 
+function editQuickExpense(intProfileId, quickData) {
+    let _db = openDB()
+    let _rs = null
+    let _success
+    let _errorMsg
+    let _result
+
+    let _txtSaveStatement = 'UPDATE quick_expenses SET category_name = ?, name = ? , descr = ?, value = ? WHERE profile_id = ? AND quick_id = ?'
+
+    let _txtID = quickData.id
+    let _txtName = quickData.name
+    let _txtCategory = quickData.category
+    let _txtDescr = quickData.description
+    let _realValue = quickData.value
+
+    let _existsResult = checkIfQuickExpenseExists(intProfileId, quickData)
+
+    if (_existsResult.success && !_existsResult.exists) {
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(_txtSaveStatement, [_txtCategory, _txtName, _txtDescr, _realValue, intProfileId, _txtID])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _existsResult.exists}
+    
+    return _result
+}
+
+function deleteQuickExpense(intProfileId, txtID) {
+    let _db = openDB()
+    let _rs = null
+    let _success
+    let _errorMsg
+    let _result
+    let _txtDeleteStatement = 'DELETE FROM quick_expenses WHERE profile_id = ? AND quick_id = ?'
+
+    try {
+        _db.transaction(function (tx) {
+            tx.executeSql(_txtDeleteStatement, [intProfileId, txtID])
+        })
+
+        _success = true
+    } catch (err) {
+        console.log("Database error: " + err)
+        _errorMsg = err
+        _success = false
+    }
+
+    _result = { "success": _success, "error": _errorMsg }
+    
+    return _result
+}
+
 function checkIfQuickExpenseExists(intProfileId, expenseData) {
     let _db = openDB()
     let _rs = null
@@ -1666,124 +1869,6 @@ function checkIfQuickExpenseExists(intProfileId, expenseData) {
     _result = {"success": _success, "error": _errorMsg, "exists": _exists}
     
     return _result
-}
-
-function updateItemEntryDate(txtEntryDate, txtNewEntryDate, intProfileId) {
-    var txtSaveStatement, txtSaveCommentStatement
-    var db = openDB()
-    var rs = null
-    var newID
-    var success
-    var errorMsg
-    var result
-
-    txtSaveStatement = 'UPDATE monitor_items_values SET entry_date = strftime("%Y-%m-%d %H:%M:%f", ?, "utc") \
-                        WHERE strftime("%Y-%m-%d %H:%M:%f", entry_date, "localtime") = strftime("%Y-%m-%d %H:%M:%f", ?) \
-                        AND profile_id = ?'
-    txtSaveCommentStatement = "UPDATE monitor_items_comments SET entry_date = strftime('%Y-%m-%d %H:%M:%f', ?, 'utc') \
-                        WHERE strftime('%Y-%m-%d %H:%M:%f', entry_date, 'localtime') = strftime('%Y-%m-%d %H:%M:%f', ?) \
-                        AND profile_id = ?"
-
-    try {
-        db.transaction(function (tx) {
-            tx.executeSql(txtSaveStatement,
-                          [txtNewEntryDate, txtEntryDate, intProfileId])
-            tx.executeSql(txtSaveCommentStatement,
-                          [txtNewEntryDate, txtEntryDate, intProfileId])
-    
-        })
-
-        success = true
-    } catch (err) {
-        console.log("Database error: " + err)
-        errorMsg = err
-        success = false
-    }
-
-    result = {"success": success, "error": errorMsg}
-    
-    return result
-}
-
-function addNewComment(txtEntryDate, intProfileId, txtComments) {
-    var txtSaveStatement
-    var db = openDB()
-    var rs = null
-    var newID
-    var success
-    var errorMsg
-    var result
-
-    txtSaveStatement = 'INSERT INTO monitor_items_comments ("entry_date", "profile_id", "comments") \
-                        VALUES(strftime("%Y-%m-%d %H:%M:%f", ?, "utc"),?,?)'
-
-    try {
-        db.transaction(function (tx) {
-            tx.executeSql(txtSaveStatement,
-                          [txtEntryDate, intProfileId, txtComments])
-    
-        })
-
-        success = true
-    } catch (err) {
-        console.log("Database error: " + err)
-        errorMsg = err
-        success = false
-    }
-
-    result = {"success": success, "error": errorMsg}
-    
-    return result
-}
-
-function editComment(txtEntryDate, intProfileId, txtNewComments) {
-    var db = openDB()
-    var success
-    var errorMsg
-    var result
-    var txtInsertStatement, txtUpdateStatement
-    
-    txtInsertStatement = 'INSERT INTO monitor_items_comments ("entry_date", "profile_id", "comments") \
-                        VALUES(strftime("%Y-%m-%d %H:%M:%f", ?, "utc"),?,?)'
-    txtUpdateStatement = "UPDATE monitor_items_comments SET comments = ? WHERE profile_id = ? \
-                        AND strftime('%Y-%m-%d %H:%M:%f', entry_date, 'localtime') = strftime('%Y-%m-%d %H:%M:%f', ?)"
-
-    try {
-        db.transaction(function (tx) {
-            if (checkCommentIfExist(txtEntryDate)) {
-                tx.executeSql(
-                            txtUpdateStatement,
-                            [txtNewComments, intProfileId, txtEntryDate])
-            } else {
-                tx.executeSql(
-                    txtInsertStatement,
-                    [txtEntryDate, intProfileId, txtNewComments])
-            }
-        })
-        success = true
-    } catch (err) {
-        console.log("Database error: " + err)
-        errorMsg = err
-        success = false
-    }
-    
-    result = {"success": success, "error": errorMsg}
-    
-    return result
-}
-
-function checkCommentIfExist(txtEntryDate) {
-    var db = openDB()
-    var rs = null
-    var exists
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql("SELECT * FROM monitor_items_comments WHERE strftime('%Y-%m-%d %H:%M:%f', entry_date, 'localtime') = strftime('%Y-%m-%d %H:%M:%f', ?)", [txtEntryDate])
-
-        exists = rs.rows.length === 0 ? false : true
-    })
-
-    return exists
 }
 
 function deleteExpense(intProfileId, txtExpenseID) {
@@ -1822,187 +1907,4 @@ function deleteTravelExpense(txtExpenseID) {
     db.transaction(function (tx) {
         tx.executeSql(txtDeleteStatement, [txtExpenseID])
     })
-}
-
-// Check if there are other values with exactly the same entry date
-function checkEntryDateMultiple(intProfileId, txtEntryDate, txtItemId) {
-    var db = openDB()
-    var rs = null
-    var exists
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql("SELECT * FROM monitor_items_values \
-                            WHERE profile_id = ? AND strftime('%Y-%m-%d %H:%M:%f', entry_date, 'localtime') = strftime('%Y-%m-%d %H:%M:%f', ?) AND item_id <> ?", [intProfileId, txtEntryDate, txtItemId])
-
-        exists = rs.rows.length === 0 ? false : true
-    })
-
-    return exists
-}
-
-function getDashItems() {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-
-    db.transaction(function (tx) {
-        rs = tx.executeSql("SELECT dash.item_id, items.display_name, items.display_format \
-              , items.unit, units.display_symbol, dash.value_type, dash.scope \
-              FROM monitor_items_dash dash, monitor_items items \
-              LEFT OUTER JOIN units units ON items.unit = units.name \
-              WHERE dash.item_id = items.item_id")
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getTotalFromValues(intProfileId, txtItemId, txtxDateFrom, txtDateTo, txtGrouping) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-    var txtSelectStatement
-
-    db.transaction(function (tx) {
-        txtSelectStatement = "SELECT strftime('%Y-%m-%d %H:%M:%f', val.entry_date, 'localtime') as entry_date, ROUND(TOTAL(val.value), fields.precision) as value \
-                              FROM monitor_items_values as val \
-                              LEFT OUTER JOIN monitor_items_fields fields \
-                              ON val.field_id = fields.field_id \
-                              AND val.item_id = fields.item_id \
-                              WHERE val.profile_id = ? \
-                              AND val.item_id = ? \
-                              AND datetime(val.entry_date, 'localtime') BETWEEN datetime(?) AND datetime(?) \
-                              GROUP BY fields.field_id \
-                              ORDER BY val.entry_date asc, fields.field_seq asc;"
-        rs = tx.executeSql(txtSelectStatement,
-                                   [intProfileId, txtItemId, txtxDateFrom, txtDateTo])
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getAverageFromValues(intProfileId, txtItemId, txtxDateFrom, txtDateTo, txtGrouping) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-    var txtSelectStatement, txtGroupBy, txtOrderBy, txtGroupSelect, txtMainSelect,txtFromWhere
-
-    txtMainSelect = "SELECT strftime('%Y-%m-%d %H:%M:%f', val.entry_date, 'localtime') as entry_date, ROUND(AVG(val.value), fields.precision) as value, fields.precision"
-    txtFromWhere = "FROM monitor_items_values as val \
-                    LEFT OUTER JOIN monitor_items_fields fields \
-                    ON val.field_id = fields.field_id \
-                    AND val.item_id = fields.item_id \
-                    WHERE val.profile_id = ? \
-                    AND val.item_id = ? \
-                    AND datetime(val.entry_date, 'localtime') BETWEEN datetime(?) AND datetime(?)"
-    txtGroupBy = "GROUP BY fields.field_id"
-    txtOrderBy = "ORDER BY val.entry_date asc, fields.field_seq asc"
-
-    switch (txtGrouping) {
-        case "day":
-            txtGroupSelect = "SELECT entry_date, ROUND(AVG(value), precision) as value FROM ("
-            txtMainSelect = "SELECT strftime('%Y-%m-%d %H:%M:%f', val.entry_date, 'localtime') as entry_date, ROUND(TOTAL(val.value), fields.precision) as value, fields.precision"
-            txtGroupBy = txtGroupBy + ", date(val.entry_date, 'localtime')"
-            break;
-    }
-
-    txtSelectStatement = (txtGroupSelect ? txtGroupSelect + " " : "") + txtMainSelect + " " + txtFromWhere + " " + txtGroupBy + " " + txtOrderBy + (txtGroupSelect ? ")" : "")
-
-    db.transaction(function (tx) {
-        
-        rs = tx.executeSql(txtSelectStatement,
-                                   [intProfileId, txtItemId, txtxDateFrom, txtDateTo])
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getLastValue(intProfileId, txtItemId, txtxDateFrom, txtDateTo, txtGrouping) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-    var txtSelectStatement
-
-    db.transaction(function (tx) {
-        txtSelectStatement = "SELECT strftime('%Y-%m-%d %H:%M:%f', valu.entry_date, 'localtime') as entry_date, valu.value \
-                            FROM monitor_items_values valu \
-                            , (SELECT val.profile_id, val.item_id, MAX(val.entry_date) as entry_date, val.value \
-                            FROM monitor_items_values as val \
-                            LEFT OUTER JOIN monitor_items_fields fields \
-                            ON val.field_id = fields.field_id \
-                            AND val.item_id = fields.item_id \
-                            WHERE val.profile_id = ? \
-                            AND val.item_id = ? \
-                            AND fields.field_seq = 1 \
-                            AND datetime(val.entry_date, 'localtime') BETWEEN datetime(?) AND datetime(?) \
-                            GROUP BY fields.field_id) max \
-							LEFT OUTER JOIN monitor_items_fields fd \
-                            ON valu.field_id = fd.field_id \
-                            AND valu.item_id = fd.item_id \
-                            WHERE max.profile_id = valu.profile_id \
-                            AND max.entry_date = valu.entry_date \
-                            AND max.item_id = valu.item_id \
-                            ORDER BY fd.field_seq asc;"
-        rs = tx.executeSql(txtSelectStatement,
-                                   [intProfileId, txtItemId, txtxDateFrom, txtDateTo])
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
-}
-
-function getHighestValue(intProfileId, txtItemId, txtxDateFrom, txtDateTo, txtGrouping) {
-    var db = openDB()
-    var arrResults = []
-    var rs = null
-    var txtSelectStatement
-
-    db.transaction(function (tx) {
-        txtSelectStatement = "SELECT strftime('%Y-%m-%d %H:%M:%f', valu.entry_date, 'localtime') as entry_date, valu.value \
-                            FROM monitor_items_values valu \
-                            , (SELECT val.profile_id, val.item_id, val.entry_date, MAX(val.value) as maxValue \
-                            FROM monitor_items_values as val \
-                            LEFT OUTER JOIN monitor_items_fields fields \
-                            ON val.field_id = fields.field_id \
-                            AND val.item_id = fields.item_id \
-                            WHERE val.profile_id = ? \
-                            AND val.item_id = ? \
-                            AND fields.field_seq = 1 \
-                            AND datetime(val.entry_date, 'localtime') BETWEEN datetime(?) AND datetime(?) \
-                            GROUP BY fields.field_id) max \
-							LEFT OUTER JOIN monitor_items_fields fd \
-                            ON valu.field_id = fd.field_id \
-                            AND valu.item_id = fd.item_id \
-                            WHERE max.profile_id = valu.profile_id \
-                            AND max.entry_date = valu.entry_date \
-                            AND max.item_id = valu.item_id \
-                            ORDER BY fd.field_seq asc;"
-        rs = tx.executeSql(txtSelectStatement,
-                                   [intProfileId, txtItemId, txtxDateFrom, txtDateTo])
-        arrResults.length = rs.rows.length
-
-        for (var i = 0; i < rs.rows.length; i++) {
-            arrResults[i] = rs.rows.item(i)
-        }
-    })
-
-    return arrResults
 }

@@ -62,6 +62,18 @@
         <file>components/pages/categoriespage/DescriptionField.qml</file>
         <file>components/pages/categoriespage/DeleteCategoryDialog.qml</file>
         <file>components/pages/categoriespage/NewCategoryDialog.qml</file>
+        <file>components/pages/QuickExpensesPage.qml</file>
+        <file>components/pages/quickexpensespage/DeleteQuickExpenseDialog.qml</file>
+        <file>components/pages/quickexpensespage/NewQuickExpenseDialog.qml</file>
+        <file>components/pages/quickexpensespage/CategoryField.qml</file>
+        <file>components/pages/quickexpensespage/NameField.qml</file>
+        <file>components/pages/quickexpensespage/DescriptionField.qml</file>
+        <file>components/pages/quickexpensespage/ValueField.qml</file>
+        <file>components/pages/ProfilesPage.qml</file>
+        <file>components/pages/profilespage/NewProfileDialog.qml</file>
+        <file>components/pages/profilespage/DeleteProfileDialog.qml</file>
+        <file>components/pages/profilespage/NameField.qml</file>
+        <file>components/pages/profilespage/ColorOverlayFields.qml</file>
 
         <file>components/models/MainModels.qml</file>
         <file>components/models/BaseValuesModel.qml</file>

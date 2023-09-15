@@ -49,7 +49,7 @@ Drawer {
             highlighted: ListView.isCurrentItem
             icon {
                 name: modelData ? modelData.iconName : modelData.icon.name
-                color: modelData ? modelData.icon.color : Suru.foregroundColor
+                color: modelData.icon.color
                 width: Suru.units.gu(2.5)
                 height: Suru.units.gu(2.5)
             }

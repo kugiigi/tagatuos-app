@@ -53,13 +53,6 @@ Pages.BasePage {
     headerLeftActions: [ exitSearchAction ]
     headerRightActions: [ nextDataAction, lastDataAction, searchAction, sortAction, todayAction, addAction ]
 
-//~     Connections {
-//~         target: mainView.settings
-//~         onActiveProfileChanged: {
-//~             refresh()
-//~         }
-//~     }
-
     function showInSearchMode() {
         if (mainView.sidePage) {
             mainView.sidePage.show()
@@ -110,7 +103,7 @@ Pages.BasePage {
     Common.BaseAction {
         id: addAction
 
-        text: i18n.tr("New Entry")
+        text: i18n.tr("New Expense")
         shortText: i18n.tr("New")
         iconName: "add"
         shortcut: StandardKey.New

@@ -11,9 +11,10 @@ Action {
     property string shortText: text
     property string tooltipText
     property string iconName
+
     icon {
         name: iconName
-        color: Suru.foregroundColor
+        color: mainView.uitkColors.normal.backgroundSecondaryText
     }
     enabled: visible
 

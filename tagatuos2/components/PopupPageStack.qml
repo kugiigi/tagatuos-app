@@ -24,9 +24,8 @@ Dialogs.BasePopup {
     leftPadding: defaultPadding
     rightPadding: defaultPadding
 
-    function openInPage(item, properties, operation) {
-        pageStack.clear()
-        pageStack.push(item, properties, operation)
+    function openInPage(item, properties, operation = StackView.Transition) {
+        pageStack.replace(item, properties, operation)
         open()
     }
 

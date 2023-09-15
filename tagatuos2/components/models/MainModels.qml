@@ -122,12 +122,54 @@ Item {
         }
     }
 
+    // Refreshes all data relevant to the active profile
+    function refreshAllProfileData() {
+        firstDetailedListModel.refresh()
+        secondDetailedListModel.refresh()
+        thirdDetailedListModel.refresh()
+
+        categoriesModel.refresh()
+        quickExpensesModel.refresh()
+        historyEntryExpensesModel.refresh()
+        searchExpenseModel.refresh()
+
+        // Breakdown Chart Models
+        todayBreakdownChartModel.refresh()
+        thisWeekBreakdownChartModel.refresh()
+        thisMonthBreakdownChartModel.refresh()
+        thisYearBreakdownChartModel.refresh()
+        recentBreakdownChartModel.refresh()
+
+        // Trend Chart Models
+        thisWeekTrendChartModel.refresh()
+        recentTrendChartModel.refresh()
+        thisMonthTrendChartModel.refresh()
+        thisYearTrendChartModel.refresh()
+    }
+
     function refreshQuickExpense() {
         quickExpensesModel.refresh()
     }
 
-    function refreshCategories() {
-        categoriesModel.refresh()
+    function refreshProfiles() {
+        profilesModel.refresh()
+    }
+
+    function refreshCategories(operation = "ADD") {
+        switch(operation) {
+            case "EDIT":
+                // Refresh all data with category to take effect
+                refreshAllProfileData() // Same list for now
+                break
+            case "DELETE":
+                categoriesModel.refresh()
+                quickExpensesModel.refresh() // Since they are deleted too
+                break
+            case "ADD":
+            default:
+                categoriesModel.refresh()
+                break
+        }
     }
 
     /*WorkerScript for asynch loading of models*/
@@ -498,6 +540,13 @@ Item {
         // Refresh 
         onCurrentDateChanged: {
             mainModels.refreshValues(currentDate)
+        }
+    }
+
+    Connections {
+        target: mainView.settings
+        onActiveProfileChanged: {
+            refreshAllProfileData()
         }
     }
 }
