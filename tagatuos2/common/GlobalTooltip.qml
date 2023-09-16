@@ -21,15 +21,14 @@ ToolTip {
                 break;
         }
 
+        let _timeout = defaultTimeout
+        let _text = customText
+
         if (customTimeout) {
-            timeout = customTimeout
-        } else {
-            timeout = defaultTimeout
+            _timeout = customTimeout
         }
 
-        text = customText
-
-        visible = true
+        show(_text, _timeout)
     }
 
     timeout: defaultTimeout

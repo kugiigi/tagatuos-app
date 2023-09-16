@@ -42,7 +42,9 @@ Dialogs.DialogWithContents {
 
     onClosed: {
         mainView.temporaryDisableColorOverlay = false
-        colorOverlayFields.testOverlay.destroy()
+        if (colorOverlayFields.testOverlay) {
+            colorOverlayFields.testOverlay.destroy()
+        }
     }
 
     onCancel: close()

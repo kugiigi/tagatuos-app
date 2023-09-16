@@ -429,10 +429,12 @@ ApplicationWindow {
                     }
 
                     function show() {
+                        pageHeader.expanded = corePage.pageHeader.expanded
                         forceShowInNarrow = true
                     }
 
                     function hide() {
+                        corePage.pageHeader.expanded = pageHeader.expanded
                         forceShowInNarrow = false
                     }
 
@@ -458,7 +460,7 @@ ApplicationWindow {
                         text: mainView.profiles.currentName()
                         Suru.textLevel: Suru.HeadingTwo
                         alignment: Qt.AlignLeft
-                        display: mainView.mainPage.headerExpanded ? AbstractButton.IconOnly : AbstractButton.TextBesideIcon
+                        display: AbstractButton.TextBesideIcon
                         secondaryIcon {
                             name: "go-down"
                             width: Suru.units.gu(1)
@@ -483,8 +485,8 @@ ApplicationWindow {
                         type: Menus.AdvancedMenu.Type.ItemAttached
                         doNotOverlapCaller: true
                         destroyOnClose: true
-                        minimumWidth: Suru.units.gu(15)
-                        maximumWidth: Suru.units.gu(20)
+                        minimumWidth: Suru.units.gu(20)
+                        maximumWidth: Suru.units.gu(30)
 
                         Repeater {
                             id: profilesMenuItemRepeater
@@ -539,7 +541,10 @@ ApplicationWindow {
 
             active: false
             asynchronous: true
-            sourceComponent: PopupPageStack {}
+            sourceComponent: PopupPageStack {
+                onAboutToShow: pageHeader.expanded = mainView.mainPage.pageHeader.expanded
+                onAboutToHide: mainView.mainPage.pageHeader.expanded = pageHeader.expanded
+            }
         }
     }
 
