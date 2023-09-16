@@ -429,10 +429,12 @@ ApplicationWindow {
                     }
 
                     function show() {
+                        pageHeader.expanded = corePage.pageHeader.expanded
                         forceShowInNarrow = true
                     }
 
                     function hide() {
+                        corePage.pageHeader.expanded = pageHeader.expanded
                         forceShowInNarrow = false
                     }
 
@@ -539,7 +541,10 @@ ApplicationWindow {
 
             active: false
             asynchronous: true
-            sourceComponent: PopupPageStack {}
+            sourceComponent: PopupPageStack {
+                onAboutToShow: pageHeader.expanded = mainView.mainPage.pageHeader.expanded
+                onAboutToHide: mainView.mainPage.pageHeader.expanded = pageHeader.expanded
+            }
         }
     }
 

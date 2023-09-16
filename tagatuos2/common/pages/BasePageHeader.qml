@@ -96,6 +96,14 @@ QQC2.ToolBar {
         }
     }
 
+    function expand() {
+        expanded = true
+    }
+
+    function collapse() {
+        expanded = false
+    }
+
     onExpandableChanged: if (!expandable) expanded = false
     onExpandedChanged: {
         if (expanded) {
