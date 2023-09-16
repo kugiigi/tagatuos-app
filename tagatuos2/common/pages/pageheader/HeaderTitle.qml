@@ -7,8 +7,9 @@ QQC2.Label {
     id: headerTitle
 
     Suru.textLevel: Suru.HeadingTwo
+    color: Suru.foregroundColor
     elide: Label.ElideRight
     fontSizeMode: Text.HorizontalFit
-    minimumPixelSize: units.gu(1)
+    minimumPixelSize: Suru.units.gu(1)
     verticalAlignment: Text.AlignVCenter
 }
