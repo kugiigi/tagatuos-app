@@ -11,7 +11,6 @@ Item {
     property real maxScale: 1.5
     property real pulseScale: 2
 
-//~     property alias iconName: iconItem.name
     property string iconName
     property real swipeProgress
     property bool enabled: true
