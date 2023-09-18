@@ -33,8 +33,10 @@ Pages.BasePage {
                     _tooltipMsg = i18n.tr("Category added")
                     _popup.close()
                 } else {
-                    if (_result.exists) {
-                        _tooltipMsg = i18n.tr("Same name already exists")
+                    if (_result.nameExists) {
+                        _tooltipMsg = i18n.tr("Name already exists")
+                    } else if (_result.colorExists) {
+                        _tooltipMsg = i18n.tr("Color already exists")
                     } else {
                         _tooltipMsg = i18n.tr("New category failed")
                     }
@@ -68,8 +70,10 @@ Pages.BasePage {
                     _tooltipMsg = i18n.tr("Category edited")
                     _popup.close()
                 } else {
-                    if (_result.exists) {
-                        _tooltipMsg = i18n.tr("New name already exists")
+                    if (_result.nameExists) {
+                        _tooltipMsg = i18n.tr("Name already exists")
+                    } else if (_result.colorExists) {
+                        _tooltipMsg = i18n.tr("Color already exists")
                     } else {
                         _tooltipMsg = i18n.tr("Editing failed")
                     }
