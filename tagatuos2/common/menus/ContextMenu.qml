@@ -13,14 +13,12 @@ Menu {
 
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-    bottomPadding: 0
-
     onClosed: {
         if (listView) {
             listView.currentIndex = -1
         }
     }
-    
+
     function popupMenu(parentItem, mouseX, mouseY, properties) {
         itemProperties = properties
         contextMenu.popup(parentItem, mouseX, mouseY)
@@ -28,10 +26,10 @@ Menu {
 
     Instantiator {
         id: instantiator
-        
+
         delegate: Loader {
             sourceComponent: modelData.separator ? separatorComponent : menuItemComponent
-            
+
             Component {
                 id: separatorComponent
 
@@ -40,15 +38,16 @@ Menu {
                     bottomPadding: Suru.units.gu(1)
                 }
             }
-            
+
             Component {
                 id: menuItemComponent
-        
+
                 MenuItem {
                     id: menuItem
 
                     text: modelData ? modelData.text : ""
                     height: modelData.visible ? Suru.units.gu(6) : 0
+                    leftPadding: iconMenu.implicitWidth + (iconMenu.anchors.leftMargin * 2)
 
                     onTriggered: {
                         contextMenu.close()
@@ -57,7 +56,7 @@ Menu {
 
                     indicator: UT.Icon {
                          id: iconMenu
-                         
+
                          implicitWidth: name ? Suru.units.gu(3) : 0
                          implicitHeight: implicitWidth
                          anchors.left: parent.left
@@ -66,7 +65,6 @@ Menu {
                          name: modelData ? modelData.iconName : ""
                          color: Suru.foregroundColor
                      }
-                     leftPadding: iconMenu.implicitWidth + (iconMenu.anchors.leftMargin * 2)
                 }
             }
         }
