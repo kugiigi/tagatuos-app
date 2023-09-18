@@ -1,6 +1,6 @@
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls 2.12
 
-QQC2.MenuSeparator {
+MenuSeparator {
     id: customMenuSeparator
 
     topPadding: 0
