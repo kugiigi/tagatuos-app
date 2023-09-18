@@ -178,9 +178,6 @@ Item {
                                   colorValue: "darkgoldenrod"
                               })
             colorModel.append({
-                                  colorValue: "darkgray"
-                              })
-            colorModel.append({
                                   colorValue: "darkgreen"
                               })
             colorModel.append({
@@ -214,9 +211,6 @@ Item {
                                   colorValue: "darkslateblue"
                               })
             colorModel.append({
-                                  colorValue: "darkslategray"
-                              })
-            colorModel.append({
                                   colorValue: "darkslategrey"
                               })
             colorModel.append({
@@ -230,9 +224,6 @@ Item {
                               })
             colorModel.append({
                                   colorValue: "deepskyblue"
-                              })
-            colorModel.append({
-                                  colorValue: "dimgray"
                               })
             colorModel.append({
                                   colorValue: "dimgrey"
@@ -263,9 +254,6 @@ Item {
                               })
             colorModel.append({
                                   colorValue: "goldenrod"
-                              })
-            colorModel.append({
-                                  colorValue: "gray"
                               })
             colorModel.append({
                                   colorValue: "green"
@@ -319,9 +307,6 @@ Item {
                                   colorValue: "lightgoldenrodyellow"
                               })
             colorModel.append({
-                                  colorValue: "lightgray"
-                              })
-            colorModel.append({
                                   colorValue: "lightgreen"
                               })
             colorModel.append({
@@ -338,9 +323,6 @@ Item {
                               })
             colorModel.append({
                                   colorValue: "lightskyblue"
-                              })
-            colorModel.append({
-                                  colorValue: "lightslategray"
                               })
             colorModel.append({
                                   colorValue: "lightslategrey"
@@ -497,9 +479,6 @@ Item {
                               })
             colorModel.append({
                                   colorValue: "slateblue"
-                              })
-            colorModel.append({
-                                  colorValue: "slategray"
                               })
             colorModel.append({
                                   colorValue: "slategrey"

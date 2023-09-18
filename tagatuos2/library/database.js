@@ -1268,10 +1268,11 @@ function addCategory(intProfileId, txtName, txtDescr, txtIcon, txtColor) {
     let _errorMsg = ""
     
     let _existsResult = checkCategoryIfExists(intProfileId, txtName)
+    let _colorExistsResult = checkCategoryColorIfExists(intProfileId, txtName, txtColor)
 
     _txtSaveStatement = 'INSERT INTO categories(profile_id,category_name,descr,icon,color) VALUES(?,?,?,?,?)'
 
-    if (_existsResult.success && !_existsResult.exists) {
+    if (_existsResult.success && !_existsResult.exists && _colorExistsResult.success && !_colorExistsResult.exists) {
         try {
             _db.transaction(function (tx) {
                 tx.executeSql(_txtSaveStatement, [intProfileId, txtName, txtDescr, txtIcon, txtColor])
@@ -1287,7 +1288,7 @@ function addCategory(intProfileId, txtName, txtDescr, txtIcon, txtColor) {
         _success = false
     }
 
-    _result = {"success": _success, "error": _errorMsg, "exists": _existsResult.exists}
+    _result = { "success": _success, "error": _errorMsg, "nameExists": _existsResult.exists, "colorExists": _colorExistsResult.exists }
 
     return _result
 }
@@ -1297,14 +1298,18 @@ function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, tx
     let _result
     let _success = false
     let _errorMsg = ""
-    let _exists = false
+    let _nameExists = false
+    let _colorExists = false
 
     if (txtNewName !== txtName) {
         let _existsResult = checkCategoryIfExists(intProfileId, txtNewName)
-        _exists = _existsResult.success && _existsResult.exists
+        _nameExists = _existsResult.success && _existsResult.exists
     }
 
-    if (!_exists) {
+    let _colorExistsResult = checkCategoryColorIfExists(intProfileId, txtName, txtColor)
+    _colorExists = _colorExistsResult.success && _colorExistsResult.exists
+
+    if (!_nameExists && !_colorExists) {
         try {
             _db.transaction(function (tx) {
                 tx.executeSql(
@@ -1326,7 +1331,7 @@ function updateCategory(intProfileId, txtName, txtNewName, txtDescr, txtIcon, tx
         _success = false
     }
 
-    _result = { "success": _success, "error": _errorMsg, "exists": _exists }
+    _result = { "success": _success, "error": _errorMsg, "nameExists": _nameExists, "colorExists": _colorExists }
 
     return _result
 }
@@ -1342,6 +1347,32 @@ function checkCategoryIfExists(intProfileId, txtCategory) {
     try {
         _db.transaction(function (tx) {
             _rs = tx.executeSql("SELECT * FROM categories WHERE profile_id = ? AND category_name = ?", [intProfileId, txtCategory])
+            _exists = _rs.rows.length > 0
+        })
+
+        _success = true
+    } catch (err) {
+        console.log("Database error: " + err)
+        _errorMsg = err
+        _success = false
+    }
+
+    _result = {"success": _success, "error": _errorMsg, "exists": _exists}
+
+    return _result
+}
+
+function checkCategoryColorIfExists(intProfileId, txtCategory, txtColor) {
+    let _db = openDB()
+    let _rs = null
+    let _result
+    let _success = false
+    let _errorMsg = ""
+    let _exists = false
+
+    try {
+        _db.transaction(function (tx) {
+            _rs = tx.executeSql("SELECT * FROM categories WHERE profile_id = ? AND category_name != ? AND color = ?", [intProfileId, txtCategory, txtColor])
             _exists = _rs.rows.length > 0
         })
 

@@ -90,7 +90,7 @@ var dataUtils = dataUtils || (function (undefined) {
                         mainView.mainModels.refreshCategories("ADD")
                     }
 
-                    return { "success": _result.success, "exists": _result.exists}
+                    return { "success": _result.success, "nameExists": _result.nameExists, "colorExists": _result.colorExists }
                 }
                 , edit: function(name, newName, description, color) {
                     let _result = Database.updateCategory(profile, name, newName, description, "", color);
@@ -98,7 +98,7 @@ var dataUtils = dataUtils || (function (undefined) {
                         mainView.mainModels.refreshCategories("EDIT")
                     }
 
-                    return { "success": _result.success, "exists": _result.exists}
+                    return { "success": _result.success, "nameExists": _result.nameExists, "colorExists": _result.colorExists }
                 }
                 , delete: function(name) {
                     let _result = Database.deleteCategory(profile, name);
