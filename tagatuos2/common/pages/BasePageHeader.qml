@@ -27,8 +27,8 @@ QQC2.ToolBar {
     readonly property Common.BaseAction rightVisibleAction: rightHeaderActions.firstVisibleAction
 
     property string title
-    property list<Common.BaseAction> leftActions
-    property list<Common.BaseAction> rightActions
+    property var leftActions
+    property var rightActions
     property Item currentItem
     property bool enableDropShadow: false
     property bool expanded: false

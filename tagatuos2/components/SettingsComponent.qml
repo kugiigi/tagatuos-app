@@ -28,6 +28,8 @@ Item {
 
     // Gestures
     property alias horizontalSwipe: settingsItem.horizontalSwipe
+    property alias horizontalDirectActions: settingsItem.horizontalDirectActions
+    property alias horizontalDirectActionsSensitivity: settingsItem.horizontalDirectActionsSensitivity
     property alias sideSwipe: settingsItem.sideSwipe
     property alias directActions: settingsItem.directActions
     property alias quickActionsHeight: settingsItem.quickActionsHeight
@@ -121,5 +123,7 @@ Item {
         property bool quickActionEnableDelay: false
         property bool headerPullDown: true
         property real bottomGesturesAreaHeight: 2
+        property bool horizontalDirectActions: false
+        property real horizontalDirectActionsSensitivity: 0.5
     }
 }
