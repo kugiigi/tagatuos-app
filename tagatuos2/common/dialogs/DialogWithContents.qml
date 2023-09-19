@@ -30,6 +30,7 @@ BaseDialog {
         anchors.fill: parent
         contentHeight: contentColumn.height
         boundsBehavior: Flickable.StopAtBounds
+        enableScrollPositioner: false
 
         ColumnLayout {
             id: contentColumn
