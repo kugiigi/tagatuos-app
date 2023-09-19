@@ -42,8 +42,22 @@ ItemDelegate {
             checked = true
         }
     }
-    onPressAndHold: if (checked) showLegend()
-    onRightClicked: if (checked) showLegend()
+
+    onPressAndHold: {
+        if (checked) {
+            showLegend()
+        } else {
+            highlightPrevious = !highlightPrevious
+        }
+    }
+
+    onRightClicked: {
+        if (checked) {
+            showLegend()
+        } else {
+            highlightPrevious = !highlightPrevious
+        }
+    }
 
     onCurrentThemeChanged: {
         delayPropertyChanges.restart()
