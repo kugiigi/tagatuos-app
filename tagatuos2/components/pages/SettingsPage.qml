@@ -257,7 +257,7 @@ Pages.BasePage {
             subGroup: "apppages"
             title: i18n.tr("Selection sensitivity")
             itemLevel: 2
-            enabled: settingsPage.settingsObject.horizontalDirectActions
+            enabled: settingsPage.settingsObject.horizontalSwipe && settingsPage.settingsObject.horizontalDirectActions
             description: i18n.tr("Determines how sensitive when swiping horizontally to select from the available actions.")
             itemType: SettingsItem.ItemType.Slider
             bindProperty: "horizontalDirectActionsSensitivity"
@@ -320,7 +320,7 @@ Pages.BasePage {
             subGroup: "apppages"
             title: i18n.tr("Max height")
             itemLevel: 2
-            enabled: settingsPage.settingsObject.directActions
+            enabled: settingsPage.settingsObject.sideSwipe && settingsPage.settingsObject.directActions
             description: i18n.tr("Maximum height of the Direct actions menu when there's enough available height")
             itemType: SettingsItem.ItemType.Slider
             bindProperty: "quickActionsHeight"
