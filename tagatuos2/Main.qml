@@ -330,6 +330,8 @@ ApplicationWindow {
                     enableDirectActionsDelay: mainView.settings.quickActionEnableDelay
                     enableBottomQuickSwipe: mainView.settings.quickSideSwipe
                     enableHorizontalSwipe: mainView.settings.horizontalSwipe
+                    enableHorizontalDirectActions: mainView.settings.horizontalDirectActions
+                    horizontalDirectActionsSensitivity: mainView.settings.horizontalDirectActionsSensitivity
                     bottomGestureAreaHeight: mainView.settings.bottomGesturesAreaHeight
                     directActionsHeight: mainView.settings.quickActionsHeight
 
@@ -393,6 +395,8 @@ ApplicationWindow {
                     enableDirectActionsDelay: mainView.settings.quickActionEnableDelay
                     enableBottomQuickSwipe: mainView.settings.quickSideSwipe
                     enableHorizontalSwipe: mainView.settings.horizontalSwipe
+                    enableHorizontalDirectActions: mainView.settings.horizontalDirectActions
+                    horizontalDirectActionsSensitivity: mainView.settings.horizontalDirectActionsSensitivity
                     bottomGestureAreaHeight: mainView.settings.bottomGesturesAreaHeight
                     directActionsHeight: mainView.settings.quickActionsHeight
                     initialItem: Pages.DetailedListPage {

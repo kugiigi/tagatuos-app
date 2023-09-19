@@ -63,7 +63,7 @@ Local.SwipeGestureHandler {
                         leftSwipeHeld()
                         internal.delayedHideActions()
                     } else {
-                        // Whem hold is disabled, only trigger after lifting swipe
+                        // When hold is disabled, only trigger after lifting swipe
                         internal.swipeHeld = false
                     }
                 } else if (leftSwipeActionEnabled) {
@@ -123,6 +123,7 @@ Local.SwipeGestureHandler {
 
     QtObject {
         id: internal
+
         property bool swipeHeld: false // Use to cancel normal left and right swipe
 
         function hideActions() {

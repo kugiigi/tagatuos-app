@@ -51,7 +51,7 @@ Pages.BasePage {
     signal refresh
 
     headerLeftActions: [ exitSearchAction ]
-    headerRightActions: [ nextDataAction, lastDataAction, searchAction, sortAction, todayAction, addAction ]
+    headerRightActions: [ lastDataAction, nextDataAction, searchAction, sortAction, todayAction, addAction ]
 
     function showInSearchMode() {
         if (mainView.sidePage) {

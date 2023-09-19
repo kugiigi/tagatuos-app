@@ -94,7 +94,10 @@
         <file>components/MenuDrawer.qml</file>
         <file>components/PopupPageStack.qml</file>
 
-        <file>common/gestures/HorizontalSwipeHandle.qml</file>
+        <file>common/gestures/HorizontalSwipeHandler.qml</file>
+        <file>common/gestures/BottomHorizontalSwipeGesture.qml</file>
+        <file>common/gestures/HorizontalSwipeActions.qml</file>
+        <file>common/gestures/HorizontalSwipeActionDelegate.qml</file>
         <file>common/gestures/BottomSwipeArea.qml</file>
         <file>common/gestures/SwipeGestureHandler.qml</file>
         <file>common/gestures/GoIndicator.qml</file>

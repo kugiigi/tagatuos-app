@@ -239,6 +239,51 @@ Pages.BasePage {
         , SettingsItem {
             mainGroup: i18n.tr("Gestures")
             subGroup: "apppages"
+            title: i18n.tr("Direct actions")
+            itemLevel: 1
+            enabled: settingsPage.settingsObject.horizontalSwipe
+            description: i18n.tr("Directly select an action instead of opening a menu when there are multiple available actions.")
+            + "\n"
+            + Functions.bulletTextArray(
+            [
+                i18n.tr("Swipe to either direction to show actions that corresponds to the page header actions")
+                ,i18n.tr("An action can be triggered by releasing the touch while it is selected.")
+            ])
+            itemType: SettingsItem.ItemType.Switch
+            bindProperty: "horizontalDirectActions"
+        }
+        , SettingsItem {
+            mainGroup: i18n.tr("Gestures")
+            subGroup: "apppages"
+            title: i18n.tr("Selection sensitivity")
+            itemLevel: 2
+            enabled: settingsPage.settingsObject.horizontalSwipe && settingsPage.settingsObject.horizontalDirectActions
+            description: i18n.tr("Determines how sensitive when swiping horizontally to select from the available actions.")
+            itemType: SettingsItem.ItemType.Slider
+            bindProperty: "horizontalDirectActionsSensitivity"
+            itemMaximumWidth: Suru.units.gu(60)
+
+            // Slider properties
+            itemResetValue: 0.5
+            itemFromValue: 0.2
+            itemToValue: 1
+            itemStepSizeValue: 0.1
+            itemLiveValue: true
+            itemDisplayCurrentValue: false
+            itemDisplayCurrentValueOnControl: false
+            itemRoundDisplayedValue: true
+            itemRoundingDecimal: 2
+            itemEnableFineControls: true
+            itemSettingsToControl: function(value) {
+                return value;
+            }
+            itemControlToSettings: function(value) {
+                return parseFloat(value.toFixed(2))
+            }
+        }
+        , SettingsItem {
+            mainGroup: i18n.tr("Gestures")
+            subGroup: "apppages"
             title: i18n.tr("Bottom side gesture")
             description: i18n.tr("Enables gesture areas at the leftmost and rightmost parts of the bottom edge")
             + "\n"
@@ -275,7 +320,7 @@ Pages.BasePage {
             subGroup: "apppages"
             title: i18n.tr("Max height")
             itemLevel: 2
-            enabled: settingsPage.settingsObject.directActions
+            enabled: settingsPage.settingsObject.sideSwipe && settingsPage.settingsObject.directActions
             description: i18n.tr("Maximum height of the Direct actions menu when there's enough available height")
             itemType: SettingsItem.ItemType.Slider
             bindProperty: "quickActionsHeight"

@@ -33,6 +33,8 @@ QQC2.Page {
     property bool enableDirectActionsDelay: true
     property bool enableBottomQuickSwipe: false
     property bool enableHorizontalSwipe: false
+    property bool enableHorizontalDirectActions: false
+    property real horizontalDirectActionsSensitivity: 0.5
     property real bottomGestureAreaHeight: units.gu(2)
     property real directActionsHeight: 3
 
@@ -141,34 +143,56 @@ QQC2.Page {
             }
         }
     }
+    
+    Gestures.BottomHorizontalSwipeGesture {
+        id: bottomHorizontalHandler
 
-    Gestures.GoIndicator {
-        id: goForwardIcon
-
-        iconName: enabled && pageHeader.rightVisibleActionsCount > 1 ? "navigation-menu"
+        z: bottomRowLayout.z + 1
+        anchors.fill: parent
+        isWideLayout: basePageStack.isWideLayout
+        enabled: basePageStack.enableHorizontalSwipe
+        gestureAreaHeight: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
+        enableDirectActions: basePageStack.enableHorizontalDirectActions
+        selectionSensitivity: basePageStack.horizontalDirectActionsSensitivity
+        gestureAreaWidth: basePageStack.enableBottomSideSwipe ? horizontalSwipeItem.width : parent.width
+        rightActionIconName: enabled && pageHeader.rightVisibleActionsCount > 1 ? "contextual-menu"
                                     : pageHeader.rightVisibleAction ? pageHeader.rightVisibleAction.iconName
                                                                     : ""
-        swipeProgress: bottomBackForwardHandle.swipeProgress
-        enabled: pageHeader.rightVisibleActionsCount > 0
-        anchors {
-            right: parent.right
-            rightMargin: units.gu(3)
-            verticalCenter: parent.verticalCenter
-        }
-    }
-
-    Gestures.GoIndicator {
-        id: goBackIcon
-
-        iconName: enabled && pageHeader.leftVisibleActionsCount > 1 ? "navigation-menu"
+        leftActionIconName: enabled && pageHeader.leftVisibleActionsCount > 1 ? "contextual-menu"
                                     : pageHeader.leftVisibleAction ? pageHeader.leftVisibleAction.iconName
                                                                    : ""
-        swipeProgress: bottomBackForwardHandle.swipeProgress
-        enabled: pageHeader.leftVisibleActionsCount > 0
-        anchors {
-            left: parent.left
-            leftMargin: units.gu(3)
-            verticalCenter: parent.verticalCenter
+        rightActionText: enabled && pageHeader.rightVisibleActionsCount > 1 ? i18n.tr("Actions menu")
+                                    : pageHeader.rightVisibleAction ? pageHeader.rightVisibleAction.text
+                                                                    : ""
+        leftActionText: enabled && pageHeader.leftVisibleActionsCount > 1 ? i18n.tr("Actions menu")
+                                    : pageHeader.leftVisibleAction ? pageHeader.leftVisibleAction.text
+                                                                   : ""
+        leftActionEnabled: pageHeader.rightVisibleActionsCount > 0
+        rightActionEnabled: pageHeader.leftVisibleActionsCount > 0
+        leftActions: pageHeader.leftActions
+        rightActions: pageHeader.rightActions
+        swipeHandler {
+            immediateRecognition: true
+            usePhysicalUnit: basePageStack.physicalBasedGestures
+            swipeHoldDuration: 700
+        }
+
+        onRightSwipe:  pageHeader.triggerLeftFromBottom()
+        onLeftSwipe:  pageHeader.triggerRightFromBottom()
+
+        Gestures.SwipeGestureHandler {
+            id: middleBottomEdgeHandler
+
+            enabled: true
+            width: bottomHorizontalHandler.gestureAreaWidth
+            usePhysicalUnit: basePageStack.physicalBasedGestures
+            immediateRecognition: !bottomHorizontalHandler.enabled
+            height: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
+            swipeHoldDuration:  500
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+            }
         }
     }
 
@@ -188,7 +212,7 @@ QQC2.Page {
         property real sideSwipeAreaWidth: basePageStack.width * (basePageStack.width > basePageStack.height ? 0.15 : 0.30)
 
         spacing: 0
-        z: swipeHeaderRevert.z + 1
+        z: swipeHeaderRevert.z
         anchors {
             left: parent.left
             right: parent.right
@@ -262,45 +286,6 @@ QQC2.Page {
                         left: parent.left
                         right: parent.right
                     }
-                }
-            }
-
-            Gestures.HorizontalSwipeHandle {
-                id: bottomBackForwardHandle
-
-                enabled: basePageStack.enableHorizontalSwipe
-                leftAction: goBackIcon
-                rightAction: goForwardIcon
-                immediateRecognition: true
-                usePhysicalUnit: basePageStack.physicalBasedGestures
-                height: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
-                swipeHoldDuration: 700
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-
-                rightSwipeHoldEnabled: false
-                leftSwipeHoldEnabled: false
-
-                onRightSwipe:  pageHeader.triggerLeftFromBottom()
-                onLeftSwipe:  pageHeader.triggerRightFromBottom()
-                onPressedChanged: if (pressed) Common.Haptics.playSubtle()
-            }
-
-            Gestures.SwipeGestureHandler {
-                id: middleBottomEdgeHandler
-
-                enabled: true
-                usePhysicalUnit: basePageStack.physicalBasedGestures
-                immediateRecognition: !bottomBackForwardHandle.enabled
-                height: Suru.units.gu(basePageStack.bottomGestureAreaHeight)
-                swipeHoldDuration:  500
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
                 }
             }
         }

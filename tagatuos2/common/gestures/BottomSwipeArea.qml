@@ -48,7 +48,7 @@ SwipeArea {
     property real availableWidth: parent.width
 
     // Model for the direct actions
-    property list<Common.BaseAction> model
+    property var model
     property int edge: BottomSwipeArea.Edge.Left
 
     signal triggered()
