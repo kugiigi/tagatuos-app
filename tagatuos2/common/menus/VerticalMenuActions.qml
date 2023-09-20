@@ -9,6 +9,8 @@ QQC2.Menu {
     property alias model: instantiator.model
     property bool isBottom: false
 
+    bottomMargin: Suru.units.gu(3)
+
     function openBottom() {
         y = Qt.binding( function() { return parent ? parent.height - height : 0 } )
         isBottom = true
@@ -20,6 +22,8 @@ QQC2.Menu {
         isBottom = false
         open()
     }
+
+    onCountChanged: if (count == 0) close()
 
     Instantiator {
         id: instantiator

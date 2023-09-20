@@ -237,16 +237,24 @@ QQC2.ToolBar {
             id: bottomMenu
 
             readonly property real edgMargin: units.gu(2)
+            readonly property real wideWidth: units.gu(40)
+            readonly property real narrowWidth: parent.width * 0.9
+            readonly property bool isWideLayout: parent.width > wideWidth * 1.5
+
+            implicitWidth: isWideLayout ? wideWidth : narrowWidth
+            modal: true
 
             function showToTheRight() {
-                x = Qt.binding( function() { return parent ? parent.width - width - edgMargin : 0 } )
+                x = Qt.binding( function() { return parent ? isWideLayout ? parent.width - width - edgMargin : (parent.width / 2) - (width / 2)
+                                                           : 0 } )
                 transformOrigin = QQC2.Menu.BottomRight
                 model = pageHeader.rightActions
                 openBottom()
             }
 
             function showToTheLeft() {
-                x = edgMargin
+                x = Qt.binding( function() { return parent ? isWideLayout ? edgMargin : (parent.width / 2) - (width / 2)
+                                                           : 0 } )
                 transformOrigin = QQC2.Menu.BottomLeft
                 model = pageHeader.leftActions
                 openBottom()
