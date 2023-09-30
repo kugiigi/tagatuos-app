@@ -753,7 +753,7 @@ msgstr "Veeg naar links of rechts om de acties te tonen"
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:250
 msgid "An action can be triggered by releasing the touch while it is selected."
 msgstr ""
-"Een actie kan worden uitgevoerd door je vinger boven de actie los te laten."
+"Een actie kan worden uitgevoerd door boven de actie het scherm los te laten."
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:258
 msgid "Selection sensitivity"
@@ -807,12 +807,12 @@ msgid ""
 "Swiping up from the left/right side without lifting your finger will reveal "
 "a menu of list of actions"
 msgstr ""
-"Veeg omhoog van de linker- of rechterzijde zonder je vinger los te laten om "
+"Veeg omhoog van de linker- of rechterzijde zonder het scherm los te laten om "
 "het actiemenu te openen"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:312
 msgid "Lifting your swipe will perform the currently selected action"
-msgstr "Laat je vinger los boven een actie om deze uit te voeren"
+msgstr "Laat het scherm los boven een actie om deze uit te voeren"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:313
 msgid ""
