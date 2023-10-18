@@ -406,7 +406,7 @@ FocusScope {
 
         y: {
             if (internal.isOpen) {
-                if (closeSwipeAreaLoader.dragging && closeSwipeAreaLoader.distance >= 0) {
+                if (closeSwipeAreaLoader.dragging && ((closeSwipeAreaLoader.distance >= 0 && !internal.partiallyShown) || internal.partiallyShown)) {
                     if (internal.partiallyShown) {
                         let _newValue = closeSwipeAreaLoader.distance + internal.partialShowY
                         return _newValue > 0 ? _newValue : 0
@@ -757,7 +757,6 @@ FocusScope {
 
             onStageChanged: {
                 if (stage == stageTrigger && !newExpenseView.entryMode) Common.Haptics.play()
-                if (stage == stagePartialTrigger && !internal.partiallyShown) Common.Haptics.playSubtle()
             }
 
             onDraggingChanged: {
@@ -766,19 +765,17 @@ FocusScope {
                         if (towardsDirection) {
                             if (stage >= stageTrigger && !newExpenseView.entryMode) {
                                 newExpenseView.close()
-                            } else if (stage >= stagePartialTrigger) {
+                            } else {
                                 if (distance > 0) {
                                     newExpenseView.animateToPartial()
                                 }
                             }
                         }
                     } else if (direction == UT.SwipeArea.Vertical) {
-                        if (stage >= stageTrigger) {
-                            if (distance > 0 && towardsDirection && !newExpenseView.entryMode) {
-                                newExpenseView.close()
-                            } else if (distance < 0) {
-                                newExpenseView.animateToFull()
-                            }
+                        if (distance > 0 && towardsDirection && !newExpenseView.entryMode) {
+                            newExpenseView.close()
+                        } else if (distance < 0) {
+                            newExpenseView.animateToFull()
                         }
                     }
                 }
