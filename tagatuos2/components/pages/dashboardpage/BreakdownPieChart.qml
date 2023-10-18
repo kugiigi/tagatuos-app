@@ -181,7 +181,8 @@ ItemDelegate {
                 } else {
                     chartView.previousHasLoaded = false
                 }
-                chartView.animationOptions = ChartView.AllAnimations
+                // Disable animations for now
+                // chartView.animationOptions = ChartView.AllAnimations
                 let pieSeries = chartView.createSeries(ChartView.SeriesTypePie, index == 0 ? "current" : "previous", null, null)
 
                 for (let i = 0; i < object.data.count; i++) {

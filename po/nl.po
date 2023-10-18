@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-18 11:23+0000\n"
+"POT-Creation-Date: 2023-10-18 11:34+0000\n"
 "PO-Revision-Date: 2023-09-30 13:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -1013,13 +1013,13 @@ msgstr "Op jaar"
 msgid "Last Year"
 msgstr "Afgelopen jaar"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/BreakdownPieChart.qml:247
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/BreakdownPieChart.qml:248
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/TrendLineChart.qml:148
 #, qt-format
 msgid "%1 & %2"
 msgstr "%1 en %2"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/BreakdownPieChart.qml:265
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/BreakdownPieChart.qml:266
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/dashboardpage/TrendLineChart.qml:165
 msgid "No expense"
 msgstr "Er zijn geen uitgaven"

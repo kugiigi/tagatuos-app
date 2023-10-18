@@ -2,6 +2,7 @@ v1.1
 * Updated Dutch translation (Thanks to Heimen Stoffels)
 * Fixed drag down logic of new expense view
 * Limit height of popup stack page in wide layout
+* Disable breakdown chart animations
 
 v1.0
 * Completely redesigned and rewritten!
