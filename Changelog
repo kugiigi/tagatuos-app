@@ -1,3 +1,14 @@
+v1.1
+* Updated Dutch translation (Thanks to Heimen Stoffels)
+* Fixed drag down logic of new expense view
+
+v1.0
+* Completely redesigned and rewritten!
+* Profiles support
+* Expenses are now saved and displayed with time
+* Realigned goal and purpose of the app
+  - Instead of being a serious app for managing expenses and finances, it is now focused more on being an expense diary :)
+
 V0.89
 * Initial Ubuntu 20.04 (Focal) support
 * Change theme in real time when set to system theme

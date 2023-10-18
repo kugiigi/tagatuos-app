@@ -406,7 +406,7 @@ FocusScope {
 
         y: {
             if (internal.isOpen) {
-                if (closeSwipeAreaLoader.dragging) {
+                if (closeSwipeAreaLoader.dragging && closeSwipeAreaLoader.distance >= 0) {
                     if (internal.partiallyShown) {
                         let _newValue = closeSwipeAreaLoader.distance + internal.partialShowY
                         return _newValue > 0 ? _newValue : 0
