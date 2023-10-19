@@ -10,16 +10,17 @@ Dialogs.BasePopup {
 
     readonly property real preferredWidthInWide: Suru.units.gu(60)
     readonly property real preferredHeightInWide: parent.height - verticalMargin
+    readonly property real maximumHeightInWide: Suru.units.gu(150)
     readonly property bool isWideLayout: parent.width >= preferredWidthInWide * 1.5 && parent.height > Suru.units.gu(60)
     readonly property real defaultPadding: isWideLayout ? Suru.units.gu(0.2) : 0
     readonly property real verticalMargin: Suru.units.gu(7)
     readonly property alias pageHeader: pageStack.pageHeader
 
     maximumWidth: isWideLayout ? preferredWidthInWide : parent.width
-    maximumHeight: isWideLayout ? preferredHeightInWide : parent.height
+    maximumHeight: isWideLayout ? Math.min(preferredHeightInWide, maximumHeightInWide) : parent.height
     preferredHeight: parent.height
     y: isWideLayout ? verticalMargin : (parent.height - height) / 2
-    
+
     topPadding: defaultPadding
     bottomPadding: defaultPadding
     leftPadding: defaultPadding

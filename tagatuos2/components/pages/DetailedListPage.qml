@@ -13,9 +13,9 @@ import "../../library/functions.js" as Functions
 Pages.BasePage {
     id: detailedListPage
 
-    readonly property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
-    readonly property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
-    readonly property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
+    property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
+    property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
+    property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
     readonly property string currentFromDate: dateViewPath.currentItem.fromDate
     readonly property string currentBaseDate: dateViewPath.baseDate
     readonly property bool isByMonth: scope == "month"
@@ -344,7 +344,15 @@ Pages.BasePage {
     
     Connections {
         target: mainView
-        onCurrentDateChanged: navigationRow.labelRefresh()
+
+        onCurrentDateChanged: {
+            navigationRow.labelRefresh()
+
+            // Rebind values when current date changed
+            detailedListPage.isToday = Qt.binding( function() { return Functions.isToday(dateViewPath.currentItem.fromDate) } )
+            detailedListPage.isThisWeek = Qt.binding( function() { return Functions.isThisWeek(dateViewPath.currentItem.fromDate) } )
+            detailedListPage.isThisMonth = Qt.binding( function() { return Functions.isThisMonth(dateViewPath.currentItem.fromDate) } )
+        }
     }
 
     ColumnLayout {

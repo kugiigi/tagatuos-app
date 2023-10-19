@@ -20,7 +20,7 @@ ApplicationWindow {
     id: mainView
     objectName: "mainView"
 
-    readonly property string current_version: "1.0"
+    readonly property string current_version: "1.10"
     readonly property var suruTheme: switch(settings.currentTheme) {
             case "Ambiance":
             case "Ubuntu.Components.Themes.Ambiance":
