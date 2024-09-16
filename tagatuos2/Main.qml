@@ -72,6 +72,10 @@ ApplicationWindow {
 
     property bool temporaryDisableColorOverlay: false
 
+    // Buffer actions from URI handling when pages are not ready yet
+    property bool pendingOpenNewExpenseAction: false
+    property bool pendingSearchExpenseAction: false
+
     title: i18n.tr("Tagatuos - Your expense diary")
     visible: false
     minimumWidth: Suru.units.gu(30)
@@ -117,6 +121,89 @@ ApplicationWindow {
 
         Database.databaseUpgrade(_currentDataBaseVersion)
         settingsLoader.active = true
+
+        // URI Handling when app is closed
+        if (Qt.application.arguments && Qt.application.arguments.length > 0) {
+
+            for (var i = 0; i < Qt.application.arguments.length; i++) {
+                if (Qt.application.arguments[i].match(/^tagatuos/)) {
+                    let _uri = Qt.application.arguments[i]
+                    console.log('Handling Incoming Uri ' + _uri);
+                    mainView.processIncomingUri(_uri)
+                }
+            }
+        }
+    }
+
+    // URI Handling at runtime
+    Connections {
+        target: UT.UriHandler
+
+        onOpened: {
+            if (uris.length > 0) {
+                // Only handle one for now
+                let _uri = uris[0]
+                console.log('Handling Incoming Uri ' + _uri);
+                mainView.processIncomingUri(_uri)
+            }
+        }
+    }
+
+    // Delay URI Handling
+    Timer {
+        id: delayUriTimer
+
+        property string mode
+
+        // TODO: Not accurate since it seems to be a timing issue when opening new expense view
+        // and text field won't get focused
+        interval: 300
+
+        function startDelay(_mode) {
+            mode = _mode
+            restart()
+        }
+
+        onTriggered: {
+            switch(mode) {
+                case "new":
+                    mainView.newExpenseView.openInSearchMode()
+                    mainView.pendingOpenNewExpenseAction = false
+                    break
+                case "search":
+                    mainView.detailedListPage.showInSearchMode()
+                    mainView.pendingSearchExpenseAction = false
+                    break
+            }
+        }
+    }
+
+     function processIncomingUri(_uri){
+        if(_uri.match(/^tagatuos/)){
+            let _actionName = _uri.replace("tagatuos://", "")
+
+            switch(_actionName){
+                case "new":
+                    if (mainView.newExpenseView) {
+                        mainView.newExpenseView.openInSearchMode()
+                    } else {
+                        mainView.pendingOpenNewExpenseAction = true
+                    }
+                    break
+                case "search":
+                    if (mainView.detailedListPage) {
+                        if (mainView.newExpenseView && mainView.newExpenseView.isOpen) {
+                            mainView.newExpenseView.close()
+                        }
+                        mainView.detailedListPage.showInSearchMode()
+                    } else {
+                        mainView.pendingSearchExpenseAction = true
+                    }
+                    break
+                default:
+                    console.log("Unkown Uri")
+            }
+        }
     }
 
     function initDataUtils() {
@@ -509,7 +596,12 @@ ApplicationWindow {
                 }
             }
 
-            onLoaded: mainView.visible = true
+            onLoaded: {
+                mainView.visible = true
+                if (mainView.pendingSearchExpenseAction) {
+                    delayUriTimer.startDelay("search")
+                }
+            }
         }
 
         Loader {
@@ -536,6 +628,12 @@ ApplicationWindow {
                     }
 
                     return 0
+                }
+            }
+
+            onLoaded: {
+                if (mainView.pendingOpenNewExpenseAction) {
+                    delayUriTimer.startDelay("new")
                 }
             }
         }

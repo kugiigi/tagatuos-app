@@ -1,3 +1,6 @@
+v1.20
+* Lock slider controls by default to avoid accidental change when scrolling with touch
+
 v1.10
 * Updated Dutch translation (Thanks to Heimen Stoffels)
 * Fixed drag down logic of new expense view

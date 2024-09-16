@@ -13,6 +13,7 @@ QML_FILES += $$files(*.qml,true) \
              $$files(*.js,true)
 
 CONF_FILES +=  tagatuos2.apparmor \
+               tagatuos2.url-dispatcher \
                tagatuos2.png \
                icon.svg \
                splash.svg
