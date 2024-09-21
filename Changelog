@@ -1,5 +1,16 @@
 v1.20
+* Implemented URI handling for searching and adding new expense: "tagatuos://search" and "tagatuos://new"
 * Lock slider controls by default to avoid accidental change when scrolling with touch
+* Add Sort & Filter action in Direct Actions in Expenses view which open the cireteria popup
+* Reset date field to current date when canceling or exiting new entry mode
+* Added settings for the size and position of the scroll button
+* Moved currency settings to the top
+* Avoid reopening Combo Box when trying to click the item again
+* Set maximumHeight of name in the quick expense delegate instead of preferredHeight
+* Add option to add new expense from search results
+* Properly scroll to the end of a list view even with bottom margin
+* Add option to hide context menu separators
+* Implemented "Fast Date Scroll" - Page indicator-like control that can be used to quickly jump/scroll to a date in the Expense page
 
 v1.10
 * Updated Dutch translation (Thanks to Heimen Stoffels)

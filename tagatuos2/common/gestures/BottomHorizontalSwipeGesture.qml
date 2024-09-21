@@ -10,6 +10,7 @@ Item {
     id: bottomHorizontalSwipe
 
     readonly property alias swipeHandler: horizontalSwipeHandler
+    readonly property alias isSwiping: horizontalSwipeHandler.dragging
 
     property alias enabled: horizontalSwipeHandler.enabled
     property alias gestureAreaHeight: horizontalSwipeHandler.height

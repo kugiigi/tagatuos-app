@@ -34,8 +34,9 @@ Menu {
                 id: separatorComponent
 
                 MenuSeparator {
-                    topPadding: Suru.units.gu(1)
-                    bottomPadding: Suru.units.gu(1)
+                    visible: modelData.visible
+                    topPadding: visible ? Suru.units.gu(1) : 0
+                    bottomPadding: visible ? Suru.units.gu(1) : 0
                 }
             }
 
@@ -47,6 +48,7 @@ Menu {
 
                     text: modelData ? modelData.text : ""
                     height: modelData.visible ? Suru.units.gu(6) : 0
+                    opacity: modelData.visible ? 1 : 0
                     leftPadding: iconMenu.implicitWidth + (iconMenu.anchors.leftMargin * 2)
 
                     onTriggered: {

@@ -151,6 +151,14 @@ function isThisMonth(petsa) {
     return dtPetsa.isBetween(thisMonthStart,thisMonthEnd,'day',[])
 }
 
+function isThisYear(petsa) {
+    let dtPetsa = moment(petsa)
+    let thisYearStart = moment(new Date()).startOf("year")
+    let thisYearEnd = moment(new Date()).endOf("year")
+
+    return dtPetsa.isBetween(thisYearStart,thisYearEnd,'day',[])
+}
+
 function addDays(petsa, days, toDBString = false) {
     let _momentDate = moment(petsa)
     _momentDate.add(days, 'day')
@@ -820,4 +828,138 @@ function getPreviousDate(calendarMode, date) {
     }
 
     return newDate.format("YYYY-MM-DD HH:mm:ss.SSS")
+}
+
+function getFromDate(calendarMode, date) {
+    let momentDate
+    let result
+
+    if (date) {
+        momentDate = moment(date)
+    } else {
+        momentDate = moment()
+    }
+
+    switch(calendarMode){
+        case "week":
+            result = momentDate.startOf('week')
+            break
+        case "month":
+            result = momentDate.startOf('month')
+            break
+        case "day":
+        default:
+            return date
+            break
+    }
+
+    return formatDateForDB(result)
+}
+
+function getToDate(calendarMode, date) {
+    let momentDate
+    let result
+
+    if (date) {
+        momentDate = moment(date)
+    } else {
+        momentDate = moment()
+    }
+
+    switch(calendarMode){
+        case "week":
+            result = momentDate.endOf('week')
+            break
+        case "month":
+            result = momentDate.endOf('month')
+            break
+        case "day":
+        default:
+            return date
+            break
+    }
+
+    return formatDateForDB(result)
+}
+
+function monthsFullNameList() {
+    return moment.months(true)
+}
+
+function monthsShortNameList() {
+    return moment.monthsShort(true)
+}
+
+function weekDaysFullNameList() {
+    return moment.weekdays(true)
+}
+
+function weekDaysShortNameList() {
+    return moment.weekdaysMin(true)
+}
+
+function getWeekOfYear(date) {
+    const momentDate = moment(date)
+    return momentDate.week()
+}
+
+function getSpecificWeekOfYear(date, week) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.week(week))
+}
+
+function getWeekOfMonth(date) {
+    const momentDate = moment(date)
+    const dateFirst = moment(momentDate).momentDate(1);
+    const startWeek = dateFirst.week();
+    const weekOfDate = momentDate.week()
+    return weekOfDate - startWeek
+}
+
+function getWeekDay(date) {
+    const momentDate = moment(date)
+    return momentDate.day()
+}
+
+function getSpecificDayOfWeek(date, day) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.day(day))
+}
+
+function getMonth(date) {
+    const momentDate = moment(date)
+    return momentDate.month()
+}
+
+function getSpecificMonthOfYear(date, month) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.month(month))
+}
+
+function getWeeksInYear(date) {
+    const momentDate = moment(date)
+    return momentDate.weeksInYear()
+}
+
+function getWeekDataOfMonth(date) {
+    let startWeek = 0
+    let endWeek = 0
+
+    if (date) {
+        const momentDate = moment(date)
+        const dateFirst = moment(date).startOf('month')
+        const dateFirstWeekStart = moment(date).startOf('month').startOf('week')
+
+        // If first day is not start of a week, start the count from the next week.
+        if (!dateFirst.isSame(dateFirstWeekStart, 'month')) {
+            dateFirst.add(1, 'week')
+        }
+
+        const dateLast = moment(date).endOf('month')
+
+        startWeek = dateFirst.week();
+        endWeek = dateLast.week();
+    }
+
+    return { startWeek: startWeek, endWeek: endWeek }
 }

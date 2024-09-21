@@ -13,11 +13,32 @@ import "../../library/functions.js" as Functions
 Pages.BasePage {
     id: detailedListPage
 
-    property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
-    property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
-    property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
+    readonly property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
+    readonly property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
+    readonly property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
+    readonly property bool isThisYear: Functions.isThisYear(dateViewPath.currentItem.fromDate)
+    readonly property string todayDate: Functions.getToday()
     readonly property string currentFromDate: dateViewPath.currentItem.fromDate
     readonly property string currentBaseDate: dateViewPath.baseDate
+    readonly property string actualFromDate: currentFromDate ? Functions.getFromDate(scope, currentFromDate) : ""
+    readonly property string actualToDate: currentFromDate ? Functions.getToDate(scope, currentFromDate) : ""
+    readonly property int currentWeekday: isByDay ? Functions.getWeekDay(actualFromDate) : -1
+    readonly property int currentMonth: isByMonth ? Functions.getMonth(actualFromDate) : -1
+    readonly property int currentWeekOfYear: isByWeek ? Functions.getWeekOfYear(actualFromDate) : -1
+    readonly property int currentMonthWeek: currentMonthStartWeek <= currentWeekOfYear ? currentWeekOfYear - currentMonthStartWeek
+                                                    : currentYearWeekCount - currentMonthStartWeek + 1
+    readonly property var currentMonthWeekData: isByWeek ? Functions.getWeekDataOfMonth(actualFromDate) : { startWeek: 0, endWeek: 0 }
+    readonly property var currentMonthStartWeek: currentMonthWeekData.startWeek
+    readonly property var currentMonthEndWeek: currentMonthWeekData.endWeek
+    readonly property int currentYearWeekCount: Functions.getWeeksInYear(detailedListPage.actualFromDate)
+
+    readonly property int todayWeekday: isByDay && isThisWeek ? Functions.getWeekDay(todayDate) : -1
+    readonly property int todayMonth: isByMonth && isThisYear ? Functions.getMonth(todayDate) : -1
+    readonly property int todayWeekOfYear: isByWeek ? Functions.getWeekOfYear(todayDate) : -1
+    readonly property int todayMonthWeek: isByWeek && isThisMonth ? currentMonthStartWeek <= todayWeekOfYear ? todayWeekOfYear - currentMonthStartWeek
+                                                                    : todayWeekOfYear - currentMonthStartWeek + 1
+                                                     : -1
+
     readonly property bool isByMonth: scope == "month"
     readonly property bool isByDay: scope == "day"
     readonly property bool isByWeek: scope == "week"
@@ -51,13 +72,17 @@ Pages.BasePage {
     signal refresh
 
     headerLeftActions: [ exitSearchAction ]
-    headerRightActions: [ lastDataAction, nextDataAction, searchAction, sortAction, todayAction, addAction ]
+    headerRightActions: [ lastDataAction, nextDataAction, searchAction, sortAction, criteriaAction, todayAction, addAction ]
 
     function showInSearchMode() {
         if (mainView.sidePage) {
             mainView.sidePage.show()
             isSearchMode = true
         }
+    }
+
+    function focusSearchField() {
+        expenseSearchView.focusSearchField()
     }
 
     function next() {
@@ -73,7 +98,7 @@ Pages.BasePage {
     }
     
     function goToday() {
-        internal.setBaseDate(Functions.getToday())
+        internal.setBaseDate(todayDate)
     }
 
     function goToLastData() {
@@ -202,6 +227,18 @@ Pages.BasePage {
     }
 
     Common.BaseAction {
+        id: criteriaAction
+
+        enabled: detailedListPage.focus && detailedListPage.visible && !detailedListPage.isSearchMode
+        onlyShowInBottom: true
+        text: i18n.tr("Sort and Filter")
+        shortText: i18n.tr("Sort")
+        iconName: "filters"
+
+        onTrigger: navigationRow.criteria()
+    }
+
+    Common.BaseAction {
         id: sortAction
 
         text: expenseSearchView.isAscending ? i18n.tr("Ascending") : i18n.tr("Descending")
@@ -244,6 +281,25 @@ Pages.BasePage {
             exitSearchAction.triggered()
             internal.setBaseDate(contextMenu.itemData.entryDate)
         }
+    }
+
+    Common.BaseAction {
+        id: createNewExpenseAction
+
+        text: i18n.tr("New expense")
+        iconName: "add"
+        visible: contextMenu.isFromSearch
+
+        onTrigger: {
+            mainView.newExpenseView.openInEntryMode(contextMenu.itemData)
+        }
+    }
+
+    Common.BaseAction {
+        id: searchSeparatorAction
+
+        visible: contextMenu.isFromSearch
+        separator: true
     }
 
     Common.BaseAction {
@@ -290,7 +346,7 @@ Pages.BasePage {
         }
         property bool isFromSearch: false
 
-        actions: [ deleteAction, separatorAction, editAction, goToDateAction ]
+        actions: [ deleteAction, separatorAction, editAction, searchSeparatorAction, goToDateAction, createNewExpenseAction ]
         listView: isFromSearch ? expenseSearchView.view : dateViewPath.currentItem.view
 
         onClosed: isFromSearch = false
@@ -538,14 +594,20 @@ Pages.BasePage {
 
                     anchors.fill: parent
                     topMargin: Suru.units.gu(1)
-                    bottomMargin: summaryValues.visible && !summaryValues.isExpanded ? summaryValues.height + summaryValues.anchors.bottomMargin
-                                                    : 0
+                    bottomMargin: summaryValues.visible && !summaryValues.isExpanded
+                                        ? summaryValues.height + summaryValues.anchors.bottomMargin
+                                                + indicatorSelectorLoader.height + indicatorSelectorLoader.anchors.bottomMargin
+                                        : 0
                     pageHeader: detailedListPage.pageManager.pageHeader
                     z: 0
                     boundsBehavior: Flickable.DragOverBounds
                     focus: true
                     currentIndex: -1
                     visible: model.ready
+
+                    // Do not use default since we have controls at the bottom that should be behind the scroll positioner
+                    enableScrollPositioner: false
+
                     section.property: {
                         if (detailedListPage.isSortByCategory) {
                             return detailedListPage.currentCategory === "all" ? "group_id" : ""
@@ -657,8 +719,8 @@ Pages.BasePage {
         id: summaryValues
 
         anchors {
-            bottom: parent.bottom
-            bottomMargin: Suru.units.gu(4)
+            bottom: indicatorSelectorLoader.top
+            bottomMargin: Suru.units.gu(2)
             horizontalCenter: parent.horizontalCenter
         }
 
@@ -668,6 +730,7 @@ Pages.BasePage {
         valuesModel: dateViewPath.currentItem.model.summaryValues
         visible: dateViewPath.currentItem.model.ready && !dateViewPath.currentItem.isEmpty && dateViewPath.currentItem.model.count > 1
 
+        Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
         NumberAnimation on opacity {
             running: !dateViewPath.currentItem.isEmpty
             from: 0
@@ -682,6 +745,151 @@ Pages.BasePage {
                 easing: Suru.animations.EasingOut
             }
         }
+    }
+
+    Loader {
+        id: indicatorSelectorLoader
+        
+        readonly property bool swipeSelectMode: item && item.swipeSelectMode
+        readonly property bool isHovered: item && item.isHovered
+        readonly property real defaultBottomMargin: Suru.units.gu(4)
+        //bottomMargin for views
+        readonly property real viewBottomMargin: item ? (swipeSelectMode ? item.storedHeightBeforeSwipeSelectMode : height) + indicatorSelectorLoader.defaultBottomMargin
+                                                      : 0
+
+        active: mainView.settings.enableFastDateScroll
+        opacity: dateViewPath.currentItem.view.moving ? 0.5 : 1
+        asynchronous: true
+        height: item ? item.height : 0 // Since height doesn't reset when inactive
+        focus: false
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            bottomMargin: (swipeSelectMode && !isHovered ? mainView.convertFromInch(0.3) : 0) + defaultBottomMargin
+            leftMargin: Suru.units.gu(1)
+            rightMargin: Suru.units.gu(1)
+        }
+
+        Behavior on anchors.bottomMargin { NumberAnimation { duration: Suru.animations.SnapDuration } }
+        Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
+
+        sourceComponent: Common.PageIndicatorSelector {
+            swipeEnabled: !detailedListPage.pageManager.bottomGestureIsSwiping
+            mouseHoverEnabled: !detailedListPage.pageManager.bottomGestureIsSwiping
+            swipeHandlerOutsideMargin: 0
+            indicatorSelectedWidth: Suru.units.gu(4)
+            backgroundOpacity: 1
+            model: {
+                switch (true) {
+                    case detailedListPage.isByWeek:
+                        return weekList
+                    case detailedListPage.isByMonth:
+                        return monthsList
+                    case detailedListPage.isByDay:
+                    default:
+                        return weekDaysList
+                }
+            }
+            currentIndex: {
+                switch (true) {
+                    case detailedListPage.isByWeek:
+                        return detailedListPage.currentMonthWeek
+                    case detailedListPage.isByMonth:
+                        return detailedListPage.currentMonth
+                    case detailedListPage.isByDay:
+                    default:
+                        return detailedListPage.currentWeekday
+                }
+            }
+            extraHighlightedIndex: {
+                switch (true) {
+                    case detailedListPage.isByWeek:
+                        return detailedListPage.todayMonthWeek
+                    case detailedListPage.isByMonth:
+                        return detailedListPage.todayMonth
+                    case detailedListPage.isByDay:
+                    default:
+                        return detailedListPage.todayWeekday
+                }
+            }
+
+            onNewIndexSelected: {
+                let _selectedIndex = newIndex
+                let _date
+
+                switch (true) {
+                    case detailedListPage.isByWeek:
+                        _date = Functions.getSpecificWeekOfYear(detailedListPage.currentFromDate, detailedListPage.currentMonthStartWeek + _selectedIndex)
+                        break
+                    case detailedListPage.isByMonth:
+                        _date = Functions.getSpecificMonthOfYear(detailedListPage.currentFromDate, _selectedIndex)
+                        break
+                    case detailedListPage.isByDay:
+                    default:
+                        _date = Functions.getSpecificDayOfWeek(detailedListPage.currentFromDate, _selectedIndex)
+                        break
+                }
+
+                internal.setBaseDate(_date)
+            }
+        }
+        readonly property var weekDaysFullNameList: detailedListPage.isByDay ? Functions.weekDaysFullNameList() : []
+        readonly property var weekDaysShortNameList: detailedListPage.isByDay ? Functions.weekDaysShortNameList() : []
+        readonly property var weekDaysList: weekDaysFullNameList.length === 7 ? [
+            { title: weekDaysFullNameList[0], shortText: weekDaysShortNameList[0] }
+            , { title: weekDaysFullNameList[1], shortText: weekDaysShortNameList[1] }
+            , { title: weekDaysFullNameList[2], shortText: weekDaysShortNameList[2] }
+            , { title: weekDaysFullNameList[3], shortText: weekDaysShortNameList[3] }
+            , { title: weekDaysFullNameList[4], shortText: weekDaysShortNameList[4] }
+            , { title: weekDaysFullNameList[5], shortText: weekDaysShortNameList[5] }
+            , { title: weekDaysFullNameList[6], shortText: weekDaysShortNameList[6] }
+        ] : []
+
+        readonly property var weekList: detailedListPage.isByWeek ? generateWeekList(detailedListPage.currentMonthStartWeek, detailedListPage.currentMonthEndWeek) : []
+        readonly property var monthsList: [
+            { title: i18n.tr("January"), shortText: i18n.tr("Ja") }
+            , { title: i18n.tr("February"), shortText: i18n.tr("Fe") }
+            , { title: i18n.tr("March"), shortText: i18n.tr("Mr") }
+            , { title: i18n.tr("April"), shortText: i18n.tr("Ap") }
+            , { title: i18n.tr("May"), shortText: i18n.tr("My") }
+            , { title: i18n.tr("June"), shortText: i18n.tr("Jn") }
+            , { title: i18n.tr("July"), shortText: i18n.tr("Jl") }
+            , { title: i18n.tr("August"), shortText: i18n.tr("Au") }
+            , { title: i18n.tr("September"), shortText: i18n.tr("Se") }
+            , { title: i18n.tr("October"), shortText: i18n.tr("Oc") }
+            , { title: i18n.tr("November"), shortText: i18n.tr("Nv") }
+            , { title: i18n.tr("December"), shortText: i18n.tr("De") }
+        ]
+
+        function generateWeekList(_startWeek, _endWeek) {
+            let _count = 0
+            let _list = []
+
+            if (_endWeek > _startWeek) {
+                _count = _endWeek - _startWeek + 1
+            } else {
+                let _weeksInYear = detailedListPage.currentYearWeekCount
+                _count = _weeksInYear - _startWeek + 2
+            }
+
+            for (let i = 0; i < _count; i++) {
+                _list.push({ title: i18n.tr("Week %1").arg(i + 1), shortText: i + 1})
+            }
+
+            return _list
+        }
+    }
+
+    Common.ScrollPositionerItem {
+        id: scrollPositioner
+
+        active: true
+        target: dateViewPath.currentItem.view
+        bottomMargin: summaryValues.visible && position == Common.ScrollPositionerItem.Position.Middle
+                                ? summaryValues.height + Suru.units.gu(5) : Suru.units.gu(5)
+        position: mainView.settings.scrollPositionerPosition
+        buttonWidthGU: mainView.settings.scrollPositionerSize
     }
     
     ExpenseSearchView {
@@ -700,7 +908,7 @@ Pages.BasePage {
     QtObject {
         id: internal
 
-        property string internalBaseDate: Functions.getToday()
+        property string internalBaseDate: detailedListPage.todayDate
 
         function setBaseDate(_newBaseDate) {
             if (_newBaseDate == internalBaseDate) {

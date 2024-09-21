@@ -149,6 +149,7 @@
         <file>common/BaseListView.qml</file>
         <file>common/HelpButton.qml</file>
         <file>common/ScrollPositioner.qml</file>
+        <file>common/ScrollPositionerItem.qml</file>
         <file>common/BaseAction.qml</file>
         <file>common/BasePathView.qml</file>
         <file>common/BaseButton.qml</file>
@@ -169,5 +170,7 @@
         <file>common/BaseRadioButton.qml</file>
         <file>common/ColorPicker.qml</file>
         <file>common/ColorPickerPopup.qml</file>
+        <file>common/PageIndicatorSelector.qml</file>
+        <file>common/PageIndicatorSelectorDelegate.qml</file>
     </qresource>
 </RCC>

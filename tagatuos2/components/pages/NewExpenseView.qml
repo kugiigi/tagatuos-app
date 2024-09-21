@@ -175,6 +175,7 @@ FocusScope {
     function exitEntryMode() {
         entryMode = false
         internal.expenseData.reset()
+        dateField.reset()
     }
 
     function save() {
@@ -225,8 +226,7 @@ FocusScope {
         historyGridView.currentIndex = -1
 
         // Reset fields
-        dateField.dateValue = new Date()
-        dateField.checkState = Qt.Checked
+        dateField.reset()
 
         searchText = ""
         internal.isOpen = false
@@ -261,24 +261,41 @@ FocusScope {
         open()
     }
 
-    function openInEditMode(expenseDataForEdit) {
+    function openInEditMode(_expenseDataForEdit) {
         internal.expenseData.reset()
-        internal.expenseData.expenseID = expenseDataForEdit.expenseID
-        internal.expenseData.entryDate = expenseDataForEdit.entryDate
-        internal.expenseData.name = expenseDataForEdit.name
-        internal.expenseData.description = expenseDataForEdit.description
-        internal.expenseData.category = expenseDataForEdit.category
-        internal.expenseData.value = expenseDataForEdit.value
-        internal.expenseData.travelData.rate = expenseDataForEdit.travelData.rate
-        internal.expenseData.travelData.homeCur = expenseDataForEdit.travelData.homeCur
-        internal.expenseData.travelData.travelCur = expenseDataForEdit.travelData.travelCur
-        internal.expenseData.travelData.value = expenseDataForEdit.travelData.value
+        internal.expenseData.expenseID = _expenseDataForEdit.expenseID
+        internal.expenseData.entryDate = _expenseDataForEdit.entryDate
+        internal.expenseData.name = _expenseDataForEdit.name
+        internal.expenseData.description = _expenseDataForEdit.description
+        internal.expenseData.category = _expenseDataForEdit.category
+        internal.expenseData.value = _expenseDataForEdit.value
+        internal.expenseData.travelData.rate = _expenseDataForEdit.travelData.rate
+        internal.expenseData.travelData.homeCur = _expenseDataForEdit.travelData.homeCur
+        internal.expenseData.travelData.travelCur = _expenseDataForEdit.travelData.travelCur
+        internal.expenseData.travelData.value = _expenseDataForEdit.travelData.value
 
         // Set date/time fields to current values
-        dateField.dateValue = Functions.convertDBToDate(expenseDataForEdit.entryDate)
+        dateField.dateValue = Functions.convertDBToDate(_expenseDataForEdit.entryDate)
         dateField.checkState = Qt.Unchecked
 
-        travelCurrencyObj.currencyID = expenseDataForEdit.travelData.travelCur
+        travelCurrencyObj.currencyID = _expenseDataForEdit.travelData.travelCur
+
+        switchToEntryMode()
+        open()
+    }
+
+    function openInEntryMode(_expenseDataForEntry) {
+        internal.expenseData.reset()
+        internal.expenseData.name = _expenseDataForEntry.name
+        internal.expenseData.description = _expenseDataForEntry.description
+        internal.expenseData.category = _expenseDataForEntry.category
+        internal.expenseData.value = _expenseDataForEntry.value
+        internal.expenseData.travelData.rate = _expenseDataForEntry.travelData.rate
+        internal.expenseData.travelData.homeCur = _expenseDataForEntry.travelData.homeCur
+        internal.expenseData.travelData.travelCur = _expenseDataForEntry.travelData.travelCur
+        internal.expenseData.travelData.value = _expenseDataForEntry.travelData.value
+
+        travelCurrencyObj.currencyID = _expenseDataForEntry.travelData.travelCur
 
         switchToEntryMode()
         open()

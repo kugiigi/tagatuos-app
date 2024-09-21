@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
+import QtQuick.Window 2.2
 import QtQuick.Layouts 1.12
 import UserMetrics 0.1
 import Lomiri.Components.Themes.Ambiance 1.3 as Ambiance
@@ -129,10 +130,14 @@ ApplicationWindow {
                 if (Qt.application.arguments[i].match(/^tagatuos/)) {
                     let _uri = Qt.application.arguments[i]
                     console.log('Handling Incoming Uri ' + _uri);
-                    mainView.processIncomingUri(_uri)
+                    delayUriProcessTimer.startDelay(_uri)
                 }
             }
         }
+    }
+
+    function convertFromInch(value) {
+        return (Screen.pixelDensity * 25.4) * value
     }
 
     // URI Handling at runtime
@@ -144,12 +149,29 @@ ApplicationWindow {
                 // Only handle one for now
                 let _uri = uris[0]
                 console.log('Handling Incoming Uri ' + _uri);
-                mainView.processIncomingUri(_uri)
+                delayUriProcessTimer.startDelay(_uri)
             }
         }
     }
 
-    // Delay URI Handling
+    // Delay URI handling processing
+    // Buffer that maybe fixes cases where the OSK doesn't show up
+    Timer {
+        id: delayUriProcessTimer
+
+        property string uri
+
+        interval: 200
+
+        function startDelay(_uri) {
+            uri = _uri
+            restart()
+        }
+
+        onTriggered: mainView.processIncomingUri(uri)
+    }
+
+    // Delay URI Handling after relevant components were loaded
     Timer {
         id: delayUriTimer
 
@@ -195,7 +217,11 @@ ApplicationWindow {
                         if (mainView.newExpenseView && mainView.newExpenseView.isOpen) {
                             mainView.newExpenseView.close()
                         }
-                        mainView.detailedListPage.showInSearchMode()
+                        if (mainView.detailedListPage.isSearchMode) {
+                            mainView.detailedListPage.focusSearchField()
+                        } else {
+                            mainView.detailedListPage.showInSearchMode()
+                        }
                     } else {
                         mainView.pendingSearchExpenseAction = true
                     }

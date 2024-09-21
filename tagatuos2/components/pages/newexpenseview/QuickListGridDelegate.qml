@@ -118,7 +118,7 @@ Item {
                             id: mainLabel
 
                             Layout.fillWidth: true
-                            Layout.preferredHeight: font.pixelSize * maximumLineCount
+                            Layout.maximumHeight: font.pixelSize * maximumLineCount
 
                             visible: text !== ""
                             Suru.textLevel: Suru.HeadingThree

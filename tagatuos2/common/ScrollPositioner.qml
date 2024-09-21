@@ -89,7 +89,9 @@ QQC2.RoundButton {
             if (mode === "Up") {
                 root.target.positionViewAtBeginning()
             } else {
-                root.target.positionViewAtEnd()
+                // Use this instead of positionViewAtEnd so that
+                // it actually positions the list to the end regardless of the bottom margin
+                root.target.positionViewAtIndex(root.target.count - 1, ListView.Center)
             }
         } else if (root.target instanceof Flickable) {
             if (mode === "Up") {

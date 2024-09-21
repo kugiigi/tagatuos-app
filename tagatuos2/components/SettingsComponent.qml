@@ -20,6 +20,11 @@ Item {
     property alias coloredText: settingsItem.coloredText
     property alias activeProfile: settingsItem.activeProfile
 
+    // Interface
+    property alias scrollPositionerPosition: settingsItem.scrollPositionerPosition
+    property alias scrollPositionerSize: settingsItem.scrollPositionerSize
+    property alias enableFastDateScroll: settingsItem.enableFastDateScroll
+
     //Detailed List Page
     property alias detailedListScope: settingsItem.detailedListScope
     property alias detailedListSort: settingsItem.detailedListSort
@@ -125,5 +130,16 @@ Item {
         property real bottomGesturesAreaHeight: 2
         property bool horizontalDirectActions: false
         property real horizontalDirectActionsSensitivity: 0.5
+
+        property int scrollPositionerPosition: Common.ScrollPositionerItem.Position.Right
+        /*
+         * ScrollPositionerItem.Position.Right
+         * ScrollPositionerItem.Position.Left
+         * ScrollPositionerItem.Position.Middle
+        */
+        property int scrollPositionerSize: 8 // In Grid Units
+
+        property bool enableFastDateScroll: true
+
     }
 }

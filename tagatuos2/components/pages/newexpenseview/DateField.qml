@@ -16,6 +16,17 @@ ColumnLayout {
     property bool showToggle: true
     readonly property bool checked: checkState == Qt.Checked
 
+    onCheckedChanged: if (checked) resetDate()
+
+    function reset() {
+        resetDate()
+        checkState = Qt.Checked
+    }
+
+    function resetDate() {
+        dateValue = new Date()
+    }
+
     spacing: Suru.units.gu(2)
 
     ListItems.BaseCheckBoxDelegate {

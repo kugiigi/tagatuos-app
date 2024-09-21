@@ -123,6 +123,18 @@ Pages.BasePage {
 
     property list<SettingsItem> settingsItemsModel: [
         SettingsItem {
+            mainGroup: i18n.tr("Currency")
+            subGroup: "currency"
+            title: i18n.tr("Home Currency")
+            description: i18n.tr("The home currency that is used to process, format and display expenses")
+            itemType: SettingsItem.ItemType.ComboBox
+            bindProperty: "currentCurrency"
+            itemModelTextRole: "descr"
+            itemModelValueRole: "currency_code"
+            itemModel: mainView.mainModels.currenciesModel
+            itemMaximumWidth: Suru.units.gu(60)
+        }
+        , SettingsItem {
             mainGroup: i18n.tr("Appearance and Layout")
             subGroup: "appearance"
             title: i18n.tr("Theme")
@@ -145,16 +157,53 @@ Pages.BasePage {
             bindProperty: "coloredText"
         }
         , SettingsItem {
-            mainGroup: i18n.tr("Currency")
-            subGroup: "currency"
-            title: i18n.tr("Home Currency")
-            description: i18n.tr("The home currency that is used to process, format and display expenses")
+            mainGroup: i18n.tr("Appearance and Layout")
+            subGroup: "appearance"
+            title: i18n.tr("Fast date scroll")
+            description: i18n.tr("Displays a control in the Expense page which allows quickly jumping or scrolling into a specific date based on the 'View by' setting.")
+            itemType: SettingsItem.ItemType.Switch
+            bindProperty: "enableFastDateScroll"
+        }
+        , SettingsItem {
+            mainGroup: i18n.tr("Appearance and Layout")
+            subGroup: "appearance"
+            title: i18n.tr("Scroll button position")
+            description: i18n.tr("Determines the position of the button for scrolling to the top or bottom of a page or list.")
             itemType: SettingsItem.ItemType.ComboBox
-            bindProperty: "currentCurrency"
-            itemModelTextRole: "descr"
-            itemModelValueRole: "currency_code"
-            itemModel: mainView.mainModels.currenciesModel
-            itemMaximumWidth: Suru.units.gu(60)
+            bindProperty: "scrollPositionerPosition"
+            itemModel: [
+                { "value": 0, "text": i18n.tr("Right") }
+                , { "value": 1, "text": i18n.tr("Left") }
+                , { "value": 2, "text": i18n.tr("Middle") }
+            ]
+            itemMaximumWidth: settingsPage.wide ? Suru.units.gu(20) : 0
+        }
+        , SettingsItem {
+            mainGroup: i18n.tr("Appearance and Layout")
+            subGroup: "appearance"
+            title: i18n.tr("Scroll button size")
+            description: i18n.tr("The size of the button for scrolling to the top or bottom of a page or list.")
+            itemType: SettingsItem.ItemType.Slider
+            bindProperty: "scrollPositionerSize"
+            itemMaximumWidth: settingsPage.wide ? Suru.units.gu(60) : 0
+
+            // Slider properties
+            itemResetValue: 8
+            itemFromValue: 3
+            itemToValue: 10
+            itemStepSizeValue: 1
+            itemLiveValue: true
+            itemDisplayCurrentValue: false
+            itemDisplayCurrentValueOnControl: false
+            itemRoundDisplayedValue: true
+            itemRoundingDecimal: 0
+            itemEnableFineControls: true
+            itemSettingsToControl: function(value) {
+                return value;
+            }
+            itemControlToSettings: function(value) {
+                return parseFloat(value.toFixed(0))
+            }
         }
         , SettingsItem {
             mainGroup: i18n.tr("Gestures")

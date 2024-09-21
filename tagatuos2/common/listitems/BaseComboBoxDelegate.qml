@@ -48,7 +48,30 @@ BaseItemDelegate {
 		return -1
 	}
 
-    onClicked: comboBox.popup.open()
+    QtObject {
+        id: internal
+
+        readonly property Timer justClosedTimer: Timer {
+            interval: 200
+            onTriggered: internal.comboBoxJustClosed = false
+        }
+        property bool comboBoxJustClosed: false
+    }
+
+    Connections {
+        target: comboBox.popup
+        onClosed: {
+            internal.comboBoxJustClosed = true
+            internal.justClosedTimer.restart()
+        }
+    }
+
+    onClicked: {
+        // Do not open when it was just closed
+        if (!internal.comboBoxJustClosed) {
+            comboBox.popup.open()
+        }
+    }
 
     contentItem: ColumnLayout {
 

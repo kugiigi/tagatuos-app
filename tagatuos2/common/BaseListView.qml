@@ -9,6 +9,8 @@ ListView {
 
     property PageComponents.BasePageHeader pageHeader
     property bool enableScrollPositioner: true
+    property alias scrollPositionerPosition: scrollPositioner.position
+    property alias scrollPositionerSize: scrollPositioner.buttonWidthGU
 
     boundsBehavior: Flickable.DragOverBounds
     boundsMovement: Flickable.StopAtBounds
@@ -19,23 +21,15 @@ ListView {
         target: baseListView
     }
 
-    Loader {
+    ScrollPositionerItem {
+        id: scrollPositioner
+
         active: baseListView.parent instanceof Layout ? false : baseListView.enableScrollPositioner
+        target: baseListView
         z: 1
         parent: baseListView.parent
-
-        anchors {
-            right: active ? parent.right : undefined
-            rightMargin: Suru.units.gu(2)
-            bottom: active ? parent.bottom : undefined
-            bottomMargin: Suru.units.gu(3) //+ baseListView.bottomMargin
-        }
-
-        sourceComponent: ScrollPositioner {
-            id: scrollPositioner
-
-            target: baseListView
-            mode: "Down"
-        }
+        bottomMargin: units.gu(5) //+ baseListView.bottomMargin
+        position: mainView.settings.scrollPositionerPosition
+        buttonWidthGU: mainView.settings.scrollPositionerSize
     }
 }
