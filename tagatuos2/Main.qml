@@ -436,6 +436,7 @@ ApplicationWindow {
                     }
 
                     isWideLayout: width > Suru.units.gu(90)
+                    enableHeaderSwipeGesture: mainView.settings.enableHeaderSwipeGesture
                     enableBottomGestureHint: !mainView.settings.hideBottomHint
                     enableHeaderPullDown: mainView.settings.headerPullDown
                     enableBottomSideSwipe: mainView.settings.sideSwipe
@@ -501,6 +502,7 @@ ApplicationWindow {
                     isWideLayout: width > Suru.units.gu(60)
                     forceShowBackButton: shownInNarrow
                     enableShortcuts: true
+                    enableHeaderSwipeGesture: mainView.settings.enableHeaderSwipeGesture
                     enableBottomGestureHint: !mainView.settings.hideBottomHint
                     enableHeaderPullDown: mainView.settings.headerPullDown
                     enableBottomSideSwipe: mainView.settings.sideSwipe

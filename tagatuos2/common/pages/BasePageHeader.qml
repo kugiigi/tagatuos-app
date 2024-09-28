@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 import QtGraphicalEffects 1.12
 import ".." as Common
+import "../gestures" as Gestures
 import "../menus" as Menus
 import "pageheader"
 
@@ -26,6 +27,7 @@ QQC2.ToolBar {
     readonly property Common.BaseAction leftVisibleAction: leftHeaderActions.firstVisibleAction
     readonly property Common.BaseAction rightVisibleAction: rightHeaderActions.firstVisibleAction
 
+    property bool enableSwipeGesture: true
     property string title
     property var leftActions
     property var rightActions
@@ -67,25 +69,40 @@ QQC2.ToolBar {
         }
     }
 
-
-    function triggerRightFromBottom() {
+    function triggerRight(_showMenuAtBottom = true) {
         if (rightVisibleActionsCount > 0) {
             if (rightVisibleActionsCount === 1) {
                 rightHeaderActions.triggerFirstVisibleItem()
             } else {
-                menuComponent.createObject(pageHeader.currentItem).showToTheRight()
+                menuComponent.createObject(pageHeader.currentItem).showToTheRight(_showMenuAtBottom)
             }
         }
     }
 
-    function triggerLeftFromBottom() {
+    function triggerLeft(_showMenuAtBottom = true) {
         if (leftVisibleActionsCount > 0) {
             if (leftVisibleActionsCount === 1) {
                 leftHeaderActions.triggerFirstVisibleItem()
             } else {
-                menuComponent.createObject(pageHeader.currentItem).showToTheLeft()
+                menuComponent.createObject(pageHeader.currentItem).showToTheLeft(_showMenuAtBottom)
             }
         }
+    }
+
+    function triggerRightFromBottom() {
+        triggerRight(true)
+    }
+
+    function triggerLeftFromBottom() {
+        triggerLeft(true)
+    }
+
+    function triggerRightFromTop() {
+        triggerRight(false)
+    }
+
+    function triggerLeftFromTop() {
+        triggerLeft(false)
     }
 
     function resetHeight() {
@@ -160,6 +177,8 @@ QQC2.ToolBar {
                 Layout.alignment: Qt.AlignBottom
                 model: pageHeader.leftActions
                 currentItem: pageHeader.currentItem
+                opacity: goBackIcon.visible ? 0.2 : 1
+                Behavior on opacity { LomiriNumberAnimation {} }
             }
 
             Item {
@@ -226,6 +245,74 @@ QQC2.ToolBar {
                 currentItem: pageHeader.currentItem
                 allowOverflow: pageHeader.allowOverflowRight
                 buttonDisplay: QQC2.AbstractButton.TextUnderIcon
+                opacity: goForwardIcon.visible ? 0.2 : 1
+                Behavior on opacity { LomiriNumberAnimation {} }
+            }
+        }
+    }
+
+    Gestures.HorizontalSwipeHandler {
+        id: bottomBackForwardHandle
+
+        enabled: pageHeader.enableSwipeGesture
+        leftAction: goBackIcon
+        rightAction: goForwardIcon
+        immediateRecognition: false
+        usePhysicalUnit: true
+        swipeHoldDuration: 700
+        anchors.fill: parent
+
+        rightSwipeHoldEnabled: false
+        leftSwipeHoldEnabled: false
+
+        onRightSwipe: pageHeader.triggerLeftFromTop()
+        onLeftSwipe: pageHeader.triggerRightFromTop()
+    }
+
+    Item {
+        anchors.fill: bottomBackForwardHandle
+
+        Gestures.GoIndicator {
+            id: goForwardIcon
+
+            iconName: {
+                if (rightHeaderActions.visibleActionsCount === 1 && rightHeaderActions.firstVisibleAction)
+                    return rightHeaderActions.firstVisibleAction.iconName
+
+                if (rightHeaderActions.visibleActionsCount > 1)
+                    return "navigation-menu"
+
+                return "go-next"
+            }
+            enabled: rightHeaderActions.visibleActionsCount > 0
+            swipeProgress: bottomBackForwardHandle.swipeProgress
+            defaultWidth: Suru.units.gu(2.8)
+            anchors {
+                right: parent.right
+                rightMargin: Suru.units.gu(1)
+                verticalCenter: parent.verticalCenter
+            }
+        }
+
+        Gestures.GoIndicator {
+            id: goBackIcon
+
+            iconName: {
+                if (leftHeaderActions.visibleActionsCount === 1 && leftHeaderActions.firstVisibleAction)
+                    return leftHeaderActions.firstVisibleAction.iconName
+
+                if (leftHeaderActions.visibleActionsCount > 1)
+                    return "navigation-menu"
+
+                return "go-previous"
+            }
+            enabled: leftHeaderActions.visibleActionsCount > 0
+            swipeProgress: bottomBackForwardHandle.swipeProgress
+            defaultWidth: Suru.units.gu(2.8)
+            anchors {
+                left: parent.left
+                leftMargin: Suru.units.gu(1)
+                verticalCenter: parent.verticalCenter
             }
         }
     }
@@ -244,20 +331,28 @@ QQC2.ToolBar {
             implicitWidth: isWideLayout ? wideWidth : narrowWidth
             modal: true
 
-            function showToTheRight() {
+            function showToTheRight(_isBottom = true) {
                 x = Qt.binding( function() { return parent ? isWideLayout ? parent.width - width - edgMargin : (parent.width / 2) - (width / 2)
                                                            : 0 } )
-                transformOrigin = QQC2.Menu.BottomRight
+                transformOrigin = _isBottom ? QQC2.Menu.BottomRight : QQC2.Menu.TopRight
                 model = pageHeader.rightActions
-                openBottom()
+                if (_isBottom) {
+                    openBottom()
+                } else {
+                    openTop()
+                }
             }
 
-            function showToTheLeft() {
+            function showToTheLeft(_isBottom = true) {
                 x = Qt.binding( function() { return parent ? isWideLayout ? edgMargin : (parent.width / 2) - (width / 2)
                                                            : 0 } )
-                transformOrigin = QQC2.Menu.BottomLeft
+                transformOrigin = _isBottom ? QQC2.Menu.BottomLeft : QQC2.Menu.TopLeft
                 model = pageHeader.leftActions
-                openBottom()
+                if (_isBottom) {
+                    openBottom()
+                } else {
+                    openTop()
+                }
             }
         }
     }

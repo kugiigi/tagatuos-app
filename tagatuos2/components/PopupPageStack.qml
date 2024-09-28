@@ -38,6 +38,7 @@ Dialogs.BasePopup {
         focus: true
         isWideLayout: popupPageStack.isWideLayout
         enableShortcuts: true
+        enableHeaderSwipeGesture: mainView.settings.enableHeaderSwipeGesture
         enableBottomGestureHint: !mainView.settings.hideBottomHint
         enableHeaderPullDown: mainView.settings.headerPullDown
         enableBottomSideSwipe: mainView.settings.sideSwipe

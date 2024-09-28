@@ -42,6 +42,7 @@ Item {
     property alias quickActionEnableDelay: settingsItem.quickActionEnableDelay
     property alias headerPullDown: settingsItem.headerPullDown
     property alias bottomGesturesAreaHeight: settingsItem.bottomGesturesAreaHeight
+    property alias enableHeaderSwipeGesture: settingsItem.enableHeaderSwipeGesture
 
     // Session Settings (not stored)
     property string currentCurrencySymbol: "8369"
@@ -140,6 +141,7 @@ Item {
         property int scrollPositionerSize: 8 // In Grid Units
 
         property bool enableFastDateScroll: true
+        property bool enableHeaderSwipeGesture: true
 
     }
 }

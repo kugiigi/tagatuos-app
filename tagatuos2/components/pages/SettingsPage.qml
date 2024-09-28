@@ -216,6 +216,14 @@ Pages.BasePage {
         , SettingsItem {
             mainGroup: i18n.tr("Gestures")
             subGroup: "options"
+            title: i18n.tr("Page header swipe gesture")
+            description: i18n.tr("Enables swiping horizontally in page headers to trigger the left and right actions.")
+            itemType: SettingsItem.ItemType.Switch
+            bindProperty: "enableHeaderSwipeGesture"
+        }
+        , SettingsItem {
+            mainGroup: i18n.tr("Gestures")
+            subGroup: "options"
             title: i18n.tr("Bottom gesture area height")
             description: i18n.tr("The height of the gesture area at the bottom of the app that detects vertical or horizontal swipes")
             itemType: SettingsItem.ItemType.Slider

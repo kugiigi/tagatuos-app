@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-28 08:00+0000\n"
+"POT-Creation-Date: 2024-09-28 09:47+0000\n"
 "PO-Revision-Date: 2023-09-30 13:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -97,13 +97,13 @@ msgstr "Verwijderen"
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:58
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:880
 msgid "Close"
 msgstr "Sluiten"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:58
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:71
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:72
 msgid "Back"
 msgstr "Terug"
 
@@ -125,12 +125,12 @@ msgstr ""
 msgid "Lock"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:72
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:73
 msgid "Go back to previous page"
 msgstr "Terug naar vorige pagina"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:170
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:173
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:172
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:175
 msgid "Actions menu"
 msgstr "Actiemenu"
 
@@ -802,16 +802,17 @@ msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:209
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:217
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:244
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:259
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:275
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:289
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:305
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:334
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:349
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:368
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:398
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:412
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:225
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:252
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:267
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:283
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:297
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:313
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:342
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:357
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:376
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:406
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:420
 msgid "Gestures"
 msgstr "Gebaren"
 
@@ -824,10 +825,21 @@ msgid "Play haptic feedback when using gestures to perform actions."
 msgstr "Voorzie gebaren om acties uit te voeren van haptische feedback."
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:219
+#, fuzzy
+msgid "Page header swipe gesture"
+msgstr "Horizontaal vegen"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:220
+msgid ""
+"Enables swiping horizontally in page headers to trigger the left and right "
+"actions."
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:227
 msgid "Bottom gesture area height"
 msgstr "Hoogte van onderste gebarenruimte"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:220
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:228
 msgid ""
 "The height of the gesture area at the bottom of the app that detects "
 "vertical or horizontal swipes"
@@ -835,22 +847,22 @@ msgstr ""
 "De hoogte van de gebarenruimte onderaan de app, waar verticaal en "
 "horizontaal kan worden geveegd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:246
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:254
 msgid "Bottom Gesture hint"
 msgstr "Tip omtrent vegen vanaf onderste rand"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:247
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:255
 msgid "Displays a visual hint for the Horizontal swipe gesture"
 msgstr "Toon hint voor het horizontaal vegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:251
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:259
 msgid ""
 "The hint indicates the space where you can swipe horizontally to trigger "
 "page header actions"
 msgstr ""
 "De hint geeft aan waar je horizontaal kunt vegen om acties uit te voeren"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:252
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:260
 msgid ""
 "When Bottom side gesture is enabled, the empty space on the left and right "
 "side indicate where you can swipe up to access its functions"
@@ -858,11 +870,11 @@ msgstr ""
 "Als vegen vanaf de onderzijde is ingeschakeld, dan wordt de lege ruimte aan "
 "weerszijden daarvan gebruikt voor omhoog vegen om extra functies te tonen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:261
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:269
 msgid "Header pull down"
 msgstr "Werkbalk op midden van scherm"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:262
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:270
 msgid ""
 "Dragging the page contents down will expand the header's height to near half "
 "of the page"
@@ -870,93 +882,93 @@ msgstr ""
 "Trek de inhoud naar beneden om de werkbalk naar het midden van het scherm te "
 "verplaatsen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:264
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:272
 msgid "This helps ease reaching top elements in the page."
 msgstr "Hiermee is het eenvoudiger om items bovenaan het scherm te bereiken."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:268
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:276
 msgid ""
 "Swipe down and release: Expands the header's height to near half of the app"
 msgstr ""
 "Omlaag vegen en vasthouden: verplaats de werkbalk naar het midden van het "
 "scherm"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:269
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:277
 msgid "Swipe up and release: Resets back the header to its normal state"
 msgstr "Omhoog vegen en vasthouden: verplaats de werkbalk weer naar boven"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:277
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:285
 msgid "Horizontal swipe gesture"
 msgstr "Horizontaal vegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:278
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:286
 msgid "Enables a gesture area around the middle part of the bottom edge"
 msgstr "Schakel een gebarenruimte op het midden van de onderste rand in"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:282
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:290
 msgid ""
 "Swipe to either direction to open a bottom menu with the corresponding "
 "actions from the page header"
 msgstr "Veeg naar links of rechts om een menu met werkbalkacties te openen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:283
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:342
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:291
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:350
 msgid ""
 "When there's only one action is available, it will be triggered immediately "
 "upon performing the swipe"
 msgstr ""
 "Als er slechts één actie beschikbaar is, dan wordt deze meteen uitgevoerd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:291
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:351
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:299
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:359
 msgid "Direct actions"
 msgstr "Onmiddellijke acties"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:294
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:302
 msgid ""
 "Directly select an action instead of opening a menu when there are multiple "
 "available actions."
 msgstr "Voer onmiddelijk een actie uit in plaats van het actiemenu te openen."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:298
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:306
 msgid ""
 "Swipe to either direction to show actions that corresponds to the page "
 "header actions"
 msgstr "Veeg naar links of rechts om de acties te tonen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:299
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:307
 msgid "An action can be triggered by releasing the touch while it is selected."
 msgstr ""
 "Een actie kan worden uitgevoerd door boven de actie het scherm los te laten."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:307
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:315
 msgid "Selection sensitivity"
 msgstr "Keuzegevoeligheid"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:310
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:318
 msgid ""
 "Determines how sensitive when swiping horizontally to select from the "
 "available actions."
 msgstr "Bepaalt hoe gevoelig horizontaal vegen over de beschikbare acties is."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:336
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:344
 msgid "Bottom side gesture"
 msgstr "Vegen vanaf onderste zijkant"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:337
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:345
 msgid ""
 "Enables gesture areas at the leftmost and rightmost parts of the bottom edge"
 msgstr ""
 "Schakel een gebarenruimte aan de uiterste linker- en rechterzijden van de "
 "onderste rand in"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:341
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:349
 msgid ""
 "A swipe will open a menu with all the actions from the corresponding side of "
 "the page header"
 msgstr "Veeg om een menu met werkbalkacties te openen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:343
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:351
 msgid ""
 "When Direct actions is enabled, Quick swipe has to be enabled to retain the "
 "original function"
@@ -964,19 +976,19 @@ msgstr ""
 "Let op: als onmiddellijke acties zijn ingeschakeld, dan dient snel vegen "
 "eveneens te worden ingeschakeld"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:354
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:362
 msgid ""
 "Enables a vertical menu for quickly performing actions that are present in "
 "the page header."
 msgstr "Schakel een verticaal menu met snelle werkbalkacties in."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:356
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:364
 msgid ""
 "The list of actions correspond to the same actions present in the page "
 "header."
 msgstr "De lijst met acties komt overeen met de werkbalkacties."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:360
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:368
 msgid ""
 "Swiping up from the left/right side without lifting your finger will reveal "
 "a menu of list of actions"
@@ -984,21 +996,21 @@ msgstr ""
 "Veeg omhoog van de linker- of rechterzijde zonder het scherm los te laten om "
 "het actiemenu te openen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:361
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:369
 msgid "Lifting your swipe will perform the currently selected action"
 msgstr "Laat het scherm los boven een actie om deze uit te voeren"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:362
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:370
 msgid ""
 "You can cancel the gesture without triggering an action by swiping down to "
 "the bottom again and release from there"
 msgstr "Breek af door weer naar beneden te vegen en los te laten"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:370
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:378
 msgid "Max height"
 msgstr "Max. hoogte"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:373
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:381
 msgid ""
 "Maximum height of the Direct actions menu when there's enough available "
 "height"
@@ -1006,15 +1018,15 @@ msgstr ""
 "De maximale hoogte van het menu met onmiddellijke acties (bij voldoende "
 "beschikbare ruimte)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:389
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:397
 msgid "inch"
 msgstr "cm"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:400
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:408
 msgid "Quick swipe"
 msgstr "Snel vegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:405
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:413
 msgid ""
 "Enable this to retain the original function of the bottom side gesture by "
 "doing a quick swipe"
@@ -1022,7 +1034,7 @@ msgstr ""
 "Schakel in om de oorspronkelijke functie van vegen aan de onderzijde te "
 "behouden door snel te vegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:406
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:414
 msgid ""
 "A quick swipe means swiping up with enough distance and lifting the finger "
 "immediately before triggering the Quick actions menu"
@@ -1030,15 +1042,15 @@ msgstr ""
 "Veeg snel omhoog met voldoende afstand en laat los voordat het menu met "
 "snelle acties getoond wordt"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:414
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:422
 msgid "Direct actions delay"
 msgstr "Actie-wachttijd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:420
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:428
 msgid "Enables a delay before the Direct action menu will appear when swiping"
 msgstr "Wacht korte tijd vooraleer het actiemenu te tonen na vegen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:421
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:429
 msgid "Disabled state only takes effect when Quick swipe is disabled"
 msgstr ""
 "Let op: uitschakelen heeft alleen effect als snel vegen is uitgeschakeld"

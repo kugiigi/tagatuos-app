@@ -25,6 +25,7 @@ QQC2.Page {
     property bool forceShowBackButton: false
 
     // Gestures
+    property bool enableHeaderSwipeGesture: false
     property bool enableBottomGestureHint: false
     property bool physicalBasedGestures: true
     property bool enableHeaderPullDown: true
@@ -87,6 +88,7 @@ QQC2.Page {
     header: BasePageHeader {
         id: pageHeader
 
+        enableSwipeGesture: basePageStack.enableHeaderSwipeGesture
         showDivider: false
         expandable: basePageStack.enableHeaderPullDown && basePageStack.parent.height >= units.gu(60)
         currentItem: mainStackView.currentItem
