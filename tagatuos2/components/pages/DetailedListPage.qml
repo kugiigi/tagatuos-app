@@ -13,11 +13,11 @@ import "../../library/functions.js" as Functions
 Pages.BasePage {
     id: detailedListPage
 
-    readonly property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
-    readonly property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
-    readonly property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
-    readonly property bool isThisYear: Functions.isThisYear(dateViewPath.currentItem.fromDate)
-    readonly property string todayDate: Functions.getToday()
+    property bool isToday: Functions.isToday(dateViewPath.currentItem.fromDate)
+    property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
+    property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
+    property bool isThisYear: Functions.isThisYear(dateViewPath.currentItem.fromDate)
+    property string todayDate: Functions.getToday()
     readonly property string currentFromDate: dateViewPath.currentItem.fromDate
     readonly property string currentBaseDate: dateViewPath.baseDate
     readonly property string actualFromDate: currentFromDate ? Functions.getFromDate(scope, currentFromDate) : ""
@@ -405,9 +405,11 @@ Pages.BasePage {
             navigationRow.labelRefresh()
 
             // Rebind values when current date changed
+            detailedListPage.todayDate = mainView.currentDate
             detailedListPage.isToday = Qt.binding( function() { return Functions.isToday(dateViewPath.currentItem.fromDate) } )
             detailedListPage.isThisWeek = Qt.binding( function() { return Functions.isThisWeek(dateViewPath.currentItem.fromDate) } )
             detailedListPage.isThisMonth = Qt.binding( function() { return Functions.isThisMonth(dateViewPath.currentItem.fromDate) } )
+            detailedListPage.isThisYear = Qt.binding( function() { return Functions.isThisYear(dateViewPath.currentItem.fromDate) } )
         }
     }
 
