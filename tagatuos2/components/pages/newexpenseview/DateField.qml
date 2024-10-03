@@ -17,6 +17,7 @@ ColumnLayout {
     readonly property bool checked: checkState == Qt.Checked
 
     onCheckedChanged: if (checked) resetDate()
+    onVisibleChanged: if (visible) resetDate()
 
     function reset() {
         resetDate()
