@@ -10,6 +10,7 @@ Item {
     property bool enableAcceptedFocus: true
     property bool enableActiveFocusScroll: true
     property bool enableLineCountScroll: true
+    property bool enableTextChangedScroll: true
 
     function focusPrevious() {
         if (target.activeFocus) {
@@ -24,6 +25,15 @@ Item {
             _nextItem.forceActiveFocus()
         }
     }
+    
+    function delayedScrollFlickableToThisItem() {
+        delaySCrollTimer.restart()
+    }
+
+    function scrollFlickableToThisItem() {
+        // TODO: Properly handle when TextArea is taller than the flickable
+        flickable.scrollToItem(target, 0, 0)
+    }
 
     Connections {
         id: connections
@@ -34,14 +44,20 @@ Item {
 
         onActiveFocusChanged: {
             if (target.activeFocus && enableActiveFocusScroll) {
-                flickable.scrollToItem(target, 0, 0)
+                focusScrollConnections.scrollFlickableToThisItem()
             }
         }
 
         // For TextArea
         onLineCountChanged: {
-            if (target.activeFocus && enableLineCountScroll) {
-                flickable.scrollToItem(target, 0, 0)
+            if (target.activeFocus && enableLineCountScroll && !enableTextChangedScroll) {
+                focusScrollConnections.scrollFlickableToThisItem()
+            }
+        }
+
+        onTextChanged: {
+            if (target.activeFocus && enableTextChangedScroll) {
+                focusScrollConnections.scrollFlickableToThisItem()
             }
         }
     }

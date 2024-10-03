@@ -14,7 +14,6 @@ TextArea {
     placeholderText: i18n.tr("Add description, more details or comments")
     font.pixelSize: Suru.units.gu(2)
     wrapMode: TextInput.WordWrap
-    selectByMouse: true
 
     Keys.onPressed: {
         if (event.key == Qt.Key_Backspace && text == "") {
