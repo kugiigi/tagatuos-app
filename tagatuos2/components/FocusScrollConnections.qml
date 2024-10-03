@@ -25,10 +25,6 @@ Item {
             _nextItem.forceActiveFocus()
         }
     }
-    
-    function delayedScrollFlickableToThisItem() {
-        delaySCrollTimer.restart()
-    }
 
     function scrollFlickableToThisItem() {
         // TODO: Properly handle when TextArea is taller than the flickable
