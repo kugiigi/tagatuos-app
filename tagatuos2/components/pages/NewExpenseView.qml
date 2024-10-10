@@ -275,8 +275,8 @@ FocusScope {
         internal.expenseData.travelData.value = _expenseDataForEdit.travelData.value
 
         // Set date/time fields to current values
+        dateField.checkState = Qt.Unchecked // Always do this before setting the date
         dateField.dateValue = Functions.convertDBToDate(_expenseDataForEdit.entryDate)
-        dateField.checkState = Qt.Unchecked
 
         travelCurrencyObj.currencyID = _expenseDataForEdit.travelData.travelCur
 

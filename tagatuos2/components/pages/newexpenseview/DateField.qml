@@ -16,8 +16,7 @@ ColumnLayout {
     property bool showToggle: true
     readonly property bool checked: checkState == Qt.Checked
 
-    onCheckedChanged: if (checked) resetDate()
-    onVisibleChanged: if (visible) resetDate()
+    onCheckedChanged: if (!checked && showToggle) resetDate()
 
     function reset() {
         resetDate()
