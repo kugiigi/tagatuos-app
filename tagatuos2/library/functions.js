@@ -489,13 +489,83 @@ function formatDateForNavigation(petsa, scope) {
     return engPetsa
 }
 
+function getDateLabelsForNavigation(petsa, scope) {
+    let _mainLabel = ""
+    let _secondaryLabel = ""
+    let _tertiaryLabel = ""
+
+    if (petsa !== null) {
+        let _momentPetsa = moment(petsa)
+        let _comparisonValues = getDateComparisonValues(petsa)
+
+        switch (scope) {
+            case "day":
+                _mainLabel = _momentPetsa.format("DD")
+
+                if (isThisYear(petsa)) {
+                    _secondaryLabel = _momentPetsa.format("MMM, dddd")
+                } else {
+                    _secondaryLabel = _momentPetsa.format("MMM YYYY, dddd")
+                    _tertiaryLabel = _momentPetsa.format("YYYY")
+                }
+                break
+            case "week":
+                let _weekStart = moment(petsa).startOf('week')
+                let _weekEnd = moment(petsa).endOf('week')
+                let _weekStartMonth = moment(_weekStart).startOf("month")
+                let _weekEndMonth = moment(_weekEnd).startOf("month")
+                let _fromString = _weekStart.format("MMM DD")
+                let _toString = ""
+                let _endIsSameMonth = _weekStartMonth.isSame(_weekEndMonth)
+
+                _mainLabel = _momentPetsa.format("ww")
+
+                if (!isThisYear(petsa)) {
+                    _tertiaryLabel = _weekEnd.format("YYYY")
+                }
+
+                if (_weekEnd.isSameOrBefore(_comparisonValues.endOfLastYear, 'day')
+                        || _weekEnd.isAfter(_comparisonValues.endOfThisYear, 'day')) {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD, YYYY")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD, YYYY")
+                    }
+                } else {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD")
+                    }
+                }
+
+                _secondaryLabel = i18n.tr("%1 - %2").arg(_fromString).arg(_toString)
+
+                break
+            case "month":
+                _mainLabel = _momentPetsa.format("MM")
+
+                if (isThisYear(petsa)) {
+                    _secondaryLabel = _momentPetsa.format("MMMM")
+                } else {
+                    _secondaryLabel = _momentPetsa.format("MMMM YYYY")
+                    _tertiaryLabel = _momentPetsa.format("YYYY")
+                }
+
+                break
+        }
+    }
+
+    return [_mainLabel, _secondaryLabel, _tertiaryLabel]
+}
+
 //Converts dates into user friendly format when necessary
 function relativeDate(petsa, format, mode){
     var defaultFormat = "ddd, MMM DD"
     var formatToUse = format ? format : defaultFormat
 
     if(petsa !== null){
-    
+
         var dtPetsa
         var engPetsa
         var formattedDate

@@ -17,6 +17,7 @@ Pages.BasePage {
     property bool isThisWeek: Functions.isThisWeek(dateViewPath.currentItem.fromDate)
     property bool isThisMonth: Functions.isThisMonth(dateViewPath.currentItem.fromDate)
     property bool isThisYear: Functions.isThisYear(dateViewPath.currentItem.fromDate)
+    readonly property bool dateIsCurrent: (isToday && isByDay) || (isThisWeek && isByWeek) || (isThisMonth && isByMonth)
     property string todayDate: Functions.getToday()
     readonly property string currentFromDate: dateViewPath.currentItem.fromDate
     readonly property string currentBaseDate: dateViewPath.baseDate
@@ -437,14 +438,21 @@ Pages.BasePage {
 
                     property bool allowExpandChanged: true
 
+                    // TODO: Replace using the 'date' property
+                    // Updates long label
                     function labelRefresh() {
                         dateTitle = Qt.binding(function() { return Functions.formatDateForNavigation(detailedListPage.currentFromDate, detailedListPage.scope) })
                     }
 
+                    date: detailedListPage.currentFromDate
+                    scope: detailedListPage.scope
+                    dateIsCurrent: detailedListPage.dateIsCurrent
+                    category: detailedListPage.currentCategory
+
                     Component.onCompleted: labelRefresh()
 
                     Layout.fillWidth: true
-                    Layout.preferredHeight: isExpanded ? Suru.units.gu(10) : Suru.units.gu(4)
+                    Layout.preferredHeight: isExpanded ? Suru.units.gu(12) : Suru.units.gu(4)
                     Layout.margins: Suru.units.gu(1)
                     z: 1
 
@@ -505,25 +513,11 @@ Pages.BasePage {
                         } 
                     }
 
-                    biggerDateLabel: detailedListPage.currentCategory === "all"
-                    itemTitle: detailedListPage.currentCategory === "all" ? i18n.tr("All")
-                                    : mainView.mainModels.categoriesModel.getItem(detailedListPage.currentCategory, "category_name").category_name
-
                     onCriteria: criteriaPopup.openPopup()
                     onNext: nextAction.triggered()
                     onPrevious: previousAction.triggered()
                     onNextData: nextDataAction.triggered()
                     onPreviousData: lastDataAction.triggered()
-                }
-
-                ToolSeparator {
-                    id: separator
-            
-                    Layout.fillWidth: true
-                    z: navigationRow.z
-                    orientation: Qt.Horizontal
-                    topPadding: 0
-                    bottomPadding: 0
                 }
             }
         }
@@ -595,7 +589,6 @@ Pages.BasePage {
                     id: listView
 
                     anchors.fill: parent
-                    topMargin: Suru.units.gu(1)
                     bottomMargin: summaryValues.visible && !summaryValues.isExpanded
                                         ? summaryValues.height + summaryValues.anchors.bottomMargin
                                                 + indicatorSelectorLoader.height + indicatorSelectorLoader.anchors.bottomMargin
