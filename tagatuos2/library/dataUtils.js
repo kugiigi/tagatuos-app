@@ -14,6 +14,13 @@ var dataUtils = dataUtils || (function (undefined) {
                         return ""
                     }
                 }
+                , homeCurrency: function() {
+                    if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").homeCurrency
+                    } else {
+                        return ""
+                    }
+                }
                 , enableOverlay: function() {
                     if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
                         return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").enableOverlay
@@ -44,16 +51,16 @@ var dataUtils = dataUtils || (function (undefined) {
                 , exists: function(displayName) {
                     return Database.checkProfileIfExist(displayName);
                 }
-                , add: function(displayName, enableOverlay, overlayColor, overlayOpacity) {
-                    let _result = Database.newProfile(displayName, enableOverlay, overlayColor, overlayOpacity)
+                , add: function(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.newProfile(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity)
                     if (_result.success) {
                         this.refresh();
                     }
 
                     return { "success": _result.success, "exists": _result.exists }
                 }
-                , edit: function(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity) {
-                    let _result = Database.editProfile(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity);
+                , edit: function(profileId, displayName, newDisplayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.editProfile(profileId, displayName, newDisplayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity);
                     if (_result.success) {
                         this.refresh();
                     }

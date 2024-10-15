@@ -217,6 +217,8 @@ function upgradeUserVersion() {
 
 //Execute Needed Database upgrades
 function databaseUpgrade(currentVersion) {
+    let _returnCode = -1
+
     if (currentVersion < 1) {
         executeUserVersion1()
     }
@@ -232,6 +234,12 @@ function databaseUpgrade(currentVersion) {
     if (currentVersion > 3) {
         enableForeignKeys()
     }
+    if (currentVersion < 5) {
+        executeUserVersion5()
+        _returnCode = 5
+    }
+
+    return _returnCode
 }
 
 //Database Changes for User Version 1
@@ -694,6 +702,56 @@ function alterMetaViewsForVersion4() {
     })
 }
 
+//Database Changes for User Version 5
+// Version 1.20 (Rewrite)
+function executeUserVersion5() {
+    alterMetaTablesForVersion5() // Add home_currency to profiles
+    console.log("Database Upgraded to 5")
+    upgradeUserVersion()
+}
+
+function alterMetaTablesForVersion5() {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        
+        /* Move home_currency from travel_expenses to profiles table */
+        // Don't delete from travel_expenses yet so data won't be totally lost
+        // in case some people have different home currencies for some reason
+        tx.executeSql(
+                    "CREATE TABLE IF NOT EXISTS `profiles_new` (`profile_id`	INTEGER PRIMARY KEY AUTOINCREMENT \
+                    , `active` INTEGER NOT NULL CHECK (`active` IN (0, 1)) \
+                    , `display_name` TEXT, `home_currency`	TEXT \
+                    , `enable_overlay` INTEGER NOT NULL CHECK (`enable_overlay` IN (0, 1)), `overlay_color` TEXT \
+                    , `overlay_opacity` REAL)")
+        // TODO: Actually remove home_currency from travel_expenses?
+        // tx.executeSql(
+        //              "CREATE TABLE IF NOT EXISTS `travel_expenses_new` (`expense_id`	INTEGER,`travel_currency`	TEXT,`rate`	REAL, `value` REAL,PRIMARY KEY(expense_id));")
+
+        /* Insert old data to recreated tables */
+        // Update home currency from 'USD' to actual after settings component was loaded
+        tx.executeSql("INSERT INTO profiles_new SELECT profile_id, active, display_name, 'USD', enable_overlay, overlay_color, overlay_opacity FROM profiles")
+        // tx.executeSql("INSERT INTO travel_expenses_new SELECT expense_id, travel_currency, rate, value FROM travel_expenses")
+
+        /* Drop old tables */
+        tx.executeSql("DROP TABLE profiles")
+        // tx.executeSql("DROP TABLE travel_expenses")
+
+        /* Rename recreated tables to correct old names */
+        tx.executeSql("ALTER TABLE profiles_new RENAME TO profiles")
+        // tx.executeSql("ALTER TABLE travel_expenses_new RENAME TO travel_expenses")
+    })
+}
+
+// Updates all profiles based on current home currency settings
+// Should only run after DB upgrade to version 5
+function updateHomeCurrencyInProfiles(homeCurrency) {
+    let _db = openDB()
+
+    _db.transaction(function (tx) {
+        tx.executeSql("UPDATE profiles SET home_currency = ?", [homeCurrency])
+    })
+}
 
 /*************Main Data functions*************/
 function getProfiles() {
@@ -727,7 +785,7 @@ function checkProfileIfExist(txtDisplayName) {
     return exists
 }
 
-function newProfile(txtDisplayName, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
+function newProfile(txtDisplayName, txtHomeCurrency, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
     let _txtSaveStatement
     let _db = openDB()
     let _rs = null
@@ -740,12 +798,12 @@ function newProfile(txtDisplayName, boolEnableOverlay, txtOverlayColor = "blue",
     // Do not save when opacity is too big
     let _saveOverlayOpacity = txtOverlayOpacity > 0.6 ? 0.6 : txtOverlayOpacity
 
-    _txtSaveStatement = 'INSERT INTO profiles(active, display_name, enable_overlay, overlay_color, overlay_opacity) VALUES(1, ?, ?, ?, ?)'
+    _txtSaveStatement = 'INSERT INTO profiles(active, display_name, home_currency, enable_overlay, overlay_color, overlay_opacity) VALUES(1, ?, ?, ?, ?, ?)'
 
     if (!_existsResult) {
         try {
             _db.transaction(function (tx) {
-                tx.executeSql(_txtSaveStatement, [txtDisplayName, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity])
+                tx.executeSql(_txtSaveStatement, [txtDisplayName, txtHomeCurrency, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity])
 
                 // Intialize profile data such as Categories
                 _rs = tx.executeSql("SELECT MAX(profile_id) as id FROM profiles")
@@ -768,7 +826,7 @@ function newProfile(txtDisplayName, boolEnableOverlay, txtOverlayColor = "blue",
     return _result
 }
 
-function editProfile(intProfileId, txtDisplayName, txtNewDisplayName, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
+function editProfile(intProfileId, txtDisplayName, txtNewDisplayName, txtHomeCurrency, boolEnableOverlay, txtOverlayColor = "blue", txtOverlayOpacity = 0.2) {
     let _db = openDB()
     let _txtSaveStatement = ""
     let _result
@@ -784,12 +842,12 @@ function editProfile(intProfileId, txtDisplayName, txtNewDisplayName, boolEnable
     // Do not save when opacity is too big
     let _saveOverlayOpacity = txtOverlayOpacity > 0.6 ? 0.6 : txtOverlayOpacity
 
-    _txtSaveStatement = "UPDATE profiles SET display_name = ?, enable_overlay = ?, overlay_color = ?, overlay_opacity = ? WHERE profile_id = ?"
+    _txtSaveStatement = "UPDATE profiles SET display_name = ?, home_currency = ?, enable_overlay = ?, overlay_color = ?, overlay_opacity = ? WHERE profile_id = ?"
 
     if (!_exists) {
         try {
             _db.transaction(function (tx) {
-                tx.executeSql(_txtSaveStatement, [ txtNewDisplayName, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity, intProfileId ])
+                tx.executeSql(_txtSaveStatement, [ txtNewDisplayName, txtHomeCurrency, boolEnableOverlay, txtOverlayColor, _saveOverlayOpacity, intProfileId ])
             })
 
             _success = true

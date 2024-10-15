@@ -12,6 +12,8 @@ v1.20
 * Add option to hide context menu separators
 * Implemented "Fast Date Scroll" - Page indicator-like control that can be used to quickly jump/scroll to a date in the Expense page
 * Implemented swipe gesture in the page header similar to bottom horizontal swipe gesture
+* Redesigned date label UI in the Expense page
+* Move Home Currency setting to per Profile. Note that each Profile can only have one main currency and it will apply to all data including all past data.
 
 v1.10
 * Updated Dutch translation (Thanks to Heimen Stoffels)

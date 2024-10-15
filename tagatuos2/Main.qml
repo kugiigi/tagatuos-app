@@ -73,6 +73,11 @@ ApplicationWindow {
 
     property bool temporaryDisableColorOverlay: false
 
+    // Return code after upgrading database
+    // and determines if there are post processing necessary
+    // i.e. Update home currency in profiles based on current settings
+    property int dbUpgradeReturnCode: -1
+
     // Buffer actions from URI handling when pages are not ready yet
     property bool pendingOpenNewExpenseAction: false
     property bool pendingSearchExpenseAction: false
@@ -120,7 +125,7 @@ ApplicationWindow {
             Database.createInitialData()
         }
 
-        Database.databaseUpgrade(_currentDataBaseVersion)
+        dbUpgradeReturnCode = Database.databaseUpgrade(_currentDataBaseVersion)
         settingsLoader.active = true
 
         // URI Handling when app is closed
@@ -297,7 +302,13 @@ ApplicationWindow {
         asynchronous: true
         sourceComponent: SettingsComponent {}
 
-        onLoaded: listModelsLoader.active = true
+        onLoaded: {
+            // Update home currency in profiles after DB upgrade to 5
+            if (dbUpgradeReturnCode === 5 && mainView.settings.currentCurrency.trim() !== "") {
+                Database.updateHomeCurrencyInProfiles(mainView.settings.currentCurrency)
+            }
+            listModelsLoader.active = true
+        }
     }
 
     Loader {
@@ -314,6 +325,31 @@ ApplicationWindow {
             newExpenseViewLoader.active = true
             popupPageLoader.active = true
             drawerLoader.active = true
+        }
+    }
+
+    // Loads home currency from current profile into the settings
+    function updateHomeCurrency() {
+        let _homeCurrency = mainView.profiles.homeCurrency()
+        if (_homeCurrency !== "") {
+            mainView.settings.currentCurrency = _homeCurrency
+        }
+    }
+
+    Connections {
+        target: mainView.mainModels.profilesModel
+        ignoreUnknownSignals: true
+        onReadyChanged: {
+            if (target.ready) {
+                mainView.updateHomeCurrency()
+            }
+        }
+    }
+
+    Connections {
+        target: mainView.settings
+        onActiveProfileChanged: {
+            mainView.updateHomeCurrency()
         }
     }
 

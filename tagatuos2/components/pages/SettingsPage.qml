@@ -123,18 +123,6 @@ Pages.BasePage {
 
     property list<SettingsItem> settingsItemsModel: [
         SettingsItem {
-            mainGroup: i18n.tr("Currency")
-            subGroup: "currency"
-            title: i18n.tr("Home Currency")
-            description: i18n.tr("The home currency that is used to process, format and display expenses")
-            itemType: SettingsItem.ItemType.ComboBox
-            bindProperty: "currentCurrency"
-            itemModelTextRole: "descr"
-            itemModelValueRole: "currency_code"
-            itemModel: mainView.mainModels.currenciesModel
-            itemMaximumWidth: Suru.units.gu(60)
-        }
-        , SettingsItem {
             mainGroup: i18n.tr("Appearance and Layout")
             subGroup: "appearance"
             title: i18n.tr("Theme")
