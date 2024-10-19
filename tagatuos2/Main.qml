@@ -248,7 +248,23 @@ ApplicationWindow {
     function checkIfDayChanged() {
         if (!Functions.isToday(currentDate)) {
             currentDate = Functions.getToday()
+            resetTagsOfTheDay()
         }
+    }
+
+    function resetTagsOfTheDay() {
+        mainView.settings.tagOfTheDayDate = ""
+        mainView.settings.tagOfTheDay = ""
+    }
+
+    function getTagsOfTheDay() {
+        if (mainView.settings.tagOfTheDayDate !== "") {
+            if (Functions.isToday(mainView.settings.tagOfTheDayDate)) {
+                return mainView.settings.tagOfTheDay
+            }
+        }
+
+        return ""
     }
 
     Ambiance.Palette { id: ambianceTheme }
@@ -307,6 +323,12 @@ ApplicationWindow {
             if (dbUpgradeReturnCode === 5 && mainView.settings.currentCurrency.trim() !== "") {
                 Database.updateHomeCurrencyInProfiles(mainView.settings.currentCurrency)
             }
+            
+            // Check tags of the day and reset and when outdated
+            if (!Functions.isToday(mainView.settings.tagOfTheDayDate)) {
+                mainView.resetTagsOfTheDay()
+            }
+
             listModelsLoader.active = true
         }
     }
@@ -378,7 +400,7 @@ ApplicationWindow {
                 id: drawer
 
                 listViewTopMargin: mainView.mainPage && mainView.mainPage.pageHeader.expanded ? mainView.mainPage.pageHeader.height : 0
-                model:  [ profilesAction, categoriesAction, quickExpensesAction, travelModeAction, settingsAction, aboutAction ]
+                model:  [ profilesAction, categoriesAction, quickExpensesAction, tagOfTheDayAction, travelModeAction, settingsAction, aboutAction ]
 
                 Common.BaseAction {
                     id: profilesAction
@@ -410,6 +432,23 @@ ApplicationWindow {
                             , homeCurrency: mainView.settings.currentCurrency
                         }
                         popupPage("qrc:///components/pages/QuickExpensesPage.qml", _properties)
+                    }
+                }
+
+                Common.BaseAction {
+                    id: tagOfTheDayAction
+
+                    text: i18n.tr("Tags of the Day")
+                    iconName: "tag"
+
+                    onTrigger: {
+                        let _popup = tagOfTheDayaDialog.createObject(mainView.mainSurface)
+                        _popup.proceed.connect(function(date, tags) {
+                            mainView.settings.tagOfTheDayDate = date
+                            mainView.settings.tagOfTheDay = tags
+                        })
+
+                        _popup.openDialog();
                     }
                 }
 
@@ -712,6 +751,12 @@ ApplicationWindow {
                 onAboutToHide: mainView.mainPage.pageHeader.expanded = pageHeader.expanded
             }
         }
+    }
+
+    Component {
+        id: tagOfTheDayaDialog
+
+        Pages.TagOfTheDayDialog {}
     }
 
     Common.KeyboardRectangle {

@@ -14,6 +14,7 @@ v1.20
 * Implemented swipe gesture in the page header similar to bottom horizontal swipe gesture
 * Redesigned date label UI in the Expense page
 * Move Home Currency setting to per Profile. Note that each Profile can only have one main currency and it will apply to all data including all past data.
+* Implmented tags support
 
 v1.10
 * Updated Dutch translation (Thanks to Heimen Stoffels)

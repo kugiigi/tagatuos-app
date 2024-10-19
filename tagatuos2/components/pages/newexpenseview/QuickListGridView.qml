@@ -185,6 +185,7 @@ GridView {
                 quickListGridView.expenseData.description = description
                 quickListGridView.expenseData.category = categoryName
                 quickListGridView.expenseData.value = value
+                quickListGridView.expenseData.tags = mainView.getTagsOfTheDay()
 
                 if (showTravelValue) {
                     quickListGridView.expenseData.value = model.value
@@ -213,6 +214,7 @@ GridView {
                 expenseData.description = description
                 expenseData.category = categoryName
                 expenseData.value = value
+                expenseData.tags = mainView.getTagsOfTheDay()
 
                 if (showTravelValue) {
                     expenseData.value = model.value

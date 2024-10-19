@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-15 13:05+0000\n"
+"POT-Creation-Date: 2024-10-19 17:39+0000\n"
 "PO-Revision-Date: 2023-09-30 13:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -22,37 +22,42 @@ msgstr ""
 msgid "Tagatuos - Your expense diary"
 msgstr "Tagatuos - Mijn uitgavenboekje"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:264
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:280
 msgid "No expense yet for today"
 msgstr "Je hebt vandaag nog niks uitgegeven"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:386
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:408
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/ProfilesPage.qml:19
 msgid "Profiles"
 msgstr "Profielen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:395
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:417
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/CategoriesPage.qml:17
 msgid "Categories"
 msgstr "Categorieën"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:404
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:426
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:21
 msgid "Quick Expenses"
 msgstr "Snelle uitgaven"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:419
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:441
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:27
+msgid "Tags of the Day"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:458
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TravelModePage.qml:17
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TravelDataFields.qml:32
 msgid "Travel Mode"
 msgstr "Reismodus"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:431
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:470
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/SettingsPage.qml:16
 msgid "Settings"
 msgstr "Instellingen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:440
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/Main.qml:479
 msgid "About"
 msgstr "Over"
 
@@ -86,7 +91,8 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DeleteExpenseDialog.qml:75
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:880
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:902
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:69
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/aboutpage/ExternalDialog.qml:55
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/DeleteCategoryDialog.qml:62
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NewCategoryDialog.qml:77
@@ -98,7 +104,7 @@ msgid "Cancel"
 msgstr "Annuleren"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:880
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:902
 msgid "Close"
 msgstr "Sluiten"
 
@@ -106,6 +112,11 @@ msgstr "Sluiten"
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/pages/BasePageStack.qml:72
 msgid "Back"
 msgstr "Terug"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/TagsList.qml:73
+#, fuzzy
+msgid "Delete tag"
+msgstr "Verwijderen"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/common/listitems/BaseSliderDelegate.qml:112
 #, qt-format
@@ -142,16 +153,16 @@ msgstr "Onvoldoende gegevens om verslag op te maken"
 msgid "Select different report criteria"
 msgstr "Selecteer andere verslagcriteria"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:434
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:458
 #, qt-format
 msgid "Today's expenses [%1]:<br>"
 msgstr "Vandaag uitgegeven [%1]:<br>"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:436
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:460
 msgid "Today's expenses:<br>"
 msgstr "Vandaag uitgegeven:<br>"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:450
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:474
 #, qt-format
 msgid "Total: <b>%1</b>"
 msgstr "Totaal: <b>%1</b>"
@@ -339,14 +350,14 @@ msgid "No Categories"
 msgstr "Er zijn geen categorieën"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/CategoriesPage.qml:144
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:582
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:600
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/ProfilesPage.qml:142
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:153
 msgid "Loading data"
 msgstr "Bezig met laden van gegevens…"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/CategoriesPage.qml:145
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:583
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:601
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/ProfilesPage.qml:143
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:154
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:97
@@ -355,7 +366,7 @@ msgstr "Even geduld…"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DashboardPage.qml:31
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:132
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:398
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:405
 msgid "New Expense"
 msgstr "Nieuwe uitgave"
 
@@ -458,195 +469,196 @@ msgstr "Nieuwe uitgave"
 msgid "Expense deleted"
 msgstr "De uitgave is verwijderd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:581
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:599
 msgid "No data"
 msgstr "Er zijn geen gegevens"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:846
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:866
 msgid "January"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:846
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:866
 msgid "Ja"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:847
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:867
 msgid "February"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:847
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:867
 msgid "Fe"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:848
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:868
 #, fuzzy
 msgid "March"
 msgstr "Zoeken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:848
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:868
 #, fuzzy
 msgid "Mr"
 msgstr "Meer"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:849
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:869
 msgid "April"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:849
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:869
 msgid "Ap"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:850
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:870
 #, fuzzy
 msgid "May"
 msgstr "dag"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:850
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:870
 msgid "My"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:851
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:871
 msgid "June"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:851
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:871
 msgid "Jn"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:852
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:872
 msgid "July"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:852
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:872
 msgid "Jl"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:853
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:873
 msgid "August"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:853
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:873
 msgid "Au"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:854
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:874
 msgid "September"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:854
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:874
 #, fuzzy
 msgid "Se"
 msgstr "Opslaan"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:855
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:875
 msgid "October"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:855
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:875
 msgid "Oc"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:856
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:876
 msgid "November"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:856
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:876
 msgid "Nv"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:857
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:877
 msgid "December"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:857
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:877
 #, fuzzy
 msgid "De"
 msgstr "Afl."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:872
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:892
 #, fuzzy, qt-format
 msgid "Week %1"
 msgstr "week"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:108
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:187
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:190
 msgid "Please fill required fields"
 msgstr "Vul alle vereiste velden in"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:142
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:144
 msgid "New expense added"
 msgstr "De nieuwe uitgave is toegevoegd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:145
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:147
 msgid "New expense failed"
 msgstr "De nieuwe uitgave kan niet worden toegevoegd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:152
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:154
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:49
 msgid "Quick expense added"
 msgstr "De snelle uitgave is toegevoegd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:155
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:157
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/ProfilesPage.qml:40
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:53
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:94
 msgid "Already exists"
 msgstr "Deze uitgave bestaat al"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:157
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:159
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:55
 msgid "New Quick expense failed"
 msgstr "De snelle uitgave kan niet worden toegevoegd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:164
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:166
 msgid "Expense updated"
 msgstr "De uitgave is bijgewerkt"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:167
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:169
 msgid "Update failed"
 msgstr "Het bijwerken is mislukt"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:395
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:402
 msgid "Edit Expense"
 msgstr "Uitgave bewerken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:401
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:408
 msgid "Quick Expense"
 msgstr "Snelle uitgave"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:494
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:501
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/NameField.qml:14
 msgid "Enter expense name"
 msgstr "Voer een uitgavenaam in"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:835
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:857
 msgid "Show list"
 msgstr "Lijst tonen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:835
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:857
 msgid "Show grid"
 msgstr "Rooster tonen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:836
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:858
 msgid "List"
 msgstr "Lijst"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:836
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:858
 msgid "Grid"
 msgstr "Rooster"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:850
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:872
 msgid "Save as Quick Expense"
 msgstr "Bewaren als snelle uitgave"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:858
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:880
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:57
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NewCategoryDialog.qml:64
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/profilespage/NewProfileDialog.qml:123
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/quickexpensespage/NewQuickExpenseDialog.qml:72
 msgid "Save"
 msgstr "Opslaan"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:867
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:889
 msgid "Search or create new expense"
 msgstr "Zoek naar een uitgave of voeg er een toe"
 
@@ -1042,6 +1054,11 @@ msgid "Disabled state only takes effect when Quick swipe is disabled"
 msgstr ""
 "Let op: uitschakelen heeft alleen effect als snel vegen is uitgeschakeld"
 
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:39
+msgid ""
+"Tags of the day will be automatically added to all your new expenses today"
+msgstr ""
+
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TravelModePage.qml:38
 msgid "Enable"
 msgstr "Inschakelen"
@@ -1287,7 +1304,7 @@ msgstr "Hoogste"
 msgid "Lowest"
 msgstr "Laagste"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValueListDelegate.qml:171
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValueListDelegate.qml:184
 #, qt-format
 msgid "@ %1"
 msgstr "op %1"
@@ -1312,6 +1329,14 @@ msgstr "Huidige datum en tijd gebruiken"
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/DescriptionField.qml:14
 msgid "Add description, more details or comments"
 msgstr "Voeg een omschrijving, aantekening of meer informatie toe"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:73
+msgid "Add tags (Enter comma after each tag)"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:195
+msgid "Clear all tags"
+msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TravelDataFields.qml:32
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/travelmodepage/RateField.qml:66
@@ -1416,140 +1441,140 @@ msgstr "= 1 %1"
 msgid "Exchange rate data as of: %1"
 msgstr "Wisselkoersgegevens van %1"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:165
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:173
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Food"
 msgstr "Eten en drinken"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:165
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:173
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:81
 msgid "Breakfast, Lunch, Dinner, etc."
 msgstr "Ontbijt, lunch, avondeten, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:166
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:174
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Transportation"
 msgstr "Vervoer"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:166
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:174
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:83
 msgid "Taxi, Bus, Train, Gas, etc."
 msgstr "Taxi, bus, trein, brandstofkosten, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:167
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:175
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Clothing"
 msgstr "Kleding"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:167
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:175
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:85
 msgid "Shirts, Pants, underwear, etc."
 msgstr "Shirts, broeken, onderbroeken, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:168
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:176
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Household"
 msgstr "Huishouden"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:168
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:176
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:87
 msgid "Electricity, Groceries, Rent etc."
 msgstr "Elektriciteit, boodschappen, huur, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:169
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:177
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Leisure"
 msgstr "Vrije tijd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:169
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:177
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:89
 msgid "Movies, Books, Sports etc."
 msgstr "Films, boeken, sport, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:170
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:178
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Savings"
 msgstr "Sparen"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:170
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:178
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:91
 msgid "Investments, Reserve Funds etc."
 msgstr "Investeringen, spaarrekening, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:171
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:179
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Healthcare"
 msgstr "Persoonlijke verzorging"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:171
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:179
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:93
 msgid "Dental, Hospital, Medicines etc."
 msgstr "Tandarts, ziekenhuis, medicijnen, etc."
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:172
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:180
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Miscellaneous"
 msgstr "Overig"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:172
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:180
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/DataProcess.js:95
 msgid "Other expenses"
 msgstr "Overige uitgaven"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:480
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:488
 msgid "Default"
 msgstr "Standaard"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:508
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:516
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/database.js:524
 msgid "Uncategorized"
 msgstr "Ongecategoriseerd"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:494
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:501
 msgid "Today's Total"
 msgstr "Totaal (vandaag)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:496
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:503
 msgid "This week's Total"
 msgstr "Totaal (deze week)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:498
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:505
 msgid "Recent Total"
 msgstr "Totaal (onlangs)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:503
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:510
 msgid "Today's Average"
 msgstr "Totaal (gemiddelde)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:505
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:512
 msgid "This Week's Average"
 msgstr "Gemiddelde (deze week)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:507
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:514
 msgid "This Month's Average"
 msgstr "Gemiddeld (deze maand)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:509
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:516
 msgid "Average"
 msgstr "Gemiddelde"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:512
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:519
 msgid "Recent Daily Average"
 msgstr "Dagelijks gemiddelde (onlangs)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:514
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:521
 msgid "Recent Average"
 msgstr "Gemiddelde (onlangs)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:523
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:530
 msgid "Highest Today"
 msgstr "Hoogste (vandaag)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:525
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:532
 msgid "Highest This Week"
 msgstr "Hoogste (deze week)"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:527
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/library/dataUtils.js:534
 msgid "Highest Recently"
 msgstr "Hoogste (onlangs)"
 
@@ -1615,7 +1640,7 @@ msgstr "Ouder"
 msgid "In The Future"
 msgstr "In de toekomst"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/build/x86_64-linux-gnu/app/tagatuos2/tagatuos2.desktop.h:1
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/build/aarch64-linux-gnu/app/tagatuos2/tagatuos2.desktop.h:1
 msgid "Tagatuos"
 msgstr "Tagatuos"
 

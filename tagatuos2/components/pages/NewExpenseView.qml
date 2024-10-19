@@ -112,11 +112,13 @@ FocusScope {
                 let _txtDescr = descriptionField.text
                 let _txtCategory = categoryField.currentText
                 let _realValue = valueField.text.trim() == "" ? 0 : Functions.cleanExpenseValue(valueField.text)
+                let _txtTags = tagsField.tags
 
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
                 internal.expenseData.value = _realValue
+                internal.expenseData.tags = _txtTags
 
                 newExpenseView.createQuickExpense()
             }
@@ -182,6 +184,7 @@ FocusScope {
         if (entryMode) {
             /*Commits the OSK*/
             mainView.keyboard.commit()
+            tagsField.commitTag()
 
             if (!internal.checkRequiredFields(false)) {
                 mainView.tooltip.display(i18n.tr("Please fill required fields"))
@@ -192,6 +195,7 @@ FocusScope {
                 let _txtCategory = categoryField.currentText
                 let _realValue = Functions.cleanExpenseValue(valueField.text)
                 let _txtDate = Functions.getToday()
+                let _txtTags = tagsField.tags
 
                 if (!dateField.checked || isEditMode) {
                     _txtDate = Functions.formatDateForDB(dateField.dateValue)
@@ -201,6 +205,7 @@ FocusScope {
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
+                internal.expenseData.tags = _txtTags
 
                 if (valueField.processTravelData) {
                     internal.expenseData.value = valueField.convertedValue
@@ -269,6 +274,7 @@ FocusScope {
         internal.expenseData.description = _expenseDataForEdit.description
         internal.expenseData.category = _expenseDataForEdit.category
         internal.expenseData.value = _expenseDataForEdit.value
+        internal.expenseData.tags = _expenseDataForEdit.tags
         internal.expenseData.travelData.rate = _expenseDataForEdit.travelData.rate
         internal.expenseData.travelData.homeCur = _expenseDataForEdit.travelData.homeCur
         internal.expenseData.travelData.travelCur = _expenseDataForEdit.travelData.travelCur
@@ -290,6 +296,7 @@ FocusScope {
         internal.expenseData.description = _expenseDataForEntry.description
         internal.expenseData.category = _expenseDataForEntry.category
         internal.expenseData.value = _expenseDataForEntry.value
+        internal.expenseData.tags = _expenseDataForEntry.tags
         internal.expenseData.travelData.rate = _expenseDataForEntry.travelData.rate
         internal.expenseData.travelData.homeCur = _expenseDataForEntry.travelData.homeCur
         internal.expenseData.travelData.travelCur = _expenseDataForEntry.travelData.travelCur
@@ -594,6 +601,7 @@ FocusScope {
                                 internal.expenseData.reset()
                                 internal.expenseData.entryDate = Functions.getToday()
                                 internal.expenseData.name = searchField.text
+                                internal.expenseData.tags = mainView.getTagsOfTheDay()
 
                                 newExpenseView.switchToEntryMode()
                             }
@@ -740,6 +748,20 @@ FocusScope {
                             Layout.fillWidth: true
                             flickable: mainFlickable
                             text: internal.expenseData.description
+                        }
+
+                        TagsField {
+                            id: tagsField
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            tags: internal.expenseData.tags
+                            onVisibleChanged: {
+                                // Rebind value since `tags` is manipulated inside this component
+                                if (visible) {
+                                    tags = Qt.binding( function() { return internal.expenseData.tags } )
+                                }
+                            }
                         }
                     }
                 }

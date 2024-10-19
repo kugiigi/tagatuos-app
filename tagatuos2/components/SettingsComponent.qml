@@ -20,6 +20,9 @@ Item {
     property alias coloredText: settingsItem.coloredText
     property alias activeProfile: settingsItem.activeProfile
 
+    property alias tagOfTheDayDate: settingsItem.tagOfTheDayDate
+    property alias tagOfTheDay: settingsItem.tagOfTheDay
+
     // Interface
     property alias scrollPositionerPosition: settingsItem.scrollPositionerPosition
     property alias scrollPositionerSize: settingsItem.scrollPositionerSize
@@ -142,6 +145,7 @@ Item {
 
         property bool enableFastDateScroll: true
         property bool enableHeaderSwipeGesture: true
-
+        property string tagOfTheDayDate: ""
+        property string tagOfTheDay: ""
     }
 }

@@ -522,6 +522,24 @@ Pages.BasePage {
             }
         }
 
+        Components.TagsList {
+            id: tagsFlow
+
+            Layout.fillWidth: true
+            Layout.leftMargin: Suru.units.gu(3)
+            Layout.rightMargin: Suru.units.gu(3)
+            Layout.margins: Suru.units.gu(2)
+
+            readonly property var tagsList: mainView.settings.tagOfTheDay !== "" ? mainView.settings.tagOfTheDay.split(",") : []
+
+            model: tagsList
+            visible: opacity > 0
+            opacity: detailedListPage.isToday && mainView.settings.tagOfTheDayDate !== "" && Functions.isToday(mainView.settings.tagOfTheDayDate) ? 1 : 0
+            spacing: Suru.units.gu(1)
+
+            Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
+        }
+
         Common.BasePathView {
             id: dateViewPath
 
@@ -668,6 +686,7 @@ Pages.BasePage {
                         comments: model.descr
                         itemName: model.name
                         categoryName: model.category_name
+                        tags: model.tags
                         highlighted: listView.currentIndex == index
                         showDate: detailedListPage.isByMonth || detailedListPage.isByWeek || detailedListPage.isSortByDate
                         showCategory: detailedListPage.isSortByDate
@@ -679,6 +698,7 @@ Pages.BasePage {
                             contextMenu.itemData.entryDate = entryDate
                             contextMenu.itemData.category = model.category_name
                             contextMenu.itemData.value = homeValue
+                            contextMenu.itemData.tags = tags
                             contextMenu.itemData.description = comments
                             contextMenu.itemData.travelData.rate = exchangeRate
                             contextMenu.itemData.travelData.homeCur = homeCurrency

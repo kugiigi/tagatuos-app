@@ -16,8 +16,17 @@ TextArea {
     wrapMode: TextInput.WordWrap
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Backspace && text == "") {
-            focusScrollConnections.focusPrevious()
+        switch (event.key) {
+            case Qt.Key_Backspace:
+                if (text == "") {
+                    focusScrollConnections.focusPrevious()
+                }
+                break
+            case Qt.Key_Down:
+                if (text == "") {
+                    focusScrollConnections.focusNext()
+                }
+                break
         }
     }
     

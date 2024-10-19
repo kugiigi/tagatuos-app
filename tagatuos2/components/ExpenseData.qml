@@ -10,6 +10,7 @@ QtObject {
     property string description: ""
     property string category: ""
     property real value: 0
+    property string tags: ""
 
     readonly property QtObject travelData: QtObject {
         property real rate: mainView.settings.exchangeRate
@@ -25,6 +26,7 @@ QtObject {
         description = ""
         category = ""
         value = 0
+        tags = ""
 
         travelData.rate = mainView.settings.exchangeRate
         travelData.homeCur = mainView.settings.currentCurrency

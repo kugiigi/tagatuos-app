@@ -135,6 +135,7 @@ WorkerScript.onMessage = function (msg) {
                 let txtDateValue = msg.result[i].entry_date
                 let txtDate = formatDateForItem(txtDateValue, scope, sort)
                 let realValue = msg.result[i].value
+                let txtTags = msg.result[i].tags
                 let realTravelValue = msg.result[i].travel_value
                 let realRate = msg.result[i].rate
                 let txtHomeCur = msg.result[i].home_currency
@@ -160,6 +161,7 @@ WorkerScript.onMessage = function (msg) {
                     entry_date: txtDateValue,
                     entry_date_relative: txtDate,
                     value: realValue,
+                    tags: txtTags,
                     rate: realRate,
                     home_currency: txtHomeCur,
                     travel_currency: txtTravelCur,
@@ -230,6 +232,15 @@ WorkerScript.onMessage = function (msg) {
                 }
             }
 
+            break;
+        case "SearchExpenseTags":
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtTagName = msg.result[i].tag_name
+
+                msg.model.append({
+                                     tagName: txtTagName
+                                 })
+            }
             break;
         case "ThisWeekTrendChart":
         case "RecentTrendChart":

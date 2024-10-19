@@ -17,6 +17,7 @@ Item {
     readonly property string quickExpensesID: "QuickExpenses"
     readonly property string historyEntryExpensesID: "HistoryEntry"
     readonly property string searchExpenseID: "SearchExpense"
+    readonly property string searchExpenseTagsID: "SearchExpenseTags"
 
     readonly property string todayBreakdownChartID: "TodayBreakdownChart"
     readonly property string thisWeekBreakdownChartID: "ThisWeekBreakdownChart"
@@ -41,6 +42,7 @@ Item {
     property alias historyEntryExpensesModel: historyEntryExpensesModel
 
     property alias searchExpenseModel: searchExpenseModel
+    property alias searchExpenseTagsModel: searchExpenseTagsModel
 
     // Breakdown Chart Models
     property alias todayBreakdownChartModel: todayBreakdownChartModel
@@ -197,6 +199,9 @@ Item {
 
             case mainModels.searchExpenseID:
                 searchExpenseModel.loadingStatus = "Ready"
+                break
+            case mainModels.searchExpenseTagsID:
+                searchExpenseTagsModel.loadingStatus = "Ready"
                 break
 
             // Detailed List Models
@@ -391,6 +396,25 @@ Item {
 
         onSearchTextChanged: refresh()
         onOrderChanged: refresh()
+    }
+
+    // Model for tags auto-complete
+    Common.BaseListModel {
+        id: searchExpenseTagsModel
+
+        property string searchText: ""
+        property string order: "asc"
+        property string excludedList: ""
+        property int resultLimit: 5
+
+        modelId: mainModels.searchExpenseTagsID
+        worker: workerLoader
+
+        function refresh() {
+            fillData(mainView.expenses.searchTags(searchText, excludedList, resultLimit, order))
+        }
+
+        onSearchTextChanged: refresh()
     }
 
     // Detailed List Models

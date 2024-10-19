@@ -28,6 +28,7 @@
         <file>components/pages/detailedlistpage/CriteriaPopup.qml</file>
         <file>components/pages/detailedlistpage/ValuesSectionDelegate.qml</file>
         <file>components/pages/BottomSwipeUpConnection.qml</file>
+        <file>components/pages/TagOfTheDayDialog.qml</file>
         <file>components/pages/NewExpenseView.qml</file>
         <file>components/pages/newexpenseview/ContextActionsListView.qml</file>
         <file>components/pages/newexpenseview/QuickListGridDelegate.qml</file>
@@ -39,6 +40,7 @@
         <file>components/pages/newexpenseview/CategoryField.qml</file>
         <file>components/pages/newexpenseview/DateField.qml</file>
         <file>components/pages/newexpenseview/TravelDataFields.qml</file>
+        <file>components/pages/newexpenseview/TagsField.qml</file>
         <file>components/pages/DashboardPage.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChart.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChartContainer.qml</file>
@@ -93,6 +95,7 @@
         <file>components/CategoryRectangle.qml</file>
         <file>components/MenuDrawer.qml</file>
         <file>components/PopupPageStack.qml</file>
+        <file>components/TagsList.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandler.qml</file>
         <file>common/gestures/BottomHorizontalSwipeGesture.qml</file>
@@ -163,6 +166,7 @@
         <file>common/KeyboardRectangle.qml</file>
         <file>common/IconGroupedProperties.qml</file>
         <file>common/BaseToolbar.qml</file>
+        <file>common/ThinDivider.qml</file>
         <file>common/ToolbarActions.qml</file>
         <file>common/ToolbarButton.qml</file>
         <file>common/TimePicker.qml</file>

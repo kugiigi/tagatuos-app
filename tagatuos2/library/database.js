@@ -74,20 +74,28 @@ function insert(txtStatement) {
 }
 
 /*************Extra functions*************/
-function processTextForGLOB (text) {
+function processTextForGLOB (text, exactStart = false) {
     if (text.indexOf("*") > -1 || text.indexOf("?") > -1) {
         return " "
     }
 
-    return ["*", text, "*"].join("")
+    if (exactStart) {
+        return [text, "*"].join("")
+    } else {
+        return ["*", text, "*"].join("")
+    }
 }
 
-function processTextForLIKE (text) {
+function processTextForLIKE (text, exactStart = false) {
     if (text.indexOf("_") > -1 || text.indexOf("%") > -1) {
         return " "
     }
 
-    return ["%", text, "%"].join("")
+    if (exactStart) {
+        return [text, "%"].join("")
+    } else {
+        return ["%", text, "%"].join("")
+    }
 }
 
 
@@ -705,16 +713,48 @@ function alterMetaViewsForVersion4() {
 //Database Changes for User Version 5
 // Version 1.20 (Rewrite)
 function executeUserVersion5() {
+    createTagsRecord()
     alterMetaTablesForVersion5() // Add home_currency to profiles
+    alterMetaViewsForVersion5() // Adjust views for tags
     console.log("Database Upgraded to 5")
     upgradeUserVersion()
+}
+
+function dropMetaViewsVersion5() {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_monthsOfYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfWeek")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfThisWeek")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfLastWeek")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfPreviousRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfLastMonth")
+
+        tx.executeSql("DROP VIEW IF EXISTS expenses_today")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_yesterday")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_thisweek")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_thismonth")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_thisyear")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_recent")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_previousrecent")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_lastweek")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_lastmonth")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_lastyear")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_vw")
+    })
 }
 
 function alterMetaTablesForVersion5() {
     var db = openDB()
 
     db.transaction(function (tx) {
-        
         /* Move home_currency from travel_expenses to profiles table */
         // Don't delete from travel_expenses yet so data won't be totally lost
         // in case some people have different home currencies for some reason
@@ -750,6 +790,176 @@ function updateHomeCurrencyInProfiles(homeCurrency) {
 
     _db.transaction(function (tx) {
         tx.executeSql("UPDATE profiles SET home_currency = ?", [homeCurrency])
+    })
+}
+
+function createTagsRecord(){
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql("CREATE TABLE `expenses_tags` (`expense_id` INTEGER, `tag_name` TEXT, PRIMARY KEY (expense_id, tag_name) \
+                        , FOREIGN KEY (expense_id) REFERENCES expenses (expense_id) ON UPDATE CASCADE ON DELETE CASCADE)")
+    })
+}
+
+function alterMetaViewsForVersion5() {
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql("DROP VIEW IF EXISTS expenses_today")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_yesterday")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_thisweek")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_thismonth")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_recent")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_lastweek")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_lastmonth")
+        tx.executeSql("DROP VIEW IF EXISTS expenses_vw")
+
+        // New views for trend charts
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_monthsOfYear")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfWeek")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfPreviousRecent")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_weeksOfLastMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfThisMonth")
+        tx.executeSql("DROP VIEW IF EXISTS datelist_daysOfLastMonth")
+
+
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_vw AS SELECT a.profile_id, a.expense_id, a.category_name, a.name, a.descr, a.date, a.value \
+                    , IFNULL(group_concat(c.tag_name, ','), '') as tags \
+                    , IFNULL(b.home_currency, '') as home_currency, IFNULL(b.travel_currency, '') as travel_currency \
+                    , IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' \
+                    FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) \
+                    LEFT OUTER JOIN expenses_tags c USING(expense_id) \
+                    GROUP BY a.expense_id")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_today AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') = date('now','localtime')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_yesterday AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') = date('now','localtime','-1 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_thisweek AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','weekday 6','-6 days') AND date('now','localtime','weekday 6')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_thismonth AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now', 'localtime', 'start of month')  AND date('now','localtime','start of month','+1 month','-1 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_recent AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','-6 day') AND date('now','localtime')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_previousrecent AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','-13 day') AND date('now','localtime','-7 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_lastweek AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','weekday 6', '-13 days') AND date('now','localtime','weekday 6', '-7 days')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_lastmonth AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','start of month','-1 month') AND date('now','localtime','start of month','-1 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_thisyear AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now', 'localtime', 'start of year')  AND date('now','localtime','start of year','+1 year','-1 day')")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS expenses_lastyear AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , home_currency, travel_currency, rate, travel_value \
+                    FROM expenses_vw \
+                    WHERE date(date,'localtime') BETWEEN date('now','localtime','start of year','-1 year') AND date('now','localtime','start of year','-1 day')")
+
+        // Date List Views for Charts
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfThisYear AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of year') AS dt, date('now','start of year','+1 year','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfLastYear AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of year','-1 year') as dt, date('now','localtime','start of year','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_monthsOfYear AS WITH RECURSIVE rec AS ( \
+                                SELECT 1 AS month_num \
+                                UNION ALL SELECT month_num + 1 FROM rec WHERE month_num < 12 \
+                            ) \
+                            SELECT PRINTF('%02d', month_num) AS month_num FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT 0 AS day_num \
+                                UNION ALL SELECT day_num + 1 FROM rec WHERE day_num < 6 \
+                            ) \
+                            SELECT cast(day_num as text) AS day_num FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfRecent AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','-6 day') AS dt, date('now','localtime') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) as day_num, dt as date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfPreviousRecent AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','-13 day') AS dt, date('now','localtime','-7 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) as day_num, dt as date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfThisMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of month') AS dt, date('now','localtime','start of month','+1 month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_weeksOfLastMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of month','-1 month') AS dt, date('now','localtime','start of month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+7 day'), last_dt FROM rec WHERE dt < date(last_dt, '-6 day') \
+                            ) \
+                            SELECT strftime('%W', dt) AS week_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfThisMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now', 'localtime', 'start of month') AS dt, date('now','localtime','start of month','+1 month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%d', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfLastMonth AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','start of month','-1 month') AS dt, date('now','localtime','start of month','-1 day') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%d', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfThisWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','weekday 6','-6 days') AS dt, date('now','localtime','weekday 6') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) AS day_num, dt AS date FROM rec")
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS datelist_daysOfLastWeek AS WITH RECURSIVE rec AS ( \
+                                SELECT date('now','localtime','weekday 6', '-13 days') AS dt, date('now','localtime','weekday 6', '-7 days') AS last_dt \
+                                UNION ALL SELECT date(dt, 'localtime', '+1 day'), last_dt FROM rec WHERE dt < last_dt \
+                            ) \
+                            SELECT strftime('%w', dt) AS day_num, dt AS date FROM rec")
     })
 }
 
@@ -1020,10 +1230,10 @@ function getExpenseDetailedData(intProfileId, txtCategory, txtScope, txtDateFrom
     let _txtFullStatement = ""
     let _arrArgs = []
 
-    //~ console.log (txtDateFrom + " - " + txtDateTo)
+    // console.log (txtDateFrom + " - " + txtDateTo)
     _db.transaction(function (tx) {
         _txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                ,value, home_currency, travel_currency, rate, travel_value"
+                                ,value, tags, home_currency, travel_currency, rate, travel_value"
         if (txtSort == "category") {
             _txtSelectStatement = _txtSelectStatement + ", TOTAL(value) OVER (PARTITION BY category_name) AS group_total \
                                                          , TOTAL(travel_value) OVER (PARTITION BY category_name) AS group_travel_total"
@@ -1280,7 +1490,7 @@ function getExpenseTrend(intProfileId, txtRange, txtMode, arrCategories, txtFrom
                                 , _txtWhereStatement, _txtExtraWhereStatement, _txtCategoryWhereStatement
                                 , _txtGroupStatement, _txtOrderStatement].join(" ")
 
-    //~ console.log(_txtFullStatement)
+    // console.log(_txtFullStatement)
     _db.transaction(function (tx) {
         if (_isCustom) {
             _rs = tx.executeSql(_txtFullStatement, [intProfileId, fromDate, toDate])
@@ -1550,16 +1760,16 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     let txtLimitStatement = ""
 
     // List items that match the name before descr
-    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value, home_currency, travel_currency, rate, travel_value"
+    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value, home_currency, travel_currency, rate, travel_value, tags"
     txtFromStatement = "FROM ( \
-                        SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 1 as score \
+                        SELECT name, category_name, descr, value, tags, date, home_currency, travel_currency, rate, travel_value, 1 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
                         AND (UPPER(name) LIKE UPPER(?) \
                         OR name GLOB ?) \
                         GROUP BY name, category_name, descr, value \
                         UNION \
-                        SELECT name, category_name, descr, value, date, home_currency, travel_currency, rate, travel_value, 0 as score \
+                        SELECT name, category_name, descr, value, tags, date, home_currency, travel_currency, rate, travel_value, 0 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
                         AND (UPPER(descr) LIKE UPPER(?) \
@@ -1603,7 +1813,7 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
 
         txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                , value, home_currency, travel_currency, rate, travel_value \
+                                , value, tags, home_currency, travel_currency, rate, travel_value \
                                 , CASE WHEN name GLOB ? THEN 1 \
                                      WHEN descr GLOB ? THEN 2 \
                                      WHEN name LIKE ? THEN 3 \
@@ -1653,8 +1863,8 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
         txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
-        //~ console.log(txtFullStatement)
-        //~ console.log(JSON.stringify(arrBindValues))
+        // console.log(txtFullStatement)
+        // console.log(JSON.stringify(arrBindValues))
         db.transaction(function (tx) {
             rs = tx.executeSql(txtFullStatement, arrBindValues)
 
@@ -1682,6 +1892,8 @@ function addNewExpense(intProfileId, expenseData, travelData) {
     let _txtCategory = expenseData.category
     let _txtDescr = expenseData.description
     let _realValue = expenseData.value
+    let _txtTags = expenseData.tags
+    let _hasTags = _txtTags.trim() !== ""
 
     txtSaveStatement = 'INSERT INTO expenses (profile_id, category_name, name, descr, date, value) VALUES(?, ?, ?, ?, strftime("%Y-%m-%d %H:%M:%f", ?, "utc"), ?)'
 
@@ -1690,14 +1902,20 @@ function addNewExpense(intProfileId, expenseData, travelData) {
             tx.executeSql(txtSaveStatement,
                           [intProfileId, _txtCategory, _txtName, _txtDescr, _txtEntryDate, _realValue])
 
-            // Add Travel Data
-            if (travelData) {
+            if (travelData || _hasTags) {
                 rs = tx.executeSql("SELECT MAX(expense_id) as id FROM expenses")
                 let _newID = rs.rows.item(0).id
 
-                addTravelData(_newID, travelData)
+                // Save tags
+                if (_hasTags) {
+                    saveExpenseTags(_newID, _txtTags)
+                }
+
+                // Add Travel Data
+                if (travelData) {
+                    addTravelData(_newID, travelData)
+                }
             }
-    
         })
 
         success = true
@@ -1745,6 +1963,7 @@ function updateExpense(expenseData, travelData) {
     let _txtCategory = expenseData.category
     let _txtDescr = expenseData.description
     let _realValue = expenseData.value
+    let _txtTags = expenseData.tags
     let _travelData = travelData
 
     _txtUpdateStatement = 'UPDATE expenses SET category_name = ?, name = ?, descr = ?, date = strftime("%Y-%m-%d %H:%M:%f", ?, "utc"), value = ? WHERE expense_id = ?'
@@ -1757,6 +1976,9 @@ function updateExpense(expenseData, travelData) {
 
             tx.executeSql(_txtUpdateStatement, [_txtCategory, _txtName, _txtDescr, _txtEntryDate, _realValue, _txtID])
         })
+
+        // Update tags
+        saveExpenseTags(_txtID, _txtTags)
 
         // Update Travel Data
         if (_travelData.rate > 0 && _travelData.homeCur != ""
@@ -1808,7 +2030,7 @@ function getQuickExpenses(intProfileId, txtSearchText) {
     }
 
     txtSelectStatement = [txtSelectStatement, txtWhereStatement, txtWhereStatement2, txtOrderStatement].join(" ")
-    //~ console.log(txtSelectStatement)
+    // console.log(txtSelectStatement)
     db.transaction(function (tx) {
         if (txtSearchText) {
             let wildcard = "%" + txtSearchText + "%"
@@ -1976,6 +2198,7 @@ function deleteExpense(intProfileId, txtExpenseID) {
         success = true
 
         deleteTravelExpense(txtExpenseID)
+        deleteExpenseTags(txtExpenseID)
     } catch (err) {
         console.log("Database error: " + "Profiled ID-" + intProfileId + "Expense ID-" + txtExpenseID)
         console.log("Error message: " + err)
@@ -1996,4 +2219,138 @@ function deleteTravelExpense(txtExpenseID) {
     db.transaction(function (tx) {
         tx.executeSql(txtDeleteStatement, [txtExpenseID])
     })
+}
+
+function saveExpenseTags(txtExpenseID, txtExpenseTags) {
+    let _db = openDB()
+    let _rs = null
+    let _success = true
+    let _errorMsg = ""
+    let _result
+
+    // Delete all tags first so we also sync tags when saving
+    deleteExpenseTags(txtExpenseID)
+
+    if (txtExpenseTags.trim() !== "") {
+        let _txtSaveStatement = 'INSERT INTO expenses_tags(expense_id, tag_name) VALUES(?,?)'
+        let _arrTags = txtExpenseTags.split(",")
+
+        for (let i = 0; i < _arrTags.length; i++) {
+            let _tag = _arrTags[i]
+
+            try {
+                _db.transaction(function (tx) {
+                    tx.executeSql(_txtSaveStatement, [txtExpenseID, _tag])
+                })
+
+                _success = true
+            } catch (err) {
+                console.log("Database error: " + err)
+                _errorMsg = err
+                _success = false
+            }
+        }
+    }
+
+    _result = {"success": _success, "error": _errorMsg}
+    
+    return _result
+}
+
+function deleteExpenseTags(txtExpenseID) {
+    let txtDeleteStatement
+    let db = openDB()
+
+    txtDeleteStatement = 'DELETE FROM expenses_tags WHERE expense_id = ?'
+
+    db.transaction(function (tx) {
+        tx.executeSql(txtDeleteStatement, [txtExpenseID])
+    })
+}
+
+function deleteExpenseTag(txtExpenseID, txtTagName) {
+    let txtDeleteStatement
+    let db = openDB()
+
+    txtDeleteStatement = 'DELETE FROM expenses_tags WHERE expense_id = ? AND tag_name = ?'
+
+    db.transaction(function (tx) {
+        tx.executeSql(txtDeleteStatement, [txtExpenseID, txtTagName])
+    })
+}
+
+function searchExpensesTags(intProfileId, txtSearchText, txtExcludedList, intLimit=10, txtSort ="asc") {
+    let arrResults = []
+
+    if (txtSearchText.trim() !== "") {
+        let db = openDB()
+        let rs = null
+        let txtFullStatement = ""
+        let txtSelectStatement = ""
+        let txtFromStatement = ""
+        let txtWhereStatement = ""
+        let txtOrderStatement = ""
+        let txtLimitStatement = ""
+        let txtFullSearchTextGLOB = processTextForGLOB(txtSearchText, false)
+        let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText, false)
+        let txtFullSearchTextGLOBExactStart = processTextForGLOB(txtSearchText, true)
+        let txtFullSearchTextLIKEExactStart = processTextForLIKE(txtSearchText, true)
+        let arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE]
+        let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
+
+        txtSelectStatement = "SELECT DISTINCT b.tag_name \
+                                , CASE WHEN b.tag_name GLOB ? THEN 1 \
+                                     WHEN b.tag_name LIKE ? THEN 2 \
+                                     WHEN b.tag_name GLOB ? THEN 3 \
+                                     WHEN b.tag_name LIKE ? THEN 4"
+
+        txtSelectStatement = txtSelectStatement + " END as score"
+
+        arrBindValues.push(intProfileId)
+
+        txtFromStatement = "FROM expenses a, expenses_tags b"
+
+        txtWhereStatement = "WHERE a.profile_id = ? AND ("
+        txtWhereStatement = txtWhereStatement + "b.tag_name GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR b.tag_name LIKE ?"
+        txtWhereStatement = txtWhereStatement + " OR b.tag_name GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR b.tag_name LIKE ?"
+        txtWhereStatement = txtWhereStatement + ")"
+
+        let _txtTermGLOB = processTextForGLOB(txtSearchText, false)
+        let _txtTermLIKE = processTextForLIKE(txtSearchText, false)
+        let _txtTermGLOBExactStart = processTextForGLOB(txtSearchText, true)
+        let _txtTermLIKEExactStart = processTextForLIKE(txtSearchText, true)
+        arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
+
+        // Exclude results based on the comma-separated list provided
+        if (txtExcludedList.trim() !== "") {
+            let _arrExcludedTerms = txtExcludedList.split(",")
+
+            for (let i = 0; i < _arrExcludedTerms.length; i++) {
+                let _term = _arrExcludedTerms[i]
+                txtWhereStatement = txtWhereStatement + " AND tag_name <> ?"
+                arrBindValues.push(_term)
+            }
+        }
+
+        txtOrderStatement = "ORDER BY score " + txtSortBy
+        txtOrderStatement = txtOrderStatement + ", length(b.tag_name) ASC"
+        txtLimitStatement = "LIMIT ?"
+        arrBindValues.push(intLimit)
+        txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
+        // console.log(txtFullStatement)
+        // console.log(JSON.stringify(arrBindValues))
+        db.transaction(function (tx) {
+            rs = tx.executeSql(txtFullStatement, arrBindValues)
+
+            arrResults.length = rs.rows.length
+
+            for (let i = 0; i < rs.rows.length; i++) {
+                arrResults[i] = rs.rows.item(i)
+            }
+        })
+    }
+
+    return arrResults
 }

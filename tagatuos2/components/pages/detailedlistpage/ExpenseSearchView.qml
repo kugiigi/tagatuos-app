@@ -133,6 +133,7 @@ Item {
                     comments: model.descr
                     itemName: model.name
                     categoryName: model.category_name
+                    tags: model.tags
                     highlighted: resultsListView.currentIndex == index
 
                     onShowContextMenu: {
@@ -142,6 +143,7 @@ Item {
                         expenseSearchView.contextMenu.itemData.category = model.category_name
                         expenseSearchView.contextMenu.itemData.value = homeValue
                         expenseSearchView.contextMenu.itemData.description = comments
+                        expenseSearchView.contextMenu.itemData.tags = tags
                         expenseSearchView.contextMenu.itemData.travelData.rate = exchangeRate
                         expenseSearchView.contextMenu.itemData.travelData.homeCur = homeCurrency
                         expenseSearchView.contextMenu.itemData.travelData.travelCur = travelCurrency

@@ -86,10 +86,8 @@ Rectangle {
         }
     }
 
-    Rectangle {
+    ThinDivider {
         visible: backgroundRec.showDivider
-        height: control.Suru.units.dp(1)
-        color: control.Suru.neutralColor
         anchors {
             left: parent.left
             right: parent.right

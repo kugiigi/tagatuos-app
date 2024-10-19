@@ -243,6 +243,7 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtTags = expenseData.tags
                     let _travelData
 
                     // Travel Data
@@ -256,6 +257,7 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "tags": _txtTags
                     }
 
                     let _result = Database.addNewExpense(profile, _data, _travelData)
@@ -272,6 +274,7 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtTags = expenseData.tags
                     let _travelData = expenseData.travelData
 
                     const _data = {
@@ -281,6 +284,7 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "tags": _txtTags
                     }
 
                     let _result = Database.updateExpense(_data, _travelData)
@@ -321,6 +325,9 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
                 , search: function(searchText, limit, sort) {
                     return Database.searchExpenses(profile, searchText, limit, sort)
+                }
+                , searchTags: function(searchText, excludedList, limit, sort) {
+                    return Database.searchExpensesTags(profile, searchText, excludedList, limit, sort)
                 }
                 , lastDateWithData: function(category, dateBase, scope) {
                     return Database.getDateWithData(false, profile, category, dateBase, scope)
