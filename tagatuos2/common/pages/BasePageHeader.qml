@@ -270,7 +270,12 @@ QQC2.ToolBar {
     }
 
     Item {
-        anchors.fill: bottomBackForwardHandle
+        height: pageHeader.defaultHeight
+        anchors {
+            left: bottomBackForwardHandle.left
+            right: bottomBackForwardHandle.right
+            bottom: bottomBackForwardHandle.bottom
+        }
 
         Gestures.GoIndicator {
             id: goForwardIcon
