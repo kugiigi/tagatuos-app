@@ -693,6 +693,31 @@ FocusScope {
 
                             Layout.fillWidth: true
                             showToggle: !newExpenseView.isEditMode
+
+                            // Remove tags of the day when the date isn't today
+                            onDateValueChanged: {
+                                let _tagsOfTheDay = mainView.getTagsOfTheDay()
+
+                                if (_tagsOfTheDay !== "" && !checked && !newExpenseView.isEditMode) {
+                                    let _isToday = Functions.isToday(dateValue)
+
+                                    if (!_isToday && tagsField.tags === _tagsOfTheDay) {
+                                        tagsField.tags = ""
+                                    } else if (_isToday && tagsField.tags === "") {
+                                        tagsField.tags = _tagsOfTheDay
+                                    }
+                                }
+                            }
+
+                            onCheckedChanged: {
+                                if (checked) {
+                                    let _tagsOfTheDay = mainView.getTagsOfTheDay()
+
+                                    if (_tagsOfTheDay !== "" && !newExpenseView.isEditMode && tagsField.tags === "") {
+                                        tagsField.tags = _tagsOfTheDay
+                                    }
+                                }
+                            }
                         }
 
                         NameField {
