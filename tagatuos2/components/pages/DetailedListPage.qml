@@ -522,22 +522,33 @@ Pages.BasePage {
             }
         }
 
-        Components.TagsList {
-            id: tagsFlow
-
+        Rectangle {
             Layout.fillWidth: true
-            Layout.leftMargin: Suru.units.gu(3)
-            Layout.rightMargin: Suru.units.gu(3)
-            Layout.margins: Suru.units.gu(2)
 
-            readonly property var tagsList: mainView.settings.tagOfTheDay !== "" ? mainView.settings.tagOfTheDay.split(",") : []
+            z: dateViewPath.z + 1
+            implicitHeight: tagsFlow.height + Suru.units.gu(2)
+            color: Suru.backgroundColor
 
-            model: tagsList
-            visible: opacity > 0
-            opacity: detailedListPage.isToday && mainView.settings.tagOfTheDayDate !== "" && Functions.isToday(mainView.settings.tagOfTheDayDate) ? 1 : 0
-            spacing: Suru.units.gu(1)
+            Components.TagsList {
+                id: tagsFlow
 
-            Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
+                readonly property var tagsList: mainView.settings.tagOfTheDay !== "" ? mainView.settings.tagOfTheDay.split(",") : []
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                    margins: Suru.units.gu(3)
+                }
+
+                model: tagsList
+                visible: opacity > 0
+                opacity: detailedListPage.isToday && mainView.settings.tagOfTheDayDate !== "" && Functions.isToday(mainView.settings.tagOfTheDayDate) ? 1 : 0
+                spacing: Suru.units.gu(1)
+                textLevel: Suru.Paragraph
+
+                Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
+            }
         }
 
         Common.BasePathView {
