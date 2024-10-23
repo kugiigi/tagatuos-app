@@ -529,6 +529,13 @@ Pages.BasePage {
             implicitHeight: tagsFlow.height + Suru.units.gu(2)
             color: Suru.backgroundColor
 
+            // Suru.animations.EasingInOut doesn't reach exact 1 or 0 so we have to use 0.01
+            visible: opacity > 0.01
+
+            opacity: detailedListPage.isToday && mainView.settings.tagOfTheDayDate !== "" && Functions.isToday(mainView.settings.tagOfTheDayDate) ? 1 : 0
+
+            Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
+
             Components.TagsList {
                 id: tagsFlow
 
@@ -542,12 +549,8 @@ Pages.BasePage {
                 }
 
                 model: tagsList
-                visible: opacity > 0
-                opacity: detailedListPage.isToday && mainView.settings.tagOfTheDayDate !== "" && Functions.isToday(mainView.settings.tagOfTheDayDate) ? 1 : 0
                 spacing: Suru.units.gu(1)
                 textLevel: Suru.Paragraph
-
-                Behavior on opacity { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.BriskDuration } }
             }
         }
 
