@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 06:44+0000\n"
+"POT-Creation-Date: 2024-10-23 07:12+0000\n"
 "PO-Revision-Date: 2023-09-30 13:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -1330,11 +1330,11 @@ msgstr "Huidige datum en tijd gebruiken"
 msgid "Add description, more details or comments"
 msgstr "Voeg een omschrijving, aantekening of meer informatie toe"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:73
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:76
 msgid "Add tags (Enter comma after each tag)"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:195
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:198
 msgid "Clear all tags"
 msgstr ""
 

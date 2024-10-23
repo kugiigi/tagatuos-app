@@ -184,7 +184,7 @@ FocusScope {
         if (entryMode) {
             /*Commits the OSK*/
             mainView.keyboard.commit()
-            tagsField.commitTag()
+            tagsField.commitTag("", false)
 
             if (!internal.checkRequiredFields(false)) {
                 mainView.tooltip.display(i18n.tr("Please fill required fields"))

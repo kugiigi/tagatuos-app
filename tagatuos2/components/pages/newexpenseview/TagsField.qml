@@ -24,7 +24,7 @@ TextField {
         onTriggered: tagsField.forceActiveFocus()
     }
 
-    function commitTag(_newTag = "") {
+    function commitTag(_newTag = "", _refocus = true) {
         if (_newTag && _newTag.trim() !== "") {
             addToTags(_newTag)
         } else {
@@ -34,7 +34,10 @@ TextField {
         }
 
         text = ""
-        delayedActiveFocus()
+
+        if (_refocus) {
+            delayedActiveFocus()
+        }
     }
 
     // To properly focus in most events especially when pressing Enter
@@ -90,7 +93,7 @@ TextField {
 
             if (_text.charAt(_text.length - 1) === ",") {
                 if (_newTag.trim() !== "") {
-                    tagsField.commitTag(_newTag)
+                    tagsField.commitTag(_newTag, false)
                 } else {
                     text = ""
                 }
@@ -102,7 +105,7 @@ TextField {
 
     onVisibleChanged: if (visible) text = ""
     onIsFocusedChanged: if (!isFocused) mainView.mainModels.searchExpenseTagsModel.searchText = ""
-    onAccepted: commitTag(text)
+    onAccepted: commitTag(text, true)
 
     Timer {
         id: searchDelay
@@ -276,7 +279,7 @@ TextField {
             }
             text: model ? model.tagName : ""
             onClicked: {
-                tagsField.commitTag(text)
+                tagsField.commitTag(text, true)
             }
             contentItem: Label {
                 text: itemDelegate.text
