@@ -175,6 +175,9 @@ GridView {
             value: showTravelValue ? model.travel_value : model.value
             description: model.description
             categoryName: model.categoryName
+            payeeName: model.payeeName
+            payeeLocation: model.payeeLocation
+            payeeOtherDescr: model.payeeOtherDescr
             isTravelMode: quickListGridView.isTravelMode
             travelCurrency: model.travel_currency ? model.travel_currency : ""
 
@@ -186,6 +189,9 @@ GridView {
                 quickListGridView.expenseData.category = categoryName
                 quickListGridView.expenseData.value = value
                 quickListGridView.expenseData.tags = mainView.getTagsOfTheDay()
+                quickListGridView.expenseData.payeeName = payeeName
+                quickListGridView.expenseData.payeeLocation = payeeLocation
+                quickListGridView.expenseData.payeeOtherDescription = payeeOtherDescr
 
                 if (showTravelValue) {
                     quickListGridView.expenseData.value = model.value
@@ -215,6 +221,9 @@ GridView {
                 expenseData.category = categoryName
                 expenseData.value = value
                 expenseData.tags = mainView.getTagsOfTheDay()
+                expenseData.payeeName = payeeName
+                expenseData.payeeLocation = payeeLocation
+                expenseData.payeeOtherDescription = payeeOtherDescr
 
                 if (showTravelValue) {
                     expenseData.value = model.value

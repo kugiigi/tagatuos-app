@@ -36,13 +36,16 @@ Pages.BasePage {
         
         onTrigger: {
             let _popup = addEditDialog.createObject(mainView.mainSurface, { mode: "add", currencySymbol: mainView.settings.currentCurrencySymbol })
-            _popup.proceed.connect(function(category, name, description, value) {
+            _popup.proceed.connect(function(category, name, description, value, payeeName, payeeLocation, payeeOtherDescr) {
                 let _tooltipMsg
 
                 internal.expenseData.name = name
                 internal.expenseData.description = description
                 internal.expenseData.category = category
                 internal.expenseData.value = value
+                internal.expenseData.payeeName = payeeName
+                internal.expenseData.payeeLocation = payeeLocation
+                internal.expenseData.payeeOtherDescription = payeeOtherDescr
 
                 let _result = mainView.quickExpenses.add(internal.expenseData)
                 if (_result.success) {
@@ -76,7 +79,7 @@ Pages.BasePage {
                 , expenseData: contextMenu.itemData
             }
             let _popup = addEditDialog.createObject(mainView.mainSurface, _properties)
-            _popup.proceed.connect(function(category, name, description, value) {
+            _popup.proceed.connect(function(category, name, description, value, payeeName, payeeLocation, payeeOtherDescr) {
                 let _tooltipMsg
 
                 internal.expenseData.expenseID = contextMenu.itemData.expenseID
@@ -84,6 +87,9 @@ Pages.BasePage {
                 internal.expenseData.description = description
                 internal.expenseData.category = category
                 internal.expenseData.value = value
+                internal.expenseData.payeeName = payeeName
+                internal.expenseData.payeeLocation = payeeLocation
+                internal.expenseData.payeeOtherDescription = payeeOtherDescr
 
                 let _result = mainView.quickExpenses.edit(internal.expenseData)
                 if (_result.success) {
@@ -181,6 +187,9 @@ Pages.BasePage {
             comments: model.description
             itemName: model.name
             categoryName: model.categoryName
+            payeeName: model.payeeName
+            payeeLocation: model.payeeLocation
+            payeeOtherDescr: model.payeeOtherDescr
             highlighted: listView.currentIndex == index
             showDate: false
             showCategory: true
@@ -191,6 +200,9 @@ Pages.BasePage {
                 contextMenu.itemData.name = itemName
                 contextMenu.itemData.category = categoryName
                 contextMenu.itemData.value = homeValue
+                contextMenu.itemData.payeeName = payeeName
+                contextMenu.itemData.payeeLocation = payeeLocation
+                contextMenu.itemData.payeeOtherDescription = payeeOtherDescr
                 contextMenu.itemData.description = comments
                 contextMenu.itemData.travelData.homeCur = homeCurrency
 

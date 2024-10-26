@@ -187,12 +187,18 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
                     const _data = {
                         "name": _txtName
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.addQuickExpense(profile, _data)
@@ -208,6 +214,9 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
                     const _data = {
                         "id": _txtID
@@ -215,6 +224,9 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.editQuickExpense(profile, _data)
@@ -244,6 +256,9 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
                     let _txtTags = expenseData.tags
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
                     let _travelData
 
                     // Travel Data
@@ -258,6 +273,9 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "category": _txtCategory
                         , "value": _realValue
                         , "tags": _txtTags
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.addNewExpense(profile, _data, _travelData)
@@ -275,6 +293,9 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
                     let _txtTags = expenseData.tags
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
                     let _travelData = expenseData.travelData
 
                     const _data = {
@@ -285,6 +306,9 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "category": _txtCategory
                         , "value": _realValue
                         , "tags": _txtTags
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.updateExpense(_data, _travelData)
@@ -328,6 +352,9 @@ var dataUtils = dataUtils || (function (undefined) {
                 }
                 , searchTags: function(searchText, excludedList, limit, sort) {
                     return Database.searchExpensesTags(profile, searchText, excludedList, limit, sort)
+                }
+                , searchPayees: function(mode, searchText, payeeName, payeeLocation, limit, sort) {
+                    return Database.searchExpensesPayees(mode, profile, searchText, payeeName, payeeLocation, limit, sort)
                 }
                 , lastDateWithData: function(category, dateBase, scope) {
                     return Database.getDateWithData(false, profile, category, dateBase, scope)

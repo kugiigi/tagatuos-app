@@ -119,18 +119,6 @@ TextField {
         }
     }
 
-    Item {
-        id: menuAnchorItem
-
-        width: parent.width * 0.8 > Suru.units.gu(40) ? parent.width * 0.8 : Suru.units.gu(40)
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: parent.top
-            bottom: parent.bottom
-            margins: Suru.units.gu(-1)
-        }
-    }
-
     Keys.onUpPressed: focusScrollConnections.focusPrevious()
     Keys.onDownPressed: {
         if (autoCompleteListView.visible && autoCompleteListView.count > 0) {

@@ -63,6 +63,9 @@ WorkerScript.onMessage = function (msg) {
                 let txtName = msg.result[i].name
                 let txtDescr = msg.result[i].descr
                 let txtValue = msg.result[i].value
+                let txtPayeeName = msg.result[i].payee_name
+                let txtPayeeLocation = msg.result[i].payee_location
+                let txtPayeeOtherDescr = msg.result[i].payee_other_descr
 
                 msg.model.append({
                                      quickID: txtID
@@ -70,6 +73,9 @@ WorkerScript.onMessage = function (msg) {
                                      , name: txtName
                                      , description: txtDescr
                                      , value: txtValue
+                                     , payeeName: txtPayeeName
+                                     , payeeLocation: txtPayeeLocation
+                                     , payeeOtherDescr: txtPayeeOtherDescr
                                  })
             }
             break;
@@ -79,6 +85,9 @@ WorkerScript.onMessage = function (msg) {
                 let txtCategoryName = msg.result[i].category_name
                 let txtDescr = msg.result[i].descr
                 let txtValue = msg.result[i].value
+                let txtPayeeName = msg.result[i].payee_name
+                let txtPayeeLocation = msg.result[i].payee_location
+                let txtPayeeOtherDescr = msg.result[i].payee_other_descr
                 let realTravelValue = msg.result[i].travel_value
                 let realRate = msg.result[i].rate
                 let txtHomeCur = msg.result[i].home_currency
@@ -89,6 +98,9 @@ WorkerScript.onMessage = function (msg) {
                                      , categoryName: txtCategoryName
                                      , description: txtDescr
                                      , value: txtValue
+                                     , payeeName: txtPayeeName
+                                     , payeeLocation: txtPayeeLocation
+                                     , payeeOtherDescr: txtPayeeOtherDescr
                                      , rate: realRate
                                      , home_currency: txtHomeCur
                                      , travel_currency: txtTravelCur
@@ -136,6 +148,9 @@ WorkerScript.onMessage = function (msg) {
                 let txtDate = formatDateForItem(txtDateValue, scope, sort)
                 let realValue = msg.result[i].value
                 let txtTags = msg.result[i].tags
+                let txtPayeeName = msg.result[i].payee_name
+                let txtPayeeLocation = msg.result[i].payee_location
+                let txtPayeeOtherDescr = msg.result[i].payee_other_descr
                 let realTravelValue = msg.result[i].travel_value
                 let realRate = msg.result[i].rate
                 let txtHomeCur = msg.result[i].home_currency
@@ -162,6 +177,9 @@ WorkerScript.onMessage = function (msg) {
                     entry_date_relative: txtDate,
                     value: realValue,
                     tags: txtTags,
+                    payee_name: txtPayeeName,
+                    payee_location: txtPayeeLocation,
+                    payee_other_descr: txtPayeeOtherDescr,
                     rate: realRate,
                     home_currency: txtHomeCur,
                     travel_currency: txtTravelCur,
@@ -239,6 +257,46 @@ WorkerScript.onMessage = function (msg) {
 
                 msg.model.append({
                                      tagName: txtTagName
+                                 })
+            }
+            break;
+        case "SearchExpensePayees":
+            for (let i = 0; i < msg.result.length; i++) {
+                let txtPayeeName = msg.result[i].payee_name
+                let txtPayeeLocation = msg.result[i].location
+                let txtPayeeOtherDescr = msg.result[i].other_descr
+                let txtMode = msg.result[i].mode
+                
+                switch (txtMode) {
+                    case "payeeName":
+                        if (i === 0) {
+                            msg.model.append({
+                                             payeeName: txtPayeeName
+                                             , payeeLocation: ""
+                                             , payeeOtherDescr: ""
+                                         })
+                        }
+                        break
+                    case "location":
+                        txtPayeeName = ""
+                        if (i === 0 && txtPayeeOtherDescr !== "") {
+                            msg.model.append({
+                                             payeeName: ""
+                                             , payeeLocation: txtPayeeLocation
+                                             , payeeOtherDescr: ""
+                                         })
+                        }
+                        break
+                    case "otherDescr":
+                        txtPayeeName = ""
+                        txtPayeeLocation = ""
+                        break
+                }
+
+                msg.model.append({
+                                     payeeName: txtPayeeName
+                                     , payeeLocation: txtPayeeLocation
+                                     , payeeOtherDescr: txtPayeeOtherDescr
                                  })
             }
             break;

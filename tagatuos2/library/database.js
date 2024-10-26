@@ -714,8 +714,9 @@ function alterMetaViewsForVersion4() {
 // Version 1.20 (Rewrite)
 function executeUserVersion5() {
     createTagsRecord()
+    createPayeesRecord()
     alterMetaTablesForVersion5() // Add home_currency to profiles
-    alterMetaViewsForVersion5() // Adjust views for tags
+    alterMetaViewsForVersion5() // Adjust views for tags and payees
     console.log("Database Upgraded to 5")
     upgradeUserVersion()
 }
@@ -768,18 +769,29 @@ function alterMetaTablesForVersion5() {
         // tx.executeSql(
         //              "CREATE TABLE IF NOT EXISTS `travel_expenses_new` (`expense_id`	INTEGER,`travel_currency`	TEXT,`rate`	REAL, `value` REAL,PRIMARY KEY(expense_id));")
 
+        // Add payee fields to quick expenses table
+        tx.executeSql(
+                    "CREATE TABLE IF NOT EXISTS `quick_expenses_new` (profile_id INTEGER REFERENCES profiles(profile_id) DEFAULT 1 \
+                    , `quick_id` INTEGER PRIMARY KEY AUTOINCREMENT, `category_name`	TEXT NOT NULL DEFAULT " + i18n.tr("Uncategorized") +
+                    ", `name` TEXT, `descr` TEXT, `value` REAL \
+                    , `payee_name` TEXT, `payee_location` TEXT, `payee_other_descr` TEXT \
+                    , FOREIGN KEY (profile_id, category_name) REFERENCES categories (profile_id, category_name) ON UPDATE CASCADE ON DELETE CASCADE)")
+
         /* Insert old data to recreated tables */
         // Update home currency from 'USD' to actual after settings component was loaded
         tx.executeSql("INSERT INTO profiles_new SELECT profile_id, active, display_name, 'USD', enable_overlay, overlay_color, overlay_opacity FROM profiles")
         // tx.executeSql("INSERT INTO travel_expenses_new SELECT expense_id, travel_currency, rate, value FROM travel_expenses")
+        tx.executeSql("INSERT INTO quick_expenses_new SELECT *,'','','' FROM quick_expenses") 
 
         /* Drop old tables */
         tx.executeSql("DROP TABLE profiles")
         // tx.executeSql("DROP TABLE travel_expenses")
+        tx.executeSql("DROP TABLE quick_expenses")
 
         /* Rename recreated tables to correct old names */
         tx.executeSql("ALTER TABLE profiles_new RENAME TO profiles")
         // tx.executeSql("ALTER TABLE travel_expenses_new RENAME TO travel_expenses")
+        tx.executeSql("ALTER TABLE quick_expenses_new RENAME TO quick_expenses")
     })
 }
 
@@ -798,6 +810,16 @@ function createTagsRecord(){
 
     db.transaction(function (tx) {
         tx.executeSql("CREATE TABLE `expenses_tags` (`expense_id` INTEGER, `tag_name` TEXT, PRIMARY KEY (expense_id, tag_name) \
+                        , FOREIGN KEY (expense_id) REFERENCES expenses (expense_id) ON UPDATE CASCADE ON DELETE CASCADE)")
+    })
+}
+
+function createPayeesRecord(){
+    var db = openDB()
+
+    db.transaction(function (tx) {
+        tx.executeSql("CREATE TABLE `payees` (`expense_id` INTEGER, `payee_name` TEXT, `location` TEXT, `other_descr` TEXT \
+                        , PRIMARY KEY (expense_id) \
                         , FOREIGN KEY (expense_id) REFERENCES expenses (expense_id) ON UPDATE CASCADE ON DELETE CASCADE)")
     })
 }
@@ -831,58 +853,70 @@ function alterMetaViewsForVersion5() {
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_vw AS SELECT a.profile_id, a.expense_id, a.category_name, a.name, a.descr, a.date, a.value \
                     , IFNULL(group_concat(c.tag_name, ','), '') as tags \
+                    , IFNULL(d.payee_name, '') as payee_name, IFNULL(d.location, '') as payee_location, IFNULL(d.other_descr,'') as payee_other_descr \
                     , IFNULL(b.home_currency, '') as home_currency, IFNULL(b.travel_currency, '') as travel_currency \
                     , IFNULL(b.rate, 0) as 'rate', IFNULL(b.value, 0) as 'travel_value' \
                     FROM expenses a LEFT OUTER JOIN travel_expenses b USING(expense_id) \
                     LEFT OUTER JOIN expenses_tags c USING(expense_id) \
+                    LEFT OUTER JOIN payees d USING(expense_id) \
                     GROUP BY a.expense_id")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_today AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') = date('now','localtime')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_yesterday AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') = date('now','localtime','-1 day')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_thisweek AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','weekday 6','-6 days') AND date('now','localtime','weekday 6')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_thismonth AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now', 'localtime', 'start of month')  AND date('now','localtime','start of month','+1 month','-1 day')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_recent AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','-6 day') AND date('now','localtime')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_previousrecent AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','-13 day') AND date('now','localtime','-7 day')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_lastweek AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','weekday 6', '-13 days') AND date('now','localtime','weekday 6', '-7 days')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_lastmonth AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','start of month','-1 month') AND date('now','localtime','start of month','-1 day')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_thisyear AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now', 'localtime', 'start of year')  AND date('now','localtime','start of year','+1 year','-1 day')")
         tx.executeSql(
                     "CREATE VIEW IF NOT EXISTS expenses_lastyear AS SELECT profile_id, expense_id, category_name, name, descr, date, value, tags \
+                    , payee_name, payee_location, payee_other_descr \
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','start of year','-1 year') AND date('now','localtime','start of year','-1 day')")
@@ -1233,7 +1267,8 @@ function getExpenseDetailedData(intProfileId, txtCategory, txtScope, txtDateFrom
     // console.log (txtDateFrom + " - " + txtDateTo)
     _db.transaction(function (tx) {
         _txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                ,value, tags, home_currency, travel_currency, rate, travel_value"
+                                ,value, tags, payee_name, payee_location, payee_other_descr \
+                                , home_currency, travel_currency, rate, travel_value"
         if (txtSort == "category") {
             _txtSelectStatement = _txtSelectStatement + ", TOTAL(value) OVER (PARTITION BY category_name) AS group_total \
                                                          , TOTAL(travel_value) OVER (PARTITION BY category_name) AS group_travel_total"
@@ -1760,30 +1795,41 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     let txtLimitStatement = ""
 
     // List items that match the name before descr
-    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value, home_currency, travel_currency, rate, travel_value, tags"
+    txtSelectStatement = "SELECT DISTINCT name, category_name, descr, value, payee_name, payee_location, payee_other_descr \
+                            , home_currency, travel_currency, rate, travel_value, tags"
     txtFromStatement = "FROM ( \
-                        SELECT name, category_name, descr, value, tags, date, home_currency, travel_currency, rate, travel_value, 1 as score \
+                        SELECT name, category_name, descr, value, payee_name, payee_location, payee_other_descr, tags \
+                        , date, home_currency, travel_currency, rate, travel_value, 1 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
                         AND (UPPER(name) LIKE UPPER(?) \
                         OR name GLOB ?) \
-                        GROUP BY name, category_name, descr, value \
+                        GROUP BY name, category_name, descr, value, payee_name, payee_location, payee_other_descr \
                         UNION \
-                        SELECT name, category_name, descr, value, tags, date, home_currency, travel_currency, rate, travel_value, 0 as score \
+                        SELECT name, category_name, descr, value, payee_name, payee_location, payee_other_descr, tags \
+                        , date, home_currency, travel_currency, rate, travel_value, 2 as score \
+                        FROM expenses_vw \
+                        WHERE profile_id = ? \
+                        AND (UPPER(payee_name) LIKE UPPER(?) \
+                        OR payee_name GLOB ?) \
+                        GROUP BY name, category_name, descr, value, payee_name, payee_location, payee_other_descr \
+                        UNION \
+                        SELECT name, category_name, descr, value, payee_name, payee_location, payee_other_descr, tags \
+                        , date, home_currency, travel_currency, rate, travel_value, 3 as score \
                         FROM expenses_vw \
                         WHERE profile_id = ? \
                         AND (UPPER(descr) LIKE UPPER(?) \
                         OR descr GLOB ?) \
-                        GROUP BY name, category_name, descr, value \
+                        GROUP BY name, category_name, descr, value, payee_name, payee_location, payee_other_descr \
                         ORDER BY score desc, date DESC \
                         )"
     txtLimitStatement = "LIMIT ?"
     txtFullStatement = [txtSelectStatement, txtFromStatement, txtLimitStatement].join(" ")
-    //console.log(txtSelectStatement)
+    // console.log(txtSelectStatement)
     db.transaction(function (tx) {
         let _likeText = processTextForLIKE(txtSearchText)
         let _globText = processTextForGLOB(txtSearchText)
-        rs = tx.executeSql(txtFullStatement, [intProfileId, _likeText, _globText, intProfileId, _likeText, _globText, intLimit])
+        rs = tx.executeSql(txtFullStatement, [intProfileId, _likeText, _globText, intProfileId, _likeText, _globText, intProfileId, _likeText, _globText, intLimit])
 
         arrResults.length = rs.rows.length
 
@@ -1813,7 +1859,7 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
 
         txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                , value, tags, home_currency, travel_currency, rate, travel_value \
+                                , value, tags, payee_name, payee_location, payee_other_descr, home_currency, travel_currency, rate, travel_value \
                                 , CASE WHEN name GLOB ? THEN 1 \
                                      WHEN descr GLOB ? THEN 2 \
                                      WHEN name LIKE ? THEN 3 \
@@ -1894,6 +1940,10 @@ function addNewExpense(intProfileId, expenseData, travelData) {
     let _realValue = expenseData.value
     let _txtTags = expenseData.tags
     let _hasTags = _txtTags.trim() !== ""
+    let _txtPayeeName = expenseData.payeeName
+    let _txtPayeeLocation = expenseData.payeeLocation
+    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
+    let _hasPayee = _txtPayeeName.trim() !== ""
 
     txtSaveStatement = 'INSERT INTO expenses (profile_id, category_name, name, descr, date, value) VALUES(?, ?, ?, ?, strftime("%Y-%m-%d %H:%M:%f", ?, "utc"), ?)'
 
@@ -1902,13 +1952,18 @@ function addNewExpense(intProfileId, expenseData, travelData) {
             tx.executeSql(txtSaveStatement,
                           [intProfileId, _txtCategory, _txtName, _txtDescr, _txtEntryDate, _realValue])
 
-            if (travelData || _hasTags) {
+            if (travelData || _hasTags || _hasPayee) {
                 rs = tx.executeSql("SELECT MAX(expense_id) as id FROM expenses")
                 let _newID = rs.rows.item(0).id
 
                 // Save tags
                 if (_hasTags) {
                     saveExpenseTags(_newID, _txtTags)
+                }
+
+                // Save Payee data
+                if (_hasPayee) {
+                    saveExpensePayees(_newID, _txtPayeeName, _txtPayeeLocation, _txtPayeeOtherDescr)
                 }
 
                 // Add Travel Data
@@ -1964,6 +2019,9 @@ function updateExpense(expenseData, travelData) {
     let _txtDescr = expenseData.description
     let _realValue = expenseData.value
     let _txtTags = expenseData.tags
+    let _txtPayeeName = expenseData.payeeName
+    let _txtPayeeLocation = expenseData.payeeLocation
+    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
     let _travelData = travelData
 
     _txtUpdateStatement = 'UPDATE expenses SET category_name = ?, name = ?, descr = ?, date = strftime("%Y-%m-%d %H:%M:%f", ?, "utc"), value = ? WHERE expense_id = ?'
@@ -1979,6 +2037,9 @@ function updateExpense(expenseData, travelData) {
 
         // Update tags
         saveExpenseTags(_txtID, _txtTags)
+
+        // Update Payee data
+        saveExpensePayees(_txtID, _txtPayeeName, _txtPayeeLocation, _txtPayeeOtherDescr)
 
         // Update Travel Data
         if (_travelData.rate > 0 && _travelData.homeCur != ""
@@ -2024,9 +2085,9 @@ function getQuickExpenses(intProfileId, txtSearchText) {
 
     txtOrderStatement = "ORDER BY name asc"
 
-    txtSelectStatement = 'SELECT quick_id, category_name, name, descr, value FROM quick_expenses'
+    txtSelectStatement = 'SELECT quick_id, category_name, name, descr, value, payee_name, payee_location, payee_other_descr FROM quick_expenses'
     if(txtSearchText){
-        txtWhereStatement2 = "AND (category_name LIKE ? OR name LIKE ? OR descr LIKE ?)"
+        txtWhereStatement2 = "AND (category_name LIKE ? OR name LIKE ? OR descr LIKE ? OR payee_name LIKE ? OR payee_location LIKE ? OR payee_other_descr LIKE ?)"
     }
 
     txtSelectStatement = [txtSelectStatement, txtWhereStatement, txtWhereStatement2, txtOrderStatement].join(" ")
@@ -2034,7 +2095,7 @@ function getQuickExpenses(intProfileId, txtSearchText) {
     db.transaction(function (tx) {
         if (txtSearchText) {
             let wildcard = "%" + txtSearchText + "%"
-            rs = tx.executeSql(txtSelectStatement, [intProfileId, wildcard, wildcard, wildcard])
+            rs = tx.executeSql(txtSelectStatement, [intProfileId, wildcard, wildcard, wildcard, wildcard, wildcard, wildcard])
         } else {
             rs = tx.executeSql(txtSelectStatement, [intProfileId])
         }
@@ -2056,19 +2117,22 @@ function addQuickExpense(intProfileId, expenseData) {
     let _errorMsg
     let _result
 
-    let _txtSaveStatement = 'INSERT INTO quick_expenses(profile_id, category_name, name, descr, value) VALUES(?,?,?,?,?)'
+    let _txtSaveStatement = 'INSERT INTO quick_expenses(profile_id, category_name, name, descr, value, payee_name, payee_location, payee_other_descr ) VALUES(?,?,?,?,?,?,?,?)'
 
     let _txtName = expenseData.name
     let _txtCategory = expenseData.category
     let _txtDescr = expenseData.description
     let _realValue = expenseData.value
+    let _txtPayeeName = expenseData.payeeName
+    let _txtPayeeLocation = expenseData.payeeLocation
+    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
     let _existsResult = checkIfQuickExpenseExists(intProfileId, expenseData)
 
     if (_existsResult.success && !_existsResult.exists) {
         try {
             _db.transaction(function (tx) {
-                tx.executeSql(_txtSaveStatement, [intProfileId, _txtCategory, _txtName, _txtDescr, _realValue])
+                tx.executeSql(_txtSaveStatement, [intProfileId, _txtCategory, _txtName, _txtDescr, _realValue, _txtPayeeName, _txtPayeeLocation, _txtPayeeOtherDescr])
             })
 
             _success = true
@@ -2093,20 +2157,25 @@ function editQuickExpense(intProfileId, quickData) {
     let _errorMsg
     let _result
 
-    let _txtSaveStatement = 'UPDATE quick_expenses SET category_name = ?, name = ? , descr = ?, value = ? WHERE profile_id = ? AND quick_id = ?'
+    let _txtSaveStatement = 'UPDATE quick_expenses SET category_name = ?, name = ? , descr = ?, value = ? \
+                             , payee_name = ?, payee_location = ?, payee_other_descr = ? \
+                             WHERE profile_id = ? AND quick_id = ?'
 
     let _txtID = quickData.id
     let _txtName = quickData.name
     let _txtCategory = quickData.category
     let _txtDescr = quickData.description
     let _realValue = quickData.value
+    let _txtPayeeName = quickData.payeeName
+    let _txtPayeeLocation = quickData.payeeLocation
+    let _txtPayeeOtherDescr = quickData.payeeOtherDescription
 
     let _existsResult = checkIfQuickExpenseExists(intProfileId, quickData)
 
     if (_existsResult.success && !_existsResult.exists) {
         try {
             _db.transaction(function (tx) {
-                tx.executeSql(_txtSaveStatement, [_txtCategory, _txtName, _txtDescr, _realValue, intProfileId, _txtID])
+                tx.executeSql(_txtSaveStatement, [_txtCategory, _txtName, _txtDescr, _realValue, _txtPayeeName, _txtPayeeLocation, _txtPayeeOtherDescr, intProfileId, _txtID])
             })
 
             _success = true
@@ -2157,16 +2226,20 @@ function checkIfQuickExpenseExists(intProfileId, expenseData) {
     let _result
     let _exists = false
 
-    let _txtSelectStatement = 'SELECT 1 FROM quick_expenses WHERE profile_id = ? AND category_name = ? AND name = ? AND descr = ? AND value = ?'
+    let _txtSelectStatement = 'SELECT 1 FROM quick_expenses WHERE profile_id = ? AND category_name = ? AND name = ? AND descr = ? AND value = ? \
+                                AND payee_name = ? AND payee_location = ? AND payee_other_descr = ?'
 
     let _txtName = expenseData.name
     let _txtCategory = expenseData.category
     let _txtDescr = expenseData.description
     let _realValue = expenseData.value
+    let _txtPayeeName = expenseData.payeeName
+    let _txtPayeeLocation = expenseData.payeeLocation
+    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
     try {
         _db.transaction(function (tx) {
-            _rs = tx.executeSql(_txtSelectStatement, [intProfileId, _txtCategory, _txtName, _txtDescr, _realValue])
+            _rs = tx.executeSql(_txtSelectStatement, [intProfileId, _txtCategory, _txtName, _txtDescr, _realValue, _txtPayeeName, _txtPayeeLocation, _txtPayeeOtherDescr])
             _exists = _rs.rows.length > 0
         })
 
@@ -2339,6 +2412,142 @@ function searchExpensesTags(intProfileId, txtSearchText, txtExcludedList, intLim
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
         txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
+        // console.log(txtFullStatement)
+        // console.log(JSON.stringify(arrBindValues))
+        db.transaction(function (tx) {
+            rs = tx.executeSql(txtFullStatement, arrBindValues)
+
+            arrResults.length = rs.rows.length
+
+            for (let i = 0; i < rs.rows.length; i++) {
+                arrResults[i] = rs.rows.item(i)
+            }
+        })
+    }
+
+    return arrResults
+}
+
+function saveExpensePayees(txtExpenseID, txtName, txtLocation, txtOtherDescr) {
+    let _db = openDB()
+    let _rs = null
+    let _success = true
+    let _errorMsg = ""
+    let _result
+
+    if (txtName.trim() !== "") {
+        let _txtSaveStatement = 'INSERT INTO payees(expense_id, payee_name, location, other_descr) VALUES(?,?,?,?) \
+                                    ON CONFLICT(expense_id) \
+                                    DO UPDATE SET payee_name=excluded.payee_name, location=excluded.location, other_descr=excluded.other_descr'
+
+        try {
+            _db.transaction(function (tx) {
+                tx.executeSql(_txtSaveStatement, [txtExpenseID, txtName, txtLocation, txtOtherDescr])
+            })
+
+            _success = true
+        } catch (err) {
+            console.log("Database error: " + err)
+            _errorMsg = err
+            _success = false
+        }
+    } else {
+        deleteExpenseLocation(txtExpenseID)
+    }
+
+    _result = {"success": _success, "error": _errorMsg}
+    
+    return _result
+}
+
+function deleteExpenseLocation(txtExpenseID) {
+    let txtDeleteStatement
+    let db = openDB()
+
+    txtDeleteStatement = 'DELETE FROM payees WHERE expense_id = ?'
+
+    db.transaction(function (tx) {
+        tx.executeSql(txtDeleteStatement, [txtExpenseID])
+    })
+}
+
+function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName, txtLocation, intLimit=10, txtSort ="asc") {
+    let arrResults = []
+
+    if (txtSearchText.trim() !== "") {
+        let db = openDB()
+        let rs = null
+        let txtFullStatement = ""
+        let txtSelectStatement = ""
+        let txtFromStatement = ""
+        let txtWhereStatement = ""
+        let txtOrderStatement = ""
+        let txtLimitStatement = ""
+        let txtFullSearchTextGLOB = processTextForGLOB(txtSearchText, false)
+        let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText, false)
+        let txtFullSearchTextGLOBExactStart = processTextForGLOB(txtSearchText, true)
+        let txtFullSearchTextLIKEExactStart = processTextForLIKE(txtSearchText, true)
+        let arrBindValues = [txtMode, txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE]
+        let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
+        let txtFieldName
+
+        switch (txtMode) {
+            case "location":
+                txtFieldName = "location"
+                break
+            case "otherDescr":
+                txtFieldName = "other_descr"
+                break
+            case "full":
+            default:
+                txtFieldName = "payee_name"
+                break
+        }
+
+        txtSelectStatement = "SELECT DISTINCT b.payee_name, b.location, b.other_descr, ? as mode \
+                                , CASE WHEN b.<FieldName> GLOB ? THEN 1 \
+                                     WHEN b.<FieldName> LIKE ? THEN 2 \
+                                     WHEN b.<FieldName> GLOB ? THEN 3 \
+                                     WHEN b.<FieldName> LIKE ? THEN 4"
+
+        txtSelectStatement = txtSelectStatement + " END as score"
+
+        arrBindValues.push(intProfileId)
+
+        txtFromStatement = "FROM expenses a, payees b"
+
+        txtWhereStatement = "WHERE a.profile_id = ? AND ("
+        txtWhereStatement = txtWhereStatement + "b.<FieldName> GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> LIKE ?"
+        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> LIKE ?"
+        txtWhereStatement = txtWhereStatement + ")"
+
+        let _txtTermGLOB = processTextForGLOB(txtSearchText, false)
+        let _txtTermLIKE = processTextForLIKE(txtSearchText, false)
+        let _txtTermGLOBExactStart = processTextForGLOB(txtSearchText, true)
+        let _txtTermLIKEExactStart = processTextForLIKE(txtSearchText, true)
+        arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
+
+        if (txtMode === "location" || txtMode === "otherDescr") {
+            switch (txtMode) {
+                case "location":
+                    txtWhereStatement = txtWhereStatement + " AND b.payee_name = ?"
+                    arrBindValues.push(txtPayeeName)
+                    break
+                case "otherDescr":
+                    txtWhereStatement = txtWhereStatement + " AND b.payee_name = ? AND b.location = ?"
+                    arrBindValues.push(txtPayeeName, txtLocation)
+                    break
+            }
+        }
+
+        txtOrderStatement = "ORDER BY score " + txtSortBy
+        txtOrderStatement = txtOrderStatement + ", length(b.<FieldName>) ASC"
+        txtLimitStatement = "LIMIT ?"
+        arrBindValues.push(intLimit)
+        txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
+        txtFullStatement = txtFullStatement.replace(/<FieldName>/g, txtFieldName)
         // console.log(txtFullStatement)
         // console.log(JSON.stringify(arrBindValues))
         db.transaction(function (tx) {

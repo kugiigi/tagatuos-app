@@ -112,13 +112,17 @@ FocusScope {
                 let _txtDescr = descriptionField.text
                 let _txtCategory = categoryField.currentText
                 let _realValue = valueField.text.trim() == "" ? 0 : Functions.cleanExpenseValue(valueField.text)
-                let _txtTags = tagsField.tags
+                let _txtPayeeName = payeeFields.payeeName
+                let _txtPayeeLocation = payeeFields.payeeLocation
+                let _txtPayeeOtherDescr = payeeFields.payeeOtherDescr
 
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
                 internal.expenseData.value = _realValue
-                internal.expenseData.tags = _txtTags
+                internal.expenseData.payeeName = _txtPayeeName
+                internal.expenseData.payeeLocation = _txtPayeeLocation
+                internal.expenseData.payeeOtherDescription = _txtPayeeOtherDescr
 
                 newExpenseView.createQuickExpense()
             }
@@ -196,6 +200,9 @@ FocusScope {
                 let _realValue = Functions.cleanExpenseValue(valueField.text)
                 let _txtDate = Functions.getToday()
                 let _txtTags = tagsField.tags
+                let _txtPayeeName = payeeFields.payeeName
+                let _txtPayeeLocation = payeeFields.payeeLocation
+                let _txtPayeeOtherDescr = payeeFields.payeeOtherDescr
 
                 if (!dateField.checked || isEditMode) {
                     _txtDate = Functions.formatDateForDB(dateField.dateValue)
@@ -206,6 +213,9 @@ FocusScope {
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
                 internal.expenseData.tags = _txtTags
+                internal.expenseData.payeeName = _txtPayeeName
+                internal.expenseData.payeeLocation = _txtPayeeLocation
+                internal.expenseData.payeeOtherDescription = _txtPayeeOtherDescr
 
                 if (valueField.processTravelData) {
                     internal.expenseData.value = valueField.convertedValue
@@ -275,6 +285,12 @@ FocusScope {
         internal.expenseData.category = _expenseDataForEdit.category
         internal.expenseData.value = _expenseDataForEdit.value
         internal.expenseData.tags = _expenseDataForEdit.tags
+
+        // Set them in this order to avoid binding loop error in the text fields
+        internal.expenseData.payeeOtherDescription = _expenseDataForEdit.payeeOtherDescription
+        internal.expenseData.payeeLocation = _expenseDataForEdit.payeeLocation
+        internal.expenseData.payeeName = _expenseDataForEdit.payeeName
+
         internal.expenseData.travelData.rate = _expenseDataForEdit.travelData.rate
         internal.expenseData.travelData.homeCur = _expenseDataForEdit.travelData.homeCur
         internal.expenseData.travelData.travelCur = _expenseDataForEdit.travelData.travelCur
@@ -297,6 +313,12 @@ FocusScope {
         internal.expenseData.category = _expenseDataForEntry.category
         internal.expenseData.value = _expenseDataForEntry.value
         internal.expenseData.tags = _expenseDataForEntry.tags
+
+        // Set them in this order to avoid binding loop error in the text fields
+        internal.expenseData.payeeOtherDescription = _expenseDataForEntry.payeeOtherDescription
+        internal.expenseData.payeeLocation = _expenseDataForEntry.payeeLocation
+        internal.expenseData.payeeName = _expenseDataForEntry.payeeName
+
         internal.expenseData.travelData.rate = _expenseDataForEntry.travelData.rate
         internal.expenseData.travelData.homeCur = _expenseDataForEntry.travelData.homeCur
         internal.expenseData.travelData.travelCur = _expenseDataForEntry.travelData.travelCur
@@ -773,6 +795,24 @@ FocusScope {
                             Layout.fillWidth: true
                             flickable: mainFlickable
                             text: internal.expenseData.description
+                        }
+
+                        PayeeFields {
+                            id: payeeFields
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            payeeName: internal.expenseData.payeeName
+                            payeeLocation: internal.expenseData.payeeLocation
+                            payeeOtherDescr: internal.expenseData.payeeOtherDescription
+
+                            onVisibleChanged: {
+                                if (visible) {
+                                    payeeName = Qt.binding( function() { return internal.expenseData.payeeName } )
+                                    payeeLocation = Qt.binding( function() { return internal.expenseData.payeeLocation } )
+                                    payeeOtherDescr = Qt.binding( function() { return internal.expenseData.payeeOtherDescription } )
+                                }
+                            }
                         }
 
                         TagsField {

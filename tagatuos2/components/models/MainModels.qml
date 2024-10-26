@@ -18,6 +18,7 @@ Item {
     readonly property string historyEntryExpensesID: "HistoryEntry"
     readonly property string searchExpenseID: "SearchExpense"
     readonly property string searchExpenseTagsID: "SearchExpenseTags"
+    readonly property string searchExpensePayeesID: "SearchExpensePayees"
 
     readonly property string todayBreakdownChartID: "TodayBreakdownChart"
     readonly property string thisWeekBreakdownChartID: "ThisWeekBreakdownChart"
@@ -43,6 +44,7 @@ Item {
 
     property alias searchExpenseModel: searchExpenseModel
     property alias searchExpenseTagsModel: searchExpenseTagsModel
+    property alias searchExpensePayeesModel: searchExpensePayeesModel
 
     // Breakdown Chart Models
     property alias todayBreakdownChartModel: todayBreakdownChartModel
@@ -202,6 +204,9 @@ Item {
                 break
             case mainModels.searchExpenseTagsID:
                 searchExpenseTagsModel.loadingStatus = "Ready"
+                break
+            case mainModels.searchExpensePayeesID:
+                searchExpensePayeesModel.loadingStatus = "Ready"
                 break
 
             // Detailed List Models
@@ -412,6 +417,32 @@ Item {
 
         function refresh() {
             fillData(mainView.expenses.searchTags(searchText, excludedList, resultLimit, order))
+        }
+
+        onSearchTextChanged: refresh()
+    }
+
+    // Model for payee auto-complete
+    Common.BaseListModel {
+        id: searchExpensePayeesModel
+
+        property string mode: "payeeName"
+        /*
+            payeeName
+            location
+            otherDescr
+        */
+        property string searchText: ""
+        property string payeeName: ""
+        property string payeeLocation: ""
+        property string order: "asc"
+        property int resultLimit: 5
+
+        modelId: mainModels.searchExpensePayeesID
+        worker: workerLoader
+
+        function refresh() {
+            fillData(mainView.expenses.searchPayees(mode, searchText, payeeName, payeeLocation, resultLimit, order))
         }
 
         onSearchTextChanged: refresh()

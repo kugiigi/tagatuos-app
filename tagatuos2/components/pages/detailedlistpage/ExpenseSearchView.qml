@@ -134,6 +134,9 @@ Item {
                     itemName: model.name
                     categoryName: model.category_name
                     tags: model.tags
+                    payeeName: model.payee_name
+                    payeeLocation: model.payee_location
+                    payeeOtherDescr: model.payee_other_descr
                     highlighted: resultsListView.currentIndex == index
 
                     onShowContextMenu: {
@@ -144,6 +147,9 @@ Item {
                         expenseSearchView.contextMenu.itemData.value = homeValue
                         expenseSearchView.contextMenu.itemData.description = comments
                         expenseSearchView.contextMenu.itemData.tags = tags
+                        expenseSearchView.contextMenu.itemData.payeeName = payeeName
+                        expenseSearchView.contextMenu.itemData.payeeLocation = payeeLocation
+                        expenseSearchView.contextMenu.itemData.payeeOtherDescription = payeeOtherDescr
                         expenseSearchView.contextMenu.itemData.travelData.rate = exchangeRate
                         expenseSearchView.contextMenu.itemData.travelData.homeCur = homeCurrency
                         expenseSearchView.contextMenu.itemData.travelData.travelCur = travelCurrency

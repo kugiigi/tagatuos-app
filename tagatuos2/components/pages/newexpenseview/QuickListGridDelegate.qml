@@ -18,6 +18,9 @@ Item {
     property string categoryName
     property string description
     property string value
+    property string payeeName
+    property string payeeLocation
+    property string payeeOtherDescr
 
     property bool isTravelMode: false
     property string travelCurrency
@@ -135,6 +138,28 @@ Item {
                 }
 
                 Components.ColoredLabel {
+                    id: payeeLabel
+
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignCenter
+
+                    Suru.textLevel: Suru.Paragraph
+                    color: Suru.secondaryForegroundColor
+                    horizontalAlignment: gridDelegate.isGridDisplay ? Text.AlignHCenter : Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    visible: gridDelegate.payeeName !== ""
+                    text: {
+                        if (gridDelegate.payeeLocation !== "") {
+                            return i18n.tr("%1 | %2").arg(gridDelegate.payeeName).arg(gridDelegate.payeeLocation)
+                        } else {
+                            return gridDelegate.payeeName
+                        }
+                    }
+                    maximumLineCount: 1
+                    elide: Text.ElideRight
+                }
+
+                Components.ColoredLabel {
                     id: descrLabel
 
                     Layout.fillWidth: true
@@ -144,7 +169,7 @@ Item {
                     color: Suru.secondaryForegroundColor
                     horizontalAlignment: gridDelegate.isGridDisplay ? Text.AlignHCenter : Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    visible: gridDelegate.description !== ""
+                    visible: gridDelegate.description !== "" && !payeeLabel.visible
                     text: gridDelegate.description
                     maximumLineCount: 1
                     elide: Text.ElideRight
@@ -169,6 +194,10 @@ Item {
                         name: "grid"
                         when: gridDelegate.isGridDisplay
                         ParentChange {
+                            target: payeeLabel
+                            parent: contentItemColumnLayout
+                        }
+                        ParentChange {
                             target: descrLabel
                             parent: contentItemColumnLayout
                         }
@@ -184,6 +213,10 @@ Item {
                     , State {
                         name: "list"
                         when: !gridDelegate.isGridDisplay
+                        ParentChange {
+                            target: payeeLabel
+                            parent: nameDescrColumnLayout
+                        }
                         ParentChange {
                             target: descrLabel
                             parent: nameDescrColumnLayout

@@ -41,6 +41,8 @@
         <file>components/pages/newexpenseview/DateField.qml</file>
         <file>components/pages/newexpenseview/TravelDataFields.qml</file>
         <file>components/pages/newexpenseview/TagsField.qml</file>
+        <file>components/pages/newexpenseview/PayeeFields.qml</file>
+        <file>components/pages/newexpenseview/PayeeFieldAutoCompleteDelegate.qml</file>
         <file>components/pages/DashboardPage.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChart.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChartContainer.qml</file>
@@ -176,5 +178,7 @@
         <file>common/ColorPickerPopup.qml</file>
         <file>common/PageIndicatorSelector.qml</file>
         <file>common/PageIndicatorSelectorDelegate.qml</file>
+        <file>common/TextFieldWithAutoComplete.qml</file>
+        <file>common/TextFieldWithAutoCompleteDelegate.qml</file>
     </qresource>
 </RCC>

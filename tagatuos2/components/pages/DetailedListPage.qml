@@ -701,6 +701,9 @@ Pages.BasePage {
                         itemName: model.name
                         categoryName: model.category_name
                         tags: model.tags
+                        payeeName: model.payee_name
+                        payeeLocation: model.payee_location
+                        payeeOtherDescr: model.payee_other_descr
                         highlighted: listView.currentIndex == index
                         showDate: detailedListPage.isByMonth || detailedListPage.isByWeek || detailedListPage.isSortByDate
                         showCategory: detailedListPage.isSortByDate
@@ -713,6 +716,9 @@ Pages.BasePage {
                             contextMenu.itemData.category = model.category_name
                             contextMenu.itemData.value = homeValue
                             contextMenu.itemData.tags = tags
+                            contextMenu.itemData.payeeName = payeeName
+                            contextMenu.itemData.payeeLocation = payeeLocation
+                            contextMenu.itemData.payeeOtherDescription = payeeOtherDescr
                             contextMenu.itemData.description = comments
                             contextMenu.itemData.travelData.rate = exchangeRate
                             contextMenu.itemData.travelData.homeCur = homeCurrency
