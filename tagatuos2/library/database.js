@@ -2541,17 +2541,9 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         let _txtTermLIKEExactStart = processTextForLIKE(txtSearchText, true)
         arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
 
-        if (txtMode === "location" || txtMode === "otherDescr") {
-            switch (txtMode) {
-                case "location":
-                    txtWhereStatement = txtWhereStatement + " AND payee_name = ?"
-                    arrBindValues.push(txtPayeeName)
-                    break
-                case "otherDescr":
-                    txtWhereStatement = txtWhereStatement + " AND payee_name = ? AND location = ?"
-                    arrBindValues.push(txtPayeeName, txtLocation)
-                    break
-            }
+        if (txtMode === "otherDescr") {
+            txtWhereStatement = txtWhereStatement + " AND location = ?"
+            arrBindValues.push(txtLocation)
         }
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
