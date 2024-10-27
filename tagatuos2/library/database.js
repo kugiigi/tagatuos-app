@@ -715,8 +715,8 @@ function alterMetaViewsForVersion4() {
 function executeUserVersion5() {
     createTagsRecord()
     createPayeesRecord()
-    alterMetaTablesForVersion5() // Add home_currency to profiles
-    alterMetaViewsForVersion5() // Adjust views for tags and payees
+    alterMetaTablesForVersion5() // Add home_currency to profiles and add payees to quick expense table
+    alterMetaViewsForVersion5() // Adjust views for tags and payees and add new views for them
     console.log("Database Upgraded to 5")
     upgradeUserVersion()
 }
@@ -828,6 +828,8 @@ function alterMetaViewsForVersion5() {
     var db = openDB()
 
     db.transaction(function (tx) {
+        tx.executeSql("DROP VIEW IF EXISTS tags_vw")
+        tx.executeSql("DROP VIEW IF EXISTS payees_vw")
         tx.executeSql("DROP VIEW IF EXISTS expenses_today")
         tx.executeSql("DROP VIEW IF EXISTS expenses_yesterday")
         tx.executeSql("DROP VIEW IF EXISTS expenses_thisweek")
@@ -920,6 +922,16 @@ function alterMetaViewsForVersion5() {
                     , home_currency, travel_currency, rate, travel_value \
                     FROM expenses_vw \
                     WHERE date(date,'localtime') BETWEEN date('now','localtime','start of year','-1 year') AND date('now','localtime','start of year','-1 day')")
+                    
+        // Create view for unique tags
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS tags_vw AS SELECT DISTINCT a.profile_id, b.tag_name \
+                    FROM expenses a INNER JOIN expenses_tags b USING(expense_id)")
+
+        // Create view for unique payees
+        tx.executeSql(
+                    "CREATE VIEW IF NOT EXISTS payees_vw AS SELECT DISTINCT a.profile_id, b.payee_name, b.location, b.other_descr \
+                    FROM expenses a INNER JOIN payees b USING(expense_id)")
 
         // Date List Views for Charts
         tx.executeSql(
@@ -2371,23 +2383,23 @@ function searchExpensesTags(intProfileId, txtSearchText, txtExcludedList, intLim
         let arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE]
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
 
-        txtSelectStatement = "SELECT DISTINCT b.tag_name \
-                                , CASE WHEN b.tag_name GLOB ? THEN 1 \
-                                     WHEN b.tag_name LIKE ? THEN 2 \
-                                     WHEN b.tag_name GLOB ? THEN 3 \
-                                     WHEN b.tag_name LIKE ? THEN 4"
+        txtSelectStatement = "SELECT tag_name \
+                                , CASE WHEN tag_name GLOB ? THEN 1 \
+                                     WHEN tag_name LIKE ? THEN 2 \
+                                     WHEN tag_name GLOB ? THEN 3 \
+                                     WHEN tag_name LIKE ? THEN 4"
 
         txtSelectStatement = txtSelectStatement + " END as score"
 
         arrBindValues.push(intProfileId)
 
-        txtFromStatement = "FROM expenses a, expenses_tags b"
+        txtFromStatement = "FROM tags_vw"
 
-        txtWhereStatement = "WHERE a.profile_id = ? AND ("
-        txtWhereStatement = txtWhereStatement + "b.tag_name GLOB ?"
-        txtWhereStatement = txtWhereStatement + " OR b.tag_name LIKE ?"
-        txtWhereStatement = txtWhereStatement + " OR b.tag_name GLOB ?"
-        txtWhereStatement = txtWhereStatement + " OR b.tag_name LIKE ?"
+        txtWhereStatement = "WHERE profile_id = ? AND ("
+        txtWhereStatement = txtWhereStatement + "tag_name GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR tag_name LIKE ?"
+        txtWhereStatement = txtWhereStatement + " OR tag_name GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR tag_name LIKE ?"
         txtWhereStatement = txtWhereStatement + ")"
 
         let _txtTermGLOB = processTextForGLOB(txtSearchText, false)
@@ -2408,7 +2420,7 @@ function searchExpensesTags(intProfileId, txtSearchText, txtExcludedList, intLim
         }
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
-        txtOrderStatement = txtOrderStatement + ", length(b.tag_name) ASC"
+        txtOrderStatement = txtOrderStatement + ", length(tag_name) ASC"
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
         txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
@@ -2504,23 +2516,23 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
                 break
         }
 
-        txtSelectStatement = "SELECT DISTINCT b.payee_name, b.location, b.other_descr, ? as mode \
-                                , CASE WHEN b.<FieldName> GLOB ? THEN 1 \
-                                     WHEN b.<FieldName> LIKE ? THEN 2 \
-                                     WHEN b.<FieldName> GLOB ? THEN 3 \
-                                     WHEN b.<FieldName> LIKE ? THEN 4"
+        txtSelectStatement = "SELECT payee_name, location, other_descr, ? as mode \
+                                , CASE WHEN <FieldName> GLOB ? THEN 1 \
+                                     WHEN <FieldName> LIKE ? THEN 2 \
+                                     WHEN <FieldName> GLOB ? THEN 3 \
+                                     WHEN <FieldName> LIKE ? THEN 4"
 
         txtSelectStatement = txtSelectStatement + " END as score"
 
         arrBindValues.push(intProfileId)
 
-        txtFromStatement = "FROM expenses a, payees b"
+        txtFromStatement = "FROM payees_vw"
 
-        txtWhereStatement = "WHERE a.profile_id = ? AND ("
-        txtWhereStatement = txtWhereStatement + "b.<FieldName> GLOB ?"
-        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> LIKE ?"
-        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> GLOB ?"
-        txtWhereStatement = txtWhereStatement + " OR b.<FieldName> LIKE ?"
+        txtWhereStatement = "WHERE profile_id = ? AND ("
+        txtWhereStatement = txtWhereStatement + "<FieldName> GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR <FieldName> LIKE ?"
+        txtWhereStatement = txtWhereStatement + " OR <FieldName> GLOB ?"
+        txtWhereStatement = txtWhereStatement + " OR <FieldName> LIKE ?"
         txtWhereStatement = txtWhereStatement + ")"
 
         let _txtTermGLOB = processTextForGLOB(txtSearchText, false)
@@ -2532,18 +2544,18 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         if (txtMode === "location" || txtMode === "otherDescr") {
             switch (txtMode) {
                 case "location":
-                    txtWhereStatement = txtWhereStatement + " AND b.payee_name = ?"
+                    txtWhereStatement = txtWhereStatement + " AND payee_name = ?"
                     arrBindValues.push(txtPayeeName)
                     break
                 case "otherDescr":
-                    txtWhereStatement = txtWhereStatement + " AND b.payee_name = ? AND b.location = ?"
+                    txtWhereStatement = txtWhereStatement + " AND payee_name = ? AND location = ?"
                     arrBindValues.push(txtPayeeName, txtLocation)
                     break
             }
         }
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
-        txtOrderStatement = txtOrderStatement + ", length(b.<FieldName>) ASC"
+        txtOrderStatement = txtOrderStatement + ", length(<FieldName>) ASC"
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
         txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
