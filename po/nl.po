@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tagatuos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-27 14:27+0000\n"
+"POT-Creation-Date: 2024-10-27 14:32+0000\n"
 "PO-Revision-Date: 2023-09-30 13:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch - vistausss@outlook.com\n"
@@ -91,7 +91,7 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DeleteExpenseDialog.qml:75
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:70
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/aboutpage/ExternalDialog.qml:55
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/DeleteCategoryDialog.qml:62
@@ -104,7 +104,7 @@ msgid "Cancel"
 msgstr "Annuleren"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
 msgid "Close"
 msgstr "Sluiten"
 
@@ -646,11 +646,11 @@ msgstr "Lijst"
 msgid "Grid"
 msgstr "Rooster"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:937
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:942
 msgid "Save as Quick Expense"
 msgstr "Bewaren als snelle uitgave"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:945
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:950
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:58
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NewCategoryDialog.qml:64
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/profilespage/NewProfileDialog.qml:123
@@ -658,7 +658,7 @@ msgstr "Bewaren als snelle uitgave"
 msgid "Save"
 msgstr "Opslaan"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:954
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:959
 msgid "Search or create new expense"
 msgstr "Zoek naar een uitgave of voeg er een toe"
 

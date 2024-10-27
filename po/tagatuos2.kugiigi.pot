@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-27 14:27+0000\n"
+"POT-Creation-Date: 2024-10-27 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid "Delete"
 msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DeleteExpenseDialog.qml:75
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:70
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/aboutpage/ExternalDialog.qml:55
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/DeleteCategoryDialog.qml:62
@@ -103,7 +103,7 @@ msgid "Cancel"
 msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
 msgid "Close"
 msgstr ""
 
@@ -634,11 +634,11 @@ msgstr ""
 msgid "Grid"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:937
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:942
 msgid "Save as Quick Expense"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:945
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:950
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:58
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NewCategoryDialog.qml:64
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/profilespage/NewProfileDialog.qml:123
@@ -646,7 +646,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:954
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:959
 msgid "Search or create new expense"
 msgstr ""
 

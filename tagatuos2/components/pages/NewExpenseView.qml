@@ -927,9 +927,9 @@ FocusScope {
 
                 onTrigger: {
                     if (newExpenseView.isGridDisplay) {
-                        newExpenseView.displayType = QuickListGridView.GridType.List
+                        mainView.settings.quickExpenseDisplayType = QuickListGridView.GridType.List
                     } else {
-                        newExpenseView.displayType = QuickListGridView.GridType.Rectangle
+                        mainView.settings.quickExpenseDisplayType = QuickListGridView.GridType.Rectangle
                     }
                 }
             }

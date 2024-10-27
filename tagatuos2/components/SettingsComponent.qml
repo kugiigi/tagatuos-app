@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Qt.labs.settings 1.0
 import "../library/Currencies.js" as Currencies
 import "../common" as Common
+import "../components/pages/newexpenseview" as NewExpenseView
 
 Item {
     id: tempSettings
@@ -27,6 +28,7 @@ Item {
     property alias scrollPositionerPosition: settingsItem.scrollPositionerPosition
     property alias scrollPositionerSize: settingsItem.scrollPositionerSize
     property alias enableFastDateScroll: settingsItem.enableFastDateScroll
+    property alias quickExpenseDisplayType: settingsItem.quickExpenseDisplayType
 
     //Detailed List Page
     property alias detailedListScope: settingsItem.detailedListScope
@@ -147,5 +149,6 @@ Item {
         property bool enableHeaderSwipeGesture: true
         property string tagOfTheDayDate: ""
         property string tagOfTheDay: ""
+        property int quickExpenseDisplayType: NewExpenseView.QuickListGridView.GridType.Rectangle
     }
 }

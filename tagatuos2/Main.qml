@@ -721,6 +721,7 @@ ApplicationWindow {
                 isColoredText: mainView.settings.coloredText
                 isTravelMode: mainView.settings.travelMode
                 isWideLayout: mainView.isWideLayout
+                displayType: mainView.settings.quickExpenseDisplayType
                 dragDistance: {
                     if (mainPage.middleBottomGesture.dragging) {
                         return mainPage.middleBottomGesture.distance
