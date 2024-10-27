@@ -64,6 +64,7 @@ TextField {
     background: Common.BaseBackgroundRectangle {
         control: valueField
         radius: Suru.units.gu(1)
+        enableHoveredHighlight: false
         highlightColor: "transparent"
         
         Label {

@@ -41,6 +41,7 @@ TextArea {
     background: Common.BaseBackgroundRectangle {
         control: descriptionField
         radius: Suru.units.gu(1)
+        enableHoveredHighlight: false
         highlightColor: "transparent"
     }
 }

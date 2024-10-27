@@ -111,6 +111,7 @@ TextField {
         sourceComponent: Common.BaseBackgroundRectangle {
             control: textField
             radius: Suru.units.gu(1)
+            enableHoveredHighlight: false
             highlightColor: "transparent"
         }
         onLoaded: textField.background = item
