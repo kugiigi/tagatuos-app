@@ -46,6 +46,7 @@ Dialogs.DialogWithContents {
         Layout.fillWidth: true
         flickable: tagOfTheDayDialog.flickable
         tags: tagOfTheDayDialog.tags
+        useCustomBackground: false
     }
 
     ColumnLayout {

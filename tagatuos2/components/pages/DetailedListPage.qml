@@ -631,6 +631,7 @@ Pages.BasePage {
                     focus: true
                     currentIndex: -1
                     visible: model.ready
+                    topMargin: Suru.units.gu(1)
 
                     // Do not use default since we have controls at the bottom that should be behind the scroll positioner
                     enableScrollPositioner: false
