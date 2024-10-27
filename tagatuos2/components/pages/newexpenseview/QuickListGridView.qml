@@ -221,9 +221,11 @@ GridView {
                 expenseData.category = categoryName
                 expenseData.value = value
                 expenseData.tags = mainView.getTagsOfTheDay()
-                expenseData.payeeName = payeeName
-                expenseData.payeeLocation = payeeLocation
+
+                // Set them in this order to avoid binding loop error in the payee fields
                 expenseData.payeeOtherDescription = payeeOtherDescr
+                expenseData.payeeLocation = payeeLocation
+                expenseData.payeeName = payeeName
 
                 if (showTravelValue) {
                     expenseData.value = model.value

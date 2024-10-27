@@ -12,6 +12,8 @@ Item {
     id: gridDelegate
 
     readonly property bool isGridDisplay: GridView.view.gridType == QuickListGridView.GridType.Rectangle
+    readonly property bool hasPayee: payeeName !== ""
+
     property alias highlighted: itemDelegate.highlighted
     property int type: QuickListGridView.Type.QuickList
     property string expenseName
@@ -38,11 +40,8 @@ Item {
     ListItems.BaseItemDelegate {
         id: itemDelegate
 
-        anchors {
-            fill: parent
-            margins: gridDelegate.isGridDisplay ? Suru.units.gu(1) : Suru.units.gu(0.8)
-        }
-        
+        anchors.fill: parent
+
         onClicked: gridDelegate.clicked()
         onRightClicked: gridDelegate.rightClicked(mouseX, mouseY)
         onDoubleClicked: gridDelegate.doubleClicked()
@@ -59,7 +58,6 @@ Item {
             anchors {
                 right: parent.right
                 verticalCenter: parent.top
-                verticalCenterOffset: gridDelegate.isGridDisplay ? 0 : height * 0.2
             }
             width: indicatorLayout.width
             height: indicatorLayout.height
@@ -138,39 +136,26 @@ Item {
                 }
 
                 Components.ColoredLabel {
-                    id: payeeLabel
-
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignCenter
-
-                    Suru.textLevel: Suru.Paragraph
-                    color: Suru.secondaryForegroundColor
-                    horizontalAlignment: gridDelegate.isGridDisplay ? Text.AlignHCenter : Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    visible: gridDelegate.payeeName !== ""
-                    text: {
-                        if (gridDelegate.payeeLocation !== "") {
-                            return i18n.tr("%1 | %2").arg(gridDelegate.payeeName).arg(gridDelegate.payeeLocation)
-                        } else {
-                            return gridDelegate.payeeName
-                        }
-                    }
-                    maximumLineCount: 1
-                    elide: Text.ElideRight
-                }
-
-                Components.ColoredLabel {
                     id: descrLabel
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignCenter
 
-                    Suru.textLevel: Suru.Caption
+                    Suru.textLevel: gridDelegate.hasPayee ? Suru.Paragraph : Suru.Caption
                     color: Suru.secondaryForegroundColor
-                    horizontalAlignment: gridDelegate.isGridDisplay ? Text.AlignHCenter : Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    visible: gridDelegate.description !== "" && !payeeLabel.visible
-                    text: gridDelegate.description
+                    visible: gridDelegate.hasPayee || gridDelegate.description !== ""
+                    text: {
+                        if (gridDelegate.hasPayee) {
+                            if (gridDelegate.payeeLocation !== "") {
+                                return i18n.tr("%1 | %2").arg(gridDelegate.payeeName).arg(gridDelegate.payeeLocation)
+                            } else {
+                                return gridDelegate.payeeName
+                            }
+                        }
+
+                        return gridDelegate.description
+                    }
                     maximumLineCount: 1
                     elide: Text.ElideRight
                 }
@@ -181,7 +166,6 @@ Item {
                     Layout.fillHeight: true
                     Layout.alignment: Qt.AlignCenter
 
-                    Suru.textLevel: gridDelegate.isGridDisplay ? Suru.Paragraph : Suru.HeadingThree
                     verticalAlignment: Text.AlignVCenter
                     visible: gridDelegate.value > 0
                     text: gridDelegate.isTravelMode ? AppFunctions.formatMoneyTravel(gridDelegate.value, false)
@@ -193,10 +177,7 @@ Item {
                     State {
                         name: "grid"
                         when: gridDelegate.isGridDisplay
-                        ParentChange {
-                            target: payeeLabel
-                            parent: contentItemColumnLayout
-                        }
+
                         ParentChange {
                             target: descrLabel
                             parent: contentItemColumnLayout
@@ -204,6 +185,23 @@ Item {
                         ParentChange {
                             target: valueLabel
                             parent: contentItemColumnLayout
+                        }
+
+                        PropertyChanges {
+                            target: itemDelegate
+                            anchors.margins: Suru.units.gu(1)
+                        }
+                        PropertyChanges {
+                            target: itemDelegate.indicator
+                            anchors.verticalCenterOffset: 0
+                        }
+                        PropertyChanges {
+                            target: descrLabel
+                            horizontalAlignment: Text.AlignHCenter
+                        }
+                        PropertyChanges {
+                            target: valueLabel
+                            Suru.textLevel: Suru.Paragraph
                         }
                         PropertyChanges {
                             target: mainLabel
@@ -213,10 +211,7 @@ Item {
                     , State {
                         name: "list"
                         when: !gridDelegate.isGridDisplay
-                        ParentChange {
-                            target: payeeLabel
-                            parent: nameDescrColumnLayout
-                        }
+
                         ParentChange {
                             target: descrLabel
                             parent: nameDescrColumnLayout
@@ -224,6 +219,23 @@ Item {
                         ParentChange {
                             target: valueLabel
                             parent: rowLayout
+                        }
+
+                        PropertyChanges {
+                            target: itemDelegate
+                            anchors.margins: Suru.units.gu(0.8)
+                        }
+                        PropertyChanges {
+                            target: itemDelegate.indicator
+                            anchors.verticalCenterOffset: height * 0.2
+                        }
+                        PropertyChanges {
+                            target: descrLabel
+                            horizontalAlignment: Text.AlignLeft
+                        }
+                        PropertyChanges {
+                            target: valueLabel
+                            Suru.textLevel: Suru.HeadingThree
                         }
                         PropertyChanges {
                             target: mainLabel
