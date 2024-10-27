@@ -23,6 +23,9 @@ TextField {
     // Function that is executed before changing the search text
     property var searchFunction: function () {}
 
+    // Function that is executed before and if searching should be triggered
+    property var checkBeforeSearchFunction: function () { return true }
+
     signal commit(var data, bool refocus)
 
     font.pixelSize: Suru.units.gu(2)
@@ -52,7 +55,10 @@ TextField {
 
         if (!internal.doNotProcessTextChange && textField.isFocused) {
             internal.hideAutoCompleteListView = false
-            searchDelay.restart()
+
+            if (textField.checkBeforeSearchFunction()) {
+                searchDelay.restart()
+            }
         }
     }
 
@@ -176,7 +182,24 @@ TextField {
                     && textField.model.ready
                     && textField.model.count > 0
                     && !(textField.model.count === 1 && autoCompleteIsOffered) // Hide when auto complete is offered and it's the only item
-        currentIndex: firstItemText === textField.text ? 0 : -1
+        currentIndex: {
+            // If the current text is equal to the first item, always highlight the first item
+            // and immediately got to the next item when focusing on the list
+            if (firstItemText === textField.text) {
+                if (activeFocus) {
+                    return 1
+                } else {
+                    return 0
+                }
+            }
+
+            // Do nothing special if current text isn't equal to the first item
+            if (activeFocus) {
+                return 0
+            } else {
+                return -1
+            }
+        }
         keyNavigationEnabled: true
         height: contentHeight
         anchors {

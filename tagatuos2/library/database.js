@@ -2505,18 +2505,21 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
 
         switch (txtMode) {
             case "location":
+                txtSelectStatement = "SELECT DISTINCT '' as payee_name, location, other_descr"
                 txtFieldName = "location"
                 break
             case "otherDescr":
+                txtSelectStatement = "SELECT DISTINCT '' as payee_name, '' as location, other_descr"
                 txtFieldName = "other_descr"
                 break
             case "full":
             default:
+                txtSelectStatement = "SELECT DISTINCT payee_name, location, other_descr"
                 txtFieldName = "payee_name"
                 break
         }
 
-        txtSelectStatement = "SELECT payee_name, location, other_descr, ? as mode \
+        txtSelectStatement = txtSelectStatement + ", ? as mode \
                                 , CASE WHEN <FieldName> GLOB ? THEN 1 \
                                      WHEN <FieldName> LIKE ? THEN 2 \
                                      WHEN <FieldName> GLOB ? THEN 3 \
