@@ -13,12 +13,16 @@ TextField {
     readonly property bool isFocused: activeFocus || autoCompleteListView.activeFocus
 
     property Common.BaseFlickable flickable
+    property bool enableAutoComplete: true
     property alias model: autoCompleteListView.model
     property alias delegate: autoCompleteListView.delegate
     property string propertyName: "name"
     property bool overrideCommit: false
     property alias iconName: leftIcon.name
     property bool useCustomBackground: true
+    property int listHorizontalAlignment: Text.AlignHCenter
+    property real listLeftMargin: Suru.units.gu(1)
+    property real listRightMargin: Suru.units.gu(1)
 
     // Function that is executed before changing the search text
     property var searchFunction: function () {}
@@ -53,11 +57,13 @@ TextField {
     onTextChanged: {
         searchDelay.stop()
 
-        if (!internal.doNotProcessTextChange && textField.isFocused) {
-            internal.hideAutoCompleteListView = false
+        if (enableAutoComplete) {
+            if (!internal.doNotProcessTextChange && textField.isFocused) {
+                internal.hideAutoCompleteListView = false
 
-            if (textField.checkBeforeSearchFunction()) {
-                searchDelay.restart()
+                if (textField.checkBeforeSearchFunction()) {
+                    searchDelay.restart()
+                }
             }
         }
     }
@@ -67,10 +73,14 @@ TextField {
 
     Keys.onUpPressed: focusScrollConnections.focusPrevious()
     Keys.onDownPressed: {
-        if (autoCompleteListView.visible && autoCompleteListView.count > 0) {
-            autoCompleteListView.forceActiveFocus()
+        if (enableAutoComplete) {
+            if (autoCompleteListView.visible && autoCompleteListView.count > 0) {
+                autoCompleteListView.forceActiveFocus()
+            } else {
+                focusScrollConnections.focusNext()
+            }
         } else {
-            focusScrollConnections.focusNext()
+            event.accepted = false
         }
     }
 
@@ -154,7 +164,7 @@ TextField {
         ignoreUnknownSignals: true
 
         onReadyChanged: {
-            if (target.ready) {
+            if (target.ready && textField.enableAutoComplete) {
                 let _text = textField.text
                 let _firstItem = textField.model.get(0)
                 let _firstItemText = autoCompleteListView.firstItemText
@@ -178,6 +188,7 @@ TextField {
         signal itemClicked(var data)
 
         visible: !internal.hideAutoCompleteListView
+                    && textField.enableAutoComplete
                     && textField.isFocused
                     && textField.model.ready
                     && textField.model.count > 0
@@ -205,7 +216,9 @@ TextField {
         anchors {
             bottom: parent.bottom
             left: parent.left
+            leftMargin: textField.listLeftMargin
             right: parent.right
+            rightMargin: textField.listRightMargin
             margins: Suru.units.gu(1)
         }
 
@@ -227,6 +240,7 @@ TextField {
 
         delegate: Common.TextFieldWithAutoCompleteDelegate {
             propertyName: textField.propertyName
+            horizontalAlignment: textField.listHorizontalAlignment
         }
     }
 }

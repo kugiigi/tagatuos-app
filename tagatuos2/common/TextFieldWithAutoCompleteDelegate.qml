@@ -9,6 +9,7 @@ ListItems.BaseItemDelegate {
     id: itemDelegate
 
     property string propertyName: "name"
+    property int horizontalAlignment: Text.AlignHCenter
 
     highlighted: ListView.view.currentIndex == index
     transparentBackground: true
@@ -25,6 +26,6 @@ ListItems.BaseItemDelegate {
     contentItem: Label {
         text: itemDelegate.text
         wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: itemDelegate.horizontalAlignment
     }
 }

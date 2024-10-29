@@ -11,6 +11,11 @@ import "../../../library/functions.js" as Functions
 Common.TextFieldWithAutoComplete {
     id: tagsField
 
+    // TODO: Maybe do something instead of reusing this for the search field
+    // This is for disabling processing of tags specific features
+    property bool enableTagsProcessing: true
+
+    property real tagsListLeftMargin: Suru.units.gu(1)
     property string tags
     readonly property var tagsList: tags ? tags.split(",") : []
     readonly property bool hasTags: tagsList.length > 0
@@ -54,6 +59,7 @@ Common.TextFieldWithAutoComplete {
         }
     }
 
+    enableAutoComplete: enableTagsProcessing
     model: mainView.mainModels.searchExpenseTagsModel
     propertyName: "tagName"
     overrideCommit: true
@@ -61,6 +67,7 @@ Common.TextFieldWithAutoComplete {
     placeholderText: i18n.tr("Add tags (Enter comma after each tag)")
     iconName: "tag"
     useCustomBackground: true
+    listLeftMargin: leftPadding
     topPadding: tagsFlow.visible ? rowLayout.height + Suru.units.gu(2) : Suru.units.gu(1)
     searchFunction: function() {
         model.excludedList = tags + "," + text
@@ -90,8 +97,8 @@ Common.TextFieldWithAutoComplete {
 
     Behavior on topPadding { NumberAnimation { easing: Suru.animations.EasingInOut; duration: Suru.animations.SnapDuration } }
 
-    onVisibleChanged: if (visible) text = ""
-    onAccepted: commit(text, true)
+    onVisibleChanged: if (visible && enableTagsProcessing) text = ""
+    onAccepted: if (enableTagsProcessing) commit(text, true)
 
     RowLayout {
         id: rowLayout
@@ -99,6 +106,7 @@ Common.TextFieldWithAutoComplete {
         anchors {
             top: parent.top
             left: parent.left
+            leftMargin: tagsField.tagsListLeftMargin
             right: parent.right
             margins: Suru.units.gu(1)
         }
@@ -110,7 +118,7 @@ Common.TextFieldWithAutoComplete {
             Layout.fillWidth: true
 
             model: tagsField.tagsList
-            visible: tagsField.hasTags
+            visible: tagsField.hasTags && tagsField.enableTagsProcessing
             editable: true
 
             onDeleteTag: tagsField.deleteTag(tag)

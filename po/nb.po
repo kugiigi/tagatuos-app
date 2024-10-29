@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-27 14:32+0000\n"
+"POT-Creation-Date: 2024-10-29 17:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: JanConGitHub <janc@sherdahl.no>\n"
 "Language-Team: NORWEGIAN <LL@li.org>\n"
@@ -93,7 +93,7 @@ msgid "Delete"
 msgstr "Slett"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/DeleteExpenseDialog.qml:75
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:70
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/aboutpage/ExternalDialog.qml:55
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/DeleteCategoryDialog.qml:62
@@ -106,7 +106,7 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/PopupPageStack.qml:59
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:972
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:967
 msgid "Close"
 msgstr "Lukk"
 
@@ -155,17 +155,17 @@ msgstr "For lite data til  vise rapporten"
 msgid "Select different report criteria"
 msgstr "Velg forskjellige rapportkriterier"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:489
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:491
 #, fuzzy, qt-format
 msgid "Today's expenses [%1]:<br>"
 msgstr "Ingen utgifter for "
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:491
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:493
 #, fuzzy
 msgid "Today's expenses:<br>"
 msgstr "Ingen utgifter for "
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:505
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/MainModels.qml:507
 #, qt-format
 msgid "Total: <b>%1</b>"
 msgstr ""
@@ -184,6 +184,7 @@ msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/models/SettingsModels.qml:40
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NameField.qml:25
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/FocusedSearchLabel.qml:12
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/quickexpensespage/NameField.qml:21
 msgid "Name"
 msgstr "Navn"
@@ -373,7 +374,7 @@ msgstr ""
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/DetailedListPage.qml:615
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/ProfilesPage.qml:143
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/QuickExpensesPage.qml:160
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:97
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:192
 msgid "Please wait"
 msgstr "Vennligst vent"
 
@@ -676,12 +677,12 @@ msgstr ""
 msgid "Grid"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:942
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:937
 #, fuzzy
 msgid "Save as Quick Expense"
 msgstr "Hurtigutgift"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:950
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:945
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/TagOfTheDayDialog.qml:58
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/NewCategoryDialog.qml:64
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/profilespage/NewProfileDialog.qml:123
@@ -689,7 +690,7 @@ msgstr "Hurtigutgift"
 msgid "Save"
 msgstr "Lagre"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:959
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/NewExpenseView.qml:954
 msgid "Search or create new expense"
 msgstr ""
 
@@ -1147,6 +1148,7 @@ msgid "Are you sure you want to delete this category?"
 msgstr "Er du sikker p at du vil slette denne kategorien?"
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/categoriespage/DescriptionField.qml:22
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/FocusedSearchLabel.qml:13
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/quickexpensespage/DescriptionField.qml:22
 #, fuzzy
 msgid "Description"
@@ -1297,23 +1299,42 @@ msgstr ""
 msgid "Filter by category"
 msgstr "Slett kategori"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:63
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:72
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:67
+msgid "Add tags (Enter comma after each tag)"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:72
 msgid "Type to search..."
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:95
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:190
 #, fuzzy
 msgid "Search your expenses"
 msgstr "Laster utgifter"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:95
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:190
 msgid "No results found"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:96
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ExpenseSearchView.qml:191
 #, fuzzy
 msgid "Searching expenses..."
 msgstr "Laster utgifter"
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/FocusedSearchLabel.qml:11
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValuesNavigationRow.qml:24
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValuesNavigationRow.qml:147
+msgid "All"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/FocusedSearchLabel.qml:14
+msgid "Payee"
+msgstr ""
+
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/FocusedSearchLabel.qml:15
+msgid "Tags"
+msgstr ""
 
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/SummaryValuesDelegate.qml:86
 msgid "Overall Total"
@@ -1357,11 +1378,6 @@ msgstr ""
 msgid "@ %1"
 msgstr ""
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValuesNavigationRow.qml:24
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/detailedlistpage/ValuesNavigationRow.qml:147
-msgid "All"
-msgstr ""
-
 #: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/ContextActionsListView.qml:30
 msgid "↵ Enter"
 msgstr ""
@@ -1401,11 +1417,7 @@ msgstr "<Ingen beskrivelse>"
 msgid "Add description"
 msgstr "<Ingen beskrivelse>"
 
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:61
-msgid "Add tags (Enter comma after each tag)"
-msgstr ""
-
-#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:138
+#: /home/kugiigi/Documents/Development/Tagatuos/tagatuos-app/tagatuos2/components/pages/newexpenseview/TagsField.qml:146
 msgid "Clear all tags"
 msgstr ""
 

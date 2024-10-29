@@ -387,6 +387,7 @@ Item {
         id: searchExpenseModel
 
         property string searchText: ""
+        property string focus: "all"
         property string order: "desc"
         property int resultLimit: 50
 
@@ -394,13 +395,14 @@ Item {
         worker: workerLoader
 
         function refresh() {
-            fillData(mainView.expenses.search(searchText, resultLimit, order))
+            fillData(mainView.expenses.search(searchText, resultLimit, order, focus))
         }
 
         Component.onCompleted: refresh()
 
         onSearchTextChanged: refresh()
         onOrderChanged: refresh()
+        onFocusChanged: refresh()
     }
 
     // Model for tags auto-complete

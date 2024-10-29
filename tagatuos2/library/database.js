@@ -1853,10 +1853,12 @@ function getHistoryExpenses(intProfileId, txtSearchText, intLimit=10) {
     return arrResults
 }
 
-function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc") {
+function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc", txtFocus="all") {
     let arrResults = []
+    let boolFullSearchOnly = txtSearchText.substr(0, 1) === '"' && txtSearchText.substr(txtSearchText.length - 1, 1) === '"'
+    let processedSearchText = boolFullSearchOnly ? txtSearchText.substr(1, txtSearchText.length - 2) : txtSearchText
 
-    if (txtSearchText.trim() !== "") {
+    if (processedSearchText.trim() !== "") {
         let db = openDB()
         let rs = null
         let txtFullStatement = ""
@@ -1865,56 +1867,280 @@ function searchExpenses(intProfileId, txtSearchText, intLimit=10, txtSort ="desc
         let txtWhereStatement = ""
         let txtOrderStatement = ""
         let txtLimitStatement = ""
-        let txtFullSearchTextGLOB = processTextForGLOB(txtSearchText)
-        let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText)
-        let arrBindValues = [txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextLIKE]
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
+        let _arrSearchTerms = boolFullSearchOnly ? [processedSearchText] : processedSearchText.split(" ")
+        let arrBindValues = []
+        let intLastScore = 0
+        let txtFullSearchTextGLOB = processTextForGLOB(processedSearchText, false)
+        let txtFullSearchTextLIKE = processTextForLIKE(processedSearchText, false)
+        let txtFullSearchTextTagStart = processTextForGLOB(processedSearchText + ",", false)
+        let txtFullSearchTextTagMiddle = processTextForGLOB("," + processedSearchText + ",", false)
+        let txtFullSearchTextTagEnd = processTextForGLOB("," + processedSearchText, false)
+        let txtFullSearchTextGLOBExactStart = processTextForGLOB(processedSearchText, true)
+        let txtFullSearchTextLIKEExactStart = processTextForLIKE(processedSearchText, true)
+        let txtSearchTags = []
 
         txtSelectStatement = "SELECT expense_id, category_name, name, descr, strftime('%Y-%m-%d %H:%M:%f', date, 'localtime') as entry_date \
-                                , value, tags, payee_name, payee_location, payee_other_descr, home_currency, travel_currency, rate, travel_value \
-                                , CASE WHEN name GLOB ? THEN 1 \
-                                     WHEN descr GLOB ? THEN 2 \
-                                     WHEN name LIKE ? THEN 3 \
-                                     WHEN descr LIKE ? THEN 4"
+                                , value, tags, payee_name, payee_location, payee_other_descr, home_currency, travel_currency, rate, travel_value"
 
-        let _arrSearchTerms = txtSearchText.split(" ")
+        switch (txtFocus) {
+            case "name":
+                txtSelectStatement = txtSelectStatement
+                                    + ", CASE WHEN name GLOB ? THEN 1 \
+                                        WHEN name LIKE ? THEN 2 \
+                                        WHEN name GLOB ? THEN 3 \
+                                        WHEN name LIKE ? THEN 4"
+                arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart
+                                ,txtFullSearchTextGLOB, txtFullSearchTextLIKE]
+                intLastScore = 4
+                break
+            case "descr":
+                txtSelectStatement = txtSelectStatement
+                                    + ", CASE WHEN descr GLOB ? THEN 1 \
+                                        WHEN descr LIKE ? THEN 2 \
+                                        WHEN descr GLOB ? THEN 3 \
+                                        WHEN descr LIKE ? THEN 4"
+                arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart
+                                ,txtFullSearchTextGLOB, txtFullSearchTextLIKE]
+                intLastScore = 4
+                break
+            case "tags":
+                txtSelectStatement = txtSelectStatement + ", 0 as score"
+                intLastScore = 0
+                txtSearchTags = processedSearchText.split(",")
+                break
+            case "payee":
+                txtSelectStatement = txtSelectStatement
+                                        // Match start of text
+                                    + ", CASE WHEN payee_name GLOB ? THEN 1 \
+                                        WHEN payee_location GLOB ? THEN 2 \
+                                        WHEN payee_other_descr GLOB ? THEN 3 \
+                                        WHEN payee_name LIKE ? THEN 4 \
+                                        WHEN payee_location LIKE ? THEN 5 \
+                                        WHEN payee_other_descr LIKE ? THEN 6"
 
-        for (let i = 0; i < _arrSearchTerms.length; i++) {
-            let _term = _arrSearchTerms[i]
-            // Continue counting the score from 4 then continue from 8
-            let _score = (4 * (i + 1)) + 1
-            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + _score
-            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + (_score + 1)
-            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 2)
-            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 3)
-            
-            let _txtTermGLOB = processTextForGLOB(_term)
-            let _txtTermLIKE = processTextForLIKE(_term)
-            arrBindValues.push(_txtTermGLOB, _txtTermGLOB, _txtTermLIKE, _txtTermLIKE)
+                                        // Match anywhere within the text
+                                    + " WHEN payee_name GLOB ? THEN 7 \
+                                        WHEN payee_location GLOB ? THEN 8 \
+                                        WHEN payee_other_descr GLOB ? THEN 9 \
+                                        WHEN payee_name LIKE ? THEN 10 \
+                                        WHEN payee_location LIKE ? THEN 11 \
+                                        WHEN payee_other_descr LIKE ? THEN 12"
+                arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextGLOBExactStart, txtFullSearchTextGLOBExactStart
+                                ,txtFullSearchTextLIKEExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextLIKEExactStart
+                                ,txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextGLOB
+                                ,txtFullSearchTextLIKE, txtFullSearchTextLIKE, txtFullSearchTextLIKE]
+                intLastScore = 12
+                break
+            case "all":
+            default:
+                txtSelectStatement = txtSelectStatement
+                                        // Match start of text
+                                    + ", CASE WHEN name GLOB ? THEN 1 \
+                                        WHEN descr GLOB ? THEN 2 \
+                                        WHEN payee_name GLOB ? THEN 3 \
+                                        WHEN tags GLOB ? THEN 4 \
+                                        WHEN tags GLOB ? THEN 5 \
+                                        WHEN tags GLOB ? THEN 6 \
+                                        WHEN payee_location GLOB ? THEN 7 \
+                                        WHEN payee_other_descr GLOB ? THEN 8 \
+                                        WHEN name LIKE ? THEN 9 \
+                                        WHEN descr LIKE ? THEN 10 \
+                                        WHEN payee_name LIKE ? THEN 11 \
+                                        WHEN payee_location LIKE ? THEN 12 \
+                                        WHEN payee_other_descr LIKE ? THEN 13"
+
+                                        // Match anywhere within the text
+                                    + " WHEN name GLOB ? THEN 14 \
+                                        WHEN descr GLOB ? THEN 15 \
+                                        WHEN payee_name GLOB ? THEN 16 \
+                                        WHEN payee_location GLOB ? THEN 17 \
+                                        WHEN payee_other_descr GLOB ? THEN 18 \
+                                        WHEN name LIKE ? THEN 19 \
+                                        WHEN descr LIKE ? THEN 20 \
+                                        WHEN payee_name LIKE ? THEN 21 \
+                                        WHEN payee_location LIKE ? THEN 22 \
+                                        WHEN payee_other_descr LIKE ? THEN 23"
+                arrBindValues = [txtFullSearchTextGLOBExactStart, txtFullSearchTextGLOBExactStart, txtFullSearchTextGLOBExactStart
+                                , txtFullSearchTextTagStart, txtFullSearchTextTagMiddle, txtFullSearchTextTagEnd
+                                , txtFullSearchTextGLOBExactStart, txtFullSearchTextGLOBExactStart
+                                , txtFullSearchTextLIKEExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextLIKEExactStart
+                                , txtFullSearchTextLIKEExactStart, txtFullSearchTextLIKEExactStart
+                                ,txtFullSearchTextGLOB, txtFullSearchTextGLOB, txtFullSearchTextGLOB
+                                ,txtFullSearchTextGLOB, txtFullSearchTextGLOB
+                                ,txtFullSearchTextLIKE, txtFullSearchTextLIKE, txtFullSearchTextLIKE
+                                ,txtFullSearchTextLIKE, txtFullSearchTextLIKE]
+                intLastScore = 23
         }
 
-        txtSelectStatement = txtSelectStatement + " END as score"
+        if (txtFocus !== "tags") {
+            if (!boolFullSearchOnly) {
+                // TODO:  Combine this with full search since _arrSearchTerms can just have the full search text and/or search terms
+                for (let i = 0; i < _arrSearchTerms.length; i++) {
+                    let _term = _arrSearchTerms[i]
+                    // Continue counting the score from intLastScore
+                    let _score = (intLastScore * (i + 1)) + 1
+                    let _txtTermGLOB = processTextForGLOB(_term, false)
+                    let _txtTermLIKE = processTextForLIKE(_term, false)
+                    let _txtTermGLOBExactStart = processTextForGLOB(_term, true)
+                    let _txtTermLIKEExactStart = processTextForLIKE(_term, true)
+                    let _txtTermTagStart = processTextForGLOB(processedSearchText + ",", false)
+                    let _txtTermTagMiddle = processTextForGLOB("," + processedSearchText + ",", false)
+                    let _txtTermTagEnd = processTextForGLOB("," + processedSearchText, false)
+
+                    switch (txtFocus) {
+                        case "name":
+                            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + _score
+                            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 1)
+                            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + (_score + 2)
+                            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 3)
+
+                            arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
+                            break
+                        case "descr":
+                            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + _score
+                            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 1)
+                            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + (_score + 2)
+                            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 3)
+
+                            arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
+                            break
+                        case "payee":
+                            // Match start of text
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name GLOB ? THEN " + _score
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location GLOB ? THEN " + (_score + 1)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr GLOB ? THEN " + (_score + 2)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name LIKE ? THEN " + (_score + 3)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location LIKE ? THEN " + (_score + 4)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr LIKE ? THEN " + (_score + 5)
+
+                            // Match anywhere within the text
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name GLOB ? THEN " + (_score + 6)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location GLOB ? THEN " + (_score + 7)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr GLOB ? THEN " + (_score + 8)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name LIKE ? THEN " + (_score + 9)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location LIKE ? THEN " + (_score + 10)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr LIKE ? THEN " + (_score + 11)
+
+                            arrBindValues.push(_txtTermGLOBExactStart, _txtTermGLOBExactStart, _txtTermGLOBExactStart
+                                            , _txtTermLIKEExactStart, _txtTermLIKEExactStart, _txtTermLIKEExactStart
+                                            , _txtTermGLOB, _txtTermGLOB, _txtTermGLOB
+                                            , _txtTermLIKE, _txtTermLIKE, _txtTermLIKE)
+                            break
+                        case "all":
+                        default:
+                            // Match start of text
+                            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + _score
+                            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + (_score + 1)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name GLOB ? THEN " + (_score + 2)
+                            txtSelectStatement = txtSelectStatement + " WHEN tags GLOB ? THEN " + (_score + 3)
+                            txtSelectStatement = txtSelectStatement + " WHEN tags GLOB ? THEN " + (_score + 4)
+                            txtSelectStatement = txtSelectStatement + " WHEN tags GLOB ? THEN " + (_score + 5)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location GLOB ? THEN " + (_score + 6)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr GLOB ? THEN " + (_score + 7)
+                            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 8)
+                            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 9)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name LIKE ? THEN " + (_score + 10)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location LIKE ? THEN " + (_score + 11)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr LIKE ? THEN " + (_score + 12)
+
+                            // Match anywhere within the text
+                            txtSelectStatement = txtSelectStatement + " WHEN name GLOB ? THEN " + (_score + 13)
+                            txtSelectStatement = txtSelectStatement + " WHEN descr GLOB ? THEN " + (_score + 14)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name GLOB ? THEN " + (_score + 15)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location GLOB ? THEN " + (_score + 16)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr GLOB ? THEN " + (_score + 17)
+                            txtSelectStatement = txtSelectStatement + " WHEN name LIKE ? THEN " + (_score + 18)
+                            txtSelectStatement = txtSelectStatement + " WHEN descr LIKE ? THEN " + (_score + 19)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_name LIKE ? THEN " + (_score + 20)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_location LIKE ? THEN " + (_score + 21)
+                            txtSelectStatement = txtSelectStatement + " WHEN payee_other_descr LIKE ? THEN " + (_score + 22)
+
+                            arrBindValues.push(_txtTermGLOBExactStart, _txtTermGLOBExactStart, _txtTermGLOBExactStart
+                                            , _txtTermTagStart, _txtTermTagMiddle, _txtTermTagEnd
+                                            , _txtTermGLOBExactStart, _txtTermGLOBExactStart
+                                            , _txtTermLIKEExactStart, _txtTermLIKEExactStart, _txtTermLIKEExactStart
+                                            , _txtTermLIKEExactStart, _txtTermLIKEExactStart
+                                            , _txtTermGLOB, _txtTermGLOB, _txtTermGLOB, _txtTermGLOB, _txtTermGLOB
+                                            , _txtTermLIKE, _txtTermLIKE, _txtTermLIKE, _txtTermLIKE, _txtTermLIKE)
+                    }
+                }
+            }
+
+            txtSelectStatement = txtSelectStatement + " END as score"
+        }
 
         arrBindValues.push(intProfileId)
 
         txtFromStatement = "FROM expenses_vw"
         txtWhereStatement = "WHERE profile_id = ? AND ("
 
-        for (let i = 0; i < _arrSearchTerms.length; i++) {
-            let _term = _arrSearchTerms[i]
+        if (txtFocus === "tags") {
+            for (let i = 0; i < txtSearchTags.length; i++) {
+                let _tag = txtSearchTags[i]
+                let _txtTermTagStart = processTextForGLOB(_tag + ",", true)
+                let _txtTermTagMiddle = processTextForGLOB("," + _tag + ",", false)
+                let _txtTermTagEnd = "*," + _tag // TODO: Create function for adding for exact end?
 
-            if (i == 0) {
-                txtWhereStatement = txtWhereStatement + "name GLOB ?"
-            } else {
-                txtWhereStatement = txtWhereStatement + " OR name GLOB ?"
+                if (i > 0) {
+                    txtWhereStatement = txtWhereStatement + " AND "
+                }
+
+                txtWhereStatement = txtWhereStatement + "(tags GLOB ? OR tags GLOB ? OR tags GLOB ?)"
+
+                arrBindValues.push(_txtTermTagStart, _txtTermTagMiddle, _txtTermTagEnd)
             }
-            txtWhereStatement = txtWhereStatement + " OR descr GLOB ?"
-            txtWhereStatement = txtWhereStatement + " OR name LIKE ?"
-            txtWhereStatement = txtWhereStatement + " OR descr LIKE ?"
+        } else {
+            // When boolFullSearchOnly is true, _arrSearchTerms is only the full search text
+            // so this also applies to full text search
+            for (let i = 0; i < _arrSearchTerms.length; i++) {
+                let _term = _arrSearchTerms[i]
+                let _txtTermLIKE = processTextForLIKE(_term, false)
+                let _txtTermTagStart = processTextForLIKE(_term + ",", false)
+                let _txtTermTagMiddle = processTextForLIKE("," + _term + ",", false)
+                let _txtTermTagEnd = processTextForLIKE("," + _term, false)
 
-            let _txtTermGLOB = processTextForGLOB(_term)
-            let _txtTermLIKE = processTextForLIKE(_term)
-            arrBindValues.push(_txtTermGLOB, _txtTermGLOB, _txtTermLIKE, _txtTermLIKE)
+                switch (txtFocus) {
+                    case "name":
+                        if (i > 0) {
+                            txtWhereStatement = txtWhereStatement + " OR "
+                        }
+
+                        txtWhereStatement = txtWhereStatement + "name LIKE ?"
+
+                        arrBindValues.push(_txtTermLIKE)
+                        break
+                    case "descr":
+                        if (i > 0) {
+                            txtWhereStatement = txtWhereStatement + " OR "
+                        }
+
+                        txtWhereStatement = txtWhereStatement + "descr LIKE ?"
+
+                        arrBindValues.push(_txtTermLIKE)
+                        break
+                    case "payee":
+                        if (i > 0) {
+                            txtWhereStatement = txtWhereStatement + " OR "
+                        }
+
+                        txtWhereStatement = txtWhereStatement + "payee_name LIKE ? OR payee_location LIKE ? OR payee_other_descr LIKE ?"
+
+                        arrBindValues.push(_txtTermLIKE, _txtTermLIKE, _txtTermLIKE)
+                        break
+                    case "all":
+                    default:
+                        if (i > 0) {
+                            txtWhereStatement = txtWhereStatement + " OR "
+                        }
+
+                        txtWhereStatement = txtWhereStatement + "name LIKE ? OR descr LIKE ? OR payee_name LIKE ? OR payee_location LIKE ? OR payee_other_descr LIKE ? \
+                                                OR tags GLOB ? OR tags GLOB ? OR tags GLOB ?"
+
+                        arrBindValues.push(_txtTermLIKE, _txtTermLIKE, _txtTermLIKE, _txtTermLIKE, _txtTermLIKE
+                                            , _txtTermTagStart, _txtTermTagMiddle, _txtTermTagEnd)
+                }
+            }
         }
         txtWhereStatement = txtWhereStatement + ")"
         txtOrderStatement = "ORDER BY score ASC, entry_date " + txtSortBy

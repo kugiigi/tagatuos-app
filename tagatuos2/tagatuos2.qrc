@@ -22,6 +22,7 @@
 
         <file>components/pages/DetailedListPage.qml</file>
         <file>components/pages/detailedlistpage/ExpenseSearchView.qml</file>
+        <file>components/pages/detailedlistpage/FocusedSearchLabel.qml</file>
         <file>components/pages/detailedlistpage/ValuesNavigationRow.qml</file>
         <file>components/pages/detailedlistpage/ValueListDelegate.qml</file>
         <file>components/pages/detailedlistpage/SummaryValuesDelegate.qml</file>

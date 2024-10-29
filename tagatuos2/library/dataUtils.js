@@ -347,8 +347,8 @@ var dataUtils = dataUtils || (function (undefined) {
                 , historyDataForEntry: function(searchText, limit) {
                     return Database.getHistoryExpenses(profile, searchText, limit)
                 }
-                , search: function(searchText, limit, sort) {
-                    return Database.searchExpenses(profile, searchText, limit, sort)
+                , search: function(searchText, limit, sort, focus) {
+                    return Database.searchExpenses(profile, searchText, limit, sort, focus)
                 }
                 , searchTags: function(searchText, excludedList, limit, sort) {
                     return Database.searchExpensesTags(profile, searchText, excludedList, limit, sort)

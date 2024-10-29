@@ -16,6 +16,7 @@ v1.20
 * Move Home Currency setting to per Profile. Note that each Profile can only have one main currency and it will apply to all data including all past data.
 * Implemented tags support
 * Implemented payee/store support
+* Improved expense search with new features such as full text search (enclose search text with "") and focused search (press space multiple times)
 
 v1.10
 * Updated Dutch translation (Thanks to Heimen Stoffels)

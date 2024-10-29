@@ -27,8 +27,10 @@ Item {
     }
 
     function scrollFlickableToThisItem() {
-        // TODO: Properly handle when TextArea is taller than the flickable
-        flickable.scrollToItem(target, 0, 0)
+        if (flickable) {
+            // TODO: Properly handle when TextArea is taller than the flickable
+            flickable.scrollToItem(target, 0, 0)
+        }
     }
 
     Connections {
