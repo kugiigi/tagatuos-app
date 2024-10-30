@@ -36,7 +36,6 @@ OTHER_FILES += $${CONF_FILES} \
     components/Common/PopupItemSelector/SelectorToolbar.qml \
     library/Currencies.js \
     components/ListModels/CurrencyModel.qml \
-    library/WorkerScripts/SimpleListModelLoader.js \
     components/QuickAddPage/QuickAddListView.qml \
     components/QuickAddPage/QuickAddFindToolbar.qml \
     components/DetailDialog/DetailDescription.qml \

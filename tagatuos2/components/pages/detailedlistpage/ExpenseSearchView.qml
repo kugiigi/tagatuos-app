@@ -74,27 +74,6 @@ Item {
                 leftPadding: isTags && hasTags ? Suru.units.gu(1) : tagsListLeftMargin
 
                 KeyNavigation.down: resultsListView
-                Keys.onPressed: (event)=> {
-                    if (text === "") {
-                        if (event.key == Qt.Key_Space) {
-                            // WORKAROUND: Cursor text do not properly adjust when left padding changes
-                            // Hence, don't accept the event so that a space is inserted
-                            // and trigger the movement of the cursor and then clear the text again
-                            // with clearSpaceDelayTimer
-                            focusLabel.clearTextWorkaround = true
-
-                            if (focusLabel.currentFocusType === 4) {
-                                focusLabel.currentFocusType = 0
-                            } else {
-                                focusLabel.currentFocusType += 1
-                            }
-
-                            event.accepted = false
-                        }
-                    } else {
-                        event.accepted = false
-                    }
-                }
 
                 onIsTagsChanged: {
                     if (hasTags) clearTags()
@@ -105,11 +84,21 @@ Item {
                 }
                 onTagsChanged: searchDelay.restart()
                 onTextChanged: {
-                    if (!isTags) {
-                        if (text.charAt(text.length - 1) == " ") { // Trailing single space
-                            searchDelay.triggered()
+                    // Change focused search type when text is empty and the user pressed/entered space
+                    if (text === " ") {
+                        if (focusLabel.currentFocusType === 4) {
+                            focusLabel.currentFocusType = 0
                         } else {
-                            searchDelay.restart()
+                            focusLabel.currentFocusType += 1
+                        }
+                        text = ""
+                    } else {
+                        if (!isTags) {
+                            if (text.charAt(text.length - 1) == " ") { // Trailing single space
+                                searchDelay.triggered()
+                            } else {
+                                searchDelay.restart()
+                            }
                         }
                     }
                 }
@@ -154,14 +143,17 @@ Item {
                     }
 
                     onItemSelectedFromMenu: {
+                        // WORKAROUND: Cursor text do not properly adjust when left padding changes
                         if (searchField.text.trim() !== "") {
-                            // WORKAROUND: Another workaround for the cursor position issue
+                            // Change cursor position to solve the issue
                             let _currentPos = searchField.cursorPosition
                             searchField.cursorPosition = 1
                             searchField.cursorPosition = _currentPos
                         } else {
+                            // Insert 2 space to trigger the movement of the cursor
+                            // and then clear the text again with clearSpaceDelayTimer
                             focusLabel.clearTextWorkaround = true
-                            searchField.text = " "
+                            searchField.text = "  "
                         }
                     }
 
