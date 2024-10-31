@@ -2777,6 +2777,17 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
         txtOrderStatement = txtOrderStatement + ", length(<FieldName>) ASC"
+
+        // Also order by length of other fields so rows with empty fields will be listed first
+        switch (txtFieldName) {
+            case "payee_name":
+                txtOrderStatement = txtOrderStatement + ", length(location) ASC, length(other_descr) ASC"
+                break
+            case "location":
+                txtOrderStatement = txtOrderStatement + ", length(other_descr) ASC"
+                break
+        }
+
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
         txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")

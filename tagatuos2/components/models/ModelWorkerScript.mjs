@@ -269,7 +269,7 @@ WorkerScript.onMessage = function (msg) {
                 
                 switch (txtMode) {
                     case "payeeName":
-                        if (i === 0) {
+                        if (i === 0 && (txtPayeeLocation !== "" || txtPayeeOtherDescr !== "")) {
                             msg.model.append({
                                              payeeName: txtPayeeName
                                              , payeeLocation: ""
