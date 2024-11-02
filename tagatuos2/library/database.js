@@ -2725,7 +2725,7 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         let txtFullSearchTextLIKE = processTextForLIKE(txtSearchText, false)
         let txtFullSearchTextGLOBExactStart = processTextForGLOB(txtSearchText, true)
         let txtFullSearchTextLIKEExactStart = processTextForLIKE(txtSearchText, true)
-        let arrBindValues = [txtMode, txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE]
+        let arrBindValues = [txtMode]
         let txtSortBy = txtSort == "asc" ? "ASC" : "DESC"
         let txtFieldName
 
@@ -2733,23 +2733,50 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
             case "location":
                 txtSelectStatement = "SELECT DISTINCT '' as payee_name, location, other_descr"
                 txtFieldName = "location"
+
+                txtSelectStatement = txtSelectStatement + ", ? as mode \
+                                , CASE WHEN <FieldName> GLOB ? AND payee_name = ? THEN 1 \
+                                    WHEN <FieldName> LIKE ? AND payee_name = ? THEN 2 \
+                                    WHEN <FieldName> GLOB ? AND payee_name = ? THEN 3 \
+                                    WHEN <FieldName> LIKE ? AND payee_name = ? THEN 4 \
+                                    WHEN <FieldName> GLOB ? THEN 5 \
+                                    WHEN <FieldName> LIKE ? THEN 6 \
+                                    WHEN <FieldName> GLOB ? THEN 7 \
+                                    WHEN <FieldName> LIKE ? THEN 8"
+                arrBindValues.push(txtFullSearchTextGLOBExactStart, txtPayeeName, txtFullSearchTextLIKEExactStart, txtPayeeName
+                                , txtFullSearchTextGLOB, txtPayeeName, txtFullSearchTextLIKE, txtPayeeName
+                                , txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
                 break
             case "otherDescr":
                 txtSelectStatement = "SELECT DISTINCT '' as payee_name, '' as location, other_descr"
                 txtFieldName = "other_descr"
+
+                txtSelectStatement = txtSelectStatement + ", ? as mode \
+                                , CASE WHEN <FieldName> GLOB ? AND location = ? THEN 1 \
+                                    WHEN <FieldName> LIKE ? AND location = ? THEN 2 \
+                                    WHEN <FieldName> GLOB ? AND location = ? THEN 3 \
+                                    WHEN <FieldName> LIKE ? AND location = ? THEN 4 \
+                                    WHEN <FieldName> GLOB ? THEN 5 \
+                                    WHEN <FieldName> LIKE ? THEN 6 \
+                                    WHEN <FieldName> GLOB ? THEN 7 \
+                                    WHEN <FieldName> LIKE ? THEN 8"
+                arrBindValues.push(txtFullSearchTextGLOBExactStart, txtLocation, txtFullSearchTextLIKEExactStart, txtLocation
+                                , txtFullSearchTextGLOB, txtLocation, txtFullSearchTextLIKE, txtLocation
+                                , txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
                 break
             case "full":
             default:
                 txtSelectStatement = "SELECT DISTINCT payee_name, location, other_descr"
                 txtFieldName = "payee_name"
-                break
-        }
 
-        txtSelectStatement = txtSelectStatement + ", ? as mode \
+                txtSelectStatement = txtSelectStatement + ", ? as mode \
                                 , CASE WHEN <FieldName> GLOB ? THEN 1 \
                                      WHEN <FieldName> LIKE ? THEN 2 \
                                      WHEN <FieldName> GLOB ? THEN 3 \
                                      WHEN <FieldName> LIKE ? THEN 4"
+                arrBindValues.push(txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
+                break
+        }
 
         txtSelectStatement = txtSelectStatement + " END as score"
 
@@ -2769,11 +2796,6 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         let _txtTermGLOBExactStart = processTextForGLOB(txtSearchText, true)
         let _txtTermLIKEExactStart = processTextForLIKE(txtSearchText, true)
         arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
-
-        if (txtMode === "otherDescr") {
-            txtWhereStatement = txtWhereStatement + " AND location = ?"
-            arrBindValues.push(txtLocation)
-        }
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
         txtOrderStatement = txtOrderStatement + ", length(<FieldName>) ASC"

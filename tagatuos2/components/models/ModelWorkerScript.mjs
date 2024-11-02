@@ -261,30 +261,48 @@ WorkerScript.onMessage = function (msg) {
             }
             break;
         case "SearchExpensePayees":
+            let firstItemText = ""
+
             for (let i = 0; i < msg.result.length; i++) {
                 let txtPayeeName = msg.result[i].payee_name
                 let txtPayeeLocation = msg.result[i].location
                 let txtPayeeOtherDescr = msg.result[i].other_descr
                 let txtMode = msg.result[i].mode
+                let boolAddItem = true
                 
                 switch (txtMode) {
                     case "payeeName":
                         if (i === 0 && (txtPayeeLocation !== "" || txtPayeeOtherDescr !== "")) {
+                            firstItemText = txtPayeeName
                             msg.model.append({
                                              payeeName: txtPayeeName
                                              , payeeLocation: ""
                                              , payeeOtherDescr: ""
                                          })
                         }
+
+                        // Do not add current item if it's already the same as the extra first item we added
+                        // and other fields are blank
+                        if (firstItemText === txtPayeeName && txtPayeeLocation === ""
+                                    && txtPayeeOtherDescr === "") {
+                            boolAddItem = false
+                        }
                         break
                     case "location":
                         txtPayeeName = ""
                         if (i === 0 && txtPayeeOtherDescr !== "") {
+                            firstItemText = txtPayeeLocation
                             msg.model.append({
                                              payeeName: ""
                                              , payeeLocation: txtPayeeLocation
                                              , payeeOtherDescr: ""
                                          })
+                        }
+
+                        // Do not add current item if it's already the same as the extra first item we added
+                        // and other fields are blank
+                        if (firstItemText === txtPayeeLocation && txtPayeeOtherDescr === "") {
+                            boolAddItem = false
                         }
                         break
                     case "otherDescr":
@@ -293,11 +311,13 @@ WorkerScript.onMessage = function (msg) {
                         break
                 }
 
-                msg.model.append({
-                                     payeeName: txtPayeeName
-                                     , payeeLocation: txtPayeeLocation
-                                     , payeeOtherDescr: txtPayeeOtherDescr
-                                 })
+                if (boolAddItem) {
+                    msg.model.append({
+                                         payeeName: txtPayeeName
+                                         , payeeLocation: txtPayeeLocation
+                                         , payeeOtherDescr: txtPayeeOtherDescr
+                                     })
+                }
             }
             break;
         case "ThisWeekTrendChart":
