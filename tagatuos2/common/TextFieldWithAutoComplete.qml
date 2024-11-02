@@ -40,6 +40,8 @@ TextField {
     bottomPadding: autoCompleteListView.visible ? autoCompleteListView.height + Suru.units.gu(2) : Suru.units.gu(1)
 
     onCommit: {
+        searchDelay.stop()
+
         if (!overrideCommit) {
             let _newText = data
 
@@ -59,7 +61,9 @@ TextField {
 
         if (enableAutoComplete) {
             if (!internal.doNotProcessTextChange && textField.isFocused) {
-                internal.hideAutoCompleteListView = false
+                if (text !== "") {
+                    internal.hideAutoCompleteListView = false
+                }
 
                 if (textField.checkBeforeSearchFunction()) {
                     searchDelay.restart()
