@@ -74,6 +74,16 @@ TextField {
 
     onAccepted: internal.hideAutoCompleteListView = true
     onIsFocusedChanged: if (!isFocused) textField.model.searchText = ""
+    onActiveFocusChanged: {
+        // WORKAROUND: For the issue where the cursor position gets misplaced
+        // when editing an item with payee then another item without
+        if (activeFocus && text === "") {
+            internal.doNotProcessTextChange = true
+            text = " "
+            text = ""
+            internal.doNotProcessTextChange = false
+        }
+    }
 
     Keys.onUpPressed: focusScrollConnections.focusPrevious()
     Keys.onDownPressed: {
