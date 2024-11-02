@@ -2764,7 +2764,7 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
                                 , txtFullSearchTextGLOB, txtLocation, txtFullSearchTextLIKE, txtLocation
                                 , txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
                 break
-            case "full":
+            case "payeeName":
             default:
                 txtSelectStatement = "SELECT DISTINCT payee_name, location, other_descr"
                 txtFieldName = "payee_name"
@@ -2773,8 +2773,18 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
                                 , CASE WHEN <FieldName> GLOB ? THEN 1 \
                                      WHEN <FieldName> LIKE ? THEN 2 \
                                      WHEN <FieldName> GLOB ? THEN 3 \
-                                     WHEN <FieldName> LIKE ? THEN 4"
-                arrBindValues.push(txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
+                                     WHEN <FieldName> LIKE ? THEN 4 \
+                                     WHEN location GLOB ? THEN 5 \
+                                     WHEN location LIKE ? THEN 6 \
+                                     WHEN other_descr GLOB ? THEN 7 \
+                                     WHEN other_descr LIKE ? THEN 8 \
+                                     WHEN location GLOB ? THEN 9 \
+                                     WHEN location LIKE ? THEN 10 \
+                                     WHEN other_descr GLOB ? THEN 11 \
+                                     WHEN other_descr LIKE ? THEN 12"
+                arrBindValues.push(txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE
+                                    , txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart
+                                    , txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
                 break
         }
 
@@ -2789,13 +2799,23 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         txtWhereStatement = txtWhereStatement + " OR <FieldName> LIKE ?"
         txtWhereStatement = txtWhereStatement + " OR <FieldName> GLOB ?"
         txtWhereStatement = txtWhereStatement + " OR <FieldName> LIKE ?"
-        txtWhereStatement = txtWhereStatement + ")"
 
-        let _txtTermGLOB = processTextForGLOB(txtSearchText, false)
-        let _txtTermLIKE = processTextForLIKE(txtSearchText, false)
-        let _txtTermGLOBExactStart = processTextForGLOB(txtSearchText, true)
-        let _txtTermLIKEExactStart = processTextForLIKE(txtSearchText, true)
-        arrBindValues.push(_txtTermGLOBExactStart, _txtTermLIKEExactStart, _txtTermGLOB, _txtTermLIKE)
+        arrBindValues.push(txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
+
+        if (txtMode === "payeeName") {
+            txtWhereStatement = txtWhereStatement + " OR location GLOB ?"
+            txtWhereStatement = txtWhereStatement + " OR location LIKE ?"
+            txtWhereStatement = txtWhereStatement + " OR other_descr GLOB ?"
+            txtWhereStatement = txtWhereStatement + " OR other_descr LIKE ?"
+            txtWhereStatement = txtWhereStatement + " OR location GLOB ?"
+            txtWhereStatement = txtWhereStatement + " OR location LIKE ?"
+            txtWhereStatement = txtWhereStatement + " OR other_descr GLOB ?"
+            txtWhereStatement = txtWhereStatement + " OR other_descr LIKE ?"
+            arrBindValues.push(txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart, txtFullSearchTextGLOBExactStart, txtFullSearchTextLIKEExactStart
+                                , txtFullSearchTextGLOB, txtFullSearchTextLIKE, txtFullSearchTextGLOB, txtFullSearchTextLIKE)
+        }
+
+        txtWhereStatement = txtWhereStatement + ")"
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
         txtOrderStatement = txtOrderStatement + ", length(<FieldName>) ASC"
