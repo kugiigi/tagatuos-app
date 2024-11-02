@@ -25,13 +25,14 @@ Common.TextFieldWithAutoCompleteDelegate {
 
     contentItem: ColumnLayout {
         Label {
+            Layout.fillWidth: true
             visible: itemDelegate.payeeName.trim() !== ""
             text: itemDelegate.payeeName
             wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
         }
 
         Label {
+            Layout.fillWidth: true
             visible: itemDelegate.locationHasValue || itemDelegate.otherDescrHasValue
             text: {
                 switch(true) {
@@ -46,7 +47,6 @@ Common.TextFieldWithAutoCompleteDelegate {
                 }
             }
             wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
         }
     }
 }

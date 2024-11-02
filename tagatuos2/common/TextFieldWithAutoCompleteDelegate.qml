@@ -24,6 +24,7 @@ ListItems.BaseItemDelegate {
     onClicked: ListView.view.itemClicked(text)
 
     contentItem: Label {
+        Layout.fillWidth: true
         text: itemDelegate.text
         wrapMode: Text.WordWrap
         horizontalAlignment: itemDelegate.horizontalAlignment
