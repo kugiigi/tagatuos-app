@@ -821,10 +821,87 @@ FocusScope {
                             Layout.fillWidth: true
                             flickable: mainFlickable
                             tags: internal.expenseData.tags
+
                             onVisibleChanged: {
                                 // Rebind value since `tags` is manipulated inside this component
                                 if (visible) {
                                     tags = Qt.binding( function() { return internal.expenseData.tags } )
+                                }
+                            }
+                        }
+
+                        // Used for spacing at the bottom so that fields with auto-complete
+                        // would be positioned at the top when in focused and OSK is visible
+                        Item {
+                            id: spacerItem
+
+                            Layout.fillWidth: true
+                            implicitHeight: mainView.keyboardRectangle.height + Suru.units.gu(5)
+
+                            function activate(_item) {
+                                visible = true
+                                scrollDelayTimer.scrollToItem(_item)
+                            }
+
+                            function deactivate() {
+                                visible = false
+                            }
+
+                            Connections {
+                                target: mainView.keyboard
+                                onVisibleChanged: {
+                                    if (visible) {
+                                        if (payeeFields.isFocused) {
+                                            spacerItem.activate(payeeFields)
+                                        }
+
+                                        if (tagsField.isFocused) {
+                                            spacerItem.activate(tagsField)
+                                        }
+                                    } else {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: payeeFields
+                                onIsFocusedChanged: {
+                                    if (target.isFocused && mainView.keyboard.visible) {
+                                        spacerItem.activate(target)
+                                    } else if (!tagsField.isFocused) {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: tagsField
+                                onIsFocusedChanged: {
+                                    if (target.isFocused && mainView.keyboard.visible) {
+                                        spacerItem.activate(target)
+                                    } else if (!payeeFields.isFocused) {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                            }
+
+                            Timer {
+                                id: scrollDelayTimer
+
+                                property var item
+
+                                interval: 1
+
+                                function scrollToItem(_item) {
+                                    item = _item
+                                    restart()
+                                }
+
+                                onTriggered: {
+                                    if (item) {
+                                        mainFlickable.scrollToItem(item, 0, 0, true)
+                                    }
                                 }
                             }
                         }

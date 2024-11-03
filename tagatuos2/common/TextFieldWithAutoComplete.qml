@@ -39,6 +39,8 @@ TextField {
     leftPadding: leftIcon.visible ? leftIcon.width + Suru.units.gu(2) : Suru.units.gu(1)
     bottomPadding: autoCompleteListView.visible ? autoCompleteListView.height + Suru.units.gu(2) : Suru.units.gu(1)
 
+    Behavior on bottomPadding { NumberAnimation { duration: Suru.animations.SnapDuration } }
+
     onCommit: {
         searchDelay.stop()
 
@@ -207,6 +209,11 @@ TextField {
                     && textField.model.ready
                     && textField.model.count > 0
                     && !(textField.model.count === 1 && autoCompleteIsOffered) // Hide when auto complete is offered and it's the only item
+
+        // Hide list while bottomPadding is animating
+        opacity: textField.bottomPadding === height + Suru.units.gu(2) ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: Suru.animations.SnapDuration } }
+
         currentIndex: {
             // If the current text is equal to the first item, always highlight the first item
             // and immediately got to the next item when focusing on the list

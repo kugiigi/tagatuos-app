@@ -20,7 +20,7 @@ Flickable {
         target: baseFlickable
     }
 
-    function scrollToItem(item, topMargin=0,  bottomMargin=0) {
+    function scrollToItem(item, topMargin=0,  bottomMargin=0, atTheTop=false) {
         let _mappedY = 0
         let _itemHeightY = 0
         let _currentViewport = 0
@@ -43,6 +43,10 @@ Flickable {
             }
         } else if (_mappedY < baseFlickable.contentY) {
             _targetContentY = _mappedY - topMargin - baseFlickable.topMargin
+        }
+
+        if (atTheTop) {
+            _targetContentY = _mappedY
         }
 
         scrollAnimation.startAnimation(_targetContentY)
