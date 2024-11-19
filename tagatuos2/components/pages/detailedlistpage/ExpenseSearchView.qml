@@ -63,6 +63,11 @@ Item {
 
                 Layout.fillWidth: true
 
+                // Disable this, otherwise, intial focus will always be Name
+                // and selecting from the menu won't work
+                // This is because the text is being changed when activeFocus changes
+                enableCursorWorkaround: false
+
                 useCustomBackground: false
                 iconName: ""
                 enableTagsProcessing: isTags

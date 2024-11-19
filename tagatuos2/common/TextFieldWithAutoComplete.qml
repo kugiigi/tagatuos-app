@@ -24,6 +24,8 @@ TextField {
     property real listLeftMargin: Suru.units.gu(1)
     property real listRightMargin: Suru.units.gu(1)
 
+    property bool enableCursorWorkaround: true
+
     // Function that is executed before changing the search text
     property var searchFunction: function () {}
 
@@ -79,7 +81,7 @@ TextField {
     onActiveFocusChanged: {
         // WORKAROUND: For the issue where the cursor position gets misplaced
         // when editing an item with payee then another item without
-        if (activeFocus && text === "") {
+        if (enableCursorWorkaround && activeFocus && text === "") {
             internal.doNotProcessTextChange = true
             text = " "
             text = ""
