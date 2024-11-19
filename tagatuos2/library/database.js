@@ -2717,8 +2717,10 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         let rs = null
         let txtFullStatement = ""
         let txtSelectStatement = ""
+        let txtOutsideSelectStatement = "SELECT payee_name, location, other_descr, mode, MIN(score) FROM"
         let txtFromStatement = ""
         let txtWhereStatement = ""
+        let txtGroupStatement = ""
         let txtOrderStatement = ""
         let txtLimitStatement = ""
         let txtFullSearchTextGLOB = processTextForGLOB(txtSearchText, false)
@@ -2816,6 +2818,7 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
         }
 
         txtWhereStatement = txtWhereStatement + ")"
+        txtGroupStatement = "GROUP BY payee_name, location, other_descr, mode"
 
         txtOrderStatement = "ORDER BY score " + txtSortBy
         txtOrderStatement = txtOrderStatement + ", length(<FieldName>) ASC"
@@ -2832,7 +2835,8 @@ function searchExpensesPayees(txtMode, intProfileId, txtSearchText, txtPayeeName
 
         txtLimitStatement = "LIMIT ?"
         arrBindValues.push(intLimit)
-        txtFullStatement = [txtSelectStatement, txtFromStatement, txtWhereStatement, txtOrderStatement, txtLimitStatement].join(" ")
+        txtFullStatement = [txtOutsideSelectStatement, "(", txtSelectStatement, txtFromStatement, txtWhereStatement
+                                , ")", txtGroupStatement, txtOrderStatement, txtLimitStatement].join(" ")
         txtFullStatement = txtFullStatement.replace(/<FieldName>/g, txtFieldName)
         // console.log(txtFullStatement)
         // console.log(JSON.stringify(arrBindValues))
