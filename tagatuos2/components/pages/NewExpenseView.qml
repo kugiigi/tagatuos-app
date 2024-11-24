@@ -851,11 +851,11 @@ FocusScope {
                                 target: mainView.keyboard
                                 onVisibleChanged: {
                                     if (visible) {
-                                        if (payeeFields.isFocused) {
+                                        if (payeeFields.autoCompleteShown) {
                                             spacerItem.activate(payeeFields)
                                         }
 
-                                        if (tagsField.isFocused) {
+                                        if (tagsField.autoCompleteShown) {
                                             spacerItem.activate(tagsField)
                                         }
                                     } else {
@@ -867,10 +867,13 @@ FocusScope {
                             Connections {
                                 target: payeeFields
                                 onIsFocusedChanged: {
-                                    if (target.isFocused && mainView.keyboard.visible) {
-                                        spacerItem.activate(target)
-                                    } else if (!tagsField.isFocused) {
+                                    if (!target.isFocused && !mainView.keyboard.visible) {
                                         spacerItem.deactivate()
+                                    }
+                                }
+                                onAutoCompleteShownChanged: {
+                                    if (target.autoCompleteShown && mainView.keyboard.visible) {
+                                        spacerItem.activate(target)
                                     }
                                 }
                             }
@@ -878,10 +881,13 @@ FocusScope {
                             Connections {
                                 target: tagsField
                                 onIsFocusedChanged: {
-                                    if (target.isFocused && mainView.keyboard.visible) {
-                                        spacerItem.activate(target)
-                                    } else if (!payeeFields.isFocused) {
+                                    if (!target.isFocused && !mainView.keyboard.visible) {
                                         spacerItem.deactivate()
+                                    }
+                                }
+                                onAutoCompleteShownChanged: {
+                                    if (target.autoCompleteShown) {
+                                        spacerItem.activate(target)
                                     }
                                 }
                             }

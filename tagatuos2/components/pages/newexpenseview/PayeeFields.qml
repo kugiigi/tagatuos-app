@@ -14,6 +14,7 @@ ColumnLayout {
     property Common.BaseFlickable flickable
     readonly property bool highlighted: activeFocus
     readonly property bool isFocused: payeeNameField.isFocused || locationTextField.isFocused || otherDescrTextField.isFocused
+    readonly property bool autoCompleteShown: payeeNameField.autoCompleteShown || locationTextField.autoCompleteShown || otherDescrTextField.autoCompleteShown
 
     property alias payeeName: payeeNameField.text
     property alias payeeLocation: locationTextField.text

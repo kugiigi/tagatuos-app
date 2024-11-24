@@ -11,6 +11,7 @@ TextField {
     id: textField
 
     readonly property bool isFocused: activeFocus || autoCompleteListView.activeFocus
+    readonly property bool autoCompleteShown: autoCompleteListView.visible
 
     property Common.BaseFlickable flickable
     property bool enableAutoComplete: true
