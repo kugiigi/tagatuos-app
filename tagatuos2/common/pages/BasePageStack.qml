@@ -25,6 +25,7 @@ QQC2.Page {
     property bool forceShowBackButton: false
 
     // Gestures
+    property bool enableHeaderSwipeGesture: false
     property bool enableBottomGestureHint: false
     property bool physicalBasedGestures: true
     property bool enableHeaderPullDown: true
@@ -37,6 +38,12 @@ QQC2.Page {
     property real horizontalDirectActionsSensitivity: 0.5
     property real bottomGestureAreaHeight: units.gu(2)
     property real directActionsHeight: 3
+
+    readonly property alias bottomHorizontalIsSwiping: bottomHorizontalHandler.isSwiping
+    readonly property alias leftBottomIsSwiping: leftBottomSwipeArea.dragging
+    readonly property alias rightBottomIsSwiping: rightBottomSwipeArea.dragging
+    readonly property alias midddleBottomIsSwiping: middleBottomEdgeHandler.dragging
+    readonly property bool bottomGestureIsSwiping: bottomHorizontalIsSwiping || leftBottomIsSwiping || rightBottomIsSwiping || midddleBottomIsSwiping
 
     signal back
 
@@ -81,6 +88,7 @@ QQC2.Page {
     header: BasePageHeader {
         id: pageHeader
 
+        enableSwipeGesture: basePageStack.enableHeaderSwipeGesture
         showDivider: false
         expandable: basePageStack.enableHeaderPullDown && basePageStack.parent.height >= units.gu(60)
         currentItem: mainStackView.currentItem
@@ -223,6 +231,8 @@ QQC2.Page {
         Behavior on opacity { LomiriNumberAnimation {} }
 
         Gestures.BottomSwipeArea {
+            id: leftBottomSwipeArea
+
             Layout.fillHeight: true
             Layout.fillWidth: !horizontalSwipeItem.visible
             Layout.preferredWidth: bottomRowLayout.sideSwipeAreaWidth
@@ -291,6 +301,8 @@ QQC2.Page {
         }
 
         Gestures.BottomSwipeArea {
+            id: rightBottomSwipeArea
+
             Layout.fillHeight: true
             Layout.fillWidth: !horizontalSwipeItem.visible
             Layout.preferredWidth: bottomRowLayout.sideSwipeAreaWidth

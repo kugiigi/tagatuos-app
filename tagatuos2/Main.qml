@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Lomiri.Components 1.3 as UT
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
+import QtQuick.Window 2.2
 import QtQuick.Layouts 1.12
 import UserMetrics 0.1
 import Lomiri.Components.Themes.Ambiance 1.3 as Ambiance
@@ -20,7 +21,7 @@ ApplicationWindow {
     id: mainView
     objectName: "mainView"
 
-    readonly property string current_version: "1.10"
+    readonly property string current_version: "1.20"
     readonly property var suruTheme: switch(settings.currentTheme) {
             case "Ambiance":
             case "Ubuntu.Components.Themes.Ambiance":
@@ -72,6 +73,15 @@ ApplicationWindow {
 
     property bool temporaryDisableColorOverlay: false
 
+    // Return code after upgrading database
+    // and determines if there are post processing necessary
+    // i.e. Update home currency in profiles based on current settings
+    property int dbUpgradeReturnCode: -1
+
+    // Buffer actions from URI handling when pages are not ready yet
+    property bool pendingOpenNewExpenseAction: false
+    property bool pendingSearchExpenseAction: false
+
     title: i18n.tr("Tagatuos - Your expense diary")
     visible: false
     minimumWidth: Suru.units.gu(30)
@@ -115,8 +125,116 @@ ApplicationWindow {
             Database.createInitialData()
         }
 
-        Database.databaseUpgrade(_currentDataBaseVersion)
+        dbUpgradeReturnCode = Database.databaseUpgrade(_currentDataBaseVersion)
         settingsLoader.active = true
+
+        // URI Handling when app is closed
+        if (Qt.application.arguments && Qt.application.arguments.length > 0) {
+
+            for (var i = 0; i < Qt.application.arguments.length; i++) {
+                if (Qt.application.arguments[i].match(/^tagatuos/)) {
+                    let _uri = Qt.application.arguments[i]
+                    console.log('Handling Incoming Uri ' + _uri);
+                    delayUriProcessTimer.startDelay(_uri)
+                }
+            }
+        }
+    }
+
+    function convertFromInch(value) {
+        return (Screen.pixelDensity * 25.4) * value
+    }
+
+    // URI Handling at runtime
+    Connections {
+        target: UT.UriHandler
+
+        onOpened: {
+            if (uris.length > 0) {
+                // Only handle one for now
+                let _uri = uris[0]
+                console.log('Handling Incoming Uri ' + _uri);
+                delayUriProcessTimer.startDelay(_uri)
+            }
+        }
+    }
+
+    // Delay URI handling processing
+    // Buffer that maybe fixes cases where the OSK doesn't show up
+    Timer {
+        id: delayUriProcessTimer
+
+        property string uri
+
+        interval: 200
+
+        function startDelay(_uri) {
+            uri = _uri
+            restart()
+        }
+
+        onTriggered: mainView.processIncomingUri(uri)
+    }
+
+    // Delay URI Handling after relevant components were loaded
+    Timer {
+        id: delayUriTimer
+
+        property string mode
+
+        // TODO: Not accurate since it seems to be a timing issue when opening new expense view
+        // and text field won't get focused
+        interval: 300
+
+        function startDelay(_mode) {
+            mode = _mode
+            restart()
+        }
+
+        onTriggered: {
+            switch(mode) {
+                case "new":
+                    mainView.newExpenseView.openInSearchMode()
+                    mainView.pendingOpenNewExpenseAction = false
+                    break
+                case "search":
+                    mainView.detailedListPage.showInSearchMode()
+                    mainView.pendingSearchExpenseAction = false
+                    break
+            }
+        }
+    }
+
+     function processIncomingUri(_uri){
+        if(_uri.match(/^tagatuos/)){
+            let _actionName = _uri.replace("tagatuos://", "")
+
+            switch(_actionName){
+                case "new":
+                    if (mainView.newExpenseView) {
+                        mainView.newExpenseView.openInSearchMode()
+                    } else {
+                        mainView.pendingOpenNewExpenseAction = true
+                    }
+                    break
+                case "search":
+                    if (mainView.detailedListPage) {
+                        if (mainView.newExpenseView && mainView.newExpenseView.isOpen) {
+                            mainView.newExpenseView.close()
+                        }
+                        if (mainView.detailedListPage.isSearchMode) {
+                            mainView.detailedListPage.focusSearchField()
+                        } else {
+                            mainView.detailedListPage.showInSearchMode()
+                        }
+                    } else {
+                        mainView.pendingSearchExpenseAction = true
+                    }
+                    break
+                default:
+                    console.log("Unkown Uri")
+            }
+        }
     }
 
     function initDataUtils() {
@@ -130,7 +248,23 @@ ApplicationWindow {
     function checkIfDayChanged() {
         if (!Functions.isToday(currentDate)) {
             currentDate = Functions.getToday()
+            resetTagsOfTheDay()
         }
+    }
+
+    function resetTagsOfTheDay() {
+        mainView.settings.tagOfTheDayDate = ""
+        mainView.settings.tagOfTheDay = ""
+    }
+
+    function getTagsOfTheDay() {
+        if (mainView.settings.tagOfTheDayDate !== "") {
+            if (Functions.isToday(mainView.settings.tagOfTheDayDate)) {
+                return mainView.settings.tagOfTheDay
+            }
+        }
+
+        return ""
     }
 
     Ambiance.Palette { id: ambianceTheme }
@@ -184,7 +318,19 @@ ApplicationWindow {
         asynchronous: true
         sourceComponent: SettingsComponent {}
 
-        onLoaded: listModelsLoader.active = true
+        onLoaded: {
+            // Update home currency in profiles after DB upgrade to 5
+            if (dbUpgradeReturnCode === 5 && mainView.settings.currentCurrency.trim() !== "") {
+                Database.updateHomeCurrencyInProfiles(mainView.settings.currentCurrency)
+            }
+            
+            // Check tags of the day and reset and when outdated
+            if (!Functions.isToday(mainView.settings.tagOfTheDayDate)) {
+                mainView.resetTagsOfTheDay()
+            }
+
+            listModelsLoader.active = true
+        }
     }
 
     Loader {
@@ -201,6 +347,31 @@ ApplicationWindow {
             newExpenseViewLoader.active = true
             popupPageLoader.active = true
             drawerLoader.active = true
+        }
+    }
+
+    // Loads home currency from current profile into the settings
+    function updateHomeCurrency() {
+        let _homeCurrency = mainView.profiles.homeCurrency()
+        if (_homeCurrency !== "") {
+            mainView.settings.currentCurrency = _homeCurrency
+        }
+    }
+
+    Connections {
+        target: mainView.mainModels.profilesModel
+        ignoreUnknownSignals: true
+        onReadyChanged: {
+            if (target.ready) {
+                mainView.updateHomeCurrency()
+            }
+        }
+    }
+
+    Connections {
+        target: mainView.settings
+        onActiveProfileChanged: {
+            mainView.updateHomeCurrency()
         }
     }
 
@@ -229,7 +400,7 @@ ApplicationWindow {
                 id: drawer
 
                 listViewTopMargin: mainView.mainPage && mainView.mainPage.pageHeader.expanded ? mainView.mainPage.pageHeader.height : 0
-                model:  [ profilesAction, categoriesAction, quickExpensesAction, travelModeAction, settingsAction, aboutAction ]
+                model:  [ profilesAction, categoriesAction, quickExpensesAction, tagOfTheDayAction, travelModeAction, settingsAction, aboutAction ]
 
                 Common.BaseAction {
                     id: profilesAction
@@ -261,6 +432,23 @@ ApplicationWindow {
                             , homeCurrency: mainView.settings.currentCurrency
                         }
                         popupPage("qrc:///components/pages/QuickExpensesPage.qml", _properties)
+                    }
+                }
+
+                Common.BaseAction {
+                    id: tagOfTheDayAction
+
+                    text: i18n.tr("Tags of the Day")
+                    iconName: "tag"
+
+                    onTrigger: {
+                        let _popup = tagOfTheDayaDialog.createObject(mainView.mainSurface)
+                        _popup.proceed.connect(function(date, tags) {
+                            mainView.settings.tagOfTheDayDate = date
+                            mainView.settings.tagOfTheDay = tags
+                        })
+
+                        _popup.openDialog();
                     }
                 }
 
@@ -323,6 +511,7 @@ ApplicationWindow {
                     }
 
                     isWideLayout: width > Suru.units.gu(90)
+                    enableHeaderSwipeGesture: mainView.settings.enableHeaderSwipeGesture
                     enableBottomGestureHint: !mainView.settings.hideBottomHint
                     enableHeaderPullDown: mainView.settings.headerPullDown
                     enableBottomSideSwipe: mainView.settings.sideSwipe
@@ -388,6 +577,7 @@ ApplicationWindow {
                     isWideLayout: width > Suru.units.gu(60)
                     forceShowBackButton: shownInNarrow
                     enableShortcuts: true
+                    enableHeaderSwipeGesture: mainView.settings.enableHeaderSwipeGesture
                     enableBottomGestureHint: !mainView.settings.hideBottomHint
                     enableHeaderPullDown: mainView.settings.headerPullDown
                     enableBottomSideSwipe: mainView.settings.sideSwipe
@@ -509,7 +699,12 @@ ApplicationWindow {
                 }
             }
 
-            onLoaded: mainView.visible = true
+            onLoaded: {
+                mainView.visible = true
+                if (mainView.pendingSearchExpenseAction) {
+                    delayUriTimer.startDelay("search")
+                }
+            }
         }
 
         Loader {
@@ -526,6 +721,7 @@ ApplicationWindow {
                 isColoredText: mainView.settings.coloredText
                 isTravelMode: mainView.settings.travelMode
                 isWideLayout: mainView.isWideLayout
+                displayType: mainView.settings.quickExpenseDisplayType
                 dragDistance: {
                     if (mainPage.middleBottomGesture.dragging) {
                         return mainPage.middleBottomGesture.distance
@@ -536,6 +732,12 @@ ApplicationWindow {
                     }
 
                     return 0
+                }
+            }
+
+            onLoaded: {
+                if (mainView.pendingOpenNewExpenseAction) {
+                    delayUriTimer.startDelay("new")
                 }
             }
         }
@@ -550,6 +752,12 @@ ApplicationWindow {
                 onAboutToHide: mainView.mainPage.pageHeader.expanded = pageHeader.expanded
             }
         }
+    }
+
+    Component {
+        id: tagOfTheDayaDialog
+
+        Pages.TagOfTheDayDialog {}
     }
 
     Common.KeyboardRectangle {

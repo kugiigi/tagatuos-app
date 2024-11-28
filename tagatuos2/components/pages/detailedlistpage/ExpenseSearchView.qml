@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
 import "../.." as Components
+import "../../pages/newexpenseview" as NewExpenseView
 import "../../../common" as Common
 
 
@@ -55,21 +56,55 @@ Item {
             Layout.margins: Suru.units.gu(1)
             Layout.bottomMargin: 0
 
-            TextField {
+            NewExpenseView.TagsField {
                 id: searchField
+
+                readonly property bool isTags: focusLabel.currentFocusType === 4
 
                 Layout.fillWidth: true
 
-                placeholderText: i18n.tr("Type to search...")
+                // Disable this, otherwise, intial focus will always be Name
+                // and selecting from the menu won't work
+                // This is because the text is being changed when activeFocus changes
+                enableCursorWorkaround: false
+
+                useCustomBackground: false
+                iconName: ""
+                enableTagsProcessing: isTags
+                horizontalAlignment: isTags && hasTags ? Text.AlignHCenter : Text.AlignLeft
+                listHorizontalAlignment: hasTags ? Text.AlignHCenter : Text.AlignLeft
+                tagsListLeftMargin: focusLabel.width + Suru.units.gu(2)
+                placeholderText: isTags ? i18n.tr("Add tags (Enter comma after each tag)") : i18n.tr("Type to search...")
                 inputMethodHints: Qt.ImhNoPredictiveText
+                leftPadding: isTags && hasTags ? Suru.units.gu(1) : tagsListLeftMargin
 
                 KeyNavigation.down: resultsListView
 
+                onIsTagsChanged: {
+                    if (hasTags) clearTags()
+
+                    if (isTags) {
+                        searchField.text = ""
+                    }
+                }
+                onTagsChanged: searchDelay.restart()
                 onTextChanged: {
-                    if (text.charAt(text.length - 1) == " ") { // Trailing single space
-                        searchDelay.triggered()
+                    // Change focused search type when text is empty and the user pressed/entered space
+                    if (text === " ") {
+                        if (focusLabel.currentFocusType === 4) {
+                            focusLabel.currentFocusType = 0
+                        } else {
+                            focusLabel.currentFocusType += 1
+                        }
+                        text = ""
                     } else {
-                        searchDelay.restart()
+                        if (!isTags) {
+                            if (text.charAt(text.length - 1) == " ") { // Trailing single space
+                                searchDelay.triggered()
+                            } else {
+                                searchDelay.restart()
+                            }
+                        }
                     }
                 }
 
@@ -77,8 +112,63 @@ Item {
                     id: searchDelay
                     interval: 300
                     onTriggered: {
-                        let _trimmedText = searchField.text.trim()
-                        resultsListView.model.searchText = _trimmedText
+                        let _focus = focusLabel.model[focusLabel.currentFocusType].id
+                        resultsListView.model.focus = _focus
+
+                        // For some reason searchField.isTags isn't updated here yet
+                        if (_focus === "tags") {
+                            resultsListView.model.searchText = searchField.tags
+                        } else {
+                            let _trimmedText = searchField.text.trim()
+                            resultsListView.model.searchText = _trimmedText
+                        }
+                    }
+                }
+
+                FocusedSearchLabel {
+                    id: focusLabel
+
+                    property bool clearTextWorkaround: false
+
+                    anchors {
+                        top: parent.top
+                        topMargin: searchField.hasTags ? Suru.units.gu(1.5) : Suru.units.gu(0.5)
+                        left: parent.left
+                        leftMargin: Suru.units.gu(0.5)
+                    }
+
+                    onCurrentFocusTypeChanged: {
+                        if (clearTextWorkaround) {
+                            clearSpaceDelayTimer.restart()
+                        } else {
+                            if (searchField.text.trim() !== "") {
+                                searchDelay.triggered()
+                            }
+                        }
+                    }
+
+                    onItemSelectedFromMenu: {
+                        // WORKAROUND: Cursor text do not properly adjust when left padding changes
+                        if (searchField.text.trim() !== "") {
+                            // Change cursor position to solve the issue
+                            let _currentPos = searchField.cursorPosition
+                            searchField.cursorPosition = 1
+                            searchField.cursorPosition = _currentPos
+                        } else {
+                            // Insert 2 space to trigger the movement of the cursor
+                            // and then clear the text again with clearSpaceDelayTimer
+                            focusLabel.clearTextWorkaround = true
+                            searchField.text = "  "
+                        }
+                    }
+
+                    Timer {
+                        id: clearSpaceDelayTimer
+                        interval: 1
+                        onTriggered: {
+                            focusLabel.clearTextWorkaround = false
+                            searchField.text = ""
+                        }
                     }
                 }
             }
@@ -133,6 +223,10 @@ Item {
                     comments: model.descr
                     itemName: model.name
                     categoryName: model.category_name
+                    tags: model.tags
+                    payeeName: model.payee_name
+                    payeeLocation: model.payee_location
+                    payeeOtherDescr: model.payee_other_descr
                     highlighted: resultsListView.currentIndex == index
 
                     onShowContextMenu: {
@@ -142,6 +236,10 @@ Item {
                         expenseSearchView.contextMenu.itemData.category = model.category_name
                         expenseSearchView.contextMenu.itemData.value = homeValue
                         expenseSearchView.contextMenu.itemData.description = comments
+                        expenseSearchView.contextMenu.itemData.tags = tags
+                        expenseSearchView.contextMenu.itemData.payeeName = payeeName
+                        expenseSearchView.contextMenu.itemData.payeeLocation = payeeLocation
+                        expenseSearchView.contextMenu.itemData.payeeOtherDescription = payeeOtherDescr
                         expenseSearchView.contextMenu.itemData.travelData.rate = exchangeRate
                         expenseSearchView.contextMenu.itemData.travelData.homeCur = homeCurrency
                         expenseSearchView.contextMenu.itemData.travelData.travelCur = travelCurrency

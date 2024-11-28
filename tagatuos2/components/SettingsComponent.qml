@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Qt.labs.settings 1.0
 import "../library/Currencies.js" as Currencies
 import "../common" as Common
+import "../components/pages/newexpenseview" as NewExpenseView
 
 Item {
     id: tempSettings
@@ -20,6 +21,15 @@ Item {
     property alias coloredText: settingsItem.coloredText
     property alias activeProfile: settingsItem.activeProfile
 
+    property alias tagOfTheDayDate: settingsItem.tagOfTheDayDate
+    property alias tagOfTheDay: settingsItem.tagOfTheDay
+
+    // Interface
+    property alias scrollPositionerPosition: settingsItem.scrollPositionerPosition
+    property alias scrollPositionerSize: settingsItem.scrollPositionerSize
+    property alias enableFastDateScroll: settingsItem.enableFastDateScroll
+    property alias quickExpenseDisplayType: settingsItem.quickExpenseDisplayType
+
     //Detailed List Page
     property alias detailedListScope: settingsItem.detailedListScope
     property alias detailedListSort: settingsItem.detailedListSort
@@ -37,6 +47,7 @@ Item {
     property alias quickActionEnableDelay: settingsItem.quickActionEnableDelay
     property alias headerPullDown: settingsItem.headerPullDown
     property alias bottomGesturesAreaHeight: settingsItem.bottomGesturesAreaHeight
+    property alias enableHeaderSwipeGesture: settingsItem.enableHeaderSwipeGesture
 
     // Session Settings (not stored)
     property string currentCurrencySymbol: "8369"
@@ -125,5 +136,19 @@ Item {
         property real bottomGesturesAreaHeight: 2
         property bool horizontalDirectActions: false
         property real horizontalDirectActionsSensitivity: 0.5
+
+        property int scrollPositionerPosition: Common.ScrollPositionerItem.Position.Right
+        /*
+         * ScrollPositionerItem.Position.Right
+         * ScrollPositionerItem.Position.Left
+         * ScrollPositionerItem.Position.Middle
+        */
+        property int scrollPositionerSize: 8 // In Grid Units
+
+        property bool enableFastDateScroll: true
+        property bool enableHeaderSwipeGesture: true
+        property string tagOfTheDayDate: ""
+        property string tagOfTheDay: ""
+        property int quickExpenseDisplayType: NewExpenseView.QuickListGridView.GridType.Rectangle
     }
 }

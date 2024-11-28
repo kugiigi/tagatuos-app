@@ -10,6 +10,10 @@ QtObject {
     property string description: ""
     property string category: ""
     property real value: 0
+    property string tags: ""
+    property string payeeName: ""
+    property string payeeLocation: ""
+    property string payeeOtherDescription: ""
 
     readonly property QtObject travelData: QtObject {
         property real rate: mainView.settings.exchangeRate
@@ -25,6 +29,10 @@ QtObject {
         description = ""
         category = ""
         value = 0
+        tags = ""
+        payeeName = ""
+        payeeLocation = ""
+        payeeOtherDescription = ""
 
         travelData.rate = mainView.settings.exchangeRate
         travelData.homeCur = mainView.settings.currentCurrency

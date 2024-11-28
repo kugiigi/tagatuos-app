@@ -31,6 +31,7 @@ TextField {
     background: Common.BaseBackgroundRectangle {
         control: nameField
         radius: Suru.units.gu(1)
+        enableHoveredHighlight: false
         highlightColor: "transparent"
     }
 }

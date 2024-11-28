@@ -6,10 +6,11 @@
     "hooks": {
         "tagatuos2": {
             "apparmor": "tagatuos2/tagatuos2.apparmor",
-            "desktop": "tagatuos2/tagatuos2.desktop"
+            "desktop": "tagatuos2/tagatuos2.desktop",
+            "urls": "tagatuos2/tagatuos2.url-dispatcher"
         }
     },
-    "version": "1.10",
+    "version": "1.20",
     "maintainer": "Kugi Eusebio <kugi_eusebio@protonmail.com>",
     "framework": "ubuntu-sdk-20.04"
 }

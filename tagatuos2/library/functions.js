@@ -72,26 +72,26 @@ function scrollToView(item, flickable, topMargin=0,  bottomMargin=0) {
     _itemHeightY = _mappedY + item.height
     _currentViewport = flickable.contentY - flickable.originY + flickable.height - flickable.bottomMargin + flickable.topMargin
 
-    //~ console.log("_mappedY: " + _mappedY)
-    //~ console.log("_itemHeightY: " + _itemHeightY)
-    //~ console.log("_currentViewport: " + _currentViewport)
+    // console.log("_mappedY: " + _mappedY)
+    // console.log("_itemHeightY: " + _itemHeightY)
+    // console.log("_currentViewport: " + _currentViewport)
     if (_itemHeightY > _currentViewport) {
         _maxContentY = flickable.contentHeight - flickable.height + flickable.bottomMargin
         _intendedContentY = _itemHeightY - flickable.height + item.height + flickable.bottomMargin + bottomMargin
 
         if (_intendedContentY > _maxContentY) {
-            //~ console.log("maxContentY")
+            // console.log("maxContentY")
             flickable.contentY = _maxContentY
         } else {
-            //~ console.log("intendedContentY")
+            // console.log("intendedContentY")
             flickable.contentY = _intendedContentY
         }
     } else if (_mappedY < flickable.contentY) {
-        //~ console.log("compute")
+        // console.log("compute")
         flickable.contentY = _mappedY - topMargin - flickable.topMargin
     }
 
-    //~ console.log("Final:" + flickable.contentY)
+    // console.log("Final:" + flickable.contentY)
 }
 
 function round_number(num, dec) {
@@ -149,6 +149,14 @@ function isThisMonth(petsa) {
     let thisMonthEnd = moment(new Date()).endOf("month")
 
     return dtPetsa.isBetween(thisMonthStart,thisMonthEnd,'day',[])
+}
+
+function isThisYear(petsa) {
+    let dtPetsa = moment(petsa)
+    let thisYearStart = moment(new Date()).startOf("year")
+    let thisYearEnd = moment(new Date()).endOf("year")
+
+    return dtPetsa.isBetween(thisYearStart,thisYearEnd,'day',[])
 }
 
 function addDays(petsa, days, toDBString = false) {
@@ -481,13 +489,83 @@ function formatDateForNavigation(petsa, scope) {
     return engPetsa
 }
 
+function getDateLabelsForNavigation(petsa, scope) {
+    let _mainLabel = ""
+    let _secondaryLabel = ""
+    let _tertiaryLabel = ""
+
+    if (petsa !== null) {
+        let _momentPetsa = moment(petsa)
+        let _comparisonValues = getDateComparisonValues(petsa)
+
+        switch (scope) {
+            case "day":
+                _mainLabel = _momentPetsa.format("DD")
+
+                if (isThisYear(petsa)) {
+                    _secondaryLabel = _momentPetsa.format("MMM, dddd")
+                } else {
+                    _secondaryLabel = _momentPetsa.format("MMM YYYY, dddd")
+                    _tertiaryLabel = _momentPetsa.format("YYYY")
+                }
+                break
+            case "week":
+                let _weekStart = moment(petsa).startOf('week')
+                let _weekEnd = moment(petsa).endOf('week')
+                let _weekStartMonth = moment(_weekStart).startOf("month")
+                let _weekEndMonth = moment(_weekEnd).startOf("month")
+                let _fromString = _weekStart.format("MMM DD")
+                let _toString = ""
+                let _endIsSameMonth = _weekStartMonth.isSame(_weekEndMonth)
+
+                _mainLabel = _momentPetsa.format("ww")
+
+                if (!isThisYear(petsa)) {
+                    _tertiaryLabel = _weekEnd.format("YYYY")
+                }
+
+                if (_weekEnd.isSameOrBefore(_comparisonValues.endOfLastYear, 'day')
+                        || _weekEnd.isAfter(_comparisonValues.endOfThisYear, 'day')) {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD, YYYY")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD, YYYY")
+                    }
+                } else {
+                    if (_endIsSameMonth) {
+                        _toString = _weekEnd.format("DD")
+                    } else {
+                        _toString = _weekEnd.format("MMM DD")
+                    }
+                }
+
+                _secondaryLabel = i18n.tr("%1 - %2").arg(_fromString).arg(_toString)
+
+                break
+            case "month":
+                _mainLabel = _momentPetsa.format("MM")
+
+                if (isThisYear(petsa)) {
+                    _secondaryLabel = _momentPetsa.format("MMMM")
+                } else {
+                    _secondaryLabel = _momentPetsa.format("MMMM YYYY")
+                    _tertiaryLabel = _momentPetsa.format("YYYY")
+                }
+
+                break
+        }
+    }
+
+    return [_mainLabel, _secondaryLabel, _tertiaryLabel]
+}
+
 //Converts dates into user friendly format when necessary
 function relativeDate(petsa, format, mode){
     var defaultFormat = "ddd, MMM DD"
     var formatToUse = format ? format : defaultFormat
 
     if(petsa !== null){
-    
+
         var dtPetsa
         var engPetsa
         var formattedDate
@@ -820,4 +898,138 @@ function getPreviousDate(calendarMode, date) {
     }
 
     return newDate.format("YYYY-MM-DD HH:mm:ss.SSS")
+}
+
+function getFromDate(calendarMode, date) {
+    let momentDate
+    let result
+
+    if (date) {
+        momentDate = moment(date)
+    } else {
+        momentDate = moment()
+    }
+
+    switch(calendarMode){
+        case "week":
+            result = momentDate.startOf('week')
+            break
+        case "month":
+            result = momentDate.startOf('month')
+            break
+        case "day":
+        default:
+            return date
+            break
+    }
+
+    return formatDateForDB(result)
+}
+
+function getToDate(calendarMode, date) {
+    let momentDate
+    let result
+
+    if (date) {
+        momentDate = moment(date)
+    } else {
+        momentDate = moment()
+    }
+
+    switch(calendarMode){
+        case "week":
+            result = momentDate.endOf('week')
+            break
+        case "month":
+            result = momentDate.endOf('month')
+            break
+        case "day":
+        default:
+            return date
+            break
+    }
+
+    return formatDateForDB(result)
+}
+
+function monthsFullNameList() {
+    return moment.months(true)
+}
+
+function monthsShortNameList() {
+    return moment.monthsShort(true)
+}
+
+function weekDaysFullNameList() {
+    return moment.weekdays(true)
+}
+
+function weekDaysShortNameList() {
+    return moment.weekdaysMin(true)
+}
+
+function getWeekOfYear(date) {
+    const momentDate = moment(date)
+    return momentDate.week()
+}
+
+function getSpecificWeekOfYear(date, week) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.week(week))
+}
+
+function getWeekOfMonth(date) {
+    const momentDate = moment(date)
+    const dateFirst = moment(momentDate).momentDate(1);
+    const startWeek = dateFirst.week();
+    const weekOfDate = momentDate.week()
+    return weekOfDate - startWeek
+}
+
+function getWeekDay(date) {
+    const momentDate = moment(date)
+    return momentDate.day()
+}
+
+function getSpecificDayOfWeek(date, day) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.day(day))
+}
+
+function getMonth(date) {
+    const momentDate = moment(date)
+    return momentDate.month()
+}
+
+function getSpecificMonthOfYear(date, month) {
+    const momentDate = moment(date)
+    return formatDateForDB(momentDate.month(month))
+}
+
+function getWeeksInYear(date) {
+    const momentDate = moment(date)
+    return momentDate.weeksInYear()
+}
+
+function getWeekDataOfMonth(date) {
+    let startWeek = 0
+    let endWeek = 0
+
+    if (date) {
+        const momentDate = moment(date)
+        const dateFirst = moment(date).startOf('month')
+        const dateFirstWeekStart = moment(date).startOf('month').startOf('week')
+
+        // If first day is not start of a week, start the count from the next week.
+        if (!dateFirst.isSame(dateFirstWeekStart, 'month')) {
+            dateFirst.add(1, 'week')
+        }
+
+        const dateLast = moment(date).endOf('month')
+
+        startWeek = dateFirst.week();
+        endWeek = dateLast.week();
+    }
+
+    return { startWeek: startWeek, endWeek: endWeek }
 }

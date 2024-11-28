@@ -8,6 +8,8 @@ Flickable {
 
     property PageComponents.BasePageHeader pageHeader
     property bool enableScrollPositioner: true
+    property alias scrollPositionerPosition: scrollPositioner.position
+    property alias scrollPositionerSize: scrollPositioner.buttonWidthGU
 
     boundsBehavior: Flickable.DragOverBounds
     boundsMovement: Flickable.StopAtBounds
@@ -18,7 +20,7 @@ Flickable {
         target: baseFlickable
     }
 
-    function scrollToItem(item, topMargin=0,  bottomMargin=0) {
+    function scrollToItem(item, topMargin=0,  bottomMargin=0, atTheTop=false) {
         let _mappedY = 0
         let _itemHeightY = 0
         let _currentViewport = 0
@@ -43,6 +45,10 @@ Flickable {
             _targetContentY = _mappedY - topMargin - baseFlickable.topMargin
         }
 
+        if (atTheTop) {
+            _targetContentY = _mappedY
+        }
+
         scrollAnimation.startAnimation(_targetContentY)
     }
     
@@ -60,23 +66,15 @@ Flickable {
         }
     }
 
-    Loader {
+    ScrollPositionerItem {
+        id: scrollPositioner
+
         active: baseFlickable.parent instanceof Layout ? false : baseFlickable.enableScrollPositioner
+        target: baseFlickable
         z: 1
         parent: baseFlickable.parent
-
-        anchors {
-            right: active ? parent.right : undefined
-            rightMargin: Suru.units.gu(2)
-            bottom: active ? parent.bottom : undefined
-            bottomMargin: Suru.units.gu(3) + baseFlickable.bottomMargin
-        }
-
-        sourceComponent: ScrollPositioner {
-            id: scrollPositioner
-
-            target: baseFlickable
-            mode: "Down"
-        }
+        bottomMargin: units.gu(5) + baseFlickable.bottomMargin
+        position: mainView.settings.scrollPositionerPosition
+        buttonWidthGU: mainView.settings.scrollPositionerSize
     }
 }

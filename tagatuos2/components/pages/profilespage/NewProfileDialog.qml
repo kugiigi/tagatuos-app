@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.12
 import "../../../common/dialogs" as Dialogs
+import "../../../common/listitems" as ListItems
 import "../.." as Components
 
 Dialogs.DialogWithContents {
@@ -15,11 +16,12 @@ Dialogs.DialogWithContents {
     property string mode: "add"
     property int profileId
     property string displayName
+    property string homeCurrency: "USD"
     property bool enableOverlay
     property color overlayColor
     property real overlayOpacity
 
-    signal proceed(string displayName, bool enableOverlay, color overlayColor, real overlayOpacity)
+    signal proceed(string displayName, string homeCurrency, bool enableOverlay, color overlayColor, real overlayOpacity)
     signal cancel
 
     anchorToKeyboard: true
@@ -54,6 +56,29 @@ Dialogs.DialogWithContents {
 
         Layout.fillWidth: true
         flickable: newProfileDialog.flickable
+    }
+
+    ListItems.BaseComboBoxDelegate {
+        id: homeCurrencyCombobox
+
+        Layout.fillWidth: true
+        text: i18n.tr("Home currency")
+        model: mainView.mainModels.currenciesModel
+        helpText: i18n.tr("The home currency that is used to process, format and display expenses")
+        controlMaximumWidth: Suru.units.gu(60)
+        valueRole: "currency_code"
+        textRole: "descr"
+        currentIndex: findIndexOfValue(newProfileDialog.homeCurrency)
+
+        onActivated: {
+            let _newValue
+            if (Array.isArray(model)) {
+                _newValue = model[index][valueRole]
+            } else {
+                _newValue = model.get(index)[valueRole]
+            }
+            newProfileDialog.homeCurrency = _newValue
+        }
     }
 
     ColorOverlayFields {
@@ -101,7 +126,7 @@ Dialogs.DialogWithContents {
 
             onClicked: {
                 mainView.keyboard.commit()
-                newProfileDialog.proceed(nameField.text, colorOverlayFields.enableOverlay, colorOverlayFields.overlayColor, colorOverlayFields.overlayOpacity / 100)
+                newProfileDialog.proceed(nameField.text, newProfileDialog.homeCurrency, colorOverlayFields.enableOverlay, colorOverlayFields.overlayColor, colorOverlayFields.overlayOpacity / 100)
             }
         }
 

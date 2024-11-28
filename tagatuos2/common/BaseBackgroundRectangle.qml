@@ -8,6 +8,7 @@ Rectangle {
     property var control
     property bool showDivider
     property bool transparentBackground: false
+    property bool enableHoveredHighlight: true
     property color backgroundColor: Suru.backgroundColor
     property color borderColor: Suru.backgroundColor
     property color highlightColor: Suru.highlightColor
@@ -35,7 +36,7 @@ Rectangle {
             if (control.highlighted)
                 return 0.1
 
-            if (control.down || control.hovered)
+            if (control.down || (control.hovered && backgroundRec.enableHoveredHighlight))
                 return 1
 
             return 0
@@ -86,10 +87,8 @@ Rectangle {
         }
     }
 
-    Rectangle {
+    ThinDivider {
         visible: backgroundRec.showDivider
-        height: control.Suru.units.dp(1)
-        color: control.Suru.neutralColor
         anchors {
             left: parent.left
             right: parent.right

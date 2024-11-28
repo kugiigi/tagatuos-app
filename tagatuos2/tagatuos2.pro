@@ -13,6 +13,7 @@ QML_FILES += $$files(*.qml,true) \
              $$files(*.js,true)
 
 CONF_FILES +=  tagatuos2.apparmor \
+               tagatuos2.url-dispatcher \
                tagatuos2.png \
                icon.svg \
                splash.svg
@@ -35,7 +36,6 @@ OTHER_FILES += $${CONF_FILES} \
     components/Common/PopupItemSelector/SelectorToolbar.qml \
     library/Currencies.js \
     components/ListModels/CurrencyModel.qml \
-    library/WorkerScripts/SimpleListModelLoader.js \
     components/QuickAddPage/QuickAddListView.qml \
     components/QuickAddPage/QuickAddFindToolbar.qml \
     components/DetailDialog/DetailDescription.qml \

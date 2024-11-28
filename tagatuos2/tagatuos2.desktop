@@ -1,6 +1,6 @@
 [Desktop Entry]
 _Name=Tagatuos
-Exec=tagatuos2
+Exec=tagatuos2 %u
 Icon=tagatuos2/icon.svg
 Terminal=false
 Type=Application

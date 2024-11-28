@@ -28,9 +28,9 @@ Pages.BasePage {
         
         onTrigger: {
             let _popup = addEditDialog.createObject(mainView.mainSurface, { mode: "add" })
-            _popup.proceed.connect(function(displayName, enableOverlay, overlayColor, overlayOpacity) {
+            _popup.proceed.connect(function(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
                 let _tooltipMsg
-                let _result = mainView.profiles.add(displayName, enableOverlay, overlayColor, overlayOpacity)
+                let _result = mainView.profiles.add(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity)
 
                 if (_result.success) {
                     _tooltipMsg = i18n.tr("Profile added")
@@ -61,15 +61,16 @@ Pages.BasePage {
                 mode: "edit"
                 , profileId: contextMenu.profileId
                 , displayName: contextMenu.displayName
+                , homeCurrency: contextMenu.homeCurrency
                 , enableOverlay: contextMenu.enableOverlay
                 , overlayColor: contextMenu.overlayColor
                 , overlayOpacity: contextMenu.overlayOpacity
             }
             let _popup = addEditDialog.createObject(mainView.mainSurface, _properties)
-            _popup.proceed.connect(function(displayName, enableOverlay, overlayColor, overlayOpacity) {
+            _popup.proceed.connect(function(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
                 let _tooltipMsg
 
-                let _result = mainView.profiles.edit(contextMenu.profileId, contextMenu.displayName, displayName, enableOverlay, overlayColor, overlayOpacity)
+                let _result = mainView.profiles.edit(contextMenu.profileId, contextMenu.displayName, displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity)
                 if (_result.success) {
                     _tooltipMsg = i18n.tr("Profile edited")
                     _popup.close()
@@ -123,6 +124,7 @@ Pages.BasePage {
 
         property int profileId
         property string displayName
+        property string homeCurrency
         property bool enableOverlay
         property color overlayColor
         property real overlayOpacity
@@ -156,7 +158,7 @@ Pages.BasePage {
         delegate: ListItems.BaseItemDelegate {
             id: itemDelegate
 
-            text: model.displayName
+            text: i18n.tr("(%2) %1").arg(model.displayName).arg(model.homeCurrency)
             highlighted: listView.currentIndex == index
             anchors {
                 left: parent.left
@@ -177,6 +179,7 @@ Pages.BasePage {
             function showContextMenu(mouseX, mouseY) {
                 contextMenu.profileId = model.profileId
                 contextMenu.displayName = model.displayName
+                contextMenu.homeCurrency = model.homeCurrency
                 contextMenu.enableOverlay = model.enableOverlay
                 contextMenu.overlayColor = model.overlayColor
                 contextMenu.overlayOpacity = model.overlayOpacity

@@ -5,14 +5,11 @@
         <file>splash.svg</file>
         <file>Main.qml</file>
 
-        <file>library/WorkerScripts/ListModelLoader.js</file>
-        <file>library/DataProcess.js</file>
         <file>library/functions.js</file>
         <file>library/database.js</file>
         <file>library/dataUtils.js</file>
-        <file>library/ApplicationFunctions.js</file>
         <file>library/Currencies.js</file>
-        <file>library/WorkerScripts/SimpleListModelLoader.js</file>
+        <file>library/ApplicationFunctions.js</file>
 
         <file>library/external/accounting.js</file>
         <file>library/external/moment.mjs</file>
@@ -22,12 +19,14 @@
 
         <file>components/pages/DetailedListPage.qml</file>
         <file>components/pages/detailedlistpage/ExpenseSearchView.qml</file>
+        <file>components/pages/detailedlistpage/FocusedSearchLabel.qml</file>
         <file>components/pages/detailedlistpage/ValuesNavigationRow.qml</file>
         <file>components/pages/detailedlistpage/ValueListDelegate.qml</file>
         <file>components/pages/detailedlistpage/SummaryValuesDelegate.qml</file>
         <file>components/pages/detailedlistpage/CriteriaPopup.qml</file>
         <file>components/pages/detailedlistpage/ValuesSectionDelegate.qml</file>
         <file>components/pages/BottomSwipeUpConnection.qml</file>
+        <file>components/pages/TagOfTheDayDialog.qml</file>
         <file>components/pages/NewExpenseView.qml</file>
         <file>components/pages/newexpenseview/ContextActionsListView.qml</file>
         <file>components/pages/newexpenseview/QuickListGridDelegate.qml</file>
@@ -39,6 +38,9 @@
         <file>components/pages/newexpenseview/CategoryField.qml</file>
         <file>components/pages/newexpenseview/DateField.qml</file>
         <file>components/pages/newexpenseview/TravelDataFields.qml</file>
+        <file>components/pages/newexpenseview/TagsField.qml</file>
+        <file>components/pages/newexpenseview/PayeeFields.qml</file>
+        <file>components/pages/newexpenseview/PayeeFieldAutoCompleteDelegate.qml</file>
         <file>components/pages/DashboardPage.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChart.qml</file>
         <file>components/pages/dashboardpage/BreakdownPieChartContainer.qml</file>
@@ -93,6 +95,7 @@
         <file>components/CategoryRectangle.qml</file>
         <file>components/MenuDrawer.qml</file>
         <file>components/PopupPageStack.qml</file>
+        <file>components/TagsList.qml</file>
 
         <file>common/gestures/HorizontalSwipeHandler.qml</file>
         <file>common/gestures/BottomHorizontalSwipeGesture.qml</file>
@@ -149,6 +152,7 @@
         <file>common/BaseListView.qml</file>
         <file>common/HelpButton.qml</file>
         <file>common/ScrollPositioner.qml</file>
+        <file>common/ScrollPositionerItem.qml</file>
         <file>common/BaseAction.qml</file>
         <file>common/BasePathView.qml</file>
         <file>common/BaseButton.qml</file>
@@ -162,6 +166,7 @@
         <file>common/KeyboardRectangle.qml</file>
         <file>common/IconGroupedProperties.qml</file>
         <file>common/BaseToolbar.qml</file>
+        <file>common/ThinDivider.qml</file>
         <file>common/ToolbarActions.qml</file>
         <file>common/ToolbarButton.qml</file>
         <file>common/TimePicker.qml</file>
@@ -169,5 +174,9 @@
         <file>common/BaseRadioButton.qml</file>
         <file>common/ColorPicker.qml</file>
         <file>common/ColorPickerPopup.qml</file>
+        <file>common/PageIndicatorSelector.qml</file>
+        <file>common/PageIndicatorSelectorDelegate.qml</file>
+        <file>common/TextFieldWithAutoComplete.qml</file>
+        <file>common/TextFieldWithAutoCompleteDelegate.qml</file>
     </qresource>
 </RCC>

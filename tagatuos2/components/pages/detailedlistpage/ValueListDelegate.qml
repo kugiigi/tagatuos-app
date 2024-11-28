@@ -12,11 +12,15 @@ import "../../../library/ApplicationFunctions.js" as AppFunctions
 ListItems.BaseItemDelegate {
     id: valueListDelegate
 
-    readonly property bool isExpandable: ((commentsLabel.truncated || itemLabel.truncated || hasTravelValue) && !isExpanded)
+    readonly property bool payeeOrCommentsIsExpandable: (payeeName !== "" && (payeeLabel.truncated || comments !== ""))
+                                                            || (payeeName === "" && commentsLabel.truncated)
+    readonly property bool isExpandable: ((payeeOrCommentsIsExpandable || itemLabel.truncated || hasTravelValue || hasTags) && !isExpanded)
                                             || isExpanded
     readonly property bool displayTravelValueAsMain: isTravelMode && currentTravelCurrency == travelCurrency
                                                             && hasTravelValue
     readonly property bool hasTravelValue: travelValue > 0
+    readonly property bool hasTags: tags.trim() !== ""
+    readonly property var tagsList: hasTags ? tags.split(",") : []
     readonly property alias formattedValue: mainValueLabel.text
 
     property bool isTravelMode: false
@@ -32,6 +36,10 @@ ListItems.BaseItemDelegate {
     property string comments
     property string itemName
     property string categoryName
+    property string tags
+    property string payeeName
+    property string payeeLocation
+    property string payeeOtherDescr
     property bool isExpanded: false
     property bool showDate: false
     property bool showCategory: false
@@ -77,16 +85,56 @@ ListItems.BaseItemDelegate {
             }
 
             Label {
+                id: payeeLabel
+
+                Layout.fillWidth: true
+
+                text: {
+                    switch (true) {
+                        case valueListDelegate.payeeLocation !== "" && valueListDelegate.payeeOtherDescr !== "":
+                            return i18n.tr("%1 | %2\n%3").arg(valueListDelegate.payeeName).arg(valueListDelegate.payeeLocation).arg(valueListDelegate.payeeOtherDescr)
+                        case valueListDelegate.payeeLocation !== "" && valueListDelegate.payeeOtherDescr === "":
+                            return i18n.tr("%1 | %2").arg(valueListDelegate.payeeName).arg(valueListDelegate.payeeLocation)
+                        case valueListDelegate.payeeLocation !== "" && valueListDelegate.payeeOtherDescr === "":
+                            return i18n.tr("%1\n%2").arg(valueListDelegate.payeeName).arg(valueListDelegate.payeeOtherDescr)
+                        default:
+                            return valueListDelegate.payeeName
+                    }
+                }
+                visible: valueListDelegate.payeeName ? true: false
+                Suru.textLevel: Suru.Paragraph
+                wrapMode: Text.WordWrap
+                maximumLineCount: valueListDelegate.isExpanded ? 999 : 1
+                elide: Text.ElideRight
+            }
+
+            Label {
                 id: commentsLabel
-      
+
                 Layout.fillWidth: true
 
                 text: valueListDelegate.comments
-                visible: valueListDelegate.comments ? true: false
+                visible: valueListDelegate.comments
+                            && (
+                                    valueListDelegate.payeeName && valueListDelegate.isExpanded
+                                    ||
+                                    valueListDelegate.payeeName === ""
+                                )
+                            ? true: false
                 Suru.textLevel: Suru.Caption
                 wrapMode: Text.WordWrap
                 maximumLineCount: valueListDelegate.isExpanded ? 999 : 1
                 elide: Text.ElideRight
+            }
+
+            Components.TagsList {
+                id: tagsFlow
+
+                Layout.fillWidth: true
+
+                model: valueListDelegate.tagsList
+                visible: valueListDelegate.tags && valueListDelegate.isExpanded ? true: false
+                textLevel: Suru.Paragraph
             }
         }
 

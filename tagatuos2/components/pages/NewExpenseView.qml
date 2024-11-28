@@ -112,11 +112,17 @@ FocusScope {
                 let _txtDescr = descriptionField.text
                 let _txtCategory = categoryField.currentText
                 let _realValue = valueField.text.trim() == "" ? 0 : Functions.cleanExpenseValue(valueField.text)
+                let _txtPayeeName = payeeFields.payeeName
+                let _txtPayeeLocation = payeeFields.payeeLocation
+                let _txtPayeeOtherDescr = payeeFields.payeeOtherDescr
 
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
                 internal.expenseData.value = _realValue
+                internal.expenseData.payeeName = _txtPayeeName
+                internal.expenseData.payeeLocation = _txtPayeeLocation
+                internal.expenseData.payeeOtherDescription = _txtPayeeOtherDescr
 
                 newExpenseView.createQuickExpense()
             }
@@ -175,12 +181,14 @@ FocusScope {
     function exitEntryMode() {
         entryMode = false
         internal.expenseData.reset()
+        dateField.reset()
     }
 
     function save() {
         if (entryMode) {
             /*Commits the OSK*/
             mainView.keyboard.commit()
+            tagsField.commitTag("", false)
 
             if (!internal.checkRequiredFields(false)) {
                 mainView.tooltip.display(i18n.tr("Please fill required fields"))
@@ -191,6 +199,10 @@ FocusScope {
                 let _txtCategory = categoryField.currentText
                 let _realValue = Functions.cleanExpenseValue(valueField.text)
                 let _txtDate = Functions.getToday()
+                let _txtTags = tagsField.tags
+                let _txtPayeeName = payeeFields.payeeName
+                let _txtPayeeLocation = payeeFields.payeeLocation
+                let _txtPayeeOtherDescr = payeeFields.payeeOtherDescr
 
                 if (!dateField.checked || isEditMode) {
                     _txtDate = Functions.formatDateForDB(dateField.dateValue)
@@ -200,6 +212,10 @@ FocusScope {
                 internal.expenseData.name = _txtName
                 internal.expenseData.description = _txtDescr
                 internal.expenseData.category = _txtCategory
+                internal.expenseData.tags = _txtTags
+                internal.expenseData.payeeName = _txtPayeeName
+                internal.expenseData.payeeLocation = _txtPayeeLocation
+                internal.expenseData.payeeOtherDescription = _txtPayeeOtherDescr
 
                 if (valueField.processTravelData) {
                     internal.expenseData.value = valueField.convertedValue
@@ -225,8 +241,7 @@ FocusScope {
         historyGridView.currentIndex = -1
 
         // Reset fields
-        dateField.dateValue = new Date()
-        dateField.checkState = Qt.Checked
+        dateField.reset()
 
         searchText = ""
         internal.isOpen = false
@@ -261,24 +276,55 @@ FocusScope {
         open()
     }
 
-    function openInEditMode(expenseDataForEdit) {
+    function openInEditMode(_expenseDataForEdit) {
         internal.expenseData.reset()
-        internal.expenseData.expenseID = expenseDataForEdit.expenseID
-        internal.expenseData.entryDate = expenseDataForEdit.entryDate
-        internal.expenseData.name = expenseDataForEdit.name
-        internal.expenseData.description = expenseDataForEdit.description
-        internal.expenseData.category = expenseDataForEdit.category
-        internal.expenseData.value = expenseDataForEdit.value
-        internal.expenseData.travelData.rate = expenseDataForEdit.travelData.rate
-        internal.expenseData.travelData.homeCur = expenseDataForEdit.travelData.homeCur
-        internal.expenseData.travelData.travelCur = expenseDataForEdit.travelData.travelCur
-        internal.expenseData.travelData.value = expenseDataForEdit.travelData.value
+        internal.expenseData.expenseID = _expenseDataForEdit.expenseID
+        internal.expenseData.entryDate = _expenseDataForEdit.entryDate
+        internal.expenseData.name = _expenseDataForEdit.name
+        internal.expenseData.description = _expenseDataForEdit.description
+        internal.expenseData.category = _expenseDataForEdit.category
+        internal.expenseData.value = _expenseDataForEdit.value
+        internal.expenseData.tags = _expenseDataForEdit.tags
+
+        // Set them in this order to avoid binding loop error in the text fields
+        internal.expenseData.payeeOtherDescription = _expenseDataForEdit.payeeOtherDescription
+        internal.expenseData.payeeLocation = _expenseDataForEdit.payeeLocation
+        internal.expenseData.payeeName = _expenseDataForEdit.payeeName
+
+        internal.expenseData.travelData.rate = _expenseDataForEdit.travelData.rate
+        internal.expenseData.travelData.homeCur = _expenseDataForEdit.travelData.homeCur
+        internal.expenseData.travelData.travelCur = _expenseDataForEdit.travelData.travelCur
+        internal.expenseData.travelData.value = _expenseDataForEdit.travelData.value
 
         // Set date/time fields to current values
-        dateField.dateValue = Functions.convertDBToDate(expenseDataForEdit.entryDate)
-        dateField.checkState = Qt.Unchecked
+        dateField.checkState = Qt.Unchecked // Always do this before setting the date
+        dateField.dateValue = Functions.convertDBToDate(_expenseDataForEdit.entryDate)
 
-        travelCurrencyObj.currencyID = expenseDataForEdit.travelData.travelCur
+        travelCurrencyObj.currencyID = _expenseDataForEdit.travelData.travelCur
+
+        switchToEntryMode()
+        open()
+    }
+
+    function openInEntryMode(_expenseDataForEntry) {
+        internal.expenseData.reset()
+        internal.expenseData.name = _expenseDataForEntry.name
+        internal.expenseData.description = _expenseDataForEntry.description
+        internal.expenseData.category = _expenseDataForEntry.category
+        internal.expenseData.value = _expenseDataForEntry.value
+        internal.expenseData.tags = _expenseDataForEntry.tags
+
+        // Set them in this order to avoid binding loop error in the text fields
+        internal.expenseData.payeeOtherDescription = _expenseDataForEntry.payeeOtherDescription
+        internal.expenseData.payeeLocation = _expenseDataForEntry.payeeLocation
+        internal.expenseData.payeeName = _expenseDataForEntry.payeeName
+
+        internal.expenseData.travelData.rate = _expenseDataForEntry.travelData.rate
+        internal.expenseData.travelData.homeCur = _expenseDataForEntry.travelData.homeCur
+        internal.expenseData.travelData.travelCur = _expenseDataForEntry.travelData.travelCur
+        internal.expenseData.travelData.value = _expenseDataForEntry.travelData.value
+
+        travelCurrencyObj.currencyID = _expenseDataForEntry.travelData.travelCur
 
         switchToEntryMode()
         open()
@@ -577,6 +623,7 @@ FocusScope {
                                 internal.expenseData.reset()
                                 internal.expenseData.entryDate = Functions.getToday()
                                 internal.expenseData.name = searchField.text
+                                internal.expenseData.tags = mainView.getTagsOfTheDay()
 
                                 newExpenseView.switchToEntryMode()
                             }
@@ -668,6 +715,31 @@ FocusScope {
 
                             Layout.fillWidth: true
                             showToggle: !newExpenseView.isEditMode
+
+                            // Remove tags of the day when the date isn't today
+                            onDateValueChanged: {
+                                let _tagsOfTheDay = mainView.getTagsOfTheDay()
+
+                                if (_tagsOfTheDay !== "" && !checked && !newExpenseView.isEditMode) {
+                                    let _isToday = Functions.isToday(dateValue)
+
+                                    if (!_isToday && tagsField.tags === _tagsOfTheDay) {
+                                        tagsField.tags = ""
+                                    } else if (_isToday && tagsField.tags === "") {
+                                        tagsField.tags = _tagsOfTheDay
+                                    }
+                                }
+                            }
+
+                            onCheckedChanged: {
+                                if (checked) {
+                                    let _tagsOfTheDay = mainView.getTagsOfTheDay()
+
+                                    if (_tagsOfTheDay !== "" && !newExpenseView.isEditMode && tagsField.tags === "") {
+                                        tagsField.tags = _tagsOfTheDay
+                                    }
+                                }
+                            }
                         }
 
                         NameField {
@@ -723,6 +795,121 @@ FocusScope {
                             Layout.fillWidth: true
                             flickable: mainFlickable
                             text: internal.expenseData.description
+                        }
+
+                        PayeeFields {
+                            id: payeeFields
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            payeeName: internal.expenseData.payeeName
+                            payeeLocation: internal.expenseData.payeeLocation
+                            payeeOtherDescr: internal.expenseData.payeeOtherDescription
+
+                            onVisibleChanged: {
+                                if (visible) {
+                                    payeeName = Qt.binding( function() { return internal.expenseData.payeeName } )
+                                    payeeLocation = Qt.binding( function() { return internal.expenseData.payeeLocation } )
+                                    payeeOtherDescr = Qt.binding( function() { return internal.expenseData.payeeOtherDescription } )
+                                }
+                            }
+                        }
+
+                        TagsField {
+                            id: tagsField
+
+                            Layout.fillWidth: true
+                            flickable: mainFlickable
+                            tags: internal.expenseData.tags
+
+                            onVisibleChanged: {
+                                // Rebind value since `tags` is manipulated inside this component
+                                if (visible) {
+                                    tags = Qt.binding( function() { return internal.expenseData.tags } )
+                                }
+                            }
+                        }
+
+                        // Used for spacing at the bottom so that fields with auto-complete
+                        // would be positioned at the top when in focused and OSK is visible
+                        Item {
+                            id: spacerItem
+
+                            Layout.fillWidth: true
+                            implicitHeight: mainView.keyboardRectangle.height + Suru.units.gu(5)
+
+                            function activate(_item) {
+                                visible = true
+                                scrollDelayTimer.scrollToItem(_item)
+                            }
+
+                            function deactivate() {
+                                visible = false
+                            }
+
+                            Connections {
+                                target: mainView.keyboard
+                                onVisibleChanged: {
+                                    if (visible) {
+                                        if (payeeFields.autoCompleteShown) {
+                                            spacerItem.activate(payeeFields)
+                                        }
+
+                                        if (tagsField.autoCompleteShown) {
+                                            spacerItem.activate(tagsField)
+                                        }
+                                    } else {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: payeeFields
+                                onIsFocusedChanged: {
+                                    if (!target.isFocused && !mainView.keyboard.visible) {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                                onAutoCompleteShownChanged: {
+                                    if (target.autoCompleteShown && mainView.keyboard.visible) {
+                                        spacerItem.activate(target)
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: tagsField
+                                onIsFocusedChanged: {
+                                    if (!target.isFocused && !mainView.keyboard.visible) {
+                                        spacerItem.deactivate()
+                                    }
+                                }
+                                onAutoCompleteShownChanged: {
+                                    if (target.autoCompleteShown) {
+                                        spacerItem.activate(target)
+                                    }
+                                }
+                            }
+
+                            Timer {
+                                id: scrollDelayTimer
+
+                                property var item
+
+                                interval: 1
+
+                                function scrollToItem(_item) {
+                                    item = _item
+                                    restart()
+                                }
+
+                                onTriggered: {
+                                    if (item) {
+                                        mainFlickable.scrollToItem(item, 0, 0, true)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -823,9 +1010,9 @@ FocusScope {
 
                 onTrigger: {
                     if (newExpenseView.isGridDisplay) {
-                        newExpenseView.displayType = QuickListGridView.GridType.List
+                        mainView.settings.quickExpenseDisplayType = QuickListGridView.GridType.List
                     } else {
-                        newExpenseView.displayType = QuickListGridView.GridType.Rectangle
+                        mainView.settings.quickExpenseDisplayType = QuickListGridView.GridType.Rectangle
                     }
                 }
             }

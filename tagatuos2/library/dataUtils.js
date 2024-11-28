@@ -14,6 +14,13 @@ var dataUtils = dataUtils || (function (undefined) {
                         return ""
                     }
                 }
+                , homeCurrency: function() {
+                    if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
+                        return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").homeCurrency
+                    } else {
+                        return ""
+                    }
+                }
                 , enableOverlay: function() {
                     if (mainView.settings && mainView.mainModels && mainView.mainModels.profilesModel && mainView.mainModels.profilesModel.ready) { 
                         return mainView.mainModels.profilesModel.getItem(settings.activeProfile, "profileId").enableOverlay
@@ -44,16 +51,16 @@ var dataUtils = dataUtils || (function (undefined) {
                 , exists: function(displayName) {
                     return Database.checkProfileIfExist(displayName);
                 }
-                , add: function(displayName, enableOverlay, overlayColor, overlayOpacity) {
-                    let _result = Database.newProfile(displayName, enableOverlay, overlayColor, overlayOpacity)
+                , add: function(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.newProfile(displayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity)
                     if (_result.success) {
                         this.refresh();
                     }
 
                     return { "success": _result.success, "exists": _result.exists }
                 }
-                , edit: function(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity) {
-                    let _result = Database.editProfile(profileId, displayName, newDisplayName, enableOverlay, overlayColor, overlayOpacity);
+                , edit: function(profileId, displayName, newDisplayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity) {
+                    let _result = Database.editProfile(profileId, displayName, newDisplayName, homeCurrency, enableOverlay, overlayColor, overlayOpacity);
                     if (_result.success) {
                         this.refresh();
                     }
@@ -180,12 +187,18 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
                     const _data = {
                         "name": _txtName
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.addQuickExpense(profile, _data)
@@ -201,6 +214,9 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
 
                     const _data = {
                         "id": _txtID
@@ -208,6 +224,9 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.editQuickExpense(profile, _data)
@@ -236,6 +255,10 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtTags = expenseData.tags
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
                     let _travelData
 
                     // Travel Data
@@ -249,6 +272,10 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "tags": _txtTags
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.addNewExpense(profile, _data, _travelData)
@@ -265,6 +292,10 @@ var dataUtils = dataUtils || (function (undefined) {
                     let _realValue = expenseData.value
                     let _txtDescr = expenseData.description
                     let _txtCategory = expenseData.category
+                    let _txtTags = expenseData.tags
+                    let _txtPayeeName = expenseData.payeeName
+                    let _txtPayeeLocation = expenseData.payeeLocation
+                    let _txtPayeeOtherDescr = expenseData.payeeOtherDescription
                     let _travelData = expenseData.travelData
 
                     const _data = {
@@ -274,6 +305,10 @@ var dataUtils = dataUtils || (function (undefined) {
                         , "description": _txtDescr
                         , "category": _txtCategory
                         , "value": _realValue
+                        , "tags": _txtTags
+                        , "payeeName": _txtPayeeName
+                        , "payeeLocation": _txtPayeeLocation
+                        , "payeeOtherDescription": _txtPayeeOtherDescr
                     }
 
                     let _result = Database.updateExpense(_data, _travelData)
@@ -312,8 +347,14 @@ var dataUtils = dataUtils || (function (undefined) {
                 , historyDataForEntry: function(searchText, limit) {
                     return Database.getHistoryExpenses(profile, searchText, limit)
                 }
-                , search: function(searchText, limit, sort) {
-                    return Database.searchExpenses(profile, searchText, limit, sort)
+                , search: function(searchText, limit, sort, focus) {
+                    return Database.searchExpenses(profile, searchText, limit, sort, focus)
+                }
+                , searchTags: function(searchText, excludedList, limit, sort) {
+                    return Database.searchExpensesTags(profile, searchText, excludedList, limit, sort)
+                }
+                , searchPayees: function(mode, searchText, payeeName, payeeLocation, limit, sort) {
+                    return Database.searchExpensesPayees(mode, profile, searchText, payeeName, payeeLocation, limit, sort)
                 }
                 , lastDateWithData: function(category, dateBase, scope) {
                     return Database.getDateWithData(false, profile, category, dateBase, scope)

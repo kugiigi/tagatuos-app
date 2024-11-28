@@ -14,11 +14,19 @@ TextArea {
     placeholderText: i18n.tr("Add description, more details or comments")
     font.pixelSize: Suru.units.gu(2)
     wrapMode: TextInput.WordWrap
-    selectByMouse: true
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Backspace && text == "") {
-            focusScrollConnections.focusPrevious()
+        switch (event.key) {
+            case Qt.Key_Backspace:
+                if (text == "") {
+                    focusScrollConnections.focusPrevious()
+                }
+                break
+            case Qt.Key_Down:
+                if (text == "") {
+                    focusScrollConnections.focusNext()
+                }
+                break
         }
     }
     
@@ -33,6 +41,7 @@ TextArea {
     background: Common.BaseBackgroundRectangle {
         control: descriptionField
         radius: Suru.units.gu(1)
+        enableHoveredHighlight: false
         highlightColor: "transparent"
     }
 }

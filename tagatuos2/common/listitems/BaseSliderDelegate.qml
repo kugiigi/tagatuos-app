@@ -30,6 +30,8 @@ BaseItemDelegate {
     property bool enableFineControls: false
     property string unit: displayInPercentage ? "%" : ""
 
+    property bool locked: true
+
     signal reset
     signal valueModified
 
@@ -84,7 +86,7 @@ BaseItemDelegate {
             Common.BaseButton {
                 id: resetButton
 
-                visible: customizedSliderDelegate.defaultValue != slider.value
+                visible: customizedSliderDelegate.defaultValue != slider.value && !customizedSliderDelegate.locked
                 display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Reset to default")
                 icon.name: "reset"
@@ -104,7 +106,7 @@ BaseItemDelegate {
 
             Common.BaseButton {
                 Layout.fillHeight: true
-                visible: customizedSliderDelegate.enableFineControls
+                visible: customizedSliderDelegate.enableFineControls && !customizedSliderDelegate.locked
                 enabled: slider.value > slider.minimumValue
                 display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Decrease by %1").arg(customizedSliderDelegate.stepSize)
@@ -126,7 +128,7 @@ BaseItemDelegate {
 
                 Layout.fillWidth: true
 
-                enabled: customizedSliderDelegate.enabled
+                enabled: customizedSliderDelegate.enabled && !customizedSliderDelegate.locked
                 minimumValue: 0
                 maximumValue: 100
                 live: true
@@ -146,7 +148,7 @@ BaseItemDelegate {
 
             Common.BaseButton {
                 Layout.fillHeight: true
-                visible: customizedSliderDelegate.enableFineControls
+                visible: customizedSliderDelegate.enableFineControls && !customizedSliderDelegate.locked
                 enabled: slider.value < slider.maximumValue
                 display: AbstractButton.IconOnly
                 tooltipText: i18n.tr("Increase by %1").arg(customizedSliderDelegate.stepSize)
@@ -161,6 +163,15 @@ BaseItemDelegate {
                         slider.value = slider.maximumValue
                     }
                 }
+            }
+
+            Common.BaseButton {
+                Layout.fillHeight: true
+                display: AbstractButton.IconOnly
+                tooltipText: customizedSliderDelegate.locked ? i18n.tr("Unlock") : i18n.tr("Lock")
+                icon.name: customizedSliderDelegate.locked ? "lock-broken" : "lock"
+                transparentBackground: true
+                onClicked: customizedSliderDelegate.locked = !customizedSliderDelegate.locked
             }
         }
     }
